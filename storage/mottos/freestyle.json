@@ -1,0 +1,191 @@
+{
+  "slug": "freestyle",
+  "name": "Dein Freestyle",
+  "active": true,
+  "order": 1,
+  "intro": "Du sagst, was drauf soll. Wir sagen dir, worauf es passt.",
+  "headline": "Dein Freestyle",
+  "text": "Kein vorgegebenes Motto, kein Raster. Du beschreibst dein Motiv mit eigenen Worten, wählst den Artikel aus - vom T-Shirt über die Tasse bis zum Frühstücksbrettchen - und wir bauen die Druckdatei genau auf dessen Maß. Das Druckverfahren und die Fläche kommen vom Artikel, den Rest bestimmst du.",
+  "sample": "",
+  "accent": "#e0673a",
+  "size": "1024x1536",
+  "styleChoice": true,
+  "markenfrei": false,
+  "kader": false,
+  "colorChoice": true,
+  "moodChoice": true,
+  "placementChoice": false,
+  "nurLogo": false,
+  "gewerblich": false,
+  "vary": false,
+  "freestyle": true,
+  "artikelPflicht": true,
+  "fotoUpload": true,
+  "noExtra": true,
+  "variations": "",
+  "research": false,
+  "researchField": "",
+  "researchKind": "",
+  "requiresApproval": false,
+  "suggestions": "",
+  "suggestField": "",
+  "nameZone": "unten",
+  "nameFont": "rund",
+  "fields": [
+    {
+      "key": "motiv",
+      "label": "Was soll drauf?",
+      "type": "textarea",
+      "required": true,
+      "printed": false,
+      "personal": false,
+      "max": 700,
+      "placeholder": "",
+      "hint": "So genau wie du magst. Was man sehen soll, welche Stimmung, welche Farben. Beispiel: ein schlafender Dackel auf einem Sofa, gemütlich, warme",
+      "geo": false,
+      "steers": false,
+      "options": []
+    },
+    {
+      "key": "text_gross",
+      "label": "Grosser Text",
+      "type": "text",
+      "required": false,
+      "printed": true,
+      "personal": false,
+      "max": 40,
+      "placeholder": "",
+      "hint": "Name, Spruch, Datum - was am grössten stehen soll",
+      "geo": false,
+      "steers": false,
+      "options": []
+    },
+    {
+      "key": "text_klein",
+      "label": "Kleiner Text",
+      "type": "text",
+      "required": false,
+      "printed": true,
+      "personal": false,
+      "max": 60,
+      "placeholder": "",
+      "hint": "Zweite Zeile, optional",
+      "geo": false,
+      "steers": false,
+      "options": []
+    },
+    {
+      "key": "foto_modus",
+      "label": "Eigenes Foto?",
+      "type": "select",
+      "required": false,
+      "printed": false,
+      "personal": false,
+      "max": 40,
+      "placeholder": "",
+      "hint": "So einsetzen heißt: dein Foto kommt genau so auf den Artikel. Nachzeichnen heißt: wir zeichnen es im gewählten Stil nach — es sieht deinem Foto ähnlich, ist aber eine Zeichnung.",
+      "default": "Kein Foto",
+      "geo": false,
+      "steers": false,
+      "options": [
+        "Kein Foto",
+        "Mein Foto so einsetzen",
+        "Mein Foto im gewählten Stil nachzeichnen"
+      ]
+    },
+    {
+      "key": "foto",
+      "label": "Foto hochladen",
+      "type": "upload",
+      "required": false,
+      "printed": false,
+      "personal": false,
+      "max": 40,
+      "placeholder": "",
+      "hint": "Bitte das Originalfoto, nicht die WhatsApp-Version. Wir sagen dir sofort, ob es für die gewählte Größe reicht.",
+      "zeigeWenn": {
+        "foto_modus": [
+          "Mein Foto so einsetzen",
+          "Mein Foto im gewählten Stil nachzeichnen"
+        ]
+      },
+      "geo": false,
+      "steers": false,
+      "options": []
+    },
+    {
+      "key": "foto_form",
+      "label": "Form des Fotos",
+      "type": "select",
+      "required": false,
+      "printed": false,
+      "personal": false,
+      "max": 40,
+      "placeholder": "",
+      "hint": "",
+      "default": "Abgerundet",
+      "zeigeWenn": {
+        "foto_modus": [
+          "Mein Foto so einsetzen"
+        ]
+      },
+      "geo": false,
+      "steers": false,
+      "options": [
+        "Rechteck",
+        "Abgerundet",
+        "Kreis"
+      ]
+    },
+    {
+      "key": "foto_rechte",
+      "label": "Ich darf dieses Foto verwenden",
+      "type": "checkbox",
+      "required": true,
+      "printed": false,
+      "personal": false,
+      "max": 40,
+      "placeholder": "",
+      "hint": "Du bestätigst, dass du die Rechte am Foto hast und alle abgebildeten Personen einverstanden sind.",
+      "zeigeWenn": {
+        "foto_modus": [
+          "Mein Foto so einsetzen",
+          "Mein Foto im gewählten Stil nachzeichnen"
+        ]
+      },
+      "geo": false,
+      "steers": false,
+      "options": []
+    },
+    {
+      "key": "vermeiden",
+      "label": "Was auf keinen Fall?",
+      "type": "text",
+      "required": false,
+      "printed": false,
+      "personal": false,
+      "max": 120,
+      "placeholder": "",
+      "hint": "Optional. Farben, Motive oder Stile, die nicht vorkommen sollen.",
+      "geo": false,
+      "steers": false,
+      "options": []
+    }
+  ],
+  "upload": {
+    "mode": "off",
+    "label": "Foto",
+    "hint": "",
+    "required": false,
+    "place": "mitte",
+    "widthPct": 40,
+    "coBrand": false,
+    "label2": "Zweites Logo (Co-Branding)"
+  },
+  "prompt": "A print design made to order for a customer.\n\nWHAT THE CUSTOMER ASKED FOR, in their own words - this decides the subject and nothing overrides it:\n{motiv}\n\nThe piece is {wofuer}.\n\nText, spelled exactly as given and nothing else added:\n- large: \"{text_gross}\"\n- small: \"{text_klein}\"\n\nMUST NOT APPEAR: {vermeiden}\n\nDraw exactly what the customer described. If they named something concrete - an animal, a person's role, an object, a place - show that thing clearly and as the main subject. Do not substitute a generic symbol for it. Do not add extra words, no signature, no watermark, no logo.",
+  "backPrompt": "",
+  "backNamesField": "",
+  "seedRev": 3,
+  "userEdited": false,
+  "updated": "2026-09-13T23:33:18.112Z"
+}

@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Band-Freigabe · Motto Otto</title>
+<style>
+/* 6. Okt., Markus: "du machst mir immer eine Vorauswahl, und ich gebe das frei - anders wird's nicht funktionieren."
+   Eine Spalte, ein Design je Karte, das Bild so gross wie der Bildschirm - Ja oder Nein mit dem Daumen. */
+:root{--bg:#f5efe2;--karte:#fff;--ink:#1b1710;--leise:#6d665a;--linie:#d9d0bf;--ja:#2f8a3c;--nein:#b3261e;--akzent:#ffc542}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.kopf{position:sticky;top:0;z-index:2;background:var(--bg);border-bottom:2px solid var(--ink);padding:12px 16px calc(10px);padding-top:calc(12px + env(safe-area-inset-top,0px))}
+.kopf h1{margin:0 0 6px;font-size:20px}
+.reiter{display:flex;gap:8px;flex-wrap:wrap}
+.reiter button{border:2px solid var(--ink);background:var(--karte);border-radius:999px;padding:6px 12px;font:inherit;font-weight:700;cursor:pointer}
+.reiter button.on{background:var(--ink);color:var(--bg)}
+main{max-width:640px;margin:0 auto;padding:16px;display:grid;gap:18px}
+.karte{background:var(--karte);border:2px solid var(--ink);border-radius:14px;overflow:hidden}
+.karte img{display:block;width:100%;height:auto;background:#eee}
+.info{padding:12px 14px;display:grid;gap:4px}
+.info b{font-size:17px}
+.info small{color:var(--leise)}
+.dar{font-weight:700;font-size:15px}
+.notiz{background:#fff7dd;border-left:4px solid var(--akzent);padding:6px 10px;font-size:14px}
+.knoepfe{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 14px 14px}
+.knoepfe button{border:0;border-radius:12px;padding:14px;font:inherit;font-weight:800;font-size:17px;color:#fff;cursor:pointer}
+.ja{background:var(--ja)}.nein{background:var(--nein)}
+.stand{padding:0 14px 12px;font-weight:700}
+.stand.ja-t{color:var(--ja)}.stand.nein-t{color:var(--nein)}
+.motiv{font-size:14px;padding:0 14px 12px}
+.leer,.fehler{padding:24px 16px;text-align:center;color:var(--leise)}
+button:focus-visible{outline:3px solid var(--akzent);outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="kopf">
+  <h1>Band-Freigabe</h1>
+  <div class="reiter" id="reiter">
+    <button type="button" data-f="offen" class="on">Offen</button>
+    <button type="button" data-f="ja">Freigegeben</button>
+    <button type="button" data-f="nein">Abgelehnt</button>
+  </div>
+</div>
+<main id="liste"><div class="leer">Lade …</div></main>
+<script>
+(function () {
+  var token = ''; try { token = localStorage.getItem('mo_admin') || ''; } catch (e) { token = ''; }
+  var filter = 'offen', alle = [];
+  var liste = document.getElementById('liste');
+  function esc(s) { return String(s || '').replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function zeigen() {
+    var d = alle.filter(function (x) { return filter === 'offen' ? x.frei === null : filter === 'ja' ? x.frei === true : x.frei === false; });
+    if (!d.length) { liste.innerHTML = '<div class="leer">' + (filter === 'offen' ? 'Nichts offen. Neue Vorschläge kommen hierher.' : 'Noch keins.') + '</div>'; return; }
+    liste.innerHTML = d.map(function (x) {
+      return '<div class="karte" data-id="' + esc(x.designId) + '"><img src="' + esc(x.bild) + '" alt="" loading="lazy">' +
+        '<div class="info">' + (x.darstellung ? '<div class="dar">' + esc(x.darstellung) + '</div>' : '') + '<b>' + esc(x.mottoText || x.motto) + '</b><small>' + esc(x.motto) + (x.stil ? ' · ' + esc(x.stil) : '') + ' · ' + esc(x.designId) + '</small>' +
+        (x.notiz ? '<div class="notiz">' + esc(x.notiz) + '</div>' : '') + '</div>' +
+        '<div class="motiv"><a href="' + esc(x.motiv) + '" target="_blank" rel="noopener">Nur das Motiv ansehen</a></div>' +
+        (x.frei === null ? '' : '<div class="stand ' + (x.frei ? 'ja-t' : 'nein-t') + '">' + (x.frei ? 'Läuft im Band' : 'Nicht im Band') + '</div>') +
+        '<div class="knoepfe"><button type="button" class="ja" data-frei="1">Ja, ins Band</button><button type="button" class="nein" data-frei="0">Nein</button></div></div>';
+    }).join('');
+  }
+  function laden() {
+    if (!token) { liste.innerHTML = '<div class="fehler">Bitte zuerst im <a href="/admin">Backend</a> anmelden, dann diese Seite neu laden.</div>'; return; }
+    fetch('/api/admin/band-freigabe', { headers: { 'x-admin-token': token } }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (j) { alle = j.designs || []; zeigen(); })
+      .catch(function () { liste.innerHTML = '<div class="fehler">Laden hat nicht geklappt. Im <a href="/admin">Backend</a> neu anmelden und hier neu laden.</div>'; });
+  }
+  liste.addEventListener('click', function (ev) {
+    var b = ev.target.closest('button[data-frei]'); if (!b) return;
+    var karte = b.closest('.karte'), id = karte.getAttribute('data-id'), frei = b.getAttribute('data-frei') === '1';
+    b.disabled = true;
+    fetch('/api/admin/band-freigabe', { method: 'POST', headers: { 'x-admin-token': token, 'content-type': 'application/json' }, body: JSON.stringify({ designId: id, frei: frei }) })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function () { alle.forEach(function (x) { if (x.designId === id) x.frei = frei; }); zeigen(); })
+      .catch(function () { b.disabled = false; b.textContent = 'Nicht gespeichert – nochmal'; });
+  });
+  document.getElementById('reiter').addEventListener('click', function (ev) {
+    var b = ev.target.closest('button[data-f]'); if (!b) return;
+    filter = b.getAttribute('data-f');
+    [].forEach.call(this.querySelectorAll('button'), function (x) { x.classList.toggle('on', x === b); });
+    zeigen();
+  });
+  laden();
+})();
+</script>
+</body>
+</html>

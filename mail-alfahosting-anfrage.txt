@@ -1,0 +1,36 @@
+Betreff: motto-otto.de — SPF-Eintrag um include:spf.brevo.com ergänzen
+
+Guten Tag,
+
+für die Domain motto-otto.de möchte ich den bestehenden SPF-Eintrag ändern.
+
+Hintergrund: Wir verschicken unsere Transaktionsmails (Anmeldelinks,
+Auftragsbestätigungen) über den Dienstleister Brevo. Die Domain ist dort
+bereits verifiziert, DKIM ist eingerichtet und funktioniert
+(brevo1._domainkey und brevo2._domainkey sind gesetzt und liefern gültige
+Schlüssel). Im SPF-Eintrag fehlt Brevo jedoch, dadurch schlägt die
+SPF-Prüfung bei allen über Brevo versendeten Mails fehl und die Mails
+landen bei manchen Empfängern im Spam.
+
+Bitte den TXT-Eintrag für motto-otto.de (Host: @ bzw. die Domain selbst)
+
+  AKTUELL:
+  v=spf1 a mx include:secure-mailgate.com ~all
+
+  ÄNDERN IN:
+  v=spf1 a mx include:secure-mailgate.com include:spf.brevo.com ~all
+
+Wichtig dabei:
+- Es soll weiterhin nur EIN TXT-Eintrag mit "v=spf1" existieren; der
+  bestehende wird ersetzt, kein zweiter angelegt.
+- Der vorhandene TXT-Eintrag "brevo-code:c4089adcdd6c8209175fc53d886fcc41"
+  bleibt unverändert bestehen (Domain-Verifizierung bei Brevo, kein SPF).
+- include:secure-mailgate.com bleibt drin, damit der Mailversand über Ihr
+  Mailgateway weiterhin SPF-konform bleibt.
+- Die Zahl der SPF-DNS-Lookups steigt dadurch von 4 auf 5, das Limit von 10
+  wird also nicht überschritten.
+
+Falls ich das selbst im Kundenmenü ändern kann, sagen Sie mir bitte kurz, wo
+ich die DNS-/TXT-Einträge für die Domain finde — dann mache ich es selbst.
+
+Vielen Dank und viele Grüße

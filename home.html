@@ -1,0 +1,1716 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Motto Otto – Sag Otto, dein Motto! Euer Design in unter 5 Minuten</title>
+<meta name="description" content="Abi, Junggesellenabschied, Malle, Fanclub, Verein, Firma: Sag den Anlass, Otto macht dein Design. Erster Entwurf in unter 5 Minuten – für ein einzelnes Produkt oder für die ganze Gruppe. Gedruckt in Deutschland.">
+<!-- Fassung 75: zweite Schrift, nur fuer Ueberschriften. Anton ist schmal geschnitten - das ist
+     bei deutschen Wortungetuemen ("Personalisierte Gruppenbestellung") auf einem 390-px-Handy
+     kein Geschmack, sondern Notwendigkeit: eine breite Displayschrift bricht dort in drei Zeilen. -->
+<!-- Fassung 79: Hier stand die Einbindung von fonts.googleapis.com. Das bedeutete fuer jeden
+     Besucher drei Wege hintereinander, bevor die Schrift da ist: eine zweite, fremde Adresse
+     aufloesen und verschluesseln, dort ein Stylesheet holen, darin erst die Adresse der
+     Schriftdatei lesen, dann die Schrift holen. Jetzt liegen beide Schriften bei uns, werden
+     schon beim Lesen des Kopfes geholt und sind auf Latein zugeschnitten. Archivo traegt als
+     Variable Font alle Staerken von 400 bis 900 in einer einzigen Datei. -->
+<link rel="preload" href="/fonts/archivo-v1.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/anton-v1.woff2" as="font" type="font/woff2" crossorigin>
+<!-- 1. Okt.: gemeinsames Farbblatt aller Kundenseiten (Logo-Farben, Schriften, Kopf) -->
+<link rel="preload" href="/fonts/anton-v1.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/marke.css">
+<style>
+@font-face{font-family:"Archivo";src:url("/fonts/archivo-v1.woff2") format("woff2");font-weight:400 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Anton";src:url("/fonts/anton-v1.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+</style>
+<link rel="icon" href="/favicon-64.png" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<!-- Fassung 78: Die eine richtige Adresse dieser Seite. Ohne das zaehlt Google jede Variante
+     als eigene Seite (mit und ohne www, mit angehaengten Werbe-Parametern aus Instagram oder
+     WhatsApp) und teilt die Bewertung darauf auf, statt sie zu buendeln. -->
+<link rel="canonical" href="__CANONICAL__">
+<meta property="og:type" content="website">
+<meta property="og:url" content="__CANONICAL__">
+<meta property="og:site_name" content="Motto Otto">
+<meta name="twitter:card" content="summary_large_image">
+<!-- Wer wir sind, in der Form, die Suchmaschinen lesen. Nur Angaben, die stimmen - erfundene
+     Bewertungen oder Preise in diesen Daten bestraft Google. -->
+<script type="application/ld+json">__LD_JSON__</script>
+<style>
+  :root{
+    --bg:#111017; --bg2:#16151d; --card:#1d1c25; --card2:#26242f; --line:#34313f;
+    --ink:#f5f3f8; --ink2:#b7b2c3; --ink3:#8b8598;
+    --accent:#ffc542; --accent-ink:#1b1710; --gruen:#5fd08a;
+    --federn:cubic-bezier(.16,.84,.34,1);
+    --sans:"Archivo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    /* EINE Zeile zum Wechseln: hier steht die Displayschrift, sonst nirgends. Wer sie tauschen
+       will, tauscht sie hier und im <link> oben - der Rest der Seite bleibt unberuehrt. */
+    --display:"Anton", "Archivo", ui-sans-serif, system-ui, sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,"DejaVu Sans Mono",monospace;
+    /* Ottos eigene Farben. Sie gehoeren IN :root - als freie Deklaration mitten im
+       Stylesheet sind es keine Variablen, sondern Muell, den der Browser wegwirft; jedes
+       var(--otto-haut) wird dann ungueltig und faellt auf Schwarz zurueck. Genau so sass
+       Otto einen Moment lang als schwarzer Klumpen auf der Seite. */
+    --otto-kappe:#d81a5b; --otto-kappe-dunkel:#a8134a; --otto-haut:#f6c9a2; --otto-haar:#1d1a24;
+  }
+  /* Anton hat genau EINEN Schnitt. Gewicht 900 waere also gefaelscht (faux bold) - das sieht
+     schmierig aus und frisst die Kontur. font-synthesis:none verbietet das Faelschen: Anton
+     kommt in seinem echten Schnitt, und wenn die Schrift NICHT laedt (Netz, Sperre, Offline),
+     faellt die Zeile auf Archivo 900 zurueck und bleibt kraeftig. Mit font-weight:400 waere
+     die Ueberschrift ohne Anton duenn wie Fliesstext - schlimmer als vorher. */
+  .display,h1,h2{font-family:var(--display);font-weight:900;font-synthesis:none;font-synthesis-weight:none;letter-spacing:.004em}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  /* Fassung 82, Markus: "farbliche Akzente so auf der Homepage einbringen, so ein background".
+     Es gab schon zwei Farbschleier - aber beide oben (bei -10 % und 10 % Hoehe). Ab dem
+     zweiten Bildschirm lief die Seite in flaches Dunkel aus, und das ueber elf Bildschirme:
+     genau das laesst sie lang und leblos wirken.
+     Jetzt zieht sich das Licht durch die ganze Seite. Die Prozentwerte beziehen sich auf die
+     Dokumenthoehe, nicht auf das Fenster - die Schleier sitzen also an Abschnitten und nicht
+     am Bildschirm, und beim Scrollen wandert man durch sie hindurch statt sie mitzuschleppen.
+     Drei Farben, gegenlaeufig verteilt, damit kein Streifenmuster entsteht: das Gelb der Marke
+     oben und bei den Preisen, ein Violett in der Mitte bei den Anlaessen, ein Gruen unten beim
+     Vertrauensteil. Alle unter 10 % Deckung - Farbe soll man spueren und nicht sehen, und der
+     Text muss seinen Kontrast behalten. Kostet nichts: reines CSS, kein Bild, kein Byte. */
+  body{margin:0;background:
+      radial-gradient(1200px 600px at 80% -2%, rgba(255,197,66,.11), transparent 60%),
+      radial-gradient(900px 500px at -10% 6%, rgba(120,90,255,.10), transparent 55%),
+      radial-gradient(1000px 620px at 105% 26%, rgba(90,200,255,.055), transparent 60%),
+      radial-gradient(1100px 700px at -15% 46%, rgba(150,95,255,.075), transparent 62%),
+      radial-gradient(900px 560px at 95% 66%, rgba(255,197,66,.06), transparent 60%),
+      radial-gradient(1000px 620px at -5% 86%, rgba(95,208,138,.05), transparent 62%),
+      var(--bg);
+    background-repeat:no-repeat;
+    color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+  h2{font-size:clamp(27px,4.2vw,40px);line-height:1.02;margin:0 0 8px;text-wrap:balance;text-transform:uppercase}
+  .lead{color:var(--ink2);margin:0;font-size:16.5px;max-width:62ch}
+  section{scroll-margin-top:76px}
+
+  /* Kopfzeile */
+  .top{position:sticky;top:0;z-index:40;backdrop-filter:blur(10px);background:rgba(17,16,23,.72);border-bottom:1px solid var(--line)}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:11px;padding-bottom:11px}
+  .top .lg{display:flex;align-items:center;gap:11px;text-decoration:none}
+  .top .lg img{height:36px;width:auto;display:block}
+  .top .lg b{font-weight:900;font-size:19px;letter-spacing:-.02em}
+  .top .lg b span{color:var(--accent)}
+  .top nav{display:flex;align-items:center;gap:6px}
+  .top nav a{color:var(--ink2);text-decoration:none;font-size:14px;font-weight:600;padding:8px 13px;border-radius:999px}
+  .top nav a:hover{color:var(--ink);background:var(--card)}
+  .top nav a.konto{border:1px solid var(--line)}
+  /* 22. Sept., Markus: "das Menue Mottos noch mal unterteilen in Motto und Stile." Am Laptop
+     klappt "Mottos" auf; der Knopf selbst fuehrt weiter auf /mottos, wer ihn nur antippt,
+     landet also nie im Nichts. */
+  .top nav .drop{position:relative;display:flex;align-items:center}
+  .top nav .drop>a::after{content:'';display:inline-block;margin-left:6px;border:4px solid transparent;
+    border-top-color:currentColor;transform:translateY(2px)}
+  .top nav .dropm{position:absolute;top:100%;left:0;min-width:186px;padding:6px;display:none;z-index:40;
+    background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 12px 34px rgba(0,0,0,.3)}
+  .top nav .drop:hover .dropm,.top nav .drop:focus-within .dropm{display:block}
+  .top nav .dropm a{display:block;padding:9px 12px;border-radius:10px;white-space:nowrap}
+  /* Handy: es gibt kein Hover. Dann faellt das Aufklappen weg und beide Eintraege stehen
+     nebeneinander in der Reihe, die sich ohnehin wischen laesst. */
+  @media (max-width:640px){
+    .top nav .drop{display:contents}
+    .top nav .drop>a{display:none}
+    .top nav .dropm{position:static;display:contents;background:none;border:0;padding:0;box-shadow:none}
+  }
+  /* Handy: vier Knoepfe brauchen die Breite - das Logo-Bild bleibt, der Schriftzug daneben faellt
+     weg (er stand sonst zweizeilig, und "Konto" ragte aus dem Bild). */
+  @media (max-width:640px){.top .wrap{gap:8px}.top .lg{flex:none}.top .lg b{display:none}.top nav{gap:2px;flex:1;justify-content:flex-end;min-width:0}.top nav a{padding:8px 9px;font-size:13.5px;white-space:nowrap}}
+  @media (max-width:360px){.top nav a{padding:8px 7px;font-size:12.5px}}
+  /* 22. Sept.: fuenfter Knopf "Alle Mottos". Am Handy heisst er kurz "Mottos", und wird es trotzdem
+     zu eng, laesst sich die Reihe wischen, statt dass der erste Knopf unter das Logo rutscht. */
+  @media (max-width:640px){.top nav .lang{display:none}.top nav{overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}.top nav::-webkit-scrollbar{display:none}.top nav a{flex:none}}
+  @media (max-width:420px){.top nav{justify-content:flex-start}}
+  /* 20. Sept.: Startseite und "So geht's" kommen aus derselben Vorlage (dieselben Stile, dieselben
+     Skripte). Die Startseite zeigt Anlaesse und Beispiele, "So geht's" den Ablauf, die Preise
+     und "Gut zu wissen". Was nicht zur Seite gehoert, ist aus dem Fluss genommen. */
+  body.seite-start .nur-sogehts{display:none}
+  body.seite-sogehts .nur-start{display:none}
+  /* 22. Sept., Markus: "oben noch einen Reiter, mit allen Mottos, wo dann einfach nur alle Mottos
+     aufgehen, schoen uebersichtlich." /mottos zeigt nur die Anlass-Kacheln, sonst nichts. */
+  body.seite-mottos .nur-start:not(.auch-mottos),body.seite-mottos .nur-sogehts,body.seite-mottos #mottos-h,body.seite-mottos #mottos .lead{display:none}
+  body.seite-start .nur-mottos,body.seite-sogehts .nur-mottos,body.seite-stile .nur-mottos{display:none}
+  /* 22. Sept., Markus: "das Menue Mottos noch mal unterteilen in Motto und Stile." /stile zeigt
+     nur die Stil-Kacheln - der Anlass sagt, WAS draufsteht, der Stil sagt, WIE es aussieht. */
+  body.seite-stile .nur-start,body.seite-stile .nur-sogehts{display:none}
+  body.seite-start .nur-stile,body.seite-sogehts .nur-stile,body.seite-mottos .nur-stile{display:none}
+  .stilgitter{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px;margin:22px 0 8px}
+  .stilkachel{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);
+    border-radius:18px;overflow:hidden;padding:0 0 14px;transition:transform .12s ease,border-color .12s ease}
+  .stilkachel:hover{transform:translateY(-2px);border-color:var(--accent)}
+  .stil-bild{display:block;aspect-ratio:3/4;background:var(--card2);overflow:hidden}
+  .stil-bild img{width:100%;height:100%;object-fit:cover;display:block}
+  /* Ein Stil ohne fertiges Beispiel bleibt in der Liste - er ist ja waehlbar -, zeigt aber
+     keinen leeren Kasten, sondern rueckt Name und Beschreibung nach oben. */
+  .stilkachel.ohnebild .stil-bild{display:none}
+  .stilkachel.ohnebild{padding-top:14px}
+  .stilkachel b{display:block;padding:12px 14px 2px;font-size:17px;letter-spacing:.005em}
+  .stilkachel small{display:block;padding:0 14px;color:var(--ink2);font-size:13.5px;line-height:1.35}
+  .stil-her,.stil-nur{display:block;padding:8px 14px 0;color:var(--ink2);font-size:12px;font-weight:700;opacity:.75}
+  .stil-nur{color:var(--accent)}
+  .seitentitel{font-size:clamp(34px,8vw,56px);line-height:1;margin:26px 0 4px;text-transform:uppercase;letter-spacing:.005em}
+  .seitentitel span{color:var(--accent)}
+  .zurueck{display:inline-block;margin:6px 0 18px;color:var(--ink2);text-decoration:none;font-weight:700;font-size:15px}
+  .zurueck:hover{color:var(--ink)}
+
+  /* ---------- 0 · Der Aufmacher: der Anlass der Saison ----------
+     Farbe: die Karte traegt die Farbe ihres Anlasses (--tc) als Schein hinter dem Bild und
+     als Linie am Rand. Nicht als Flaeche - Farbe soll man spueren, nicht anstarren. */
+  .aufmacher{margin:16px 0 10px}
+  .au-kopf{text-align:center;max-width:52ch;margin:0 auto 18px}
+  .au-badge{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:900;letter-spacing:.07em;
+    text-transform:uppercase;color:var(--accent-ink);background:var(--accent);padding:6px 13px;border-radius:999px;margin-bottom:12px}
+  .au-badge::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--accent-ink);
+    animation:aupuls 2.4s var(--federn) infinite}
+  @keyframes aupuls{0%,70%,100%{opacity:1;transform:scale(1)}85%{opacity:.35;transform:scale(.7)}}
+  .aufmacher h1{font-size:clamp(34px,6.4vw,58px);line-height:.96;margin:0 0 10px;text-transform:uppercase;letter-spacing:.005em}
+  .aufmacher h1 span{color:var(--accent)}
+  .au-kopf p{color:var(--ink2);font-size:clamp(15px,1.7vw,17.5px);margin:0;line-height:1.5}
+
+  .au-karten{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;max-width:560px;margin:0 auto}
+  .au-k{display:flex;flex-direction:column;border-radius:20px;overflow:hidden;text-decoration:none;
+    border:1px solid var(--line);background:linear-gradient(160deg,var(--card) 0%,var(--card2) 100%);
+    position:relative;isolation:isolate;transition:transform .28s var(--federn),border-color .28s,box-shadow .28s}
+  /* Der Farbschein liegt UNTER dem Inhalt und waechst beim Zeigen. Ein eigenes Element statt
+     box-shadow, damit er nicht die Nachbarkarte anleuchtet. */
+  .au-k::before{content:'';position:absolute;inset:auto -30% 30% -30%;height:70%;z-index:-1;
+    background:radial-gradient(closest-side,color-mix(in srgb,var(--tc,var(--accent)) 38%,transparent),transparent);
+    opacity:.5;transition:opacity .28s,transform .28s var(--federn)}
+  /* 4:3 auf dem Handy (hochkant ist dort Platz), flacher am Rechner - sonst schiebt sich
+     die Zeile "Alle 28 Anlaesse" unter die Bildschirmkante, und genau die ist der Weg ins
+     Sortiment. Gemessen: bei 4:3 endete der Aufmacher am 1440er Schirm bei 995 px, also
+     95 px zu tief. */
+  .au-bild{position:relative;display:block;aspect-ratio:4/3;overflow:hidden;background:#0f0e14}
+  @media (min-width:900px){
+    .au-bild{aspect-ratio:16/10}
+    .au-kopf{margin-bottom:14px}
+  }
+  .au-bild img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s var(--federn),filter .3s}
+  .au-txt{display:flex;flex-direction:column;gap:3px;padding:13px 14px 14px;position:relative}
+  .au-txt{flex:1}
+  .au-txt b{font-family:var(--display);font-weight:900;font-size:clamp(18px,2.5vw,25px);line-height:1.05;
+    text-transform:uppercase;letter-spacing:.006em;color:var(--ink);
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .au-txt small{color:var(--ink2);font-size:13.5px;line-height:1.35;min-height:2.7em}
+  /* margin-top:auto schiebt die Zeile an den unteren Rand - sonst steht sie je nach Laenge
+     des Untertitels auf unterschiedlicher Hoehe, und zwei Karten nebeneinander wirken schief. */
+  .au-los{margin-top:auto;padding-top:8px;font-weight:800;font-size:14.5px;color:var(--tc,var(--accent));
+    transition:transform .28s var(--federn)}
+  /* Zeigen: die Karte hebt ab, das Bild zieht leicht an, der Schein wird staerker, der Pfeil
+     laeuft los. Alles ueber transform und opacity - das laeuft auf der Grafikkarte und ruckelt
+     auch auf einem alten Handy nicht. */
+  .au-k:hover,.au-k:focus-visible{transform:translateY(-6px);border-color:color-mix(in srgb,var(--tc,var(--accent)) 55%,var(--line));
+    box-shadow:0 18px 40px rgba(0,0,0,.42);outline:none}
+  .au-k:hover .au-bild img,.au-k:focus-visible .au-bild img{transform:scale(1.06)}
+  .au-k:hover::before,.au-k:focus-visible::before{opacity:.95;transform:translateY(-8%)}
+  .au-k:hover .au-los,.au-k:focus-visible .au-los{transform:translateX(5px)}
+  .au-alle{display:block;text-align:center;margin:16px auto 0;color:var(--ink2);font-weight:800;
+    font-size:15px;text-decoration:none;padding:10px}
+  .au-alle:hover{color:var(--accent)}
+  @media (max-width:520px){
+    .au-karten{gap:10px}
+    .au-txt{padding:11px 11px 12px}
+    .au-txt small{font-size:12.5px;min-height:3.5em}
+    .au-los{font-size:13.5px}
+  }
+
+  /* ---------- 1 · Erster Bildschirm: eine Frage und ein Shirt ---------- */
+  .hero{padding:26px 0 8px;display:grid;gap:14px 38px;align-items:center;
+    grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);
+    grid-template-areas:'oben bild' 'unten bild'}
+  .hero .oben{grid-area:oben;align-self:end}
+  .hero .unten{grid-area:unten;align-self:start}
+  .hero .werk{grid-area:bild}
+  /* Fassung 75: Die Schlagzeile darf auf dem Handy richtig gross werden - Anton ist schmal
+     genug, dass "Sag Otto, dein Motto!" trotzdem in zwei Zeilen passt. Award-Seiten machen
+     Typografie zum Helden; das ist der billigste Weg dorthin. */
+  /* 26. Sept.: aus h1 wurde h2 - die einzige H1 der Startseite steht jetzt im Aufmacher
+     ganz oben. Zwei H1 auf einer Seite sind fuer die Suche ein Fehler, und fuer den Leser
+     auch: er weiss nicht, was die Seite eigentlich ist. Das Aussehen bleibt gleich. */
+  .hero h1,.hero h2{font-size:clamp(46px,12vw,86px);line-height:.92;letter-spacing:.005em;margin:0 0 14px;text-transform:uppercase}
+  .hero h1 span,.hero h2 span{color:var(--accent)}
+  .hero .sub{color:var(--ink2);font-size:clamp(16px,2vw,19px);margin:0 0 22px;max-width:46ch}
+
+  /* Fassung 81: Diese Zeile war in Versalien gesperrt - und damit das VIERTE Kleinkapitälchen-
+     Etikett auf dem ersten Bildschirm (neben AUFGABE, ANLASS und ERGEBNIS). Genau diese
+     Häufung lässt eine Seite wie ein Verwaltungswerkzeug aussehen statt wie ein Laden. Die
+     drei auf dem Zettel gehören zum Bild - der Zettel IST ein Formular. Diese hier ist eine
+     Frage an einen Menschen und sieht jetzt auch so aus. */
+  .frage{font-size:16.5px;font-weight:700;color:var(--ink2);display:block;margin-bottom:9px;letter-spacing:-.005em}
+  .suchfeld{position:relative}
+  .suchfeld input{width:100%;padding:16px 50px 16px 18px;font:inherit;font-size:17px;font-weight:600;color:var(--ink);
+    background:var(--card);border:2px solid var(--line);border-radius:14px}
+  .suchfeld input::placeholder{color:var(--ink3);font-weight:500}
+  .suchfeld input:focus{outline:none;border-color:var(--accent)}
+  .suchfeld .lupe{position:absolute;right:17px;top:50%;transform:translateY(-50%);color:var(--ink3);font-size:19px;pointer-events:none}
+  .treffer{position:absolute;left:0;right:0;top:calc(100% + 7px);z-index:20;background:var(--card);border:1px solid var(--line);
+    border-radius:14px;overflow:hidden;box-shadow:0 22px 50px rgba(0,0,0,.55)}
+  .treffer:empty{display:none}
+  .treffer a{display:flex;align-items:center;gap:12px;padding:12px 15px;text-decoration:none;font-size:15.5px;font-weight:700}
+  .treffer a+a{border-top:1px solid var(--line)}
+  .treffer a:hover,.treffer a.an{background:var(--card2)}
+  .treffer a i{font-style:normal;width:9px;height:9px;border-radius:50%;background:var(--tc,var(--accent));flex:0 0 auto}
+  .treffer a em{font-style:normal;margin-left:auto;color:var(--ink3);font-size:13px;font-weight:600}
+  .treffer .nix{padding:13px 15px;color:var(--ink3);font-size:14.5px}
+
+  /* Fassung 77 hielt hier Platz frei, weil die Knoepfe erst aus dem Skript kamen und beim
+     Erscheinen alles darunter nach unten schoben - mit gemessenen Hoehen je Umbruchpunkt.
+     Fassung 78 braucht das nicht mehr: die Knoepfe kommen fertig vom Server, stehen also von
+     der ersten Zeichnung an da. Keine geschaetzten Hoehen mehr, die veralten koennen. */
+  .schnell{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+
+  /* ---------- 3a · Fuer jeden Artikel ein eigenes Design ----------
+     Fassung 82. Hier lagen bis jetzt fuenf Produktbilder mit EINEM Shirt-Motiv darauf. Markus:
+     "sieht einfach nicht gut aus. Zumal wir ja auch anbieten, Designs direkt fuer diese
+     Artikel zu machen, und die sehen ja dann definitiv anders aus." Genau - die Bilder haben
+     eine falsche Behauptung illustriert.
+     Jetzt stehen hier die echten Druckflaechen maszstabsgetreu nebeneinander: T-Shirt 36x46
+     hoch, Kissen 40x40 quadratisch, Handtuch 50x100 schmal, Mousepad 70x30 breit. Der
+     Groessen- und Formatunterschied IST das Argument, und er braucht kein Foto - nur eine
+     gemeinsame Grundlinie, auf der die Rechtecke stehen. Das ist auch nicht faelschbar: die
+     Zahlen kommen aus dem Artikelkatalog. */
+  .worauf{padding:6px 0 4px}
+  .fk-band{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(128px,1fr);gap:12px;
+    margin-top:20px;overflow-x:auto;scroll-snap-type:x mandatory;
+    padding-bottom:10px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .fk-band::-webkit-scrollbar{display:none}
+  .fk{scroll-snap-align:start;background:var(--card);border:1px solid var(--line);
+    border-radius:14px;padding:14px 14px 13px;display:flex;flex-direction:column;gap:12px;
+    color:inherit;text-decoration:none;transition:border-color .2s}   /* 19. Sept.: ist jetzt ein Link */
+  .fk:hover,.fk:focus-visible{border-color:var(--accent)}
+  /* Alle Rechtecke stehen unten auf einer Linie - nur so liest man den Hoehenunterschied. */
+  .fk-buehne{height:112px;display:flex;align-items:flex-end;justify-content:center;
+    border-bottom:1px solid var(--line)}
+  .fk-form{display:block;border:1.5px solid var(--accent);border-bottom:none;
+    border-radius:4px 4px 0 0;
+    background:linear-gradient(180deg, color-mix(in srgb, var(--accent) 22%, transparent), transparent)}
+  .fk-text{display:flex;flex-direction:column;gap:3px}
+  .fk-text b{font-size:15px;font-weight:800;line-height:1.2}
+  .fk-text em{font-style:normal;font-size:13px;color:var(--ink2);font-weight:700;
+    font-variant-numeric:tabular-nums}
+  .fk-text i{font-style:normal;font-size:12.5px;color:var(--ink3);font-weight:600}
+
+  /* Fassung 84. Markus: "Die Massangabe sieht nicht besonders professionell aus" und "es sieht
+     alles gleich aus - den Stil dazuschreiben, Informationen mit auf das Bild, und mal weisze
+     T-Shirts, ein weiszer Hoody, eine Mischung".
+     Die nackten Rechtecke von Fassung 82 waren ehrlich, aber sie sahen aus wie eine technische
+     Zeichnung. Jetzt stehen hier echte Designs auf echten Teilen; das Masz steht AUF dem Bild,
+     der Stilname daneben. Die Rechtecke bleiben als Rueckfall im Code - gibt es zu wenige
+     Vorzeige-Designs, ist eine maszstabsgetreue Flaeche immer noch besser als eine halbe Reihe. */
+  .sk-band{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(196px,1fr);gap:14px;
+    margin-top:20px;overflow-x:auto;scroll-snap-type:x mandatory;
+    padding-bottom:12px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .sk-band::-webkit-scrollbar{display:none}
+  /* 19. Sept.: Pfeile fuer Maus und Tastatur, nur wenn die Reihe ueberlaeuft (siehe Skript unten) */
+  .band-nav{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}
+  .band-nav button{font:inherit;font-size:22px;line-height:1;width:40px;height:40px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+  .band-nav button:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+  .band-nav button:disabled{opacity:.3;cursor:default}
+  .sk{scroll-snap-align:start;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:9px}
+  .sk-bild{position:relative;display:block;aspect-ratio:1;border-radius:16px;overflow:hidden;
+    background:var(--card2);border:1px solid var(--line);
+    transition:border-color .15s, transform .15s}
+  .sk:hover .sk-bild{border-color:var(--tc,var(--accent));transform:translateY(-2px)}
+  .sk-bild img{width:100%;height:100%;object-fit:cover;display:block}
+  /* Die zwei Schildchen: Stil oben links, Masz unten rechts. Beide auf einem weichen Verlauf,
+     damit sie auf hellen wie auf dunklen Produktfotos lesbar bleiben - eine feste Farbe war auf
+     dem weiszen Handtuch unsichtbar und auf dem schwarzen Shirt ein Klotz. */
+  .sk-bild:before{content:"";position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(180deg,rgba(0,0,0,.42),rgba(0,0,0,0) 34%,rgba(0,0,0,0) 62%,rgba(0,0,0,.44))}
+  /* Zwei gleich gebaute Pillen, nicht zwei verschiedene Beschriftungen: der Stil oben links, das
+     Masz unten rechts. Erst stand die Stilbeschreibung mit auf dem Bild - auf einer 196 px
+     breiten Kachel lief "Handgemalt, Verlaufskanten, Papier" ueber drei Zeilen quer durchs
+     Motiv. Der Stilname allein sagt dasselbe und laeszt das Design in Ruhe. */
+  .sk-stil,.sk-mass{position:absolute;color:#fff;font-weight:800;letter-spacing:.01em;
+    font-size:12.5px;line-height:1;padding:5px 10px;border-radius:999px;
+    background:rgba(12,10,18,.5);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);
+    box-shadow:0 1px 6px rgba(0,0,0,.25);max-width:calc(100% - 22px);
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .sk-stil{top:10px;left:10px}
+  .sk-mass{right:10px;bottom:10px;font-variant-numeric:tabular-nums}
+  .sk-cap{display:flex;flex-direction:column;gap:1px;padding:0 2px}
+  .sk-cap b{font-size:14.5px;font-weight:800;line-height:1.25}
+  .sk-cap i{font-style:normal;font-size:12.5px;color:var(--ink3);font-weight:600}
+  @media (max-width:420px){ .sk-band{grid-auto-columns:minmax(168px,1fr)} }
+
+  /* Die Lieferzeit unter den Preisen: eine ruhige Zeile, kein Kasten - sie soll gelesen und
+     nicht beworben werden. Der Zusatz steht in derselben Zeile, damit nichts wie ein
+     Kleingedrucktes aussieht. */
+  .lieferzeit{margin:18px 0 0;padding-top:16px;border-top:1px solid var(--line);
+    font-size:15px;color:var(--ink2);line-height:1.6}
+  .lieferzeit b{color:var(--ink);font-weight:800}
+  .lieferzeit span{color:var(--ink3)}
+
+  /* 23. Sept., Markus: "alle Artikel aufgezaehlt, klein, uebersichtlich, was wir alles anbieten -
+     und nicht irgendwelche Beispiele, die auch noch doppelt sind." Also eine vollstaendige Liste
+     statt eines Satzes, der mit "und mehr" endet. Klein gesetzt, mehrspaltig, jeder Artikel
+     einmal, mit Preis - damit man auf einen Blick sieht, was es gibt und was es kostet. */
+  .wf-alle-h{margin:22px 0 10px;font-size:15px;letter-spacing:.02em;text-transform:uppercase;color:var(--ink3);font-weight:800}
+  .wf-alle{list-style:none;margin:0;padding:0;display:grid;gap:6px 18px;
+    grid-template-columns:repeat(auto-fill,minmax(190px,1fr));font-size:14.5px}
+  .wf-alle li{border-bottom:1px solid var(--line)}
+  /* 24. Sept.: jeder Artikel ist ein Link. Die Trefferflaeche ist die ganze Zeile, nicht nur das
+     Wort - am Handy trifft man sonst daneben. */
+  .wf-alle a{display:flex;align-items:baseline;gap:8px;padding:9px 6px;margin:0 -6px;
+    text-decoration:none;border-radius:8px;transition:.12s}
+  .wf-alle a:hover,.wf-alle a:focus-visible{background:var(--card2)}
+  .wf-alle a:hover .n{color:var(--accent)}
+  .wf-alle .n{color:var(--ink);font-weight:700}
+  .wf-alle .p{margin-left:auto;color:var(--ink3);font-variant-numeric:tabular-nums;white-space:nowrap}
+  @media (max-width:380px){ .wf-alle{grid-template-columns:1fr} }
+
+  .wf-rest{margin:16px 0 0;font-size:14.5px;color:var(--ink2);line-height:1.6}
+  .wf-rest a{color:var(--accent)}
+  .schnell a{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-size:15px;font-weight:800;
+    padding:11px 16px;border-radius:999px;border:1px solid var(--line);background:var(--card);transition:.15s}
+  .schnell a:hover{border-color:var(--tc,var(--accent));background:var(--card2)}
+  .schnell a i{font-style:normal;width:8px;height:8px;border-radius:50%;background:var(--tc,var(--accent))}
+  .schnell a.mehr{background:transparent;color:var(--ink2);font-weight:700}
+
+  .frei{margin-top:18px;display:flex;flex-wrap:wrap;gap:7px 18px;font-size:14.5px;color:var(--ink3);font-weight:600}
+  .frei b{color:var(--ink);font-weight:800}
+
+  .hero .bild{position:relative;border-radius:20px;overflow:hidden;border:1px solid var(--line);background:var(--card);aspect-ratio:1/1;
+    display:block;text-decoration:none;transition:border-color .3s, box-shadow .4s, transform .4s var(--federn)}
+  .hero .bild:hover{border-color:var(--tc,var(--accent));transform:translateY(-4px);
+    box-shadow:0 30px 60px -30px color-mix(in srgb, var(--tc,var(--accent)) 80%, #000)}
+  /* Zwei Ebenen: die eine zeigt, die andere laedt schon das naechste Motto und blendet darueber */
+  .hero .bild img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;z-index:1;
+    opacity:0;transition:opacity .9s ease, transform 7s linear}
+  .hero .bild img.da{opacity:1}
+  .hero .bild img.zoom{transform:scale(1.06)}
+  .hero .bild:hover img.da{transform:scale(1.05);transition:transform .6s var(--federn)}
+
+  /* ---------- Der Kopf erklaert sich ohne Kunststueck ----------
+     Links der ausgefuellte Zettel mit den ECHTEN Angaben, aus denen genau dieses Design
+     entstanden ist. Rechts das Teil. Dazwischen ein Pfeil. Wer zwei Sekunden bleibt, hat
+     es verstanden - ohne dass sich etwas bewegen muss.
+     Die kurze Uhr davor zeigt nur eines: zwischen Eingabe und Design liegen Minuten,
+     keine Wochen. Danach ist sie weg. */
+  .werk{display:grid;grid-template-columns:minmax(0,.72fr) auto minmax(0,1.28fr);gap:10px;align-items:center;min-width:0}
+  /* Fassung 77: Der Zettel wird erst vom Skript geschrieben - vorher war der Kasten 54 px hoch
+     und danach bis zu 202. Das hat Kopfbild, Schnellwahl und alles darunter nach unten
+     geschoben; es war der letzte messbare Layoutsprung der Startseite. Die Hoehe steht jetzt
+     von Anfang an, und sie kommt nicht aus einer Schaetzung: der Server weiss, welcher Anlass
+     im Kopf steht und wie viele Zeilen dessen Zettel hat, und setzt sie hier ein
+     (zettelHoehe() in server.js, 55 px Rahmen + 49 px je Zeile, beides gemessen und von der
+     Fensterbreite unabhaengig). Bleibt der Platzhalter mal stehen, ist die Regel schlicht
+     ungueltig und alles laeuft wie vorher. */
+  .zettel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:13px 14px;min-width:0}
+  #hero-zettel{min-height:__ZETTEL_MIN__px}
+  .zettel .kopf{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--ink3);margin-bottom:10px}
+  .zettel .z{padding:7px 0;border-top:1px solid var(--line)}
+  .zettel .z:first-of-type{border-top:0;padding-top:0}
+  .zettel .z span{display:block;font-size:10.5px;font-weight:800;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--ink3)}
+  .zettel .z b{display:block;font-size:14.5px;font-weight:800;line-height:1.25;overflow-wrap:anywhere;hyphens:auto;min-height:1.25em}
+  .zettel .z.dran b:after{content:"";display:inline-block;width:2px;height:1em;margin-left:2px;
+    vertical-align:-2px;background:var(--accent);animation:blinken .8s step-end infinite}
+  @keyframes blinken{50%{opacity:0}}
+  .pfeil{display:flex;flex-direction:column;align-items:center;gap:5px;color:var(--ink3)}
+  .pfeil .otto svg{width:17px;height:17px;display:block;color:var(--tc,var(--accent));
+    stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;fill:none}
+  .pfeil .otto{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--card);
+    display:flex;align-items:center;justify-content:center;font-size:17px}
+  .pfeil .pf{font-size:19px;color:var(--tc,var(--accent));font-weight:900;line-height:1}
+  .pfeil em{font-style:normal;font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+
+  /* Die Uhr laeuft nur kurz und liegt ueber dem Teil */
+  /* Vor dem Ergebnis liegt eine Abdeckung ueber dem Bild - sonst sieht man das Design schon,
+     waehrend die Uhr noch laeuft, und der ganze Ablauf waere sinnlos. */
+  .hero .bild .uhr{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:9px;background:var(--bg2);
+    opacity:1;pointer-events:none;transition:opacity .3s}
+  .hero .bild.fertig .uhr{opacity:0}
+  .hero .bild.wartet .uhr .zeit{visibility:visible}
+  .hero .bild .uhr .zeit{visibility:hidden}
+  /* Otto sitzt am Rechner und arbeitet - statt eines leeren Kastens mit Ladekringel.
+     Alles ist gezeichnet, kein Bild: laedt nichts nach und passt sich der Motto-Farbe an. */
+  /* Das echte Otto-Bild ersetzt die Zeichnung; fehlt es, bleibt die Zeichnung stehen.
+     Die Kachel ist am Rechner quadratisch, auf dem Handy breit und flach - darum begrenzt
+     auch die Hoehe, sonst waere Otto dort groesser als der Kasten. */
+  /* Die allgemeine Bildregel der Kachel legt jedes img absolut in die Ecke und zieht es auf
+     volle Groesse - fuer die beiden Design-Ebenen richtig, fuer Otto falsch. Er soll in der
+     Mitte der Abdeckung stehen, also zurueck in den normalen Fluss der Flex-Box. */
+  .hero .bild .uhr .otto-foto{position:relative;inset:auto;z-index:1;
+    width:auto;max-width:min(62%,240px);max-height:64%;height:auto;object-fit:contain;
+    display:none;border-radius:14px;box-shadow:0 12px 32px -14px rgba(0,0,0,.6)}
+  .hero .bild .uhr .otto-foto.da{display:block}
+  .hero .bild .uhr .otto-foto.da ~ .otto-werk{display:none}
+  .hero .bild .uhr .otto-werk{width:min(62%,230px);height:auto;display:block}
+  .otto-werk .schirm{fill:var(--card);stroke:var(--line);stroke-width:2.5}
+  .otto-werk .fuss{fill:var(--line)}
+  .otto-werk .tisch{stroke:var(--line);stroke-width:2.5;stroke-linecap:round}
+  .otto-werk .taste{fill:var(--card2);stroke:var(--line);stroke-width:2}
+  .otto-werk .kopf{fill:var(--card2);stroke:var(--ink3);stroke-width:2.5}
+  .otto-werk .schulter{fill:var(--card2);stroke:var(--ink3);stroke-width:2.5}
+  .otto-werk .arm{fill:none;stroke:var(--ink3);stroke-width:6;stroke-linecap:round}
+  .otto-werk .kappe{fill:var(--tc,var(--accent))}
+  .otto-werk .schirmchen{fill:color-mix(in srgb, var(--tc,var(--accent)) 70%, #000)}
+  /* Auf dem Bildschirm entsteht Strich fuer Strich etwas - das ist die Arbeit, die gerade laeuft */
+  .otto-werk .striche path{fill:none;stroke:var(--tc,var(--accent));stroke-width:5;stroke-linecap:round;
+    stroke-dasharray:60;stroke-dashoffset:60}
+  .hero .bild.wartet .otto-werk .s1{animation:malen 2.1s ease-out infinite}
+  .hero .bild.wartet .otto-werk .s2{animation:malen 2.1s ease-out .35s infinite}
+  .hero .bild.wartet .otto-werk .s3{animation:malen 2.1s ease-out .7s infinite}
+  @keyframes malen{0%{stroke-dashoffset:60}45%,100%{stroke-dashoffset:0}}
+  .hero .bild .uhr .zeit{margin-top:12px;font-family:var(--mono);font-size:15px;font-weight:700;color:var(--ink2);
+    font-variant-numeric:tabular-nums}
+  /* Der Knall: das Teil springt einmal kurz auf, dazu ein Ring nach aussen */
+  .hero .bild.knall img.da{animation:knall .42s var(--federn)}
+  @keyframes knall{0%{transform:scale(.82)}55%{transform:scale(1.04)}100%{transform:scale(1)}}
+  .hero .bild .blitz{position:absolute;inset:0;z-index:6;pointer-events:none;opacity:0;
+    box-shadow:inset 0 0 0 0 var(--tc,var(--accent))}
+  .hero .bild.knall .blitz{animation:blitz .5s ease-out}
+  @keyframes blitz{
+    0%{opacity:.9;box-shadow:inset 0 0 0 6px var(--tc,var(--accent))}
+    100%{opacity:0;box-shadow:inset 0 0 0 46px transparent}
+  }
+  /* Fassung 81: Das Schild sass als gruene Monospace-Kapitaelchen oben links auf dem Bild -
+     Terminal-Optik, und zusammen mit der Bildunterschrift unten links waren es ZWEI Etiketten
+     auf einem Bild. Ein fertiges Design braucht kein Statusfeld, das "ERGEBNIS" ruft. Jetzt
+     ein Punkt und ein Wort in der Hausschrift, das den Zustand nur noch andeutet - solange
+     gerechnet wird in Grau, wenn das Design steht in der Akzentfarbe. */
+  .hero .bild .schild{position:absolute;left:12px;top:12px;z-index:6;
+    display:inline-flex;align-items:center;gap:7px;
+    font-size:12px;font-weight:700;letter-spacing:.01em;
+    color:var(--ink3);background:rgba(17,16,23,.58);backdrop-filter:blur(6px);
+    border-radius:999px;padding:5px 11px 5px 9px}
+  .hero .bild .schild:before{content:"";width:6px;height:6px;border-radius:50%;
+    background:currentColor;flex:0 0 auto}
+  .hero .bild.fertig .schild{color:var(--accent)}
+  .hero .bild .bu{position:absolute;left:12px;bottom:12px;right:12px;z-index:4;
+    display:flex;align-items:center;gap:8px;width:fit-content;max-width:calc(100% - 24px);
+    background:rgba(17,16,23,.86);backdrop-filter:blur(8px);border:1px solid var(--line);
+    border-radius:13px;padding:6px 11px;font-size:12.5px;font-weight:700;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;gap:8px;align-items:center}
+  .hero .bild .bu i{font-style:normal;font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--gruen);flex:0 0 auto;
+    opacity:0;transition:opacity .35s}
+  .hero .bild.fertig .bu{opacity:1}
+  .hero .bild .bu b{color:var(--accent)}
+  .hero .bild.wartet .punkte{opacity:0;transition:opacity .3s}
+
+  /* Auf dem Handy: erst die Aussage, dann das Shirt, dann die Handlung - alles im ersten Bildschirm */
+  @media (max-width:860px){
+    .hero{grid-template-columns:1fr;grid-template-areas:'oben' 'bild' 'unten';gap:16px;padding-top:18px}
+    .hero h1,.hero h2{margin-bottom:9px}
+    .hero .sub{margin-bottom:0;font-size:15.5px}
+    .hero .bild{aspect-ratio:2/1}
+    .hero .bild .bu{font-size:12px;padding:6px 11px}
+    .werk{grid-template-columns:1fr;gap:10px}
+    .pfeil{flex-direction:row;gap:9px}
+    .pfeil .pf{transform:rotate(90deg)}
+    .frei{margin-top:14px}
+  }
+
+  /* ---------- 1b · Werkbank: die Arbeit, randlos, in Bewegung ----------
+     Zwei gegenlaeufige Baender. Die Bewegung laeuft in CSS (keine Bildrate am Hauptfaden) und
+     haelt an, sobald jemand mit dem Finger oder der Maus draufgeht - sonst kann man nichts
+     antippen. Wer Bewegung abgestellt hat, bekommt ein ruhendes Band, das sich wischen laesst. */
+  .werkbank{padding:30px 0 8px;overflow:hidden}
+  .werkbank[hidden]{display:none}
+  .wb-kopf{margin-bottom:16px}
+  .wb-band{display:flex;overflow:hidden;margin-bottom:12px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+  .wb-lauf{display:flex;gap:12px;padding-right:12px;flex:none;animation:wblauf 64s linear infinite;will-change:transform}
+  .wb-band.rueck .wb-lauf{animation-direction:reverse;animation-duration:78s}
+  .wb-band:hover .wb-lauf,.wb-band:focus-within .wb-lauf{animation-play-state:paused}
+  @keyframes wblauf{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .wb-kachel{flex:none;width:clamp(150px,38vw,232px);aspect-ratio:1/1;border-radius:14px;overflow:hidden;
+    background:var(--card2);border:1px solid var(--line);position:relative;display:block}
+  .wb-kachel img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s var(--federn)}
+  .wb-kachel:hover img{transform:scale(1.06)}
+  .wb-kachel b{position:absolute;left:8px;bottom:8px;right:8px;font-size:12px;font-weight:800;color:#fff;
+    text-shadow:0 1px 6px rgba(0,0,0,.85);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .wb-fuss{margin-top:6px}
+  .wb-mehr{font-weight:800;font-size:15px;color:var(--accent);text-decoration:none}
+  @media (prefers-reduced-motion:reduce){
+    .wb-lauf{animation:none}
+    .wb-band{overflow-x:auto;scrollbar-width:none}
+    .wb-band::-webkit-scrollbar{display:none}
+  }
+
+  /* ---------- Otto als Erzähler ----------
+     Fassung 76 (Markus: "Die Figur muss natürlich Otto sein!!!" und, nach meinem Versuch, ihn
+     in SVG nachzuzeichnen: "Was versuchst du da gerade? Das ist kein Otto.").
+     Er hat beide Male recht gehabt. Otto ist eine fertig gestaltete Figur - pinke Kappe,
+     runde Brille, breites Grinsen, Stift mit Funken. Jede Annäherung in dreißig Zeilen SVG
+     bleibt ein Strichmann mit pinker Kappe. Also kommt hier das ECHTE Bild, und wo es noch
+     keines gibt, steht lieber gar keine Figur: das Bild entfernt sich per onerror selbst.
+     Die Dateien liegen in otto-bilder.json, ausgeliefert unter /api/mo/otto/<name>.png -
+     genau die Mechanik, die dafür schon gebaut war. Sobald eine Haltung als Bild existiert,
+     erscheint sie von selbst, ohne dass hier eine Zeile geändert werden muss.
+     Bewegung: Otto atmet leicht und wippt kaum merklich. Mehr wäre Zappeln - die Figur ist
+     gezeichnet, nicht animiert, und soll nicht wie ein Werbebanner wirken. */
+  .sk .kopf{align-items:flex-start;padding-top:10px;padding-bottom:2px}
+  .otto-pose{margin-left:auto;margin-top:-6px;width:clamp(58px,20%,78px);flex:none;pointer-events:none}
+  .op-bild{width:100%;height:auto;display:block;border-radius:50%;
+    box-shadow:0 4px 14px -6px rgba(0,0,0,.7)}
+  .ablauf .op-bild{animation:opAtmen 4.6s ease-in-out infinite}
+  .ablauf.rein:not(.da) .op-bild{animation-play-state:paused}
+  @keyframes opAtmen{0%,100%{transform:translateY(0) rotate(-1.5deg)}50%{transform:translateY(-3px) rotate(1.5deg)}}
+  @media (prefers-reduced-motion:reduce){.op-bild{animation:none !important}}
+  @media (max-width:760px){.otto-pose{width:70px}}
+
+  /* ---------- 2 · So läuft das (samt "Warum", Fassung 75 zusammengezogen) ---------- */
+  .ablauf{padding:34px 0 10px}
+  /* Die Zwischenzeile traegt die zweite Ueberschrift. Sie ist kleiner als ein h2, aber gross
+     genug, dass man beim Scrollen merkt: hier faengt ein neuer Gedanke an. */
+  .warum{margin:34px 0 0;padding-top:26px;border-top:1px solid var(--line)}
+  .warum-h{font-size:clamp(22px,3.2vw,31px);line-height:1.04;margin:0 0 7px;text-transform:uppercase}
+  .schritte{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}
+  .sk{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+  .sk .kopf{display:flex;align-items:center;gap:9px;padding:13px 15px 0;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3)}
+  .sk .kopf i{font-style:normal;width:23px;height:23px;border-radius:7px;background:var(--accent);color:var(--accent-ink);
+    font-size:12.5px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .sk .flaeche{margin:12px 15px 0;border-radius:12px;overflow:hidden;background:var(--bg2);aspect-ratio:1/1;position:relative}
+  .sk .flaeche.zwei{display:grid;grid-template-columns:1fr 1fr;gap:0}
+  .sk .flaeche .seite{margin:0;position:relative;min-width:0}
+  .sk .flaeche .seite img{width:100%;height:100%;object-fit:cover}
+  .sk .flaeche .seite figcaption{position:absolute;left:6px;bottom:6px;font-size:12px;font-weight:700;background:rgba(255,255,255,.88);border-radius:6px;padding:2px 6px}
+  .sk .flaeche img,.sk .flaeche svg{width:100%;height:100%;object-fit:cover;display:block}
+  .sk b{display:block;padding:13px 15px 3px;font-size:17px;font-weight:800;letter-spacing:-.01em}
+  .sk em{font-style:normal;display:block;padding:0 15px 15px;color:var(--ink3);font-size:14px;line-height:1.45}
+  .sk em b{display:inline;padding:0;font-size:inherit;letter-spacing:0;color:var(--ink)}   /* 9. Okt.: Fettes im Satz blieb ein eigener Block (Zeile fuer sich, Punkt allein darunter) */
+  /* nachgestelltes Eingabe-Formular für Schritt 1 */
+  .formular{position:absolute;inset:0;padding:14px;display:flex;flex-direction:column;gap:9px;justify-content:center}
+  .formular .z{background:var(--card);border:1px solid var(--line);border-radius:9px;padding:8px 11px}
+  .formular .z span{display:block;font-size:9.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)}
+  .formular .z b{padding:0;font-size:14px;font-weight:700;color:var(--ink)}
+  .formular .z.leer b{color:var(--ink3);font-weight:500}
+  .formular .knopf{background:var(--accent);color:var(--accent-ink);border-radius:9px;padding:9px;text-align:center;font-size:13.5px;font-weight:900}
+  @media (max-width:760px){.schritte{grid-template-columns:1fr}.sk .flaeche{aspect-ratio:4/3}}
+
+  /* ---------- 3 · Vorteile ---------- */
+  .vorteile{padding:34px 0 10px}
+  .vt{display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:14px;margin-top:20px}
+  .vt article{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:17px 18px 19px;display:flex;flex-direction:column}
+  .vt article.stark{border-color:var(--accent);background:linear-gradient(180deg,rgba(255,197,66,.08),transparent 55%),var(--card)}
+  /* Fassung 81, Markus: "damit nicht jeder sieht, dass es mit KI gebaut ist". Hier standen
+     drei Emoji als Symbole (🗳️ ✏️ 🔁), und das ist der deutlichste Verräter von allen:
+     Emoji sehen auf jedem Gerät anders aus (Apple, Android, Windows zeichnen jedes einzeln
+     neu), sie bringen ihre eigenen Farben mit, die mit der Palette kollidieren, und sie
+     lassen sich in Größe und Strichstärke nicht an die Seite anpassen. Kein Studio benutzt
+     sie als Icon-Sprache. Jetzt sind es eigene Striche: 1,7 px, runde Enden, currentColor -
+     also in der Akzentfarbe des Mottos, nicht in Apple-Blau. */
+  .vt .icn{display:block;width:26px;height:26px;color:var(--accent);stroke:currentColor;
+    stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;fill:none}
+  /* Statt eines schreienden gelben Schilds: eine ruhige Zeile mit einem Strich davor. Wer
+     etwas wirklich exklusiv hat, muss es nicht in Versalien auf ein Etikett drucken. */
+  .vt .nur{align-self:flex-start;margin-top:9px;display:inline-flex;align-items:center;gap:8px;
+    color:var(--accent);font-size:12.5px;font-weight:800;letter-spacing:.02em}
+  .vt .nur:before{content:"";width:16px;height:1.5px;background:var(--accent);border-radius:1px}
+  .vt h3{font-size:18.5px;font-weight:800;letter-spacing:-.01em;margin:10px 0 7px;line-height:1.25}
+  .vt p{margin:0;color:var(--ink2);font-size:15px;line-height:1.5}
+  .vt p+p{margin-top:8px;color:var(--ink3);font-size:14px}
+
+  /* ---------- 3b · Der Unterschied: Standard-KI gegen Otto ---------- */
+  .vergleich{padding:34px 0 10px}
+  .vergleich[hidden]{display:none}
+  .vergleich .schalter{display:flex;gap:8px;margin:18px 0 14px;flex-wrap:wrap;align-items:center}
+  .vergleich .schalter span{color:var(--ink3);font-size:13.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-right:4px}
+  .vergleich .schalter button{font:inherit;font-size:14px;font-weight:800;padding:9px 15px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink2);cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+  .vergleich .schalter button.an{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+  .vg{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+  .vg article{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:17px 18px 19px;display:flex;flex-direction:column;position:relative}
+  .vg article.otto{border-color:var(--accent);background:linear-gradient(180deg,rgba(255,197,66,.08),transparent 55%),var(--card)}
+  .vg .kopf{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+  .vg h3{font-size:19px;font-weight:900;letter-spacing:-.01em;margin:0;line-height:1.2}
+  .vg .nur{background:var(--accent);color:var(--accent-ink);font-size:11.5px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;padding:4px 9px;border-radius:999px;white-space:nowrap}
+  /* Fassung 90 (Markus, 18. Sept.: "das Bild mit den beiden Dachdeckern ... vollkommen
+     uebertrieben von der Groesse"): Die Motive fuellten am Laptop 741 px Hoehe, am Handy war
+     der Abschnitt 2404 px - drei Bildschirme fuer einen Vergleich. Jetzt: Bild gedeckelt auf
+     420 px und mittig, am Handy die beiden Karten NEBENEINANDER - ein Vergleich wirkt nur,
+     wenn man beides gleichzeitig sieht. */
+  .vg .bild{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:2/3;background:#fff;border:1px solid var(--line);width:min(100%,280px);max-height:420px;margin:0 auto}
+  .vg .bild.shirt{background:#1a191f;background-image:radial-gradient(600px 400px at 50% 20%, rgba(255,255,255,.07), transparent 70%)}
+  /* Fassung 73: die Druckdatei auf Schachbrett - so sieht man jedes Loch und jeden Saum.
+     Auf dem dunklen Shirt fallen Loecher nicht auf, weil Loch und Shirt dieselbe Farbe haben. */
+  .vg .bild.karo{background:#e9e7ef;background-image:
+    linear-gradient(45deg,#c8c5d2 25%,transparent 25%,transparent 75%,#c8c5d2 75%),
+    linear-gradient(45deg,#c8c5d2 25%,transparent 25%,transparent 75%,#c8c5d2 75%);
+    background-size:22px 22px;background-position:0 0,11px 11px}
+  .vg .bild img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;transition:opacity .35s}
+  .vg .bild img.weg{opacity:0;pointer-events:none}
+  .vg .bild .tag{position:absolute;left:10px;top:10px;z-index:2;background:rgba(17,16,23,.82);color:var(--ink);font-size:12.5px;font-weight:800;padding:5px 10px;border-radius:999px;backdrop-filter:blur(6px)}
+  .vg .lupe{display:flex;gap:12px;align-items:center;margin-top:12px}
+  .vg .lupe img{width:96px;height:96px;border-radius:10px;border:1px solid var(--line);flex:0 0 auto;image-rendering:pixelated;background:#18171e}
+  .vg .lupe div{font-size:13.5px;color:var(--ink3);line-height:1.45}
+  .vg .lupe b{display:block;color:var(--ink2);font-size:14px;margin-bottom:2px}
+  .vg ul{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:7px}
+  .vg li{position:relative;padding-left:26px;font-size:14.5px;line-height:1.45;color:var(--ink2)}
+  .vg li:before{content:"✕";position:absolute;left:0;top:0;font-weight:900;color:#ff7a6b}
+  .vg article.otto li:before{content:"✓";color:var(--gruen)}
+  .vergleich .fuss{margin-top:16px;color:var(--ink3);font-size:14px;max-width:70ch}
+  @media (max-width:700px){
+    .vg{grid-template-columns:1fr 1fr;gap:8px}
+    .vg article{padding:10px 9px 12px;border-radius:12px}
+    .vg .kopf{margin-bottom:8px;flex-wrap:wrap;gap:4px}
+    .vg h3{font-size:14.5px}
+    .vg .nur{display:none}             /* rutscht am Handy unter den Titel und schiebt das Bild - der gelbe Rahmen sagt es schon */
+    .vg .bild{width:100%;max-height:none;border-radius:9px}
+    .vg .bild .tag{font-size:10.5px;padding:3px 7px;left:6px;top:6px;max-width:calc(100% - 12px);white-space:normal;line-height:1.25}
+    .vg .lupe{display:none}            /* die achtfache Lupe ist am Handy zu klein, um etwas zu zeigen */
+    .vg ul{margin-top:10px;gap:5px}
+    .vg li{font-size:12.5px;line-height:1.35;padding-left:18px}
+    .vergleich .schalter button{font-size:12.5px;padding:7px 11px}
+    .vergleich .schalter span{width:100%;margin-bottom:2px}
+  }
+
+  /* ---------- 4 · Alle Anlässe ---------- */
+  .mottos{padding:34px 0 10px}
+  .grp{margin-top:22px}
+  .grp h3{font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);font-weight:800;margin:0 0 11px;display:flex;align-items:center;gap:10px}
+  .grp h3:after{content:"";flex:1;height:1px;background:var(--line)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(178px,1fr));gap:13px}
+  .mc{position:relative;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;text-decoration:none;color:inherit;display:block;
+    transition:transform .35s var(--federn), border-color .25s, box-shadow .35s}
+  .mc:hover,.mc:focus-visible{transform:translateY(-6px);border-color:var(--tc,var(--accent));
+    box-shadow:0 20px 44px -22px color-mix(in srgb, var(--tc,var(--accent)) 85%, #000), 0 3px 14px rgba(0,0,0,.4)}
+  .mc:focus-visible{outline:none}
+  .mc .im{aspect-ratio:1/1;position:relative;overflow:hidden;background:
+      linear-gradient(135deg, color-mix(in srgb, var(--tc,var(--accent)) 26%, #201e2a), #1a1922)}
+  .mc .im img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
+    transition:transform .55s var(--federn), filter .35s}
+  .mc:hover .im img{transform:scale(1.07)}
+  .mc .im .glyph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:58px;color:color-mix(in srgb, var(--tc,var(--accent)) 70%, #fff);opacity:.28}
+  /* Schleier und Merker erscheinen erst beim Zeigen - im Ruhezustand bleibt das Bild frei */
+  .mc .im:after{content:"";position:absolute;inset:0;opacity:0;transition:opacity .35s;
+    background:linear-gradient(to top, rgba(12,11,17,.82), rgba(12,11,17,.12) 52%, transparent)}
+  .mc:hover .im:after{opacity:1}
+  .mc .los{position:absolute;left:10px;bottom:10px;z-index:2;display:inline-flex;align-items:center;gap:6px;
+    background:var(--tc,var(--accent));color:#15121a;font-size:12.5px;font-weight:900;letter-spacing:.02em;
+    padding:6px 11px;border-radius:999px;opacity:0;transform:translateY(8px);transition:opacity .3s, transform .35s var(--federn)}
+  .mc:hover .los,.mc:focus-visible .los{opacity:1;transform:none}
+  /* lange Woerter wie "Junggesellenabschied" bekommen einen Trennstrich statt eines harten Bruchs */
+  .mc .cap{padding:11px 12px 13px;display:flex;align-items:flex-start;gap:8px;font-size:15.5px;font-weight:800;line-height:1.2;
+    hyphens:auto;-webkit-hyphens:auto;overflow-wrap:anywhere}
+  .mc .cap:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--tc,var(--accent));flex:0 0 auto;margin-top:5px;
+    transition:transform .3s var(--federn),box-shadow .3s}
+  .mc:hover .cap:before{transform:scale(1.5);box-shadow:0 0 0 4px color-mix(in srgb, var(--tc,var(--accent)) 22%, transparent)}
+  @media (max-width:520px){.grid{grid-template-columns:repeat(2,1fr);gap:10px}.mc .cap{padding:9px 10px 11px;font-size:14px}}
+
+  /* ---------- 5 · Preise ---------- */
+  .preise{padding:34px 0 10px}
+  .pk{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:20px;align-items:start}
+  .pk article{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+  .pk .marke{font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3)}
+  .pk h3{font-size:18.5px;font-weight:800;margin:9px 0 6px;letter-spacing:-.01em}
+  .pk p{margin:0;color:var(--ink2);font-size:14.5px;line-height:1.5}
+  .pk .zahl{font-size:30px;font-weight:900;color:var(--accent);letter-spacing:-.02em;margin:12px 0 2px}
+  .pk .zahl small{font-size:14px;font-weight:700;color:var(--ink3);letter-spacing:0}
+  .pk .wege{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:11px}
+  .pk .wege li{display:flex;flex-direction:column;gap:2px;padding-left:15px;position:relative}
+  .pk .wege li:before{content:"";position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:50%;background:var(--accent)}
+  .pk .note{margin-top:12px;color:var(--ink3);font-size:13.5px}
+  .pk .wege b{font-size:15.5px;font-weight:800}
+  .pk .wege span{color:var(--ink3);font-size:14px;line-height:1.4}
+
+  /* ---------- 6 · Vertrauen ---------- */
+  .vertrauen{padding:30px 0 6px}
+  .vr{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-top:16px}
+  .vr div{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+  .vr b{display:block;font-size:15px;font-weight:800;margin-bottom:3px}
+  .vr span{color:var(--ink3);font-size:14px;line-height:1.45;display:block}
+
+  footer{margin:34px 0 60px;color:var(--ink3);font-size:13px;border-top:1px solid var(--line);padding-top:18px}
+  footer a{color:inherit}
+  .empty{color:var(--ink3);padding:36px 0}
+
+  /* ---------- 7 · Politur: Bewegung, Lichtschein, Zeigen ---------- */
+
+  /* Ein sehr langsam treibender Schimmer hinter allem. Faellt nicht auf,
+     nimmt der Seite aber das Starre. Liegt hinter dem Inhalt und faengt keine Klicks. */
+  body:before{content:"";position:fixed;inset:-25%;z-index:-1;pointer-events:none;
+    background:
+      radial-gradient(620px circle at 22% 28%, rgba(255,197,66,.075), transparent 62%),
+      radial-gradient(720px circle at 78% 68%, rgba(120,90,255,.075), transparent 62%);
+    animation:treiben 30s ease-in-out infinite alternate}
+  @keyframes treiben{
+    from{transform:translate3d(-2%,-1.5%,0) scale(1)}
+    to{transform:translate3d(2.5%,2%,0) scale(1.1)}
+  }
+
+  /* Abschnitte kommen beim Scrollen herein. Ohne Javascript bleibt alles sichtbar,
+     die Klasse wird erst gesetzt, wenn der Beobachter wirklich läuft. */
+  .rein{opacity:0;transform:translateY(22px);transition:opacity .6s ease, transform .7s var(--federn)}
+  .rein.da{opacity:1;transform:none}
+
+  /* Lichtschein unter dem Zeiger - macht die Kacheln lebendig, ohne bunt zu werden */
+  .schein{position:relative;isolation:isolate}
+  .schein:before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:0;opacity:0;
+    transition:opacity .35s;
+    background:radial-gradient(320px circle at var(--mx,50%) var(--my,50%), color-mix(in srgb, var(--accent) 13%, transparent), transparent 62%)}
+  .schein:hover:before{opacity:1}
+  .schein>*{position:relative;z-index:1}
+
+  .vt article,.pk article,.vr div{transition:transform .35s var(--federn), border-color .3s, box-shadow .35s}
+  .vt article:hover,.pk article:hover{transform:translateY(-4px);border-color:color-mix(in srgb, var(--accent) 45%, var(--line));
+    box-shadow:0 20px 40px -26px rgba(0,0,0,.9)}
+  .vr div:hover{transform:translateY(-3px);border-color:color-mix(in srgb, var(--accent) 38%, var(--line))}
+
+  /* Die drei Schritte: Bild leicht heran, Karte hebt sich */
+  .sk{transition:transform .35s var(--federn), border-color .3s, box-shadow .35s}
+  .sk:hover{transform:translateY(-4px);border-color:color-mix(in srgb, var(--accent) 45%, var(--line));
+    box-shadow:0 20px 40px -26px rgba(0,0,0,.9)}
+  .sk .flaeche img,.sk .flaeche svg{transition:transform .55s var(--federn)}
+  .sk:hover .flaeche img,.sk:hover .flaeche svg{transform:scale(1.05)}
+  .formular .knopf{transition:transform .3s var(--federn),box-shadow .3s}
+  .sk:hover .formular .knopf{transform:translateY(-2px);box-shadow:0 8px 20px -8px var(--accent)}
+
+  /* Kopfzeile bekommt beim Scrollen mehr Halt */
+  .top{transition:background .3s, box-shadow .3s, border-color .3s}
+  .top.tief{background:rgba(17,16,23,.9);box-shadow:0 10px 30px -18px rgba(0,0,0,.95)}
+  .top .lg img{transition:transform .4s var(--federn)}
+  .top .lg:hover img{transform:rotate(-7deg) scale(1.07)}
+  .top nav a{transition:color .2s, background .2s, transform .25s var(--federn)}
+  .top nav a:hover{transform:translateY(-1px)}
+
+  /* Suchfeld und Schnellwahl */
+  .suchfeld input{transition:border-color .25s, box-shadow .3s, background .25s}
+  .suchfeld input:focus{box-shadow:0 0 0 5px rgba(255,197,66,.14);background:var(--card2)}
+  .suchfeld:focus-within .lupe{color:var(--accent)}
+  .schnell a{transition:transform .28s var(--federn), border-color .25s, background .25s, box-shadow .3s}
+  .schnell a:hover{transform:translateY(-3px);box-shadow:0 12px 24px -14px var(--tc,var(--accent))}
+  .schnell a i{transition:transform .3s var(--federn),box-shadow .3s}
+  .schnell a:hover i{transform:scale(1.45);box-shadow:0 0 0 4px color-mix(in srgb, var(--tc,var(--accent)) 22%, transparent)}
+
+  /* Der Preis in der Mitte darf einmal kurz aufleuchten, wenn er ins Bild kommt */
+  .pk .zahl{transition:transform .5s var(--federn)}
+  .pk article:hover .zahl{transform:scale(1.04)}
+
+  /* Wer keine Bewegung möchte, bekommt keine. */
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *,*:before,*:after{transition-duration:.01ms !important;animation-duration:.01ms !important}
+    body:before{animation:none;transform:none}
+    .rein{opacity:1;transform:none}
+    .mc:hover,.sk:hover,.vt article:hover,.pk article:hover,.vr div:hover,.schnell a:hover,.hero .bild:hover{transform:none}
+    .mc:hover .im img,.sk:hover .flaeche img,.hero .bild:hover img.da{transform:none}
+    .au-k:hover,.au-k:hover .au-bild img,.au-k:hover .au-los{transform:none}
+    .au-badge::before{animation:none}
+  }
+  /* Fassung 90: Auf Touch-Geraeten gibt es kein Hover - aber iOS behandelt den ERSTEN Tipp auf
+     ein Element, dessen :hover etwas sichtbar macht, gern als Hover statt als Klick. Genau das
+     war am 18. Sept. "nicht anklickbar": Kachel markiert, Pille sichtbar, keine Navigation.
+     Deshalb: ohne Hover-Faehigkeit ist die Pille immer da und die Kachel bewegt sich nicht. */
+  @media (hover:none){
+    .mc .los{opacity:1;transform:none}
+    .mc:hover{transform:none}
+    .mc:hover .im img{transform:none}
+    .mc:hover .im:after{opacity:0}
+    /* Dieselbe Falle wie bei den Motto-Kacheln: iOS macht aus dem ersten Tipp ein Hover,
+       wenn dabei etwas sichtbar wird. Auf Touch also keine Hover-Bewegung - der Pfeil und
+       der Farbschein sind dort ohnehin von Anfang an da. */
+    .au-k:hover,.au-k:hover .au-bild img,.au-k:hover .au-los{transform:none}
+    .au-k::before{opacity:.8}
+  }
+  .wruf-zeile{margin:14px 0 6px;text-align:center}
+  .wruf{display:inline-block;background:#ffc542;color:#1a1712;border:2px solid #ffc542;border-radius:999px;font-weight:800;font-size:15px;line-height:1.2;padding:12px 26px;text-decoration:none;box-shadow:0 2px 10px rgba(255,197,66,.25)}
+  .wruf:hover,.wruf:focus{background:#ffd775;border-color:#ffd775;text-decoration:none;outline:none}
+
+  /* ===== 1. Okt.: So geht's, Mottos, Stile (und die alte Startseite) in den Logo-Farben =====
+     marke.css belegt die alten Namen um (body.mo-seite). Hier nur, was diese Seite eigen hat:
+     kein Farbschleier mehr (Gelb/Violett auf Dunkel, MASTER.md verbietet Verlaeufe), Akzent als
+     Schrift wird Beere, Schilder auf Bildern hell mit Kontur, Ueberschriften ohne Versalien. */
+  .mo-seite{--gruen:#77C500}
+  body.mo-seite{background:var(--papier)}
+  body.mo-seite:before{display:none}
+  .mo-seite h1,.mo-seite h2,.mo-seite .display{font-weight:400;text-transform:none}
+  .stil-nur,.seitentitel span,.aufmacher h1 span,.au-los,.au-alle:hover,.hero h1 span,.hero h2 span,
+  .wf-alle a:hover .n,.wf-rest a,.pfeil .pf,.hero .bild.fertig .schild,.hero .bild .bu b,.wb-mehr,
+  .vt .icn,.pk .zahl,.suchfeld:focus-within .lupe,.pfeil .otto svg{color:var(--beere)}
+  .hero .bild .bu i,.vg article.otto li:before{color:var(--ok-text)}
+  .vg li:before{color:var(--warn-text)}
+  .hero .bild .schild,.hero .bild .bu,.vg .bild .tag{background:rgba(255,255,255,.94);color:var(--tinte);border:2px solid var(--tinte);backdrop-filter:none}
+  .mc .im{background:color-mix(in srgb, var(--tc,var(--gruen)) 28%, #fff)}
+  .mc,.sk-bild,.hero .bild,.schnell a,.vt article,.vg article,.pk,.au-k,.wf-alle a,.stilkachel{border-color:var(--tinte)}
+  .vt article.stark,.vg article.otto{background:var(--haut);border-color:var(--tinte)}
+  .vg .nur{text-transform:none;letter-spacing:0}
+  .suchfeld input:focus{box-shadow:0 0 0 6px var(--magenta);background:#fff}
+</style>
+</head>
+<body class="mo-seite seite-__SEITE__">
+<header class="mo-kopf"><div class="mo-in">
+  <a class="mo-marke" href="/"><img src="/logo.png" alt="" width="36" height="42">Motto Otto</a>
+  <nav class="mo-nav" aria-label="Hauptmenü">
+    <a href="/mottos">Mottos</a>
+    <a href="/so-gehts">So geht’s</a>
+    <a href="/firma">Firmen</a>
+    <a href="/partner">Partner</a>
+    <a href="/event">Event</a>
+  </nav>
+  <a class="mo-knopf hell mo-konto" href="/konto">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8.5" r="4"/><path d="M4 21c1.4-4 4.4-6 8-6s6.6 2 8 6"/></svg>
+    Konto
+  </a>
+</div></header>
+
+  <!-- 0 · Der Aufmacher: der Anlass der Saison -->
+  __HIGHLIGHT_HTML__
+
+  <!-- 1 · Eine Frage, sechs Knöpfe, ein Shirt -->
+  <div class="wrap nur-start">
+    <section class="hero">
+      <div class="oben">
+        <!-- 26. Sept.: Die Zeile "Sag Otto, dein Motto" steht jetzt im Aufmacher ganz oben.
+             Zweimal dieselbe Ueberschrift auf einem Bildschirm liest sich wie ein Fehler -
+             und war einer. Hier steht jetzt, was dieser Block wirklich tut: suchen. -->
+        <h2>Finde <span>deinen</span> Anlass.</h2>
+        <!-- 20. Sept., Markus: "Die grosse Erklaerung brauchen die nicht, wenn wir es geschafft
+             haben, dass die Leute das Motto waehlen und du sie dahin fuehrst." Ein Satz, der Rest
+             steht unter "So geht's". -->
+        <p class="sub">Tippen, eintragen, fertig – Otto führt dich Schritt für Schritt zum ersten Entwurf.</p>
+      </div>
+      <div class="unten">
+        <label class="frage" for="suche">Zu welchem Motto?</label>
+        <div class="suchfeld">
+          <!-- Fassung 81: Hier stand "z. B. Abi, JGA, Malle, Verein" - und direkt darunter
+               stehen die Knöpfe Abi, JGA, Malle. Dieselben Wörter zweimal, einmal blass und
+               einmal knallig: das Feld sagte nichts, was die Knöpfe nicht schon sagen. Jetzt
+               nennt es zwei Anlässe, die NICHT in der Schnellwahl stehen - der erste
+               Bildschirm zeigt damit acht statt sechs. Kurz gehalten, weil der Platzhalter
+               sonst auf einem 320-px-Gerät abgeschnitten wird (nachgemessen). -->
+          <input type="text" id="suche" autocomplete="off" placeholder="Geburtstag, Kegeltour …"
+                 aria-label="Motto suchen" role="combobox" aria-expanded="false" aria-controls="treffer">
+          <span class="lupe" aria-hidden="true">⌕</span>
+          <div class="treffer" id="treffer" role="listbox" aria-label="Passende Mottos"></div>
+        </div>
+        <div class="schnell" id="schnell">__SCHNELL_HTML__</div>
+
+        <p class="frei"><span><b>Erster Entwurf ohne Konto</b></span><span>nach dem Anmelden fünf weitere frei</span><span>danach 1 € – <b>beim Kauf verrechnet</b></span></p>
+      </div>
+      <div class="werk">
+        <div class="zettel" id="hero-zettel"></div>
+        <div class="pfeil" aria-hidden="true">
+          <!-- Fassung 81: hier stand ein Emoji-Stift. Jetzt eine gezeichnete Feder in der
+               Akzentfarbe des Mottos - sie gehoert zur Seite statt zum Betriebssystem. -->
+          <span class="otto"><svg viewBox="0 0 22 22" aria-hidden="true">
+            <path d="M14.8 3.6l3.6 3.6-9.1 9.1-4.6 1 1-4.6z"/>
+            <path d="M13.2 5.2l3.6 3.6"/>
+          </svg></span>
+          <span class="pf">→</span>
+          <em>Otto</em>
+        </div>
+        <a class="bild" id="hero-bild" href="#mottos" style="margin:0">
+          <img alt="" id="hero-a" loading="eager">
+          <img alt="" id="hero-b" loading="eager">
+          <span class="blitz" aria-hidden="true"></span>
+          <span class="uhr" aria-hidden="true">
+            <img class="otto-foto" id="otto-foto" alt="" width="480" height="480" src="/api/mo/otto/arbeitet.png"
+                 onload="this.classList.add('da')" onerror="this.remove()">
+            <svg class="otto-werk" viewBox="0 0 200 132" role="img">
+              <!-- Bildschirm: darauf entsteht Strich fuer Strich etwas -->
+              <rect class="schirm" x="104" y="20" width="80" height="58" rx="7"/>
+              <rect class="fuss" x="136" y="78" width="16" height="9" rx="2"/>
+              <rect class="fuss" x="124" y="87" width="40" height="5" rx="2.5"/>
+              <g class="striche">
+                <path class="s1" d="M116 38 h40"/>
+                <path class="s2" d="M116 50 h56"/>
+                <path class="s3" d="M116 62 h30"/>
+              </g>
+              <!-- Otto von hinten: Kappe, Kopf, Schultern, ein Arm zur Tastatur -->
+              <path class="kappe" d="M34 46 a24 24 0 0 1 48 0 z"/>
+              <path class="schirmchen" d="M78 45 h22 a4 4 0 0 1 0 8 h-22 z"/>
+              <circle class="kopf" cx="58" cy="56" r="21"/>
+              <path class="schulter" d="M28 116 a30 30 0 0 1 60 0 z"/>
+              <path class="arm" d="M84 96 q24 -2 34 6"/>
+              <!-- Tastatur -->
+              <rect class="taste" x="112" y="98" width="54" height="11" rx="3"/>
+              <line class="tisch" x1="14" y1="116" x2="190" y2="116"/>
+            </svg>
+            <span class="zeit" id="hero-zeit">0:00</span>
+          </span>
+          <span class="schild">Ergebnis</span>
+          <span class="bu" id="hero-cap"></span>
+          <span class="punkte" id="hero-punkte" aria-hidden="true"></span>
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <!-- 1b · Die Werkbank: echte Designs, direkt unter dem Kopf.
+       Fassung 75 (Markus, 17. Sept.: "wir machen ja Design, d. h. unsere Seite an sich muss
+       schon mal total krasses Design haben"). Gemessen stand die erste Galerie bei 3.511 px -
+       also nach vier Bildschirmen Text. Ein Designhaus zeigt Arbeit, bevor es erklaert.
+       Zwei Baender, gegenlaeufig, randlos. Alles darin ist echt: Designs, die Otto fuer Kunden
+       gezeichnet hat und die zur Bewertung freigegeben sind. Erfunden wird hier nichts. -->
+  <section class="werkbank nur-start" id="werkbank" hidden>
+    <div class="wrap wb-kopf">
+      <h2>Das hat Otto gezeichnet</h2>
+      <p class="lead">Keine Stockfotos, keine Vorlagen. Jedes Design hier stammt aus einem echten Auftrag.</p>
+    </div>
+    <div class="wb-band" id="wb1" aria-hidden="true"><div class="wb-lauf"></div></div>
+    <div class="wb-band rueck" id="wb2" aria-hidden="true"><div class="wb-lauf"></div></div>
+    <div class="wrap wb-fuss"><a class="wb-mehr" href="#mottos">Alle Mottos ansehen →</a></div>
+  </section>
+
+  <!-- 2 · So läuft das - seit dem 20. Sept. die eigene Seite /so-gehts (Knopf oben), nicht mehr
+       auf der Startseite: "so dass die Leute direkt die Beispiele sehen und sofort aufs Motto
+       tippen koennen." -->
+  <div class="wrap nur-sogehts">
+    <h1 class="seitentitel">So <span>geht’s</span></h1>
+    <a class="zurueck" href="/">← Zu den Mottos</a>
+    <section class="ablauf" id="so-gehts">
+      <h2>So läuft das hier</h2>
+      <p class="lead">Drei Schritte vom Einfall bis zum Druck.</p>
+      <div class="schritte">
+        <article class="sk">
+          <!-- Fassung 75 (Markus: "Otto die Figur fürs Storytelling nutzen und noch etwas
+               bewegter machen"): Otto steht bei jedem Schritt daneben, in einer anderen Haltung -
+               nimmt auf, zeichnet, jubelt. Drei Haltungen derselben Figur ergeben eine
+               Bildergeschichte statt drei beliebiger Kästen.
+               Fassung 76: Die Haltungen sind aus Markus' Otto-Video geschnitten, nicht
+               nachgezeichnet ("100 % nimmst du den echten!!! Das ist unsere Figur."). Jedes Bild
+               ist 256 px gross und unter 13 kB - zusammen wiegen alle drei weniger als ein
+               einzelnes Produktfoto. Fehlt eine Datei, nimmt sich das Bild per onerror selbst
+               aus der Zeile; dann steht der Schritt ohne Figur da, aber nie ein Nachbau. -->
+                    <div class="kopf"><i>1</i>Ihr sagt, worum es geht
+            <div class="otto-pose" aria-hidden="true">
+            <img class="op-bild" src="/api/mo/otto/nimmt-auf.png" alt="" width="256" height="256"
+                 loading="lazy" decoding="async"
+                 onerror="var p=this.closest('.otto-pose'); if(p) p.remove();">
+          </div>
+          </div>
+          <div class="flaeche">
+            <div class="formular">
+              <div class="z"><span>Abi-Motto</span><b>ABIrama</b></div>
+              <div class="z"><span>Schule</span><b>Gymnasium Hittfeld</b></div>
+              <div class="z leer"><span>Namen der Stufe</span><b>92 Personen</b></div>
+              <div class="knopf">Otto starten</div>
+            </div>
+          </div>
+          <b>Ein paar Felder</b>
+          <em>Motto, Ort, Jahrgang. Logo und Namensliste, wenn ihr wollt.</em>
+        </article>
+        <article class="sk">
+                    <div class="kopf"><i>2</i>Otto macht das Design
+            <div class="otto-pose" aria-hidden="true">
+            <img class="op-bild" src="/api/mo/otto/zeichnet.png" alt="" width="256" height="256"
+                 loading="lazy" decoding="async"
+                 onerror="var p=this.closest('.otto-pose'); if(p) p.remove();">
+          </div>
+          </div>
+          <div class="flaeche" id="sk-entwurf"></div>
+          <b>Der Entwurf</b>
+          <em>Meist in unter fünf Minuten da, in achtzehn Stilen. Den ersten Entwurf gibt es ohne Konto; nach einmaligem Anmelden mit E-Mail – ohne Passwort – sind fünf weitere frei. Jeder danach kostet 1 € – <b>und dieser Euro wird beim Kauf wieder verrechnet</b>.</em>
+        </article>
+        <article class="sk">
+                    <div class="kopf"><i>3</i>Ihr wählt, worauf
+            <div class="otto-pose" aria-hidden="true">
+            <img class="op-bild" src="/api/mo/otto/jubelt.png" alt="" width="256" height="256"
+                 loading="lazy" decoding="async"
+                 onerror="var p=this.closest('.otto-pose'); if(p) p.remove();">
+          </div>
+          </div>
+          <div class="flaeche" id="sk-shirt"></div>
+          <!-- Fassung 76: Hier stand ein Teil in der Ueberschrift, und darunter die Aufzaehlung
+               mit allem anderen. Das liest sich wie "wir machen Shirts, ach ja, und noch was".
+               Die Ueberschrift nennt jetzt kein Produkt mehr - die Aufzaehlung darunter macht
+               die Arbeit, und die ist ehrlich und vollstaendig. -->
+          <b>Auf das, was ihr wollt</b>
+          <em>Dazu Tasse, Beutel, Poster, Sticker, Kissen und Strandtuch.</em>
+        </article>
+      </div>
+
+      <!-- Fassung 75: Frueher waren das ZWEI Abschnitte mit zwei Ueberschriften und zusammen
+           2.750 px Hoehe auf dem Handy - drei Bildschirme Text, bevor die erste Galerie kam.
+           Jetzt ein Abschnitt: erst der Ablauf, dann die Begruendung. Die Saetze sind
+           unveraendert Markus' Saetze, nur die Ueberschrift ist zur Zwischenzeile geworden -
+           zusammengezogen heisst zusammengezogen, nicht umgeschrieben. -->
+      <div class="warum" id="vorteile">
+        <!-- Fassung 76 (Markus zu dem Satz, der hier stand: "Wer soll diesen Satz verstehen?").
+             Er hatte recht. Der Satz lautete: "Für ein einzelnes Teil kannst du das. Sobald ihr
+             mehr als einer seid, ist nicht das Drucken das Problem, sondern die Einigung."
+             Drei Hürden in zwei Zeilen: eine doppelte Verneinung (nicht A, sondern B), ein
+             Wechsel von "du" zu "ihr" mitten im Gedanken, und die Pointe kommt erst ganz am
+             Ende. Jetzt steht die Behauptung vorn und die Begründung dahinter. -->
+        <h3 class="warum-h display">Drucken ist nicht das Problem</h3>
+        <!-- Fassung 79, Markus' Vorgabe im Wortlaut: "Einen einzelnen Artikel zu bestellen fuer
+             sich selber ist nicht das Problem, aber in der Gemeinschaft einen gemeinsamen
+             Nenner zu finden und sich einig zu werden, das ist schon gar nicht so einfach."
+             Er hat mich gebeten, das schoener zu fassen. Geblieben ist sein Gedanke und sein
+             Aufbau: erst das Leichte, dann der Bruch, dann das Schwere - und das Schwere ist
+             nicht der Druck, sondern die Einigung. -->
+        <p class="lead">Für dich allein ist es leicht: aussuchen, bestellen, fertig. Zu mehreren fängt die eigentliche Arbeit an – ihr müsst einen gemeinsamen Nenner finden, den am Ende wirklich alle tragen wollen.</p>
+      </div>
+      <div class="vt">
+        <article>
+          <!-- Abstimmen: ein Entwurf, der Sterne bekommt. -->
+          <svg class="icn" viewBox="0 0 26 26" aria-hidden="true">
+            <rect x="3.5" y="3" width="19" height="15" rx="2.5"/>
+            <path d="M13 7.2l1.55 3.14 3.45.5-2.5 2.44.59 3.44L13 15.1l-3.09 1.62.59-3.44-2.5-2.44 3.45-.5z"/>
+            <path d="M8.5 21.5h9"/>
+          </svg>
+          <h3>Abstimmen statt streiten</h3>
+          <p>Otto zeichnet mehrere Entwürfe. Ihr schickt einen Link herum, jeder vergibt Sterne und schreibt dazu, was ihm gefällt und was nicht.</p>
+          <p>Ihr seht jederzeit, wer schon abgestimmt hat und wer noch fehlt.</p>
+        </article>
+        <article class="stark">
+          <!-- Aus Kommentaren wird ein Design: zwei Sprechblasen, daraus ein Funke. -->
+          <svg class="icn" viewBox="0 0 26 26" aria-hidden="true">
+            <path d="M3 5.5A2 2 0 015 3.5h9a2 2 0 012 2v5a2 2 0 01-2 2H8l-3.5 2.6v-2.6H5a2 2 0 01-2-2z"/>
+            <path d="M18.5 9.5h2.5a2 2 0 012 2v4a2 2 0 01-2 2h-.8v2.2l-3-2.2h-3.2"/>
+            <path d="M20 3v2.4M22.6 4.2l-1.7 1.7M17.4 4.2l1.7 1.7"/>
+          </svg>
+          <span class="nur">Das gibt es nur hier</span>
+          <h3>Aus euren Kommentaren wird ein neues Design</h3>
+          <p>Wenn die Abstimmung endet, liest Otto alle Kommentare, sucht den gemeinsamen Nenner und zeichnet daraus einen weiteren Entwurf.</p>
+          <p>Nicht der Sieger nach Sternen – sondern das Design, das die Gruppe eigentlich gemeint hat.</p>
+        </article>
+        <article>
+          <!-- Sechs Entwuerfe: ein Stapel Blaetter, nicht ein Kreislauf-Pfeil. -->
+          <svg class="icn" viewBox="0 0 26 26" aria-hidden="true">
+            <rect x="8" y="3" width="14.5" height="17" rx="2.5"/>
+            <path d="M5.5 6.5A2.5 2.5 0 003 9v11.5A2.5 2.5 0 005.5 23H16"/>
+            <path d="M11.5 8.5h7.5M11.5 12h7.5M11.5 15.5h4.5"/>
+          </svg>
+          <!-- Fassung 82: Hier stand die ganze Preisrechnung - erster Entwurf ohne Konto, fünf
+               weitere nach Anmeldung, dann ein Euro, der beim Kauf verrechnet wird. Genau
+               dasselbe erklärt der Abschnitt "Was kostet das?" ein Stück weiter unten noch
+               einmal, und der ist 1,5 Bildschirme lang. Das war kein doppeltes Wort, sondern
+               doppelter Inhalt: der Leser liest dieselbe Rechnung zweimal und weiß hinterher
+               nicht, ob er etwas übersehen hat. Die Karte sagt jetzt, was sie in DIESEM
+               Zusammenhang zu sagen hat - dass Nachbessern nichts kostet und schnell geht -
+               und verweist für die Zahlen nach unten. Markus hat das freigegeben:
+               "Mach alles, was nötig ist." -->
+          <h3>Sechs Entwürfe kostenlos</h3>
+          <p>Ihr müsst euch nicht mit dem ersten Versuch abfinden. Gefällt ein Entwurf nicht ganz, kommt der nächste – <b>die ersten sechs kosten nichts</b>, und was danach anfällt, wird beim Kauf wieder verrechnet.</p>
+          <p>Woanders wartet ihr auf den Designer und die nächste Korrekturschleife. Hier steht der nächste Entwurf in unter fünf Minuten. <a href="#preise">Die ganze Rechnung steht weiter unten</a>.</p>
+        </article>
+      </div>
+    </section>
+  </div>
+
+  <!-- 3a · Ein Design, und dann? -----------------------------------------------------------
+       Fassung 78 (Markus): "Wir zeigen ueberhaupt nicht, was wir alles koennen. Auf der
+       Startseite ist nichts von dem, was wir koennen, zu sehen oder zu lesen." Er hatte recht:
+       eine Zeile weiter oben NANNTE die Seite Tasse, Poster und Kissen - gezeigt hat sie nur
+       Textil. Hier steht jetzt ein Motiv auf fuenf verschiedenen Sachen, direkt unter dem
+       Schritt "Ihr waehlt, worauf". Der ganze Abschnitt kommt vom Server (woraufKacheln() in
+       server.js): gibt es zu wenige Vorlagen, steht hier gar nichts. -->
+  <div class="nur-start">__WORAUF_HTML__</div>
+
+  <!-- 3b · Der Unterschied: KI-Bild oder Druckdatei -->
+  <div class="wrap nur-sogehts">
+    <section class="vergleich" id="vergleich" hidden>
+      <h2>KI-Bild ist nicht gleich Druckdatei</h2>
+      <p class="lead">Ein Motiv von einer KI malen lassen kann heute jeder. Der Unterschied entsteht danach: beim Freistellen, bei den Farben, bei den Druckregeln. Hier derselbe Auftrag – einmal Standard-KI, einmal Otto.</p>
+      <div class="schalter" role="tablist" aria-label="Ansicht">
+        <span>Ansicht</span>
+        <button type="button" class="an" data-ansicht="a">A · So kommt es aus dem Generator</button>
+        <button type="button" data-ansicht="b">B · So geht es aufs Shirt</button>
+        <button type="button" data-ansicht="c">C · Die Druckdatei selbst</button>
+      </div>
+      <div class="vg" id="vg"></div>
+      <p class="fuss" id="vg-fuss"></p>
+    </section>
+  </div>
+
+  <!-- 4 · Alle Anlässe -->
+  <div class="wrap nur-start auch-mottos">
+    <section class="mottos" id="mottos">
+      <!-- 22. Sept.: unter /mottos (Reiter "Alle Mottos") steht nur diese Liste, mit eigenem Titel. -->
+      <h1 class="seitentitel nur-mottos">Alle <span>Mottos</span></h1>
+      <a class="zurueck nur-mottos" href="/">‹ Zur Startseite</a>
+      <h2 id="mottos-h">Alle __ANLASS_ZAHL__ Mottos</h2>
+      <!-- Fassung 76 (Markus): "Und falls euer Anlass oder Stil nicht dabei ist, gibt's Otto
+           Freestyle." Der Satz gehoert genau hierhin - wer die Liste durchgeht und seinen Anlass
+           nicht findet, geht sonst wieder. Mit Verweis direkt in den Freestyle. -->
+      <!-- 20. Sept., Markus: "Da muesste doch als Text stehen: einfach Anlass waehlen und ich fuehre
+           euch durchs Menue. Solltet ihr trotzdem mal irgendwo haengen: unter So geht's wird alles
+           genau erklaert." -->
+      <p class="lead">Einfach Anlass wählen – ich führe euch durchs Menü. Solltet ihr trotzdem mal irgendwo hängen: Unter <a href="/so-gehts"><b>So geht’s</b></a> wird alles genau erklärt. Euer Anlass ist nicht dabei? Dann <a href="/m/freestyle"><b>Dein Freestyle</b></a>.</p>
+      <!-- Fassung 78: Die Kacheln kommen fertig vom Server (anlassKacheln() in server.js).
+           Vorher baute sie ein Skript im Browser - damit standen die Namen der Anlaesse, also
+           genau die Suchwoerter, nur als JSON in der Seite und nicht als Text. -->
+      <div id="groups">__GRUPPEN_HTML__</div>
+    </section>
+  </div>
+
+  <!-- 4b · Alle Stile. 22. Sept., Markus: "das Menue Mottos noch mal unterteilen in Motto und
+       Stile." Der Block kommt fertig vom Server (stilKachelnHtml) und steht nur unter /stile. -->
+  __STILE_HTML__
+
+  <!-- 5 · Was kostet das -->
+  <div class="wrap nur-sogehts">
+    <section class="preise" id="preise">
+      <h2>Was kostet das?</h2>
+      <p class="lead">Das Entwerfen und das Produkt sind zwei Paar Schuhe. Ausprobieren kostet nichts.</p>
+      <div class="pk">
+        <article>
+          <div class="marke">Otto starten</div>
+          <h3>Sechs Entwürfe frei</h3>
+          <div class="zahl">0 €</div>
+          <p>Der erste ohne Konto, fünf weitere nach einmaligem Anmelden mit E-Mail – ohne Passwort, ohne Zahlungsdaten. Jeder weitere Entwurf kostet 1 € – <b>und wird beim Textilkauf voll verrechnet</b>, ihr zahlt ihn am Ende also nicht.</p>
+        </article>
+        <article>
+          <div class="marke">Das fertige Produkt</div>
+          <h3>Textil, Tasse, Poster …</h3>
+          <div class="zahl" id="preis-ab">ab 19,90 €</div>
+          <p>Beim Textil drei Stufen je Produkt – Ottos Starter, Ottos Liebling und Otto Deluxe (Bio, Stanley/Stella).
+             Ab fünf Stück wird das Textil günstiger, ab fünfzig um 28 Prozent.</p>
+          <ul class="wege" id="preis-liste"></ul>
+        </article>
+        <!-- 7. Okt., Markus: "Nur die Druckdatei sollte ueberall raus." Hier stand sie als zweiter Weg. -->
+      </div>
+      <!-- Fassung 85 (Markus, 18. Sept.): Die Lieferzeit stand nirgends auf der Seite. Das ist die
+           erste Frage jeder Gruppe, die auf einen Termin zusteuert - Abiball, JGA, Vereinsfest -
+           und die billigste Art, Vertrauen zu verschenken. "Nach vollstaendiger Bezahlung" gehoert
+           dazu und wird nicht weggelassen: bei einer Gruppe beginnt die Frist eben nicht, wenn der
+           Erste zahlt. -->
+      <p class="lieferzeit"><b>Lieferzeit:</b> 4–5 Arbeitstage nach vollständiger Bezahlung.
+        <span>Express auf Anfrage – schreibt uns, wann es da sein muss.</span></p>
+    </section>
+  </div>
+
+  <!-- 6 · Vertrauen -->
+  <div class="wrap">
+    <section class="vertrauen nur-sogehts">
+      <h2>Gut zu wissen</h2>
+      <div class="vr">
+        <div><b>4–5 Arbeitstage</b><span>Nach vollständiger Bezahlung geht es in den Druck. Express auf Anfrage.</span></div>
+        <div><b>In Deutschland veredelt</b><span>Jedes Produkt wird auf Bestellung gefertigt, nichts liegt auf Lager.</span></div>
+        <div><b>Keine geschützten Namen</b><span>Vereins- und Markennamen prüfen wir automatisch, bevor etwas gedruckt wird.</span></div>
+        <!-- 20. Sept., Markus: "Das Thema mit den Adressen auf dem Textil hat hier nichts zu suchen -
+             dass das nicht passiert, sollte man von Profis erwarten." Die Karte "Kontaktdaten bleiben
+             draussen" ist deshalb weg; die Zusage selbst steht weiter im Datenschutz. -->
+        <div><b>Bis zu 100 Namen</b><span>Jeder bekommt seine eigene Druckdatei, die Bestellliste fällt hinten raus.</span></div>
+      </div>
+    </section>
+    <footer>Motto Otto · Jedes Produkt wird auf Bestellung gefertigt und in Deutschland veredelt. · <a href="/impressum">Impressum</a> · <a href="/datenschutz">Datenschutz</a> · <a href="/agb">AGB</a></footer>
+  <!-- Fassung 73 (Markus, 17. Sept.): Der Widerruf gehoert sichtbar auf die Seite, nicht als
+       kleiner Link zwischen anderen. Eigener, hervorgehobener Knopf unter der Fusszeile. -->
+  <div class="wruf-zeile"><a class="wruf" href="/widerruf">Vertrag widerrufen oder kündigen</a></div>
+  </div>
+
+<script src="/preise.js"></script>
+<script src="/entwurf.js"></script>
+<script>
+(function(){
+  var MOTTOS = __MOTTOS_JSON__;
+  var STYLES = __STYLES_JSON__;
+  var VERGLEICH = __VERGLEICH_JSON__;
+
+  // ---- Der Unterschied: Standard-KI gegen Otto. Bilder liegen fertig auf dem Server
+  // (vergleich-bilder.json); ohne fertiges Beispiel bleibt der Abschnitt versteckt. ----
+  (function () {
+    var sec = document.getElementById('vergleich'), box = document.getElementById('vg');
+    if (!sec || !box || !VERGLEICH || !VERGLEICH.length) return;
+    var b = VERGLEICH[0];
+    function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+    function karte(art) {
+      var otto = art === 'otto', p = '/api/mo/vergleich/' + b.id + '-' + art + '-';
+      var punkte = otto
+        ? ['Kommt freigestellt aus der Pipeline – pixelgenau, auch die Innenflächen der Buchstaben.',
+           'Schwarz ist das Shirt: kein Schwarz als Farbe, kein Tintenklotz, kein Kasten.',
+           'Klare Farbflächen, Mindestlinie und Mindestschrifthöhe ab dem ersten Strich.',
+           'Druckdatei in Echtgröße, 300 dpi, mit Marken- und Symbolprüfung.']
+        : ['Hintergrund muss von Hand weg – Kanten fransen, helle Stellen reißen Löcher.',
+           'Verläufe, Schatten und Glanz sehen am Bildschirm toll aus und saufen im Druck ab.',
+           'Feine Linien und winzige Schrift, die kein Drucker hält.',
+           'Gesichter, Wappen und fremde Zeichen werden einfach mitgemalt.'];
+      return '<article class="' + (otto ? 'otto' : 'standard') + '">' +
+        '<div class="kopf"><h3>' + (otto ? 'Motto Otto' : 'Standard-KI') + '</h3>' + (otto ? '<span class="nur">Das gibt es nur hier</span>' : '') + '</div>' +
+        '<div class="bild" data-art="' + art + '"><span class="tag"></span>' +
+          '<img class="a" src="' + p + 'a.png" alt="' + (otto ? 'Motto Otto: das Motiv, wie es aus dem Generator kommt' : 'Standard-KI: das Motiv, wie es aus dem Generator kommt') + '" loading="lazy">' +
+          '<img class="b weg" src="' + p + 'b.png" alt="' + (otto ? 'Motto Otto: dasselbe Motiv freigestellt fürs Shirt' : 'Standard-KI: dasselbe Motiv nach dem Freistellen') + '" loading="lazy">' +
+        '</div>' +
+        '<div class="lupe"><img src="' + p + 'lupe.png" alt="" loading="lazy"><div><b>Kante, achtfach vergrößert</b>' + (otto ? 'Sauber bis zum letzten Pixel – so geht es in den DTF-Druck.' : 'Saum, Fransen, Reste vom Hintergrund – das druckt genau so mit.') + '</div></div>' +
+        '<ul>' + punkte.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ul>' +
+        '</article>';
+    }
+    box.innerHTML = karte('standard') + karte('otto');
+    var fuss = document.getElementById('vg-fuss');
+    if (fuss) fuss.textContent = 'Beispiel: ' + (b.titel || '') + (b.auftrag ? ' – ' + b.auftrag : '') + ' Beide Bilder stammen aus demselben Bildmodell. Der Unterschied ist, was Otto vorher hineingibt und hinterher daraus macht. In Ansicht C ist kariert gleich durchsichtig – beim Standard fehlen dort Stellen, die zum Motiv gehören: überall, wo Motivfarbe und Hintergrund sich ähnelten, hat das Freistellen mitgenommen.';
+    function ansicht(k) {
+      [].forEach.call(sec.querySelectorAll('.schalter button'), function (bt) { bt.classList.toggle('an', bt.getAttribute('data-ansicht') === k); });
+      [].forEach.call(sec.querySelectorAll('.bild'), function (el) {
+        el.classList.toggle('shirt', k === 'b');
+        el.classList.toggle('karo', k === 'c');
+        el.querySelector('img.a').classList.toggle('weg', k !== 'a');
+        el.querySelector('img.b').classList.toggle('weg', k === 'a');
+        var otto = el.getAttribute('data-art') === 'otto';
+        el.querySelector('.tag').textContent = k === 'a' ? (otto ? 'Aus dem Generator, mit Druckregeln' : 'Aus dem Generator')
+          : k === 'b' ? (otto ? 'Freigestellt, druckfertig' : 'Hintergrund entfernt')
+          : (otto ? 'Druckdatei · kariert = durchsichtig' : 'Druckdatei · kariert = durchsichtig, und da fehlt Motiv');
+      });
+    }
+    [].forEach.call(sec.querySelectorAll('.schalter button'), function (bt) { bt.addEventListener('click', function () { ansicht(bt.getAttribute('data-ansicht')); }); });
+    ansicht('a');
+    sec.hidden = false;
+  })();
+  var groupsEl = document.getElementById('groups');
+  function esc(s){return String(s==null?'':s).replace(/[<>&"]/g,function(c){return ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'})[c];});}
+  var bySlug = {}; MOTTOS.forEach(function(m){ bySlug[m.slug] = m; });
+  var bild = function(slug){ return '/api/mo/sample/'+encodeURIComponent(slug)+'.jpg'; };
+
+  if(!MOTTOS.length){ groupsEl.innerHTML='<p class="empty">Bald geht es los – die ersten Mottos werden gerade eingerichtet.</p>'; return; }
+
+  // ---------- Erster Bildschirm ----------
+  // Das Shirt im Kopf: das erste Motto aus der Schnellwahl, das es wirklich gibt.
+  // Fassung 77: Die Liste kommt aus server.js (SCHNELL_SLUGS) - der Server rechnet daraus auch
+  // die Hoehe des Zettels aus, also darf sie nicht an zwei Stellen stehen.
+  var SCHNELL = __SCHNELL_JSON__;
+  // Fassung 78: Die Knoepfe stehen fertig in der Seite (schnellwahl() in server.js). Hier wird
+  // nur noch dieselbe Auswahl nachgerechnet, weil das Kopfbild und der Zettel wissen muessen,
+  // welches Motto oben gezeigt wird.
+  var schnell = SCHNELL.map(function(s){ return bySlug[s]; }).filter(Boolean);
+  while(schnell.length < 6){                      // fehlt eins, rückt das nächste Motto nach
+    var f = MOTTOS.filter(function(m){ return schnell.indexOf(m) < 0; })[0];
+    if(!f) break; schnell.push(f);
+  }
+
+  var held = schnell[0] || MOTTOS[0];
+
+  // ---------- Werkbank: echte Designs, gleich unter dem Kopf ----------
+  // Fassung 75. Quelle ist derselbe Pool, aus dem der Wartescreen seine Bewertungen zieht -
+  // also nur Designs, die zur Anzeige freigegeben sind (kein Logo, kein Kundenfoto, keine
+  // Namensliste, siehe bewertungSperrgrund im Server). Kommt nichts zurueck oder zu wenig,
+  // bleibt der Abschnitt versteckt: ein leeres Laufband ist schlimmer als gar keins.
+  (function werkbank(){
+    var sec = document.getElementById('werkbank');
+    if (!sec) return;
+    fetch('/api/mo/showcase?mode=rate&limit=40&vielfalt=1', { headers: { accept: 'application/json' } })
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(j){
+        var d = (j && j.designs) || [];
+        if (d.length < 6) return;                       // zu duenn fuer ein Band
+        var haelfte = Math.ceil(d.length / 2);
+        [['wb1', d.slice(0, haelfte)], ['wb2', d.slice(haelfte)]].forEach(function(paar){
+          var band = document.getElementById(paar[0]); if (!band) return;
+          var lauf = band.querySelector('.wb-lauf'); if (!lauf) return;
+          var kacheln = paar[1].map(function(x){
+            // 21. Sept., Markus: "einmal das Motto und in welchem Stil - Geburt Neon, Jaeger Tattoo"
+            var titel = [x.mottoName, x.stil].filter(Boolean).join(' · ') || (x.motto || '').trim();
+            // 22. Sept., Markus: "dann muesste ich ja sofort auf den Artikel, auf das Motto und
+            // auf den Stil kommen. Nicht irgendwohin." Das Ziel kommt fertig vom Server.
+            return '<a class="wb-kachel" href="' + esc(x.ziel || '/mottos') + '">' +
+              '<img src="' + esc(x.image) + '" loading="lazy" decoding="async" alt="' + esc(titel || 'Design') + '" onerror="this.closest(\'.wb-kachel\').remove()">' +
+              (titel ? '<b>' + esc(titel) + '</b>' : '') + '</a>';
+          }).join('');
+          // Zweimal hintereinander: die Animation schiebt um -50 %, dann sitzt die Kopie
+          // nahtlos an derselben Stelle und das Band laeuft ohne Sprung weiter.
+          lauf.innerHTML = kacheln + kacheln;
+        });
+        sec.hidden = false;
+      })
+      .catch(function(){ /* ohne Werkbank ist die Seite vollstaendig, nur aermer */ });
+  })();
+
+  // ---------- Das Bild im Kopf wechselt durch die Schnellwahl ----------
+  // Zwei Ebenen im Wechsel: die sichtbare bleibt stehen, bis die naechste geladen ist.
+  // Faellt ein Bild aus, wird das Motto aus der Runde genommen statt einen Rahmen leer zu lassen.
+  var heroBild = document.getElementById('hero-bild');
+  var heroCap = document.getElementById('hero-cap');
+  var heroPunkte = document.getElementById('hero-punkte');
+  var ebenen = [document.getElementById('hero-a'), document.getElementById('hero-b')];
+  var runde = schnell.slice(0, 6);
+  if (runde.indexOf(held) < 0) runde.unshift(held);
+  // Die Runde waechst, wenn jemand nach einem Motto sucht, das nicht darin war - ein gemerkter
+  // Index zeigt danach auf ein anderes Motto. Darum merken wir uns das Motto selbst.
+  // "Gerade beschaeftigt" als Zeitstempel, nicht als Schalter: ein Schalter wird von alten
+  // Zeitgebern zurueckgesetzt, und dann springt der Wechsel mitten ins Tippen.
+  var hMotto = null, hEbene = 0, letzteEingabe = 0;
+  var RUHE_MS = 9000;
+  function beschaeftigt(){ return Date.now() - letzteEingabe < RUHE_MS; }
+  // Wird beim ersten Zeichnen schon gebraucht - muss also vor dem ersten Aufruf stehen.
+  var mag = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function punkteZeichnen(){
+    heroPunkte.innerHTML = runde.length > 1 ? runde.map(function(m){
+      return '<i class="' + (m === hMotto ? 'an' : '') + '"></i>';
+    }).join('') : '';
+  }
+  // ---------- Zettel -> Otto -> Teil ----------
+  // Links steht, was der Kunde WIRKLICH eingetragen hat - der Server liest das aus dem Auftrag
+  // des gezeigten Designs. Frueher standen hier erfundene Beispielsaetze, die zum Bild daneben
+  // gar nicht gehoert haben. Erfunden wird hier nichts mehr.
+  var heroZettel = document.getElementById('hero-zettel');
+  var heroZeit = document.getElementById('hero-zeit');
+  var malUhr = [];
+  var malLauf = 0;
+
+  // Der Zettel wird GESCHRIEBEN, nicht hingestellt. Erst wenn man sieht, wie die Angaben
+  // entstehen, ist klar: das ist die Eingabe eines Menschen. Steht sie schon fertig da, wirkt
+  // sie wie Deko. Danach laeuft die Uhr, danach geht das Design auf - in dieser Reihenfolge,
+  // sonst ist der Zusammenhang wieder weg.
+  function zettelGeruest(m){
+    var z = (m.zettel || []).filter(function(x){ return x && x.wert; }).slice(0, 3);
+    if (!z.length) z = [{ label: 'Anlass', wert: m.name }];
+    heroZettel.innerHTML = '<div class="kopf">Aufgabe</div>' + z.map(function(x, i){
+      return '<div class="z" data-i="' + i + '"><span>' + esc(x.label) + '</span><b></b></div>';
+    }).join('');
+    return z;
+  }
+  function zettelFertig(m){
+    var z = zettelGeruest(m);
+    [].forEach.call(heroZettel.querySelectorAll('.z b'), function(el, i){ el.textContent = z[i] ? z[i].wert : ''; });
+  }
+
+  // Schreibt die Werte der Reihe nach, Zeichen fuer Zeichen.
+  function zettelSchreiben(m, lauf, fertig){
+    var z = zettelGeruest(m);
+    var felder = heroZettel.querySelectorAll('.z b');
+    var n = 0;
+    (function naechstesFeld(){
+      if (lauf !== malLauf) return;
+      if (n >= z.length) { heroZettel.classList.remove('tippt'); fertig(); return; }
+      var el = felder[n], ganz = String(z[n].wert), i = 0;
+      heroZettel.classList.add('tippt');
+      el.parentNode.classList.add('dran');
+      (function weiter(){
+        if (lauf !== malLauf) return;
+        if (i >= ganz.length) {
+          el.parentNode.classList.remove('dran');
+          n++;
+          malUhr.push(setTimeout(naechstesFeld, 180));
+          return;
+        }
+        i++;
+        el.textContent = ganz.slice(0, i);
+        malUhr.push(setTimeout(weiter, 16 + Math.random() * 24));
+      })();
+    })();
+  }
+
+  function malenStoppen(){
+    malLauf++;
+    malUhr.forEach(clearTimeout); malUhr = [];
+    heroBild.classList.remove('wartet', 'knall', 'fertig');
+    heroZettel.classList.remove('tippt');
+  }
+
+  // Die Uhr laeuft erst, wenn die Aufgabe steht - sie gehoert zwischen Eingabe und Ergebnis.
+  var UHR_MS = 2100;
+  function malen(el, m, fertig){
+    malenStoppen();
+    if (mag.matches) { zettelFertig(m); heroBild.classList.add('fertig'); fertig(); return; }
+    var lauf = malLauf;
+    zettelSchreiben(m, lauf, function(){
+      if (lauf !== malLauf) return;
+      heroBild.classList.add('wartet');
+      var start = Date.now();
+      (function ticken(){
+        if (lauf !== malLauf) return;
+        var weg = Date.now() - start;
+        heroZeit.textContent = '0:0' + Math.floor(weg / 1000);
+        if (weg < UHR_MS) { malUhr.push(setTimeout(ticken, 90)); return; }
+        heroBild.classList.remove('wartet');
+        heroBild.classList.add('knall', 'fertig');
+        fertig();
+        malUhr.push(setTimeout(function(){
+          if (lauf === malLauf) heroBild.classList.remove('knall');
+        }, 600));
+      })();
+    });
+  }
+
+  function heroZeigen(i, sofort){
+    var m = runde[i];
+    if (!m) return;
+    var neu = ebenen[1 - hEbene], alt = ebenen[hEbene];
+    var img = new Image();
+    img.onload = function(){
+      neu.src = img.src;
+      neu.alt = m.name + ' – von Otto entworfen';
+      neu.classList.add('da'); alt.classList.remove('da');
+      // langsames Heranfahren, solange das Bild steht
+      neu.classList.remove('zoom'); void neu.offsetWidth; neu.classList.add('zoom');
+      alt.classList.remove('zoom');
+      hEbene = 1 - hEbene; hMotto = m;
+      heroBild.setAttribute('href', '/m/' + encodeURIComponent(m.slug));
+      heroBild.style.setProperty('--tc', m.accent || 'var(--accent)');
+      punkteZeichnen();
+      malen(neu, m, function(){
+        heroCap.innerHTML = esc(m.name) + ' · <b>in unter 5 Minuten</b>';
+      });
+    };
+    img.onerror = function(){
+      runde.splice(i, 1);                       // dieses Motto hat kein Bild
+      if (!runde.length) { heroBild.style.display = 'none'; return; }
+      if (sofort) heroZeigen(i % runde.length, true);
+    };
+    img.src = bild(m.slug);
+  }
+  heroZeigen(0, true);
+  function heroWeiter(){
+    if (runde.length < 2 || document.hidden || beschaeftigt()) return;
+    var i = runde.indexOf(hMotto);
+    heroZeigen(((i < 0 ? 0 : i) + 1) % runde.length);
+  }
+  if (!mag.matches) {
+    // Laenger als die Zeichnung dauert, sonst steht das fertige Design zu kurz.
+    setInterval(heroWeiter, 10500);
+    // Wer auf das Bild zeigt, will es ansehen - dann steht es, solange die Maus daraufliegt.
+    var zeigtDrauf = false;
+    heroBild.addEventListener('mouseenter', function(){ zeigtDrauf = true; letzteEingabe = Date.now(); });
+    heroBild.addEventListener('mouseleave', function(){ zeigtDrauf = false; });
+    setInterval(function(){ if (zeigtDrauf) letzteEingabe = Date.now(); }, 1500);
+  }
+
+  // Suche: findet auch über gängige Abkürzungen, die nicht im Namen stehen
+  var EXTRA = {
+    'junggesellenabschied':'jga polterabend bachelor party braut bräutigam',
+    'malle-fahrt':'mallorca urlaub strand ballermann reise',
+    'abi':'abitur abschluss stufe jahrgang hoodie abipulli abistufe abikomitee abiball abizeitung abimotto',
+    'abschlussfahrt':'klassenfahrt kursfahrt studienfahrt reise',
+    'schulmotto':'schule klasse abschluss',
+    'fanclub':'fans verein kurve stadion',
+    'fan-shirt':'lieblingsverein fussball fußball fans',
+    'vereinsjubilaeum':'jubiläum verein geburtstag sportverein',
+    'firmenausflug':'betriebsausflug firma team betrieb kollegen',
+    'kegeltour':'kegeln kegelclub männertour',
+    'geburt-baby':'baby geburt neugeborenes taufe',
+    'kinder-tiershirt':'kind kinder geburtstag tier',
+    'sprueche-shirt':'spruch sprüche lustig witzig',
+    'handwerker-shirt':'handwerk betrieb firma arbeitskleidung',
+    'meister-shirt':'meister meisterschaft pokal gewonnen sieg sieger aufstieg aufgestiegen titel pokalsieg fussball fußball handball volleyball basketball turnier saison mannschaft',
+    'karneval':'fasching fastnacht kostüm gruppe',
+    'weihnachtsfeier':'weihnachten christmas betriebsfeier firmenfeier glühwein xmas advent',
+    'hochzeit':'heiraten heirat brautpaar braut bräutigam trauung trauzeugen trauzeugin just married ehe ehepaar wedding',
+    'darts':'dart dartverein dartclub pfeile scheibe oche 180 triple bullseye steeldart liga kneipe',
+    'bowling':'bowlen bowlingclub bahn kugel pins pin zehn strike spare abräumen kegeln center liga',
+    'geburtstag':'party feier jubiläum'
+  };
+  var norm = function(s){ return String(s||'').toLowerCase()
+    .replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss'); };
+  var suche = document.getElementById('suche'), treffer = document.getElementById('treffer'), pos = -1;
+
+  function zeigen(){
+    var q = norm(suche.value.trim());
+    if(!q){ treffer.innerHTML=''; suche.setAttribute('aria-expanded','false'); pos=-1; return; }
+    // Echte Leute tippen ganze Saetze: "Malle mit 8 Jungs", "Shirt fuer den JGA". Wer nur den
+    // kompletten Text als Teilstring sucht, findet dann gar nichts. Also wortweise suchen -
+    // mit zwei Schaerfungen, sonst wird es Grabbelkiste statt Suche:
+    //   1. Fuellwoerter fliegen raus. "Shirt" steckt in jedem zweiten Mottonamen und sagt nichts.
+    //   2. Nur Wortanfaenge zaehlen, keine beliebigen Teilstrings - sonst trifft "wir" auf Landwirt.
+    //      Deutsche Komposita gehen in beide Richtungen: "abistufe" findet "abi", "abi" findet "abistufe".
+    var STOPP = { 'shirt':1,'shirts':1,'pulli':1,'pullis':1,'pullover':1,'hoodie':1,'hoodies':1,'trikot':1,
+      'trikots':1,'tshirt':1,'jacke':1,'jacken':1,'fuer':1,'fuers':1,'furs':1,'mit':1,'und':1,'der':1,'die':1,'das':1,'den':1,
+      'dem':1,'ein':1,'eine':1,'einen':1,'wir':1,'ihr':1,'uns':1,'unser':1,'unsere':1,'meine':1,'mein':1,
+      'haben':1,'brauchen':1,'suche':1,'suchen':1,'will':1,'moechte':1,'bitte':1,'von':1,'zum':1,'zur':1,'auf':1 };
+    var alleW = q.split(/[^a-z0-9]+/).filter(Boolean);
+    var woerter = alleW.filter(function(w){ return w.length >= 3 && !STOPP[w]; });
+    if (!woerter.length) woerter = alleW.filter(function(w){ return w.length >= 3; });
+    if (!woerter.length) woerter = [q];
+    var passt = function(text, w){
+      var ws = text.split(/[^a-z0-9]+/);
+      for (var i = 0; i < ws.length; i++) {
+        var h = ws[i];
+        if (!h) continue;
+        if (h.indexOf(w) === 0) return true;                       // "abi" findet "abistufe"
+        if (w.length >= 5 && h.length >= 3 && w.indexOf(h) === 0) return true; // "abistufe" findet "abi"
+      }
+      return false;
+    };
+    var liste = MOTTOS.map(function(m){
+      var name = norm(m.name), rest = norm(EXTRA[m.slug] || '') + ' ' + norm(m.intro);
+      var punkte = 0;
+      woerter.forEach(function(w){
+        if (passt(name, w)) punkte += 3;
+        else if (passt(rest, w)) punkte += 1;
+      });
+      return { m: m, punkte: punkte };
+    }).filter(function(x){ return x.punkte > 0; })
+      .sort(function(a, b){ return b.punkte - a.punkte; });
+    // Trifft ein Mottoname direkt, sind die schwachen Treffer aus den Beschreibungstexten
+    // nur Rauschen - dann lieber ein klares Ergebnis als sechs beliebige.
+    if (liste.length && liste[0].punkte >= 3) liste = liste.filter(function(x){ return x.punkte >= 3; });
+    liste = liste.slice(0, 6).map(function(x){ return x.m; });
+    treffer.innerHTML = liste.length
+      ? liste.map(function(m,i){
+          return '<a href="/m/'+encodeURIComponent(m.slug)+'" role="option" style="--tc:'+esc(m.accent)+'"'+(i===0?' class="an"':'')+'>'+
+            '<i></i>'+esc(m.name)+'<em>Otto starten →</em></a>';
+        }).join('')
+      : '<div class="nix">Dafür haben wir noch kein fertiges Motto – schau in der Liste unten, oder schreib uns.</div>';
+    pos = liste.length ? 0 : -1;
+    suche.setAttribute('aria-expanded','true');
+    // Der Kopf antwortet: Otto zeichnet den Anlass, den man gerade tippt. Erst danach
+    // klickt jemand - und weiss schon, was ihn erwartet.
+    if (liste.length) heroVorfuehren(liste[0]);
+  }
+  // Waehrend jemand tippt, laeuft der eigene Wechsel nicht mit dazwischen.
+  var tippUhr = null;
+  // Wer im Suchfeld tippt, bekommt den passenden Anlass im Kopf gezeigt - mit dessen echten
+  // Angaben. Der eigene Wortlaut wird NICHT in den Zettel geschrieben: dort steht, was zu dem
+  // gezeigten Design gehoert, und nichts anderes.
+  function heroVorfuehren(m){
+    if (!m || runde.length === 0) return;
+    letzteEingabe = Date.now();
+    clearTimeout(tippUhr);
+    tippUhr = setTimeout(function(){
+      var i = runde.indexOf(m);
+      if (i < 0) { runde.push(m); i = runde.indexOf(m); }
+      if (m !== hMotto) heroZeigen(i);
+    }, 380);
+  }
+  suche.addEventListener('input', zeigen);
+  suche.addEventListener('keydown', function(e){
+    var a = treffer.querySelectorAll('a');
+    if(e.key === 'ArrowDown' || e.key === 'ArrowUp'){
+      if(!a.length) return;
+      e.preventDefault();
+      pos = (pos + (e.key === 'ArrowDown' ? 1 : a.length - 1)) % a.length;
+      [].forEach.call(a, function(x,i){ x.classList.toggle('an', i === pos); });
+    } else if(e.key === 'Enter'){
+      if(a[pos]){ e.preventDefault(); location.href = a[pos].getAttribute('href'); }
+    } else if(e.key === 'Escape'){ treffer.innerHTML=''; suche.setAttribute('aria-expanded','false'); }
+  });
+  document.addEventListener('click', function(e){
+    if(!e.target.closest('.suchfeld')){ treffer.innerHTML=''; suche.setAttribute('aria-expanded','false'); }
+  });
+
+  // ---------- Schritt 2 und 3 ----------
+  // Fassung 79 (Markus): "Wir haben jetzt drei unterschiedliche Sachen da drauf." Er hatte
+  // recht, und es waren gleich zwei Fehler. Schritt 2 zeigte gar kein echtes Design: die
+  // Adresse /api/mo/entwurf/... gibt es im Server ueberhaupt nicht, also lief JEDES Mal die
+  // gezeichnete Ersatzdarstellung - ein Bild, das mit dem Anlass oben nichts zu tun hat.
+  // Und Schritt 3 stand fest auf 'fanclub' verdrahtet, zeigte also den Vereins-Hoodie,
+  // waehrend im Formular darueber "ABIrama" stand.
+  // Jetzt kommen beide aus DEMSELBEN Design desselben Anlasses: Schritt 2 nackt (?a=motiv),
+  // Schritt 3 gedruckt. Damit erzaehlen die drei Schritte eine Geschichte statt drei.
+  var s2 = document.getElementById('sk-entwurf');
+  var s2img = new Image();
+  s2img.alt = 'Das Design, das Otto daraus macht';
+  s2img.style.objectFit = 'contain';
+  s2img.onerror = function () { s2.innerHTML = entwurfSVG('college', true); };
+  s2img.src = bild(held.slug) + '?a=motiv';
+  s2.appendChild(s2img);
+  var s3 = document.getElementById('sk-shirt');
+  var s3img = new Image();
+  s3img.alt = 'Dasselbe Design, gedruckt – vorne';
+  s3img.onerror = function(){ s3.innerHTML = entwurfSVG('vintage'); };
+  s3img.src = bild(held.slug);
+  // 7. Okt., Markus: "auch zu sehen sein, wie das Ganze von hinten aussehen kann mit Namen" - vorne und hinten nebeneinander;
+  // hat das Design keine Rueckseite, bleibt vorne allein.
+  var s3v = document.createElement('figure'); s3v.className = 'seite'; s3v.appendChild(s3img);
+  var s3vt = document.createElement('figcaption'); s3vt.textContent = 'Vorne'; s3v.appendChild(s3vt);
+  var s3h = document.createElement('figure'); s3h.className = 'seite';
+  var s3himg = new Image(); s3himg.alt = 'Dasselbe Design – hinten mit allen Namen'; s3himg.loading = 'lazy';
+  s3himg.onerror = function(){ s3h.remove(); s3.classList.remove('zwei'); };
+  s3himg.src = bild(held.slug) + '?seite=hinten';
+  s3h.appendChild(s3himg);
+  var s3ht = document.createElement('figcaption'); s3ht.textContent = 'Hinten mit Namen'; s3h.appendChild(s3ht);
+  s3.classList.add('zwei'); s3.appendChild(s3v); s3.appendChild(s3h);
+
+  // ---------- Alle Anlässe ----------
+  // Fassung 78: Hier stand der Bau der Kacheln - Gruppen, Karten, Restliste, alles im Browser.
+  // Das macht jetzt der Server (ANLASS_GRUPPEN und anlassKacheln() in server.js), damit die
+  // Namen der Anlaesse als Text in der Seite stehen und nicht nur als JSON im Skript. Bleibt
+  // hier nichts zu tun: die Kacheln sind schon da, bevor dieses Skript ueberhaupt laeuft.
+
+  // Preise aus /preise.js - eine Quelle, keine zweite Tabelle im Seitentext
+  if (window.MoPreise) {
+    var P = window.MoPreise;
+    var teile = ['tee', 'hoodie', 'zip'];
+    var ab = Math.min.apply(null, teile.map(function (k) { return P.listenpreis(k, 'starter'); }));
+    // Die grosse Zahl sagt dazu, worauf sie sich bezieht - die Tasse ist guenstiger,
+    // das Shirt ist der Einstieg beim Textil.
+    document.getElementById('preis-ab').innerHTML = 'ab ' + esc(P.euro(ab)) + ' <small>beim Shirt</small>';
+    var zeilen = teile.map(function (k) {
+      return '<li><b>' + esc(P.label(k)) + '</b><span>' + esc(P.euro(P.listenpreis(k, 'starter'))) + ' bis ' +
+        esc(P.euro(P.listenpreis(k, 'deluxe'))) + ' je Stück, vor Mengenrabatt</span></li>';
+    });
+    // Wir machen mehr als Textil - die uebrigen Artikel als eine Zeile, mit ihrer echten Spanne
+    var merch = Object.keys(P.MERCH);
+    if (merch.length) {
+      var preise = merch.map(function (k) { return P.listenpreis(k); });
+      zeilen.push('<li><b>' + esc(merch.map(function (k) { return P.label(k); }).join(', ')) + '</b><span>' +
+        esc(P.euro(Math.min.apply(null, preise))) + ' bis ' + esc(P.euro(Math.max.apply(null, preise))) +
+        ' je Stück</span></li>');
+    }
+    document.getElementById('preis-liste').innerHTML = zeilen.join('');
+  }
+
+  // ---------- Politur ----------
+  // Alles hier ist Zugabe. Faellt es aus, steht die Seite trotzdem vollstaendig da.
+
+  // Abschnitte kommen beim Scrollen herein - die Klasse setzen wir erst,
+  // wenn der Beobachter da ist, sonst bliebe ohne Javascript alles unsichtbar.
+  if (!mag.matches && 'IntersectionObserver' in window) {
+    var zuSehen = new IntersectionObserver(function (eintraege) {
+      eintraege.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('da');
+        zuSehen.unobserve(e.target);
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0 });
+    var stufe = 0;
+    [].forEach.call(document.querySelectorAll('.ablauf, .vorteile, .vergleich, .mottos .grp, .preise, .vertrauen'), function (el) {
+      el.classList.add('rein');
+      el.style.transitionDelay = (Math.min(stufe++, 3) * 60) + 'ms';
+      zuSehen.observe(el);
+    });
+  }
+
+  // Lichtschein unter dem Zeiger. Nur auf Geraeten mit echtem Zeiger,
+  // auf dem Handy waere er sinnlos und kostet nur Rechenzeit.
+  if (window.matchMedia('(hover:hover) and (pointer:fine)').matches && !mag.matches) {
+    var scheinEls = document.querySelectorAll('.vt article, .pk article, .sk, .vr div');
+    [].forEach.call(scheinEls, function (el) { el.classList.add('schein'); });
+    var wartet = false, letzte = null;
+    document.addEventListener('pointermove', function (e) {
+      var el = e.target.closest && e.target.closest('.schein');
+      if (!el) return;
+      letzte = { el: el, x: e.clientX, y: e.clientY };
+      if (wartet) return;
+      wartet = true;
+      requestAnimationFrame(function () {
+        wartet = false;
+        if (!letzte) return;
+        var r = letzte.el.getBoundingClientRect();
+        letzte.el.style.setProperty('--mx', (letzte.x - r.left) + 'px');
+        letzte.el.style.setProperty('--my', (letzte.y - r.top) + 'px');
+      });
+    }, { passive: true });
+  }
+
+  // Kopfzeile bekommt beim Scrollen mehr Halt
+  var kopf = document.querySelector('.top');
+  if (kopf) {
+    var tief = false;
+    var pruefen = function () {
+      var jetzt = window.scrollY > 12;
+      if (jetzt !== tief) { tief = jetzt; kopf.classList.toggle('tief', tief); }
+    };
+    pruefen();
+    window.addEventListener('scroll', pruefen, { passive: true });
+  }
+
+  // 19. Sept., Besucher-Durchlauf am Laptop: die Reihe "Fuer jeden Artikel" ist breiter als das
+  // Fenster (gemessen 1246 px in 1080 px), der Scrollbalken ist versteckt, Pfeile gab es
+  // nicht - mit der Maus kam man an die letzten Kacheln nicht heran. Auf Touch-Geraeten
+  // wischt man; mit Maus und Tastatur gibt es jetzt zwei Pfeile, die um eine Fensterbreite
+  // weiterblaettern. Sie erscheinen nur, wenn die Reihe wirklich ueberlaeuft.
+  (function () {
+    if (!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+    [].forEach.call(document.querySelectorAll('.sk-band, .fk-band'), function (band) {
+      function baue() {
+        var alt = band.parentNode.querySelector('.band-nav'); if (alt) alt.remove();
+        if (band.scrollWidth <= band.clientWidth + 8) return;
+        var nav = document.createElement('div'); nav.className = 'band-nav';
+        nav.innerHTML = '<button type="button" aria-label="Zurück">‹</button><button type="button" aria-label="Weiter">›</button>';
+        var b = nav.querySelectorAll('button');
+        var stand = function () { b[0].disabled = band.scrollLeft <= 2; b[1].disabled = band.scrollLeft + band.clientWidth >= band.scrollWidth - 2; };
+        b[0].addEventListener('click', function () { band.scrollBy({ left: -band.clientWidth * 0.85, behavior: 'smooth' }); });
+        b[1].addEventListener('click', function () { band.scrollBy({ left: band.clientWidth * 0.85, behavior: 'smooth' }); });
+        band.addEventListener('scroll', stand, { passive: true });
+        band.parentNode.insertBefore(nav, band.nextSibling);
+        stand();
+      }
+      baue();
+      window.addEventListener('resize', baue);
+    });
+  })();
+
+  // Alte Direktlinks (#slug) weiterhin auf die Motto-Seite schicken
+  var start = decodeURIComponent((location.hash||'').replace(/^#/,''));
+  if(start && bySlug[start]) location.replace('/m/'+encodeURIComponent(start));
+})();
+</script>
+</body>
+</html>

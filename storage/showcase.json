@@ -1,0 +1,41 @@
+{
+  "MO-ABI-20260910-test01": {
+    "approved": true,
+    "count": 0,
+    "sum": 0,
+    "motto": "abi",
+    "mottoText": "ABIrama",
+    "textile": "dunkel",
+    "created": "2026-09-11T06:49:26.599Z",
+    "auto": true,
+    "vorzeige": true,
+    "style": "standard",
+    "bandFrei": true
+  },
+  "MO-ABI-20260911-t1": {
+    "approved": true,
+    "count": 0,
+    "sum": 0,
+    "motto": "abi",
+    "mottoText": "ABIrama",
+    "textile": "dunkel",
+    "created": "2026-09-11T09:32:21.423Z",
+    "auto": true,
+    "vorzeige": true,
+    "style": "standard",
+    "bandFrei": true
+  },
+  "MO-MALLE-20260911-t2": {
+    "approved": true,
+    "count": 0,
+    "sum": 0,
+    "motto": "malle-fahrt",
+    "mottoText": "Die Strandhelden",
+    "textile": "dunkel",
+    "created": "2026-09-11T09:32:21.424Z",
+    "auto": true,
+    "vorzeige": true,
+    "style": "standard",
+    "bandFrei": true
+  }
+}

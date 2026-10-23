@@ -1,0 +1,178 @@
+<title>Geschenke-Fee Entwurf</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: eine ruhige weisse Seite, rosa nur als Akzent; die Fee und ihr Stab sind der eine Blickfang */
+:root{
+  --weiss:#FFFFFF; --hauch:#FDEAF2; --blush:#F6B9D0; --rosa:#E2508A; --himbeere:#B5315F; --tinte:#3B2333; --grau:#7A6170;
+  --schrift:"Quicksand","Nunito","Segoe UI",sans-serif; --zier:"Great Vibes","Brush Script MT",cursive;
+  color-scheme:light;
+}
+body{background:var(--weiss);color:var(--tinte);font-family:var(--schrift);font-size:16px;line-height:1.55}
+.rahmen{max-width:980px;margin:0 auto;padding-block:28px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:48px}
+h1,h2,h3{text-wrap:balance;margin:0}
+h2{font-size:1.5rem;font-weight:700;color:var(--tinte)}
+h2 .zier{font-family:var(--zier);font-weight:400;font-size:2.2rem;color:var(--himbeere);margin-right:6px}
+p{margin:0;max-width:65ch}
+.kopf{display:grid;gap:18px;justify-items:start}
+.kopf svg{width:min(520px,100%);height:auto}
+.unter{color:var(--grau)}
+.etikett{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--rosa);font-weight:700}
+section{display:grid;gap:16px}
+.zwei{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;align-items:start}
+.zwei>*{min-width:0}
+/* Zauberbuehne */
+.buehne{position:relative;background:var(--hauch);border-radius:22px;aspect-ratio:4/3;max-width:100%;overflow:hidden}
+.buehne svg.karte{position:absolute;left:50%;top:56%;width:46%;transform:translate(-50%,-50%)}
+.motiv{opacity:0;transition:opacity 1.2s ease .2s}
+.buehne.fertig .motiv{opacity:1}
+.stab{position:absolute;width:26%;left:58%;top:6%;transform-origin:15% 90%;animation:schwingen 1.6s ease-in-out infinite}
+.buehne.fertig .stab{animation-play-state:paused}
+@keyframes schwingen{0%,100%{transform:rotate(-14deg)}50%{transform:rotate(16deg)}}
+.funke{position:absolute;width:14px;height:14px;pointer-events:none}
+.status{position:absolute;left:0;right:0;bottom:14px;text-align:center;font-weight:600;color:var(--himbeere)}
+.knopf{font:inherit;font-weight:700;background:var(--himbeere);color:var(--weiss);border:0;border-radius:999px;padding:10px 20px;cursor:pointer;justify-self:start}
+.knopf:focus-visible{outline:3px solid var(--blush);outline-offset:3px}
+.farben{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px}
+.farbe{display:grid;gap:6px;font-size:.85rem}
+.farbe i{display:block;height:64px;border-radius:14px;border:1px solid var(--blush)}
+.farbe code{color:var(--grau);font-variant-numeric:tabular-nums}
+.welten{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.welt{border:1px solid var(--blush);border-radius:18px;padding:16px;display:grid;gap:4px;align-content:start}
+.welt b{font-family:var(--zier);font-weight:400;font-size:1.9rem;color:var(--himbeere);line-height:1.1}
+.welt span{font-size:.9rem;color:var(--grau)}
+.tabelle{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--hauch);vertical-align:top}
+th{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--rosa)}
+td.nr{font-variant-numeric:tabular-nums;color:var(--grau)}
+.ki{white-space:nowrap;color:var(--himbeere);font-weight:700}
+.hinweis{background:var(--hauch);border-radius:16px;padding:14px 16px;font-size:.92rem}
+@media (prefers-reduced-motion:reduce){.stab{animation:none}.motiv{transition:none}}
+</style>
+
+<div class="rahmen">
+  <header class="kopf">
+    <span class="etikett">Arbeitstitel · Entwurf vom 19. Oktober</span>
+    <svg viewBox="0 0 520 160" role="img" aria-label="Geschenke-Fee">
+      <g fill="#FDEAF2" stroke="#E2508A" stroke-width="2">
+        <ellipse cx="63" cy="64" rx="15" ry="27" transform="rotate(-38 63 64)"/><ellipse cx="97" cy="64" rx="15" ry="27" transform="rotate(38 97 64)"/>
+        <ellipse cx="67" cy="90" rx="9" ry="16" transform="rotate(-62 67 90)"/><ellipse cx="93" cy="90" rx="9" ry="16" transform="rotate(62 93 90)"/>
+      </g>
+      <g fill="#B5315F"><circle cx="80" cy="38" r="5"/><circle cx="80" cy="51" r="10"/>
+        <path d="M80 61 C73 62 72 69 75 79 C70 92 62 108 56 123 Q80 133 104 123 C98 108 90 92 85 79 C88 69 87 62 80 61 Z"/></g>
+      <g stroke="#B5315F" stroke-width="5" stroke-linecap="round" fill="none"><path d="M87 69 L106 52"/><path d="M73 70 L64 88"/></g>
+      <path d="M106 52 L121 35" stroke="#3B2333" stroke-width="2.5" stroke-linecap="round"/>
+      <path fill="#E2508A" d="M126.0 20.0 L128.2 25.9 L134.6 26.2 L129.6 30.2 L131.3 36.3 L126.0 32.8 L120.7 36.3 L122.4 30.2 L117.4 26.2 L123.8 25.9 Z"/>
+      <g fill="#E2508A"><path d="M141 14 Q142.68 18.32 147 20 Q142.68 21.68 141 26 Q139.32 21.68 135 20 Q139.32 18.32 141 14 Z"/><circle cx="146" cy="34" r="1.8"/></g>
+      <text x="168" y="92" font-family="Quicksand, Nunito, sans-serif" font-weight="600" font-size="46" letter-spacing="1" fill="#3B2333">Geschenke</text>
+      <text x="400" y="104" font-family="'Great Vibes', cursive" font-size="78" fill="#B5315F">Fee</text>
+      <text x="170" y="128" font-family="Quicksand, Nunito, sans-serif" font-weight="600" font-size="15" letter-spacing="4" fill="#E2508A">.DE · GESCHENKE MIT ZAUBER</text>
+    </svg>
+    <p class="unter">Kopie von Motto Otto als neues Projekt, auf dem Zweig <b>geschenke-fee</b>. Weiß als Grund, Rosa als Akzent, die Fee mit ihrem Stab als Zeichen, das auf der Seite immer wieder auftaucht.</p>
+  </header>
+
+  <section>
+    <h2><span class="zier">Zauber</span>Wenn ein Design entsteht</h2>
+    <div class="zwei">
+      <div class="buehne" id="buehne" aria-live="polite">
+        <svg class="karte" viewBox="0 0 200 200" aria-hidden="true">
+          <rect x="10" y="10" width="180" height="180" rx="22" fill="#FFFFFF" stroke="#F6B9D0" stroke-width="3"/>
+          <g class="motiv">
+            <path d="M100 150 C60 120 42 98 50 74 C57 54 86 52 100 72 C114 52 143 54 150 74 C158 98 140 120 100 150 Z" fill="#E2508A"/>
+            <text x="100" y="178" text-anchor="middle" font-family="'Great Vibes',cursive" font-size="30" fill="#B5315F">für Oma</text>
+          </g>
+        </svg>
+        <svg class="stab" viewBox="0 0 120 120" aria-hidden="true">
+          <path d="M18 108 L84 36" stroke="#3B2333" stroke-width="6" stroke-linecap="round"/>
+          <path fill="#E2508A" d="M92 10 L97.5 24.8 L113.4 25.5 L100.9 35.3 L105.2 50.7 L92 41.9 L78.8 50.7 L83.1 35.3 L70.6 25.5 L86.5 24.8 Z"/>
+        </svg>
+        <div class="status" id="status">Die Fee zaubert dein Design …</div>
+      </div>
+      <div style="display:grid;gap:14px">
+        <p>Während Otto heute eine Uhr zeigt, schwingt hier die Fee ihren Stab: Funken springen von der Sternspitze, und das Motiv erscheint auf dem Geschenk. Dasselbe Zeichen kommt beim Warten, beim fertigen Design und auf den Knöpfen wieder.</p>
+        <p>Bei „weniger Bewegung“ im System steht der Stab still, und das Motiv erscheint ohne Funken.</p>
+        <button class="knopf" id="nochmal" type="button">Nochmal zaubern</button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="zier">Farben</span>Weiß und Rosa</h2>
+    <div class="farben">
+      <div class="farbe"><i style="background:#FFFFFF"></i><b>Weiß</b><code>#FFFFFF · Grund</code></div>
+      <div class="farbe"><i style="background:#FDEAF2"></i><b>Feenhauch</b><code>#FDEAF2 · Flächen</code></div>
+      <div class="farbe"><i style="background:#F6B9D0"></i><b>Blütenrosa</b><code>#F6B9D0 · Linien</code></div>
+      <div class="farbe"><i style="background:#E2508A"></i><b>Feenrosa</b><code>#E2508A · Akzent</code></div>
+      <div class="farbe"><i style="background:#B5315F"></i><b>Himbeere</b><code>#B5315F · Knöpfe</code></div>
+      <div class="farbe"><i style="background:#3B2333"></i><b>Tinte</b><code>#3B2333 · Schrift</code></div>
+    </div>
+    <p class="unter">Feenrosa ist zu hell für Schrift auf Weiß. Für Knöpfe und Text nehme ich Himbeere und Tinte, damit es lesbar bleibt.</p>
+  </section>
+
+  <section>
+    <h2><span class="zier">Feenwelten</span>statt Mottos</h2>
+    <p>Mein Vorschlag, je Welt ein Anlass aus der Recherche. Die Namen sind Entwürfe.</p>
+    <div class="welten">
+      <div class="welt"><b>Sternenzauber</b><span>Weihnachten und Advent · Decke, Kissen, Kalender, Kugel, Tasse</span></div>
+      <div class="welt"><b>Wiegenwald</b><span>Geburt und Taufe · Babybody, Decke, Kinderteller, Spardose</span></div>
+      <div class="welt"><b>Rosenhain</b><span>Liebe, Hochzeit, Valentinstag · Sternenkarte, Paar-Porträt, Acryl</span></div>
+      <div class="welt"><b>Blütenlichtung</b><span>Muttertag · Kissen mit Kinderbild, Tasse, Windlicht</span></div>
+      <div class="welt"><b>Schultütenwiese</b><span>Einschulung und Kita · Brotdose, Trinkflasche, Turnbeutel</span></div>
+      <div class="welt"><b>Pfotenreich</b><span>Haustiere · Tierporträt auf Poster, Tasse, Decke, Napfunterlage</span></div>
+      <div class="welt"><b>Kerzenfest</b><span>Geburtstag · Tasse, Shirt, Puzzle, Poster</span></div>
+      <div class="welt"><b>Dankesgarten</b><span>Lehrer, Erzieher, Ruhestand · Beutel, Keksglas, Kissen</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="zier">Bestseller</span>Was sich personalisiert verschenkt</h2>
+    <p>Aus der Recherche: kein Anbieter veröffentlicht Verkaufszahlen je Artikel. Die Reihenfolge ist daher eine Einschätzung aus Studien, Shop-Startseiten und Etsy-Berichten.</p>
+    <div class="tabelle">
+      <table>
+        <thead><tr><th>#</th><th>Artikel</th><th>Anlässe</th><th>Preis am Markt</th><th>KI-Motiv</th></tr></thead>
+        <tbody>
+          <tr><td class="nr">1</td><td>Tasse</td><td>alles, v. a. Weihnachten</td><td>13,95–14,95 €</td><td class="ki">+++</td></tr>
+          <tr><td class="nr">2</td><td>Fotobuch</td><td>Urlaub, Jahr, Hochzeit</td><td>25–60 € (geschätzt)</td><td class="ki">+</td></tr>
+          <tr><td class="nr">3</td><td>Schmuck mit Gravur</td><td>Valentinstag, Muttertag</td><td>20–80 € (geschätzt)</td><td class="ki">–</td></tr>
+          <tr><td class="nr">4</td><td>Fotokissen</td><td>Weihnachten, Geburt, Haustier</td><td>ab 24,90 €</td><td class="ki">+++</td></tr>
+          <tr><td class="nr">5</td><td>Kuscheldecke</td><td>Weihnachten, Geburt</td><td>ab 44,99 €</td><td class="ki">+++</td></tr>
+          <tr><td class="nr">6</td><td>Puzzle</td><td>Familie, Großeltern</td><td>15–40 € (geschätzt)</td><td class="ki">++</td></tr>
+          <tr><td class="nr">7</td><td>Wandkalender</td><td>Weihnachten</td><td>15–35 € (geschätzt)</td><td class="ki">++</td></tr>
+          <tr><td class="nr">8</td><td>Poster, Acrylbild</td><td>Hochzeit, Haustier</td><td>ab 4,90 €</td><td class="ki">+++</td></tr>
+          <tr><td class="nr">9</td><td>Stadt-/Sternenkarte</td><td>Hochzeit, Jahrestag, Geburt</td><td>44,99–79,99 €</td><td class="ki">+</td></tr>
+          <tr><td class="nr">10</td><td>LED-Acryl, Glasfoto</td><td>Valentinstag, Kinderzimmer</td><td>25–70 € (geschätzt)</td><td class="ki">++</td></tr>
+          <tr><td class="nr">11</td><td>Babybody</td><td>Geburt, Taufe</td><td>15–30 € (geschätzt)</td><td class="ki">++</td></tr>
+          <tr><td class="nr">12</td><td>Shirt, Hoodie</td><td>JGA, Geburtstag, Vatertag</td><td>ab 16,95 €</td><td class="ki">+++</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="hinweis">Die Lücke am Markt: Andere bieten „Foto hochladen, Filter wählen“. Ein Motiv aus einem gesprochenen Wunsch, für jeden Artikel im richtigen Format gebaut, hat in der Recherche niemand. Genau das kann die Technik von Motto Otto schon. Die ganze Rangliste mit 35 Artikeln und allen Quellen liegt im Zweig unter <b>geschenke-fee/recherche-geschenkartikel.md</b>.</div>
+  </section>
+</div>
+
+<script>
+(function(){
+  var b=document.getElementById('buehne'), st=document.getElementById('status'), stab=b.querySelector('.stab');
+  var ruhig=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var STERN='<svg viewBox="0 0 20 20" class="funke"><path fill="#E2508A" d="M10 0 Q11.5 8.5 20 10 Q11.5 11.5 10 20 Q8.5 11.5 0 10 Q8.5 8.5 10 0Z"/></svg>';
+  var lauf=null;
+  function funke(){
+    var r=b.getBoundingClientRect(), s=stab.getBoundingClientRect();
+    var x=s.left-r.left+s.width*0.77, y=s.top-r.top+s.height*0.22;
+    var d=document.createElement('div'); d.innerHTML=STERN; var f=d.firstChild;
+    f.style.left=x+'px'; f.style.top=y+'px'; b.appendChild(f);
+    var dx=(Math.random()*-1.6-0.2)*r.width*0.35, dy=(Math.random()*0.9+0.2)*r.height*0.45, gr=0.5+Math.random()*0.9;
+    f.animate([{transform:'translate(0,0) scale('+gr+') rotate(0deg)',opacity:1},{transform:'translate('+dx+'px,'+dy+'px) scale(0.2) rotate(160deg)',opacity:0}],{duration:1100+Math.random()*600,easing:'ease-out'}).onfinish=function(){f.remove()};
+  }
+  function zaubern(){
+    b.classList.remove('fertig'); st.textContent='Die Fee zaubert dein Design …';
+    if(lauf) clearInterval(lauf);
+    if(ruhig){ b.classList.add('fertig'); st.textContent='Fertig – dein Design ist da.'; return; }
+    lauf=setInterval(funke,90);
+    setTimeout(function(){ clearInterval(lauf); lauf=null; b.classList.add('fertig'); st.textContent='Fertig – dein Design ist da.'; },3200);
+  }
+  document.getElementById('nochmal').addEventListener('click',zaubern);
+  zaubern();
+})();
+</script>

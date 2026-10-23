@@ -1,0 +1,1845 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Motto Otto · Backend</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+  :root{
+    --bg:#14131a; --card:#1d1c25; --card2:#26242f; --line:#35323f;
+    --ink:#f4f2f7; --ink2:#b6b1c2; --ink3:#8b8598;
+    --accent:#ffc542; --accent-ink:#1b1710; --ok:#5fcf95; --warn:#ff8f6b; --bad:#ff6b6b;
+    --sans:"Archivo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5}
+  .top{display:flex;align-items:center;gap:16px;padding:14px 20px;border-bottom:1px solid var(--line);background:var(--card);position:sticky;top:0;z-index:5;flex-wrap:wrap}
+  .top h1{font-size:18px;margin:0;font-weight:800}
+  .top h1 span{color:var(--accent)}
+  .top .sp{flex:1}
+  .grid{display:grid;grid-template-columns:250px 1fr;gap:0;min-height:calc(100vh - 55px)}
+  @media(max-width:820px){.grid{grid-template-columns:1fr}}
+  .side{border-right:1px solid var(--line);padding:16px;background:var(--card)}
+  .main{padding:22px 24px 90px;max-width:840px}
+
+  button{font:inherit;cursor:pointer;border-radius:7px;border:1px solid var(--line);background:var(--card2);color:var(--ink);padding:8px 13px}
+  button:hover{border-color:var(--ink3)}
+  button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:800}
+  button.danger{color:var(--bad)}
+  button.small{padding:5px 9px;font-size:13px}
+
+  .item{display:block;width:100%;text-align:left;margin-bottom:6px;background:none;border:1px solid transparent;padding:9px 11px}
+  .item:hover{background:var(--card2)}
+  .item.on{border-color:var(--accent);background:var(--card2)}
+  .item b{display:block;font-weight:700}
+  .item small{color:var(--ink3);font-size:12px}
+  .item .off{color:var(--warn)}
+
+  label{display:block;font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3);font-weight:700;margin:0 0 5px}
+  input[type=text],input[type=number],select,textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:7px;background:var(--card);color:var(--ink);font:inherit;font-size:15px}
+  textarea{font-family:var(--mono);font-size:13.5px;line-height:1.6;resize:vertical}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+  .row{display:grid;gap:14px;margin-bottom:16px}
+  .row.two{grid-template-columns:1fr 1fr}
+  .row.three{grid-template-columns:1fr 1fr 1fr}
+  @media(max-width:640px){.row.two,.row.three{grid-template-columns:1fr}}
+  .chk{display:flex;align-items:center;gap:8px;color:var(--ink2);font-size:14px;padding-top:22px}
+  .chk input{width:auto}
+
+  h2{font-size:15px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3);margin:30px 0 12px;padding-top:14px;border-top:1px solid var(--line);font-weight:700}
+  .help{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:7px;padding:12px 14px;color:var(--ink2);font-size:13.5px;margin-bottom:14px}
+  .help code{font-family:var(--mono);background:var(--card2);padding:1px 5px;border-radius:4px;color:var(--ink)}
+
+  .frow{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px;margin-bottom:10px}
+  .frow .line{display:grid;grid-template-columns:1.4fr 1fr 110px 90px;gap:10px;margin-bottom:10px}
+  .frow .line2{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:end}
+  @media(max-width:700px){.frow .line,.frow .line2{grid-template-columns:1fr}}
+  .frow .tag{font-family:var(--mono);font-size:12.5px;color:var(--accent)}
+
+  .bar{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:12px 24px;display:flex;gap:10px;align-items:center;z-index:6}
+  .bar .msg{flex:1;font-size:14px;color:var(--ink2)}
+  .bar .msg.ok{color:var(--ok)} .bar .msg.err{color:var(--bad)}
+
+  pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px;overflow-x:auto;font-family:var(--mono);font-size:13px;line-height:1.6;color:var(--ink2);white-space:pre-wrap}
+  .hide{display:none}
+  .gate{max-width:420px;margin:80px auto;padding:24px;background:var(--card);border:1px solid var(--line);border-radius:10px}
+</style>
+</head>
+<body>
+
+<div class="gate" id="gate">
+  <h1 style="margin:0 0 6px;font-size:22px;font-weight:800">Motto <span style="color:var(--accent)">Otto</span> · Backend</h1>
+  <p style="color:var(--ink2);margin:0 0 18px;font-size:14px">Bitte das Backend-Passwort eingeben. Es wird nur in diesem Browser gespeichert.</p>
+  <div class="row"><div><label for="tok">Passwort</label><input type="text" id="tok" autocomplete="off"></div></div>
+  <button class="primary" id="tok-go">Öffnen</button>
+  <div class="msg err" id="gate-msg" style="margin-top:10px;font-size:14px;color:var(--bad)"></div>
+</div>
+
+<div id="ui" class="hide">
+  <div class="top">
+    <h1>Motto <span>Otto</span> · Backend</h1>
+    <div class="sp"></div>
+    <button id="new">Neues Motto</button>
+    <button class="primary" id="druck-top" type="button">🖨 Druckdaten</button>
+    <a href="/" target="_blank" style="color:var(--accent);text-decoration:none;font-size:14px">Kundenseite ansehen ↗</a>
+    <button id="mailtest">Mail-Test</button>
+    <button id="mailvorschau" type="button" title="So sieht die Mail aus, die der Kunde bekommt, wenn sein Design fertig ist">✉ Fertig-Mail ansehen</button>
+    <button id="logout" style="color:#ff8a8a;border-color:#5c2b2b">Abmelden</button>
+  </div>
+
+  <!-- Lage zuerst: die Frage "laeuft alles?" soll man sehen, nicht suchen muessen -->
+  <div id="lage-karte" style="border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:0 0 22px;background:var(--card)">
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <h2 style="margin:0">Lage</h2>
+      <span id="lage-kurz" style="font-size:14px;color:var(--ink2)">wird geprüft …</span>
+      <button type="button" id="lage-neu" style="margin-left:auto;font-size:13px">Neu prüfen</button>
+    </div>
+    <div id="lage-liste" style="margin-top:10px"></div>
+  </div>
+
+  <div style="border:1px solid var(--accent);border-radius:12px;padding:12px 16px;margin:0 0 22px;background:var(--card)">
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <h2 style="margin:0">🖨 Druckdaten</h2>
+      <button class="primary" id="druck-go" type="button">Druckdaten-Übersicht öffnen ↗</button>
+      <span style="color:var(--ink2);font-size:14px">Alle fertigen Designs mit Druckdatei (PNG · PDF · SVG), Namenslisten und Bestelllisten-CSV.</span>
+    </div>
+    <div style="border-top:1px solid var(--line);margin-top:12px;padding-top:12px">
+      <b style="font-size:14px">Zugang für die Druckerei</b>
+      <p style="color:var(--ink2);font-size:13.5px;margin:4px 0 8px">Dieser Link zeigt nur die Druckdaten – Ansehen und Herunterladen. Kein Backend, kein Löschen, keine Freigaben. Zum Weitergeben an die Druckerei. Wer den Link hat, kommt rein: also nicht öffentlich posten. Ein neues Passwort macht den alten Link sofort ungültig – so nimmst du einer Druckerei den Zugang wieder weg.</p>
+      <div class="row" style="gap:8px;align-items:center;flex-wrap:wrap">
+        <input type="text" id="dz-link" readonly style="flex:1;min-width:240px;font-family:ui-monospace,monospace;font-size:13px" value="lade …">
+        <button type="button" id="dz-copy">Kopieren</button>
+        <button type="button" id="dz-open">Öffnen ↗</button>
+      </div>
+      <div class="row" style="gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px">
+        <input type="text" id="dz-pw" placeholder="Eigenes Passwort (mind. 8 Zeichen, keine Leerzeichen)" style="flex:1;min-width:240px">
+        <button type="button" class="primary" id="dz-setzen">Passwort übernehmen</button>
+        <button type="button" id="dz-neu">Zufälligen Schlüssel erzeugen</button>
+      </div>
+      <div id="dz-msg" style="color:var(--ink3);font-size:13px;margin-top:6px"></div>
+    </div>
+  </div>
+
+  <div style="border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:0 0 22px">
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <h2 style="margin:0">Druckdatei-Qualität</h2>
+      <span id="gm-jetzt" style="font-size:13px;color:var(--ink2)">lade …</span>
+    </div>
+    <p style="color:var(--ink2);font-size:13.5px;margin:6px 0 8px">Wie der Hintergrund der Druckdatei entsteht. <b>Alphakanal</b> ist der Weg: der Bildserver liefert die Transparenz direkt, die Kanten werden hier nur nachgeschärft. <b>Chromagrün</b> (Motiv auf grünem Grund, hier freigestellt) ist nur noch für Tests gedacht. Die Wahl hier gilt vor der Railway-Variable und bleibt auf dem Volume.</p>
+    <div class="row" style="gap:8px;align-items:center;flex-wrap:wrap">
+      <button type="button" class="primary" id="gm-test">Bildserver prüfen</button>
+      <input type="text" id="gm-modell" placeholder="Modell (leer = wie eingestellt)" list="gm-modelle"
+             style="width:210px;font-size:13px" autocomplete="off">
+      <datalist id="gm-modelle">
+        <option value="gpt-image-2"></option>
+        <option value="gpt-image-2.5-sunburst"></option>
+        <option value="gpt-image-2.5-flare"></option>
+      </datalist>
+      <label style="font-size:13px;color:var(--ink2)">Stufe
+        <select id="gm-quali" style="margin-left:4px">
+          <option value="">wie eingestellt</option>
+          <option value="medium">medium</option>
+          <option value="high">high</option>
+          <option value="xhigh">xhigh (nur 2.5)</option>
+          <option value="max">max (nur 2.5)</option>
+        </select>
+      </label>
+      <button type="button" id="gm-chroma">auf Chromagrün</button>
+      <button type="button" id="gm-alpha">auf Alphakanal</button>
+      <span id="gm-msg" style="color:var(--ink3);font-size:13px"></span>
+    </div>
+    <div id="gm-wache" style="color:var(--ink3);font-size:13px;margin-top:8px"></div>
+    <div style="border-top:1px solid var(--line);margin-top:12px;padding-top:12px">
+      <b style="font-size:14px">Modell für echte Designs</b>
+      <div id="bm-kraft" style="margin:8px 0;background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:9px 11px;font-size:13.5px">wird geladen …</div>
+      <p style="color:var(--ink2);font-size:13.5px;margin:4px 0 8px">Was du hier einträgst, <b>gewinnt immer</b> – gegen Railway und gegen die Einstellung am Bildserver. Es gilt für <b>alle</b> neu erzeugten Designs, auch für Kunden. Leer heißt: es gilt, was oben unter „kommt aus" steht. Nach dem Vergleich bitte wieder leeren.</p>
+      <div class="row" style="gap:8px;align-items:center;flex-wrap:wrap">
+        <input type="text" id="bm-modell" placeholder="Modell (leer = Standard)" list="gm-modelle" style="width:220px;font-size:13px" autocomplete="off">
+        <select id="bm-stufe" style="font-size:13px">
+          <option value="">Stufe: Standard</option>
+          <option value="medium">medium</option>
+          <option value="high">high</option>
+          <option value="xhigh">xhigh (nur 2.5)</option>
+          <option value="max">max (nur 2.5)</option>
+        </select>
+        <button type="button" class="primary" id="bm-set">Übernehmen</button>
+        <button type="button" id="bm-weg">Zurück auf Standard</button>
+        <span id="bm-msg" style="color:var(--ink3);font-size:13px"></span>
+      </div>
+      <div id="bm-warn" class="hide" style="margin-top:8px;background:#2a2416;border:1px solid #5c4a2b;color:#ffc542;border-radius:7px;padding:7px 10px;font-size:13px"></div>
+    </div>
+    <pre id="gm-befund" class="hide" style="white-space:pre-wrap;font-size:13px;background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:10px;margin:10px 0 0"></pre>
+  </div>
+
+  <!-- Fassung 74 (Markus, 17. Sept.: "Ja, baue einen Zähler, am Tracken können, überall alles
+       ganz genau"): Reine Tageszahlen, keine Personendaten. Beantwortet endlich Fragen wie
+       "schaut überhaupt jemand auf Kissen?" oder "wie viele Seitenaufrufe werden Aufträge?" -->
+  <div style="border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:0 0 22px">
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <h2 style="margin:0">Zahlen</h2>
+      <select id="zh-tage" style="font-size:13px;width:auto;min-width:130px">
+        <option value="1">Heute</option>
+        <option value="7">7 Tage</option>
+        <option value="14" selected>14 Tage</option>
+        <option value="30">30 Tage</option>
+        <option value="90">90 Tage</option>
+      </select>
+      <button type="button" id="zh-neu">Aktualisieren</button>
+      <span id="zh-msg" style="color:var(--ink2);font-size:13px"></span>
+    </div>
+    <div id="zh-quote" style="margin-top:12px"></div>
+    <div id="zh-body" style="margin-top:6px;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px"></div>
+    <p style="color:var(--ink3);font-size:12.5px;margin:12px 0 4px">Gezählt werden nur Zahlen – kein Name, keine E-Mail, keine IP, kein Text eines Kunden und keine Design-Nummer. Aufbewahrt 180 Tage, Ablage <code>storage/zaehler.json</code>.</p>
+  </div>
+
+  <div style="border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:0 0 22px">
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><h2 style="margin:0">Bewertungs-Pool</h2><button id="sc-open" type="button">Bewertungs-Pool anzeigen (…)</button><span id="sc-msg" style="color:var(--ink2);font-size:13px"></span></div>
+    <div id="sc-body" class="hide" style="margin-top:12px">
+      <p style="color:var(--ink2);font-size:14px;margin:0 0 10px">Alle Designs, die Besuchern zur Bewertung angezeigt werden können. Einzeln aus der Bewertung nehmen (☆) oder komplett löschen (🗑 – inkl. Dateien und Google Drive). Es werden 40 auf einmal geladen – zum Suchen den Filter nutzen.</p>
+      <div style="margin:0 0 12px;display:flex;gap:6px;flex-wrap:wrap;align-items:center"><input type="text" id="sc-filter" placeholder="Filter: Motto oder Design-Nr" style="flex:1;min-width:180px"><button id="sc-purge-all" class="danger" type="button">Alle alten Designs aus dem Pool nehmen</button><button id="sc-purge-fan" class="danger" type="button">Alle „Lieblingsverein" aus der Bewertung nehmen</button><button id="sc-reload" type="button">Aktualisieren</button></div>
+      <div id="showcase" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:12px"></div>
+      <button id="sc-more" type="button" style="display:none;margin:0 0 8px">Mehr laden</button>
+    </div>
+  </div>
+
+  <div style="border:1px solid var(--line);border-radius:12px;padding:16px 16px 6px;margin:0 0 22px">
+    <h2 style="margin-top:0">Fanclub-Freigaben</h2>
+    <p style="color:var(--ink2);font-size:14px;margin:0 0 10px">Fanclub-Designs dürfen Vereinsmotive nutzen, werden aber erst gedruckt, wenn der/die Vorsitzende einen Nachweis (Fanclub-Ausweis) geschickt hat. „Eingereicht" zuerst – Nachweis ansehen, dann freigeben.</p>
+    <div style="margin:0 0 12px"><button id="fc-reload" type="button">Aktualisieren</button> <span id="fc-list-msg" style="color:var(--ink2);font-size:13px;margin-left:6px"></span></div>
+    <div id="approvals" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:12px"></div>
+  </div>
+
+  <div class="grid">
+    <div class="side" id="list"></div>
+
+    <div class="main hide" id="editor">
+      <div class="row two">
+        <div><label for="e-name">Name des Mottos</label><input type="text" id="e-name" placeholder="z. B. Junggesellenabschied"></div>
+        <div><label for="e-slug">Kürzel</label><input type="text" id="e-slug" placeholder="wird aus dem Namen gebildet"></div>
+      </div>
+      <div class="row three">
+        <div><label for="e-order">Reihenfolge</label><input type="number" id="e-order" value="100"></div>
+        <div><label for="e-size">Bildformat</label><select id="e-size">
+          <option value="1024x1536">Hochformat (Shirt)</option>
+          <option value="1024x1024">Quadratisch</option>
+          <option value="1536x1024">Querformat</option>
+        </select></div>
+        <div class="chk"><input type="checkbox" id="e-active" checked><label for="e-active" style="margin:0;text-transform:none;letter-spacing:0;font-size:14px;color:var(--ink2)">Für Kunden sichtbar</label></div>
+      </div>
+      <div class="row"><div><label for="e-intro">Kurzer Text (Kachel auf der Startseite)</label><input type="text" id="e-intro" placeholder="z. B. Ein Shirt für die letzte Nacht in Freiheit."></div></div>
+
+      <h2>Eigene Seite des Mottos</h2>
+      <div class="help">Jedes Motto hat eine eigene Seite unter <code>/m/&lt;kürzel&gt;</code>. Überschrift und Text stehen dort oben, das Beispielbild ist das T-Shirt-Mockup eines gespeicherten Designs.</div>
+      <div class="row"><div><label for="e-headline">Überschrift auf der Motto-Seite</label><input type="text" id="e-headline" placeholder="z. B. Das Shirt für die letzte Nacht in Freiheit"></div></div>
+      <div class="row"><div><label for="e-text">Text auf der Motto-Seite</label><textarea id="e-text" rows="3" style="font-family:inherit;font-size:15px" placeholder="Zwei, drei Sätze, was das Motto kann und was der Kunde eingeben soll."></textarea></div></div>
+      <div class="row two">
+        <div><label for="e-sample">Beispielbild: Design-Nummer</label><input type="text" id="e-sample" placeholder="z. B. MO-MALLEFAH-20260905-MBKN"></div>
+        <div><label for="e-accent">Akzentfarbe</label><input type="text" id="e-accent" placeholder="#ffc542"></div>
+      </div>
+      <div class="row two">
+        <div><label for="e-stylechoice">Stilwahl für Kunden</label><select id="e-stylechoice"><option value="1">an – Street Art, Meisterwerk, Minimalistisch, Pop-Art, Vintage, Tattoo, Comic, Japan</option><option value="0">aus – immer der Stil aus dem Master-Prompt</option></select></div>
+        <div><label for="e-colorchoice">Lieblingsfarben-Feld</label><select id="e-colorchoice"><option value="1">an – Kunde kann Farben nennen</option><option value="0">aus</option></select></div>
+      </div>
+      <div class="row two">
+        <div><label for="e-markenfrei">Markensperre für dieses Motto</label><select id="e-markenfrei"><option value="0">an – geschützte Vereins-/Markennamen und Logos werden abgewiesen</option><option value="1">aus – keine Sperre (z. B. Handwerker-Shirt mit eigenem Firmenlogo)</option></select></div>
+        <div class="help" style="margin:0;align-self:end">„Aus“ schaltet für dieses Motto alle Prüfstellen ab: Eingabe, Namensliste, Upload, Bild-QA (Text + Logo). Der Recherche-Scrub bleibt. Fanclub ist immer ohne Sperre (Nachweis statt Sperre).</div>
+      </div>
+      <div class="row two">
+        <div><label for="e-gewerblich">Firmen-Motto (B2B)</label><select id="e-gewerblich"><option value="0">nein – normales Motto für Endkunden</option><option value="1">ja – erscheint im Firmenbereich und bleibt immer privat</option></select></div>
+        <div class="help" style="margin:0;align-self:end"><b>Zwei Wirkungen:</b> das Motto erscheint im Firmenbereich unter <code>/firma</code>, <b>und</b> seine Designs bleiben immer privat. Firmen- und Vereinsbekleidung gehört nicht ins öffentliche Schaufenster. Designs mit hochgeladenem Logo oder Foto und Designs mit Namensliste bleiben ohnehin automatisch draußen – unabhängig von dieser Einstellung. Der Kunde kann sein Design auf der Ergebnisseite selbst freigeben.</div>
+      </div>
+      <div class="row two">
+        <div><label for="e-bildstufe">Bildqualität für dieses Motto</label><select id="e-bildstufe"><option value="">wie allgemein eingestellt (oben unter „Bildmodell“)</option><option value="max">max – höchste Stufe, langsamste</option><option value="xhigh">xhigh</option><option value="high">high – gemessen 23 s statt Minuten</option><option value="medium">medium</option><option value="low">low</option></select></div>
+        <div class="help" style="margin:0;align-self:end">Gilt <b>nur für dieses Motto</b> und schlägt die allgemeine Einstellung. Gemessen am 22. Sept. mit demselben Selfie, Postkarte in Druckgröße (1952 × 1408): <b>high 23 s</b>, <b>max im Schnitt 310 s</b> je Design. Die Postkarte steht deshalb auf „high“ – der Kunde wartet dort auf ein Bild, das er sofort teilt. Alle anderen Mottos bleiben unberührt.</div>
+      </div>
+      <div class="row two">
+        <div><label for="e-vary">Unikat-Variation</label><select id="e-vary"><option value="1">an – jeder Auftrag bekommt zufällig Layout, Schmuck und Schriftart gemischt</option><option value="0">aus – nur der Master-Prompt</option></select></div>
+        <div><label for="e-variations">Eigene Variationen (eine je Zeile, englisch)</label><textarea id="e-variations" rows="3" style="font-family:inherit;font-size:14px" placeholder="z. B. laurel wreath around the emblem&#10;shield crest with two banners&#10;round badge with sun rays"></textarea></div>
+      </div>
+      <div class="row two">
+        <div><label for="e-namezone">Namensliste: Band für den Namen</label><select id="e-namezone"><option value="unten">unten</option><option value="oben">oben</option></select></div>
+        <div><label for="e-namefont">Namensliste: Schrift</label><select id="e-namefont"><option value="rund">Rund &amp; kräftig</option><option value="schmal">Schmal &amp; hoch</option><option value="serif">Klassisch (Serifen)</option></select></div>
+      </div>
+      <div class="row two">
+        <div><label for="e-listewort">Wort für die Namensliste</label><input type="text" id="e-listewort" maxlength="30" placeholder="leer = automatisch: Kaderliste, Mitarbeiterliste, Stufenliste …"></div>
+        <div><label for="e-kader">Namensliste hinten &amp; Brust-Print</label><select id="e-kader"><option value="1">an – Kunde wählt: Name im Motiv / vorne Motiv + hinten alle Namen / hinten groß + Brust-Print mit Namen</option><option value="0">aus – nur Name im Motiv</option></select></div>
+        <div class="help" style="margin:0;align-self:end">Greift nur bei Mottos mit Namensliste. Größen aus der Liste („Lena, M“) landen nie auf dem Textil, sondern in der Bestellliste (CSV unter /druck und für den Kunden).</div>
+      </div>
+      <div class="row two">
+        <div><label for="e-research">Motto-Recherche (Abi-Motto, Schulmotto)</label><select id="e-research"><option value="0">aus</option><option value="1">an – Wortspiel auflösen, Quelle bei Wikipedia nachschlagen, Bildwelt festlegen</option></select></div>
+        <div><label for="e-researchfield">Feld mit dem Motto-Text (Kürzel)</label><input type="text" id="e-researchfield" placeholder="z. B. motto"></div>
+      </div>
+      <div class="row"><div><label for="e-suggestions">Vorschläge für Kunden (einer je Zeile, erscheinen als Klick-Vorschläge)</label><textarea id="e-suggestions" rows="4" style="font-family:inherit;font-size:14px" placeholder="Ein Spruch je Zeile, passend zu DIESEM Motto – der Kunde klickt ihn ins Spruch-Feld. Leer = keine Vorschläge."></textarea></div></div>
+      <div class="row two"><div><label for="e-suggestfield">Vorschläge füllen dieses Feld (Kürzel)</label><input type="text" id="e-suggestfield" placeholder="leer = Recherche-Feld, sonst z. B. spruch"></div></div>
+      <div class="help">Recherche: Wie bei kiezfashion mit dem Ort – aus dem Motto wird erst ein Steckbrief (Wortspiel, Quelle, Motive, Farben, Schrift), daraus dann das Design. Dein Master-Prompt beschreibt nur noch den Rahmen (Shirt-Typ, Jahr, Schule); die Bildwelt kommt aus der Recherche.</div>
+      <div class="help">Namensliste: Ist bei einem Feld „je Person" angehakt, tippt der Kunde beliebig viele Namen (oder lädt eine Excel/CSV hoch). Die KI malt das Design <b>ohne</b> den Namen und hält dafür ein Band frei; jeder Name wird als Schriftzug hineingesetzt – jede Person bekommt ihre eigene Druckdatei, das Motiv bleibt gleich. Namen lassen sich später ändern, ohne das Design neu zu erzeugen.</div>
+      <div class="help">Ein gewählter Stil hängt sich hinter deinen Master-Prompt und überschreibt nur die Optik („Style: …“), nicht Aufbau und Texte. Genannte Lieblingsfarben werden zur dominanten Palette. Beides landet bei jedem Entwurf unten in der Liste.</div>
+
+      <h2>Master-Prompt</h2>
+      <div class="help">
+        <b style="color:var(--ink)">So setzt du Kundeneingaben ein:</b><br>
+        <code>{name}</code> wird durch das Feld mit dem Kürzel <code>name</code> ersetzt.<br>
+        <code>[[ … {stadt} … ]]</code> fällt komplett weg, wenn <code>{stadt}</code> leer bleibt — so wird aus optionalen Feldern kein leerer Satz.<br>
+        Die Druckregeln (freigestellt, keine Logos, Text exakt) hängt der Dienst automatisch an. Schreib sie nicht selbst dazu.
+      </div>
+      <div class="row"><div><textarea id="e-prompt" rows="14" placeholder="Bold vintage screen-print T-shirt design, portrait, isolated on a plain empty background.&#10;&#10;The main text reads exactly &quot;{name}&quot;.&#10;[[A curved line below reads exactly &quot;{stadt}&quot;.]]"></textarea></div></div>
+
+      <h2>Rückseite mit Namensliste (z. B. Abi/Schulmotto)</h2>
+      <div class="help">
+        Ist hier ein Prompt hinterlegt <b>und</b> ein Feld mit der Namensliste angegeben, wird zusätzlich eine <b>Rückseite</b> erzeugt: sie wird aus der Vorderseite abgeleitet (gleicher Stil, ein Element wird übernommen), und alle Namen werden als echter Schriftzug in den unteren Bereich gesetzt. Der Dienst hält den unteren Bereich automatisch frei – beschreibe im Prompt nur den oberen Teil (Motto, Schule, Ort und ein Element aus dem Motiv). Leer lassen = keine Rückseite.
+      </div>
+      <div class="row two">
+        <div><label for="e-backfield">Feld mit der Namensliste (Kürzel)</label><input type="text" id="e-backfield" placeholder="z. B. namen"></div>
+      </div>
+      <div class="row"><div><textarea id="e-backprompt" rows="8" placeholder="Same art style and palette as the front. Reuse one clear element from the front motif at the top. A big headline reads exactly &quot;{motto}&quot;. A line below reads exactly &quot;{schule}&quot; and &quot;{ort}&quot;."></textarea></div></div>
+
+      <h2>Felder für den Kunden</h2>
+      <div id="fields"></div>
+      <button id="addfield" class="small">Feld hinzufügen</button>
+
+      <h2>Bild-Upload</h2>
+      <div class="row two">
+        <div><label for="u-mode">Was passiert mit dem hochgeladenen Bild?</label><select id="u-mode">
+          <option value="off">Kein Upload</option>
+          <option value="exact">Exakt einsetzen — für Logos, bleibt unverändert und scharf</option>
+          <option value="reference">Als Vorlage nachzeichnen — für Fotos, wird neu gezeichnet</option>
+        </select></div>
+        <div class="chk"><input type="checkbox" id="u-required"><label for="u-required" style="margin:0;text-transform:none;letter-spacing:0;font-size:14px;color:var(--ink2)">Pflicht</label></div>
+      </div>
+      <div id="u-extra" class="hide">
+        <div class="row two">
+          <div><label for="u-label">Beschriftung</label><input type="text" id="u-label" placeholder="z. B. Euer Logo"></div>
+          <div><label for="u-hint">Hinweis für den Kunden</label><input type="text" id="u-hint" placeholder="z. B. PNG mit freigestelltem Hintergrund wird am schönsten."></div>
+        </div>
+        <div class="row two" id="u-place-row">
+          <div><label for="u-place">Wo sitzt das Logo?</label><select id="u-place">
+            <option value="oben">oben</option><option value="mitte">mitte</option><option value="unten">unten</option>
+          </select></div>
+          <div><label for="u-width">Breite in Prozent</label><input type="number" id="u-width" value="38" min="8" max="90"></div>
+        </div>
+        <div class="row two" id="u-cobrand-row">
+          <div class="chk" style="padding-top:0"><input type="checkbox" id="u-cobrand"><label for="u-cobrand" style="margin:0;text-transform:none;letter-spacing:0;font-size:14px;color:var(--ink2)">Co-Branding: Kunde darf ein zweites Logo hochladen (wird neben das erste gesetzt)</label></div>
+          <div><label for="u-label2">Beschriftung zweites Logo</label><input type="text" id="u-label2" placeholder="z. B. Zweites Logo (Co-Branding)"></div>
+        </div>
+      </div>
+
+      <h2>Prüfen</h2>
+      <p style="color:var(--ink2);font-size:14px;margin:0 0 12px">Zeigt den fertigen Prompt mit Beispielwerten, so wie er beim Bildgenerator ankommt. Kostet nichts.</p>
+      <button id="preview">Prompt anzeigen</button>
+      <pre id="preview-out" class="hide"></pre>
+    </div>
+
+    <div class="main" id="empty">
+      <p style="color:var(--ink2)">Links ein Motto wählen oder oben rechts ein neues anlegen.</p>
+      <h2>Stile (für alle Mottos)</h2>
+      <div class="help">Diese Stile stehen dem Kunden bei jedem Motto zur Auswahl. Der <b>Prompt-Text</b> wird dem Bildgenerator zusätzlich mitgegeben und macht den Stil aus. „Standard“ hat keinen Text (nimmt das Motto wie vorgesehen). Häkchen bei <b>Aus</b> blendet einen Stil überall aus.</div>
+      <div id="styles-box" style="margin-bottom:12px"></div>
+      <div class="row" style="align-items:center;gap:10px;margin-bottom:26px">
+        <button type="button" class="small primary" id="styles-save">Stile speichern</button>
+        <span id="styles-msg" style="color:var(--ink3);font-size:13px"></span>
+      </div>
+
+      <h2>Google Drive · Druckdateien</h2>
+      <div class="help">Jede fertige Druckdatei wird automatisch in dein Google Drive gelegt: <code>Motto Otto / &lt;motto&gt; / &lt;Design-Nr&gt; /</code> – bei Namenslisten eine Datei je Name, dazu eine INFO.json mit den Eingaben. Einmal verbinden genügt (Google-Login machst du selbst).</div>
+      <div class="row" style="align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:26px">
+        <span id="gd-status" style="color:var(--ink2);font-size:14px">…</span>
+        <a class="small" id="gd-connect" href="#" style="display:none;text-decoration:none;border:1px solid var(--line);border-radius:7px;padding:8px 12px;color:var(--ink)">Google Drive verbinden</a>
+        <button type="button" class="small" id="gd-push" style="display:none">Fehlende Druckdateien jetzt hochladen</button>
+        <button type="button" class="small" id="gd-push-all" style="display:none">Alle neu hochladen</button>
+        <button type="button" class="small danger" id="gd-off" style="display:none">Trennen</button>
+        <span id="gd-msg" style="color:var(--ink3);font-size:13px"></span>
+      </div>
+
+      <h2>Vorzeige-Designs · Stil-Galerie</h2>
+      <div class="help">Je Motto und Stil ein fertiges Beispiel, das auf der Motto-Seite auf den Stil-Kacheln und in der Galerie erscheint. Die Spalte <b>kachel</b> ist der Aufmacher des Mottos – das Bild, das auf der Startseite im Kopf und auf der Anlass-Kachel zu sehen ist. Mit <b>weg</b> unter einem Bild wird der Platz geleert (das Design selbst bleibt erhalten). Die Beispiele aus <code>vorzeige-designs.json</code> im Repo werden beim Start automatisch angelegt (nur was fehlt). Hier lässt sich zusätzlich ein Manifest einspielen oder ein Stil auf eine vorhandene Design-Nummer setzen. Mit <b>neu</b> unter einem Bild zeichnet der Server selbst ein frisches Beispiel – gleicher Weg wie bei einem Kundendesign, in der eingestellten Stufe, mit denselben Texten wie bisher. Das dauert ein paar Minuten; das alte Bild bleibt stehen, bis das neue fertig ist.</div>
+      <textarea id="vz-json" rows="4" placeholder='Optional: Manifest-JSON hier einfügen (oder nur {"manifestUrl":"https://…"})' style="width:100%;font:12px ui-monospace,monospace"></textarea>
+      <div class="row" style="align-items:center;gap:10px;flex-wrap:wrap;margin:8px 0 10px">
+        <button type="button" class="primary" id="vz-import">Manifest importieren</button>
+        <span id="vz-msg" style="color:var(--ink3);font-size:13px"></span>
+      </div>
+      <div id="vz-box" style="overflow-x:auto;margin-bottom:26px"></div>
+
+      <h2>Mockup-Vorlagen · Produktansicht und Situation</h2>
+      <div class="help">Von jedem Artikel zwei Bilder: die <b>Produktansicht</b> zeigt sachlich, <i>was</i> man kauft – die <b>Situation</b> zeigt, <i>warum</i> (das Poster an der Wand, das Handtuch am Strand). Mit <b>erzeugen</b> macht der Server beides selbst und misst dabei aus, wo genau der Druck sitzt. Ein Klick = eine Bildgenerierung, ein bis zwei Minuten.<br>
+        Die getragenen Textilien (T-Shirt, Polo, Hoodie, Zip) gibt es zusätzlich <b>als Frau</b> und <b>als Mann</b>: Steht ein eindeutiger Vorname auf dem Design (Anne, Jürgen), zeigt die Ansicht „Getragen“ die passende Person – sobald die Vorlage dafür erzeugt ist. Fehlt sie, bleibt es bei der allgemeinen Situation.<br>
+      Sieht ein Bild schief aus oder ist das Produkt angeschnitten: einfach nochmal auf <b>erzeugen</b>. Angenommen wird nur ein Bild, bei dem die Druckfläche wirklich gefunden wurde – sonst bricht der Server ab und die alte Vorlage bleibt stehen. <b>Das sind unsere eigenen, allgemeinen Produkte</b> – nicht die Herstellerfotos von Roly, B&amp;C und Stanley/Stella, die stehen im Abschnitt darunter.</div>
+      <div class="row" style="align-items:center;gap:10px;margin:8px 0 10px;flex-wrap:wrap">
+        <button type="button" class="primary" id="vl-alle">Alle fehlenden erzeugen</button>
+        <button type="button" id="vl-stopp">Warteschlange leeren</button>
+        <button type="button" id="vl-orig" title="Holt die echten Herstellerfotos zurück, falls ein erzeugtes Bild darüber gelegt wurde">Produktfotos wiederherstellen</button>
+        <span id="vl-msg" style="color:var(--ink3);font-size:13px"></span>
+      </div>
+      <div id="vl-box" style="overflow-x:auto;margin-bottom:26px"></div>
+
+      <h2>Textil-Linie · 17 Artikel, 3 Stufen</h2>
+      <div class="help">Ottos Starter (Roly), Ottos Liebling (B&amp;C), Otto Deluxe (Stanley/Stella). Farben, Größen, Gewicht, Passform und Material stehen fest – <b>es fehlen noch die Produktfotos und die Preise</b>.<br>
+      Zum Foto: die Spalte <b>Herstellerseite</b> führt dorthin, wo die Bilder liegen. Dort das Packshot-Bild anklicken, <b>die Bildadresse</b> kopieren (nicht die der Seite) und hier einfügen – der Server lädt die Datei und legt sie ab. Angenommen werden nur Adressen des jeweiligen Herstellers. Bei Stanley/Stella nur Packshots <i>ohne Modellkopf</i>, bei B&amp;C nur Packshots und Studiobilder, bei Roly bleibt das Bild unverändert (deshalb dort kein Mockup mit unserem Druck).</div>
+      <div id="tl-msg" style="font-size:13.5px;margin:0 0 8px;min-height:20px"></div>
+      <div id="tl-box" style="overflow-x:auto;margin-bottom:8px"></div>
+      <div class="row" style="align-items:center;gap:10px;margin-bottom:26px"><span id="tl-msg2" style="color:var(--ink3);font-size:13px"></span></div>
+
+      <h2>Markensperre · geschützte Wörter</h2>
+      <div class="help">Geschützte Vereins- und Markennamen kommen nie auf ein Textil: Sie werden bei der Eingabe abgewiesen, in Namenslisten geblockt, aus der Recherche entfernt und im fertigen Bild per Bild-QA erkannt – als Text <b>und</b> als Logo/Wappen/Emblem (auch nachempfunden; Versuch wird verworfen). Hochgeladene Kundenbilder werden vor der Annahme genauso geprüft. Der Grundstock steckt im Code (<code>marken.js</code>); hier kommen eigene Wörter dazu. <b>Ausnahmen</b> sind für bewusst erlaubte Namen (z. B. ein eigener Amateurverein) – Groß-/Kleinschreibung, Punkte und Umlaute spielen keine Rolle.</div>
+      <div class="row two">
+        <div><label for="mk-wort">Eigene Sperrwörter (ganzes Wort, eins je Zeile)</label><textarea id="mk-wort" rows="5" style="font-family:inherit;font-size:14px" placeholder="z. B. Nordkurve Hamburg&#10;Ultras"></textarea></div>
+        <div><label for="mk-teil">Eigene Sperr-Bestandteile (treffen auch in längeren Wörtern)</label><textarea id="mk-teil" rows="5" style="font-family:inherit;font-size:14px" placeholder="z. B. Werder"></textarea></div>
+      </div>
+      <div class="row two">
+        <div><label for="mk-frei">Ausnahmen – ausdrücklich erlaubt (eins je Zeile)</label><textarea id="mk-frei" rows="3" style="font-family:inherit;font-size:14px" placeholder="z. B. Bayern-Tour"></textarea></div>
+        <div><label for="mk-test">Schnelltest: ein Wort oder Satz prüfen</label><input type="text" id="mk-test" placeholder="z. B. Nur der HSV"><div class="hint" id="mk-test-out"></div></div>
+      </div>
+      <div class="row two">
+        <div><label for="mk-bild-id">Bild-Schnelltest: Design-ID prüfen (Text + Logo/Wappen)</label><div class="row" style="gap:8px"><input type="text" id="mk-bild-id" placeholder="z. B. MO-FANSHIRT-20260908-ab12cd" style="flex:1"><button type="button" id="mk-bild-go">Prüfen</button></div></div>
+        <div><label for="mk-bild-file">… oder ein Bild hochladen und prüfen</label><input type="file" id="mk-bild-file" accept="image/*"></div>
+      </div>
+      <div class="hint" id="mk-bild-out" style="white-space:pre-wrap;margin-bottom:8px"></div>
+      <div class="row" style="margin:8px 0 26px"><button type="button" class="primary" id="mk-save">Markensperre speichern</button><span id="mk-msg" style="color:var(--ink3);font-size:13px;margin-left:10px"></span><details style="margin-top:10px;font-size:13px;color:var(--ink3)"><summary>Grundstock anzeigen</summary><pre id="mk-grund" style="font-size:12px"></pre></details></div>
+
+      <h2>Prüfstand</h2>
+      <div class="help">Ganze Reihen auf einmal durchfahren, statt Fehler einzeln zu entdecken. Zu jedem Lauf stehen die automatischen Befunde dabei – Druckprüfung, Bildprüfung, <b>der Text, den die KI wirklich ins Bild gemalt hat</b>, und ob das Namensband frei geblieben ist. Daneben ein Kommentarfeld: was dir auffällt, schreibst du direkt an den Lauf. Am Ende hast du eine Mängelliste statt vieler Einzelmeldungen. Prüfstand-Läufe kommen <b>nie</b> in die Community-Bewertung und gehören keinem Kunden.</div>
+      <div class="row two">
+        <div><label for="ps-mottos">Mottos (nichts gewählt = alle aktiven)</label><select id="ps-mottos" multiple size="8" style="font-size:13px"></select></div>
+        <div>
+          <label for="ps-stile">Stile</label><select id="ps-stile" multiple size="4" style="font-size:13px"></select>
+          <div class="row" style="gap:8px;margin-top:8px">
+            <div style="flex:1"><label for="ps-textil">Textil</label><select id="ps-textil" style="font-size:13px"><option value="dunkel">dunkel</option><option value="hell">hell</option><option value="beide">beide</option></select></div>
+            <div style="flex:1"><label for="ps-logo">Logo</label><select id="ps-logo" style="font-size:13px"><option value="ohne">ohne Logo</option><option value="mit">mit Testlogo</option><option value="beide">beides</option></select></div>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="margin:8px 0 10px;gap:8px;align-items:center"><button type="button" id="ps-zaehlen">Wie viele Läufe wären das?</button><button type="button" class="primary" id="ps-start" style="display:none">Jetzt starten</button><button type="button" id="ps-neu">Ergebnisse neu laden</button><button type="button" id="ps-leeren">Liste leeren (Kommentare behalten)</button><span id="ps-msg" style="color:var(--ink3);font-size:13px"></span></div>
+      <div id="ps-liste" style="margin-bottom:26px"></div>
+
+      <h2>Druckdateien auslagern</h2>
+      <div class="help">Druckdateien sind mehrere MB groß – und je Name kommt eine eigene in derselben Größe dazu. Sie liegen alle ohnehin auf Google Drive. Nach <b id="au-tage">30</b> Tagen können sie lokal weg; wer sie danach braucht, holt sie automatisch von Drive zurück (dauert dann ein paar Sekunden). <b>Originale</b> werden nur gelöscht, wenn die identische Datei mit verglichener Prüfsumme auf Drive liegt. <b>Abgeleitetes</b> (Namensvarianten, Brust-Prints, Mockups) wird ohne Nachprüfung gelöscht – das baut sich aus dem Original neu. Kundenvorschauen bleiben immer liegen. Fanclub-Designs ohne Freigabe werden übersprungen.</div>
+      <div class="row" style="margin:8px 0 10px;gap:8px"><button type="button" id="au-pruefen">Vorschau: was würde gelöscht?</button><button type="button" id="au-los" style="display:none">Jetzt wirklich löschen</button><span id="au-msg" style="color:var(--ink3);font-size:13px"></span></div>
+      <div id="au-out" style="font-size:13px;margin-bottom:26px"></div>
+
+      <h2>Verbotene Zeichen &amp; Parolen</h2>
+      <div class="help">Hakenkreuz, SS-Runen, NS-Parolen, Kennzeichen verbotener Organisationen. Diese Sperre <b>lässt sich nicht abschalten</b> – auch nicht für Fanclub oder Handwerker, die von der Markensperre ausgenommen sind, und auch nicht von hier aus. Geprüft werden: jede Eingabe, jeder Name in der Kaderliste, jedes hochgeladene Logo <b>vor</b> der Annahme und jedes fertig gezeichnete Bild (der Versuch wird verworfen, nicht gedruckt). Der Grundstock steckt im Code (<code>verboten.js</code>) und ist bewusst so gewählt, dass harmlose Fälle durchgehen – Rückennummer 88, 18. Geburtstag, „HH", Totenkopf auf dem Bikershirt. Hier lässt sich nur <b>ergänzen</b>; eine Freigabe-Liste gibt es absichtlich nicht.</div>
+      <div class="row two">
+        <div><label for="vb-wort">Eigene Einträge (ganzes Wort oder Wortfolge, eins je Zeile)</label><textarea id="vb-wort" rows="4" style="font-family:inherit;font-size:14px" placeholder="z. B. eine neu verbotene Gruppierung"></textarea></div>
+        <div><label for="vb-teil">Eigene Bestandteile (treffen auch zusammengeschrieben)</label><textarea id="vb-teil" rows="4" style="font-family:inherit;font-size:14px"></textarea></div>
+      </div>
+      <div class="row two">
+        <div><label for="vb-test">Schnelltest: Text prüfen</label><input type="text" id="vb-test" placeholder="z. B. Abi 1488"><div class="hint" id="vb-test-out"></div></div>
+        <div class="help" style="margin:0;align-self:end">Der Kunde bekommt bei einem Treffer eine sachliche Meldung, ohne das Wort zu wiederholen und ohne zu verraten, was genau gegriffen hat – sonst wäre die Meldung eine Anleitung zum Umgehen.</div>
+      </div>
+      <div class="row" style="margin:8px 0 10px"><button type="button" class="primary" id="vb-save">Ergänzungen speichern</button><span id="vb-msg" style="color:var(--ink3);font-size:13px;margin-left:10px"></span><details style="margin-top:10px;font-size:13px;color:var(--ink3)"><summary>Grundstock anzeigen</summary><pre id="vb-grund" style="font-size:12px"></pre></details></div>
+      <div style="margin-bottom:26px"><b style="font-size:14px">Protokoll der letzten Treffer</b><div class="help" style="margin:4px 0 8px">Ein einzelner Treffer ist meist ein danebengegangener Scherz. Viele aus derselben Richtung sind jemand, der die Sperre austestet – das will man sehen.</div><div id="vb-log" style="overflow-x:auto"></div></div>
+
+      <h2>Produkte je Motto</h2>
+      <div class="help">Pro Motto per Klick festlegen, welche Produkte im Konfigurator angeboten werden. Grün = an. Änderungen wirken sofort für neue Designs. <span id="prod-msg" style="color:var(--ink3)"></span></div>
+      <div id="prod-box" style="overflow-x:auto;margin-bottom:26px"></div>
+
+      <h2>Kaufformen &amp; Preise</h2>
+      <div class="help">Was der Kunde am Ende bekommt: das <b>fertige Produkt</b> (die Druckdatei allein ist seit 7. Okt. raus). Preise in Euro – leer oder 0 heißt „auf Anfrage“, dann steht auf der Seite kein Preis. Bezahlt wird noch nicht auf der Seite: bis der Warenkorb steht, geht eine Anfrage per Mail raus. <span id="kf-msg" style="color:var(--ink3)"></span></div>
+      <div id="kf-box" style="margin-bottom:12px"></div>
+      <div class="row" style="margin:0 0 26px"><button type="button" class="primary" id="kf-save">Kaufformen speichern</button></div>
+
+      <h2>Anfragen</h2>
+      <div class="help">Kaufanfragen von den Design-Seiten, neueste zuerst. Sie gehen zusätzlich per Mail raus.</div>
+      <div id="anf-box" style="overflow-x:auto;margin-bottom:26px"></div>
+
+      <h2>Backup · Google Drive</h2>
+      <div class="help" id="bk-help"></div>
+      <div class="row" style="margin:0 0 8px"><button type="button" class="small" id="bk-now">Backup jetzt</button><span id="bk-msg" style="color:var(--ink3);font-size:13px;margin-left:10px"></span></div>
+      <div id="bk-box" style="overflow-x:auto;margin-bottom:26px"></div>
+
+      <h2>Mail-Protokoll</h2>
+      <div class="help" id="ml-help"></div>
+      <div id="ml-box" style="overflow-x:auto;margin-bottom:26px"></div>
+
+      <h2>Kunden</h2>
+      <div class="help" id="users-help">Konten entstehen, sobald sich jemand per E-Mail-Link anmeldet. Kontingent und Bezahlung greifen erst mit <code>ACCOUNTS=on</code> in Railway.</div>
+      <div id="users" style="overflow-x:auto;margin-bottom:26px"></div>
+
+      <h2>Letzte Entwürfe der Kunden</h2>
+      <p style="color:var(--ink2);font-size:14px;margin:0 0 12px">Was zuletzt erzeugt wurde – mit den Eingaben des Kunden. Die Design-Nummer kannst du oben als Beispielbild eintragen. <label style="margin-left:10px;cursor:pointer"><input type="checkbox" id="jobs-alle"> auch Vorzeige- und Automatik-Designs zeigen</label> <span id="jobs-zahl" style="color:var(--ink3)"></span></p>
+      <div id="jobs" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px"></div>
+    </div>
+  </div>
+
+  <div class="bar">
+    <div class="msg" id="msg"></div>
+    <button class="danger" id="del">Löschen</button>
+    <button class="primary" id="save">Speichern</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var token = '';
+  var all = [], current = null;
+
+  try { token = localStorage.getItem('mo_admin') || ''; } catch (e) { token = ''; }
+
+  function api(path, opts) {
+    var o = opts || {};
+    o.headers = Object.assign({ 'x-admin-token': token }, o.headers || {});
+    if (o.body) o.headers['content-type'] = 'application/json';
+    return fetch('/api/admin' + path, o).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (j) { return { ok: r.ok, status: r.status, j: j }; });
+    });
+  }
+
+  function msg(t, kind) { var m = $('msg'); m.textContent = t || ''; m.className = 'msg' + (kind ? ' ' + kind : ''); }
+
+  function open() {
+    api('/mottos').then(function (r) {
+      if (!r.ok) { $('gate-msg').textContent = 'Passwort stimmt nicht.'; return; }
+      try { localStorage.setItem('mo_admin', token); } catch (e) { }
+      $('gate').classList.add('hide');
+      $('ui').classList.remove('hide');
+      all = r.j.mottos || [];
+      drawList();
+      drawJobs(); drawUsers(); drawDrive(); drawStyles(); drawVorzeige(); drawVorlagen(); drawTextilLinie(); drawProdukte(); drawKaufformen(); drawAnfragen(); drawShowcase(); drawApprovals(); drawMarken(); drawVerboten(); drawLage(); drawZahlen(); psFuellen(); drawPruefstand(); drawMailLog(); drawBackup(); drawDruckzugang(); drawGrundmodus(); drawBildmodell();
+    }).catch(function () { $('gate-msg').textContent = 'Der Dienst ist nicht erreichbar.'; });
+  }
+
+  function druckOeffnen() {
+    if (!token) { alert('Bitte erst anmelden.'); return; }
+    window.open('/druck?token=' + encodeURIComponent(token), '_blank', 'noopener');
+  }
+  $('druck-go').addEventListener('click', druckOeffnen);
+  $('druck-top').addEventListener('click', druckOeffnen);
+
+  // Druckdatei-Qualitaet: Grund-Modus anzeigen/umstellen und den Bildserver messen
+  function gmZeigen(modus) {
+    $('gm-jetzt').innerHTML = modus === 'alpha'
+      ? 'aktuell: <b>Alphakanal</b> – der Bildserver liefert die Transparenz'
+      : 'aktuell: <b>Chromagrün</b> – wir stellen hier frei';
+    $('gm-chroma').disabled = modus === 'chroma';
+    $('gm-alpha').disabled = modus === 'alpha';
+  }
+  function drawGrundmodus() {
+    api('/grundmodus').then(function (r) { if (r.ok) gmZeigen(r.j.modus); })
+      .catch(function () { $('gm-jetzt').textContent = 'Status unbekannt'; });
+    // Ergebnis der täglichen Wache - damit man sieht, dass geprüft wird, ohne zu klicken
+    api('/bildserver-wache').then(function (r) {
+      if (!r.ok) return;
+      var w = r.j.letzte, ziel = $('gm-wache');
+      if (!w) { ziel.textContent = 'Tägliche Prüfung um ' + r.j.stunde + ':00 UTC – noch kein Lauf.'; return; }
+      var wann = new Date(w.at).toLocaleString('de-DE');
+      var gut = w.ok && w.bereit;
+      ziel.innerHTML = (gut ? '✅' : '❌') + ' Letzte Prüfung ' + wann + ': ' +
+        (gut ? w.bekommen + ', Alphakanal in Ordnung' : (w.fehler || 'Befund nicht in Ordnung')) +
+        ' <span style="opacity:.7">· täglich ab ' + r.j.stunde + ':00 UTC' +
+        (r.j.empfaenger ? ', Mail an ' + r.j.empfaenger + ' nur bei Änderung' : ', keine Mailadresse hinterlegt') + '</span>';
+    }).catch(function () { });
+  }
+  function gmSetzen(modus) {
+    if (modus === 'alpha' && !confirm('Auf Alphakanal umstellen?\n\nNur sinnvoll, wenn die Prüfung sagt, dass der Bildserver umgestellt ist. Sonst kommen Druckdateien mit Kasten-Hintergrund heraus.')) return;
+    $('gm-msg').textContent = 'stelle um …';
+    api('/grundmodus', { method: 'POST', body: JSON.stringify({ modus: modus }) }).then(function (r) {
+      if (!r.ok) { $('gm-msg').textContent = (r.j && r.j.error) || 'Das hat nicht geklappt.'; return; }
+      gmZeigen(r.j.modus);
+      $('gm-msg').textContent = 'Umgestellt. Gilt ab dem nächsten Design.';
+    }).catch(function () { $('gm-msg').textContent = 'Der Dienst ist nicht erreichbar.'; });
+  }
+  $('gm-chroma').addEventListener('click', function () { gmSetzen('chroma'); });
+  $('gm-alpha').addEventListener('click', function () { gmSetzen('alpha'); });
+  $('gm-test').addEventListener('click', function () {
+    $('gm-test').disabled = true; $('gm-test').textContent = 'prüfe … (dauert bis zu 2 Minuten)';
+    $('gm-msg').textContent = '';
+    var such = [];
+    if ($('gm-quali').value) such.push('quality=' + encodeURIComponent($('gm-quali').value));
+    if ($('gm-modell').value.trim()) such.push('model=' + encodeURIComponent($('gm-modell').value.trim()));
+    api('/bildserver-test' + (such.length ? '?' + such.join('&') : '')).then(function (r) {
+      var b = $('gm-befund'); b.classList.remove('hide');
+      if (!r.ok) { b.textContent = (r.j && r.j.error) || 'Die Prüfung ist fehlgeschlagen.'; return; }
+      b.textContent = r.j.text + '\n\n(Probebild erzeugt in ' + Math.round(r.j.dauerMs / 1000) + ' s)';
+      if (r.j.bild) {
+        var a2 = document.createElement('a');
+        a2.href = r.j.bild; a2.target = '_blank'; a2.rel = 'noopener';
+        a2.textContent = 'Probebild ansehen ↗';
+        a2.style.cssText = 'display:inline-block;margin-top:8px';
+        b.appendChild(document.createElement('br')); b.appendChild(a2);
+      }
+      drawGrundmodus();
+    }).catch(function () { $('gm-msg').textContent = 'Der Dienst ist nicht erreichbar.'; })
+      .then(function () { $('gm-test').disabled = false; $('gm-test').textContent = 'Bildserver prüfen'; });
+  });
+
+  // Modell fuer echte Designs - sichtbar, weil es ALLE Kundendesigns betrifft
+  function bmZeigen(w) {
+    $('bm-modell').value = w.model || '';
+    $('bm-stufe').value = w.quality || '';
+    // Die eine Zeile, die alles beantwortet: was läuft gerade, und woher kommt es.
+    // Vorher musste man dafür zwei Railway-Services und dieses Feld gedanklich verrechnen.
+    var k = w.inKraft;
+    if (k) {
+      $('bm-kraft').innerHTML =
+        '<b>Gerade in Kraft</b><br>' +
+        'Modell: <b style="color:var(--accent)">' + esc(k.modell) + '</b> <span style="color:var(--ink3)">— kommt aus: ' + esc(k.modellQuelle) + '</span><br>' +
+        'Stufe: <b style="color:var(--accent)">' + esc(k.stufe) + '</b> <span style="color:var(--ink3)">— kommt aus: ' + esc(k.stufeQuelle) + '</span>' +
+        // 22. Sept.: Mottos mit EIGENER Stufe stehen dazu - sonst liest man hier "max" und
+        // die Postkarte laeuft in Wahrheit mit "high".
+        ((w.eigeneStufen && w.eigeneStufen.length)
+          ? '<br><span style="color:var(--ink3)">Eigene Stufe je Motto (schlägt das hier): ' +
+            w.eigeneStufen.map(function (e) { return esc(e.name || e.slug) + ' = <b>' + esc(e.stufe) + '</b>'; }).join(', ') + '</span>'
+          : '');
+    }
+    var an = !!(w.model || w.quality);
+    $('bm-warn').classList.toggle('hide', !an);
+    if (an) $('bm-warn').textContent = '⚠️ Abweichende Einstellung aktiv: ' +
+      (w.model || 'Standardmodell') + (w.quality ? ', Stufe ' + w.quality : '') +
+      ' – das gilt für jedes neue Design, auch für Kunden.';
+  }
+  function drawBildmodell() {
+    api('/bildmodell').then(function (r) { if (r.ok) bmZeigen(r.j); }).catch(function () { });
+  }
+  function bmSetzen(model, quality) {
+    $('bm-msg').textContent = 'speichere …';
+    api('/bildmodell', { method: 'POST', body: JSON.stringify({ model: model, quality: quality }) }).then(function (r) {
+      if (!r.ok) { $('bm-msg').textContent = (r.j && r.j.error) || 'Das hat nicht geklappt.'; return; }
+      bmZeigen(r.j);
+      $('bm-msg').textContent = 'Gilt ab dem nächsten Design.';
+    }).catch(function () { $('bm-msg').textContent = 'Der Dienst ist nicht erreichbar.'; });
+  }
+  $('bm-set').addEventListener('click', function () {
+    var m = $('bm-modell').value.trim();
+    if (m && !confirm('Modell "' + m + '" für ALLE neuen Designs verwenden?\n\nAuch Kundendesigns werden damit erzeugt, bis du es wieder zurückstellst.')) return;
+    bmSetzen(m, $('bm-stufe').value);
+  });
+  $('bm-weg').addEventListener('click', function () { bmSetzen('', ''); });
+
+  // Zugang fuer die Druckerei: Link anzeigen, kopieren, neu vergeben
+  function dzZeigen(link, hinweis) {
+    $('dz-link').value = link || '';
+    $('dz-msg').textContent = hinweis || '';
+  }
+  function drawDruckzugang() {
+    api('/druckzugang').then(function (r) {
+      if (!r.ok) { dzZeigen('', 'Zugang konnte nicht geladen werden.'); return; }
+      dzZeigen(r.j.link, r.j.erstellt ? 'Gültig seit ' + new Date(r.j.erstellt).toLocaleString('de-DE') + '.' : '');
+    }).catch(function () { dzZeigen('', 'Zugang konnte nicht geladen werden.'); });
+  }
+  function dzNeu(passwort) {
+    var text = passwort
+      ? 'Neues Passwort für die Druckerei setzen?\n\nDer bisherige Link funktioniert danach nicht mehr.'
+      : 'Neuen zufälligen Schlüssel erzeugen?\n\nDer bisherige Link funktioniert danach nicht mehr.';
+    if (!confirm(text)) return;
+    $('dz-msg').textContent = 'wird gesetzt …';
+    api('/druckzugang/neu', { method: 'POST', body: JSON.stringify({ passwort: passwort || '' }) }).then(function (r) {
+      if (!r.ok) { $('dz-msg').textContent = (r.j && r.j.error) || 'Das hat nicht geklappt.'; return; }
+      $('dz-pw').value = '';
+      dzZeigen(r.j.link, 'Neuer Zugang ist aktiv – der alte Link ist ab sofort ungültig.');
+    }).catch(function () { $('dz-msg').textContent = 'Der Dienst ist nicht erreichbar.'; });
+  }
+  $('dz-copy').addEventListener('click', function () {
+    var f = $('dz-link');
+    f.select(); f.setSelectionRange(0, 99999);
+    var fertig = function () { $('dz-msg').textContent = 'Link kopiert.'; };
+    if (navigator.clipboard) navigator.clipboard.writeText(f.value).then(fertig, function () { document.execCommand('copy'); fertig(); });
+    else { document.execCommand('copy'); fertig(); }
+  });
+  $('dz-open').addEventListener('click', function () { if ($('dz-link').value) window.open($('dz-link').value, '_blank', 'noopener'); });
+  $('dz-neu').addEventListener('click', function () { dzNeu(''); });
+  $('dz-setzen').addEventListener('click', function () {
+    var pw = $('dz-pw').value.trim();
+    if (pw.length < 8) { $('dz-msg').textContent = 'Das Passwort muss mindestens 8 Zeichen haben.'; return; }
+    if (!/^[A-Za-z0-9_.\-]+$/.test(pw)) { $('dz-msg').textContent = 'Erlaubt sind Buchstaben, Ziffern, Punkt, Bindestrich und Unterstrich – keine Leerzeichen.'; return; }
+    dzNeu(pw);
+  });
+  $('dz-pw').addEventListener('keydown', function (e) { if (e.key === 'Enter') $('dz-setzen').click(); });
+
+  $('tok-go').addEventListener('click', function () { token = $('tok').value.trim(); open(); });
+  $('tok').addEventListener('keydown', function (e) { if (e.key === 'Enter') $('tok-go').click(); });
+  // Die Fertig-Mail ansehen, ohne sie zu verschicken - Textfehler faellt sonst erst im Postfach auf.
+  $('mailvorschau').addEventListener('click', function () {
+    window.open('/api/admin/mail-vorschau?token=' + encodeURIComponent(token), '_blank');
+  });
+  $('mailtest').addEventListener('click', function () {
+    var to = prompt('Test-Mail an welche Adresse schicken?', 'assemacher@icloud.com');
+    if (!to) return;
+    $('mailtest').disabled = true; $('mailtest').textContent = 'sende …';
+    api('/mail-test?to=' + encodeURIComponent(to)).then(function (r) {
+      var j = r.j || {};
+      if (j.ok) alert('✅ Test-Mail an ' + j.gesendet_an + ' gesendet (Absender ' + j.absender + ').\nJetzt Posteingang/Spam prüfen.');
+      else alert('❌ Versand abgelehnt.\n\nGrund: ' + (j.brevo_fehler || j.grund || 'unbekannt') + '\n\n(Absender: ' + (j.absender || '?') + ')');
+    }).catch(function () { alert('Konnte den Test nicht ausführen.'); })
+      .then(function () { $('mailtest').disabled = false; $('mailtest').textContent = 'Mail-Test'; drawMailLog(); });
+  });
+  $('logout').addEventListener('click', function () {
+    token = '';
+    try { localStorage.removeItem('mo_admin'); } catch (e) { }
+    $('ui').classList.add('hide');
+    $('gate').classList.remove('hide');
+    if ($('tok')) { $('tok').value = ''; $('tok').focus(); }
+  });
+  if (token) open();
+
+  function drawStyles() {
+    api('/styles').then(function (r) {
+      var list = (r.j && r.j.styles) || [];
+      $('styles-box').innerHTML = list.map(function (s) {
+        var std = s.key === 'standard';
+        return '<div class="frow" data-key="' + esc(s.key) + '" style="border:1px solid var(--line);border-radius:9px;padding:12px;margin-bottom:10px">' +
+          '<div class="row" style="gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:8px">' +
+            '<input class="s-label" style="flex:0 0 180px" value="' + esc(s.label || '') + '" placeholder="Name des Stils">' +
+            '<input class="s-desc" style="flex:1 1 240px" value="' + esc(s.desc || '') + '" placeholder="Kurzbeschreibung für den Kunden">' +
+            '<label style="font-size:13px;color:var(--ink2);display:flex;align-items:center;gap:5px"><input type="checkbox" class="s-off"' + (s.off ? ' checked' : '') + '> Aus</label>' +
+          '</div>' +
+          (std ? '<div style="font-size:13px;color:var(--ink3)">„Standard“ nimmt das Motto wie vorgesehen – kein Prompt-Text.</div>'
+               : '<textarea class="s-text" rows="3" style="width:100%;box-sizing:border-box" placeholder="Prompt-Text (englisch), der den Stil erzeugt">' + esc(s.text || '') + '</textarea>') +
+          '</div>';
+      }).join('');
+    });
+  }
+  $('styles-save').addEventListener('click', function () {
+    var rows = [].map.call($('styles-box').querySelectorAll('.frow'), function (el) {
+      var t = el.querySelector('.s-text');
+      return {
+        key: el.getAttribute('data-key'),
+        label: el.querySelector('.s-label').value,
+        desc: el.querySelector('.s-desc').value,
+        text: t ? t.value : '',
+        off: el.querySelector('.s-off').checked
+      };
+    });
+    $('styles-msg').textContent = 'Speichern …';
+    api('/styles', { method: 'PUT', body: JSON.stringify({ styles: rows }) }).then(function (r) {
+      $('styles-msg').textContent = r.ok ? 'Gespeichert ✓' : 'Fehler beim Speichern';
+      if (r.ok) drawStyles();
+    });
+  });
+
+  function drawDrive() {
+    api('/gdrive/status').then(function (r) {
+      var st = r.j || {};
+      var el = $('gd-status');
+      if (!st.enabled) { el.textContent = 'Noch nicht eingerichtet: In Railway GDRIVE_CLIENT_ID und GDRIVE_CLIENT_SECRET setzen (Google Cloud → OAuth-Client, Weiterleitungs-URI ' + location.origin + '/api/admin/gdrive/callback).'; return; }
+      if (!st.connected) { el.textContent = 'Eingerichtet, aber noch nicht verbunden.'; $('gd-connect').style.display = 'inline-block'; $('gd-connect').href = '/api/admin/gdrive/connect?token=' + encodeURIComponent(token); return; }
+      el.textContent = 'Verbunden' + (st.email ? ' als ' + st.email : '') + ' · Ordner „' + st.root + '“';
+      $('gd-push').style.display = 'inline-block'; $('gd-push-all').style.display = 'inline-block'; $('gd-off').style.display = 'inline-block';
+    });
+  }
+  $('gd-push').addEventListener('click', function () { api('/gdrive/push', { method: 'POST', body: JSON.stringify({}) }).then(function (r) { $('gd-msg').textContent = (r.j.queued || 0) + ' Designs werden hochgeladen …'; }); });
+  $('gd-push-all').addEventListener('click', function () { api('/gdrive/push', { method: 'POST', body: JSON.stringify({ all: true }) }).then(function (r) { $('gd-msg').textContent = (r.j.queued || 0) + ' Designs werden hochgeladen …'; }); });
+  $('gd-off').addEventListener('click', function () { api('/gdrive/disconnect', { method: 'POST', body: '{}' }).then(drawDrive); });
+
+  function drawMarken() {
+    api('/marken').then(function (r) {
+      var j = r.j || {}; var e = j.eigene || {}; var g = j.grundstock || {};
+      $('mk-wort').value = (e.wort || []).join('\n'); $('mk-teil').value = (e.teil || []).join('\n'); $('mk-frei').value = (e.frei || []).join('\n');
+      $('mk-grund').textContent = 'Ganze Wörter:\n' + (g.wort || []).join(', ') + '\n\nBestandteile:\n' + (g.teil || []).join(', ');
+    });
+  }
+  $('mk-save').addEventListener('click', function () {
+    var lines = function (id) { return $(id).value.split('\n').map(function (x) { return x.trim(); }).filter(Boolean); };
+    api('/marken', { method: 'PUT', body: JSON.stringify({ wort: lines('mk-wort'), teil: lines('mk-teil'), frei: lines('mk-frei') }) }).then(function (r) { $('mk-msg').textContent = r.ok ? 'Gespeichert – gilt sofort.' : 'Speichern fehlgeschlagen.'; });
+  });
+  // ---- Lage: ein Blick statt einer Suche ----
+  // Jede Zeile hat eine Ampel und, wenn etwas klemmt, gleich den nächsten Schritt.
+  // Ein Hinweis ohne Handlungsanweisung hilft nachts um elf keinem.
+  var LAGE_FARBE = { ok: 'var(--ok)', warnung: '#ffc542', schlecht: '#ff8a8a' };
+  var LAGE_ZEICHEN = { ok: '●', warnung: '▲', schlecht: '■' };
+  function drawLage() {
+    $('lage-kurz').textContent = 'wird geprüft …';
+    api('/lage').then(function (r) {
+      var j = r.j;
+      if (!r.ok || !j || !j.punkte) { $('lage-kurz').textContent = 'Prüfung fehlgeschlagen.'; return; }
+      $('lage-karte').style.borderColor = LAGE_FARBE[j.gesamt] || 'var(--line)';
+      $('lage-kurz').innerHTML = j.gesamt === 'ok'
+        ? '<b style="color:var(--ok)">Alles in Ordnung</b> · Stand ' + esc(new Date(j.stand).toLocaleTimeString('de-DE'))
+        : '<b style="color:' + LAGE_FARBE[j.gesamt] + '">' + (j.schlecht ? j.schlecht + ' Problem' + (j.schlecht > 1 ? 'e' : '') : '') +
+          (j.schlecht && j.warnung ? ', ' : '') + (j.warnung ? j.warnung + '× Hinweis' : '') + '</b> · Stand ' + esc(new Date(j.stand).toLocaleTimeString('de-DE'));
+      $('lage-liste').innerHTML = j.punkte.map(function (x) {
+        return '<div style="display:flex;gap:9px;padding:6px 0;border-top:1px solid var(--line);font-size:13.5px">' +
+          '<span style="color:' + (LAGE_FARBE[x.stand] || 'var(--ink3)') + ';flex:0 0 auto">' + (LAGE_ZEICHEN[x.stand] || '·') + '</span>' +
+          '<span style="flex:0 0 190px;font-weight:700">' + esc(x.name) + '</span>' +
+          '<span style="flex:1;min-width:0;color:var(--ink2)">' + esc(x.text) +
+          (x.tipp ? '<br><span style="color:' + LAGE_FARBE[x.stand] + '">→ ' + esc(x.tipp) + '</span>' : '') +
+          '</span></div>';
+      }).join('');
+    }).catch(function () { $('lage-kurz').textContent = 'Prüfung fehlgeschlagen.'; });
+  }
+  $('lage-neu').addEventListener('click', drawLage);
+
+  // ---- Zahlen (Fassung 74) ----
+  // Oben die Quoten, die eine Entscheidung tragen: Wie viele Seitenaufrufe werden zu einem
+  // Auftrag? Wie viele Aufträge gehen gut? Wie oft schaut jemand ein anderes Teil an?
+  // Darunter je Gruppe die Rangliste. Balken statt Zahlenkolonne – man soll es sehen, nicht lesen.
+  function zahlenBlock(g) {
+    var top = (g.liste || []).slice(0, 12);
+    var max = top.length ? top[0].n : 0;
+    var h = '<div style="border:1px solid var(--line);border-radius:10px;padding:11px 12px;background:var(--card)">' +
+      '<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px">' +
+      '<b style="font-size:14px">' + esc(g.label || g.key) + '</b>' +
+      '<span style="color:var(--ink2);font-size:13px;font-weight:700">' + g.gesamt + '</span></div>';
+    if (!top.length) h += '<div style="color:var(--ink3);font-size:13px;margin-top:6px">noch nichts</div>';
+    top.forEach(function (x) {
+      var b = max ? Math.max(3, Math.round(x.n / max * 100)) : 0;
+      h += '<div style="margin-top:7px;font-size:13px">' +
+        '<div style="display:flex;justify-content:space-between;gap:8px"><span>' + esc(x.name) + '</span>' +
+        '<span style="color:var(--ink2)">' + x.n + ' <span style="color:var(--ink3)">· ' + x.anteil + ' %</span></span></div>' +
+        '<div style="height:6px;background:var(--card2);border-radius:3px;margin-top:3px;overflow:hidden">' +
+        '<i style="display:block;height:100%;width:' + b + '%;background:#ffc542"></i></div></div>';
+    });
+    return h + '</div>';
+  }
+  function quote(name, oben, unten, erklaerung) {
+    var p = unten ? Math.round(oben / unten * 100) : null;
+    return '<div style="border:1px solid var(--line);border-radius:10px;padding:11px 12px;background:var(--card2)">' +
+      '<div style="font-size:26px;font-weight:900">' + (p === null ? '–' : p + ' %') + '</div>' +
+      '<div style="font-size:13px;font-weight:700;margin-top:2px">' + esc(name) + '</div>' +
+      '<div style="color:var(--ink3);font-size:12.5px;margin-top:3px">' + esc(erklaerung) + ' · ' + oben + ' von ' + unten + '</div></div>';
+  }
+  function drawZahlen() {
+    $('zh-msg').textContent = 'wird geladen …';
+    api('/zaehler?tage=' + encodeURIComponent($('zh-tage').value)).then(function (r) {
+      var j = r.j;
+      if (!r.ok || !j || !j.gruppen) { $('zh-msg').textContent = 'Konnte nicht geladen werden.'; return; }
+      $('zh-msg').textContent = j.tage ? (j.tage === 1 ? 'Heute' : j.vonTag + ' bis ' + j.bisTag) + ' · ' + j.tage + ' Tag(e) mit Daten' : 'noch keine Daten';
+      var g = {};
+      j.gruppen.forEach(function (x) { g[x.key] = x; });
+      var seite = (g.seite || {}).gesamt || 0, auftrag = (g.auftrag || {}).gesamt || 0;
+      var fertig = (g.fertig || {}).gesamt || 0, fehler = (g.fehler || {}).gesamt || 0;
+      var mockup = (g.mockup || {}).gesamt || 0;
+      // Wie oft wurde ein Teil angeschaut, das NICHT das T-Shirt ist? Genau diese Zahl
+      // entscheidet, ob "auf dieses Produkt anwenden" je gebaut werden muss.
+      var fremd = 0;
+      ((g.mockup || {}).liste || []).forEach(function (x) { if (x.name !== 'tee') fremd += x.n; });
+      var q = '';
+      q += quote('Seite → Auftrag', auftrag, seite, 'aus Mottoseiten werden Designs');
+      q += quote('Aufträge gelungen', fertig, fertig + fehler, 'fertig statt gescheitert');
+      q += quote('Blick auf andere Produkte', fremd, mockup, 'Mockups, die nicht das T-Shirt sind');
+      $('zh-quote').innerHTML = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px">' + q + '</div>';
+      $('zh-body').innerHTML = j.gruppen.map(zahlenBlock).join('');
+    }).catch(function () { $('zh-msg').textContent = 'Konnte nicht geladen werden.'; });
+  }
+  $('zh-neu').addEventListener('click', drawZahlen);
+  $('zh-tage').addEventListener('change', drawZahlen);
+
+  // ---- Prüfstand ----
+  // Fehler fallen einzeln kaum auf: das leere Schild gab es nur ohne Logo, die gemalte
+  // Anweisung nur mit Wunschtext. Nebeneinander sieht man sie sofort. Darum hier ganze
+  // Reihen auf einmal – mit den automatischen Befunden und einem Kommentarfeld je Lauf.
+  var psPoll = null;       // lädt nach, solange noch etwas unterwegs ist
+  var psKomm = {};         // je Lauf ein Timer: Kommentare werden verzögert gespeichert
+
+  function psFuellen() {
+    $('ps-mottos').innerHTML = all.filter(function (m) { return m.active !== false; }).map(function (m) {
+      return '<option value="' + esc(m.slug) + '">' + esc(m.name || m.slug) +
+        (m.upload && m.upload.mode === 'exact' ? ' · nimmt Logo' : '') + '</option>';
+    }).join('');
+    api('/styles').then(function (r) {
+      var list = ((r.j && r.j.styles) || []).filter(function (s) { return !s.off; });
+      $('ps-stile').innerHTML = list.map(function (s) {
+        return '<option value="' + esc(s.key) + '"' + (s.key === 'standard' ? ' selected' : '') + '>' + esc(s.label || s.key) + '</option>';
+      }).join('');
+    });
+  }
+
+  function psWahl() {
+    var gewaehlt = function (id) {
+      return Array.prototype.filter.call($(id).options, function (o) { return o.selected; }).map(function (o) { return o.value; });
+    };
+    return { mottos: gewaehlt('ps-mottos'), styles: gewaehlt('ps-stile'), textile: $('ps-textil').value, logo: $('ps-logo').value };
+  }
+
+  function psN(n, ein, viele) { return n + ' ' + (n === 1 ? ein : viele); }
+  function psDauer(sek) {
+    if (!sek) return 'Dauer unbekannt';
+    var m = Math.max(1, Math.round(sek / 60));
+    if (m < 60) return 'etwa ' + psN(m, 'Minute', 'Minuten');
+    return 'etwa ' + (Math.round(m / 6) / 10).toString().replace('.', ',') + ' Stunden';
+  }
+
+  $('ps-zaehlen').addEventListener('click', function () {
+    var w = psWahl(); w.nurZaehlen = true;
+    $('ps-msg').textContent = 'wird gerechnet …';
+    $('ps-start').style.display = 'none';
+    api('/pruefstand/start', { method: 'POST', body: JSON.stringify(w) }).then(function (r) {
+      if (!r.ok) { $('ps-msg').textContent = (r.j && (r.j.hinweis || r.j.error)) || 'Das geht so nicht.'; return; }
+      // Ehrlich dazusagen, was es kostet: jeder Lauf ist ein bezahltes Bild.
+      $('ps-msg').textContent = psN(r.j.geplant, 'Lauf', 'Läufe') + ' · ' + psDauer(r.j.dauerSek) + ' · jeder Lauf kostet ein Bild';
+      $('ps-start').textContent = psN(r.j.geplant, 'Lauf', 'Läufe') + ' jetzt starten';
+      $('ps-start').style.display = 'inline-block';
+      $('ps-start').setAttribute('data-n', r.j.geplant);
+    }).catch(function () { $('ps-msg').textContent = 'Nicht erreichbar.'; });
+  });
+
+  $('ps-start').addEventListener('click', function () {
+    var n = $('ps-start').getAttribute('data-n') || '?';
+    if (!confirm('Prüfstand starten?\n\n' + n + ' Designs werden erzeugt. Jedes kostet ein Bild beim Bilddienst.\nKunden haben Vorrang – der Lauf wird nur angenommen, wenn in der Schlange Platz ist.')) return;
+    $('ps-msg').textContent = 'wird gestartet …';
+    api('/pruefstand/start', { method: 'POST', body: JSON.stringify(psWahl()) }).then(function (r) {
+      if (!r.ok) { $('ps-msg').textContent = (r.j && (r.j.hinweis || r.j.error)) || 'Start fehlgeschlagen.'; return; }
+      $('ps-msg').textContent = psN(r.j.geplant, 'Lauf', 'Läufe') + ' gestartet · ' + psDauer(r.j.dauerSek) + ' · die Liste füllt sich von selbst';
+      $('ps-start').style.display = 'none';
+      drawPruefstand();
+    }).catch(function () { $('ps-msg').textContent = 'Start fehlgeschlagen.'; });
+  });
+
+  var PS_STATUS = {
+    queued: ['wartet', 'var(--ink3)'], running: ['läuft …', '#ffc542'], done: ['fertig', 'var(--ok)'],
+    error: ['abgebrochen', '#ff8a8a'], qa_failed: ['Prüfung nicht bestanden', '#ff8a8a'],
+    weg: ['nicht mehr im Speicher', 'var(--ink3)']
+  };
+
+  function psKarte(e) {
+    var st = PS_STATUS[e.status] || [e.status || '?', 'var(--ink3)'];
+    var befund = e.befund || [];
+    return '<div style="background:var(--card2);border:1px solid ' + (befund.length ? '#ff8a8a' : 'var(--line)') + ';border-radius:10px;padding:8px">' +
+      (e.bild
+        ? '<img src="' + esc(e.bild) + '" style="width:100%;border-radius:8px;background:#eee" loading="lazy">'
+        : '<div style="height:120px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:var(--card);color:' + st[1] + ';font-size:13px">' + esc(st[0]) + '</div>') +
+      '<div style="font-size:12.5px;font-weight:700;margin:6px 0 2px">' + esc(e.name || e.motto || '') + '</div>' +
+      '<div style="font-size:11.5px;color:var(--ink3)">' + esc(e.stil || '') + ' · ' + esc(e.textile || '') + ' · ' +
+        (e.mitLogo ? 'mit Testlogo' : 'ohne Logo') + (e.versuche > 1 ? ' · ' + e.versuche + ' Versuche' : '') + '</div>' +
+      '<div style="font-size:11.5px;color:' + st[1] + '">' + esc(st[0]) + '</div>' +
+      (befund.length ? '<div style="font-size:11.5px;color:#ff8a8a;margin-top:4px">' + befund.map(function (b) { return '⚠ ' + esc(b); }).join('<br>') + '</div>' : '') +
+      (e.hinweis ? '<div style="font-size:11px;color:var(--ink3);margin-top:3px">nicht im Bewertungs-Pool: ' + esc(e.hinweis) + '</div>' : '') +
+      // Der wichtigste Befund überhaupt: was wirklich im Bild steht. Gemalte Anweisungen
+      // („VORNE NAME AN BRUST“) fallen hier sofort auf, ohne jedes Bild zu vergrößern.
+      (e.texte && e.texte.length
+        ? '<div style="font-size:11px;color:var(--ink2);margin-top:4px">Im Bild steht: <span style="font-family:ui-monospace,monospace">' + esc(e.texte.join(' · ')) + '</span></div>' : '') +
+      (e.designId ? '<div style="font-family:ui-monospace,monospace;font-size:10.5px;color:var(--ink3);word-break:break-all;margin-top:3px">' + esc(e.designId) + '</div>' : '') +
+      '<textarea class="ps-k" data-job="' + esc(e.jobId) + '" rows="2" placeholder="Was fällt dir auf?" ' +
+        'style="width:100%;box-sizing:border-box;margin-top:6px;font-family:inherit;font-size:12.5px">' + esc(e.kommentar || '') + '</textarea>' +
+      '</div>';
+  }
+
+  function psStop() { if (psPoll) { clearInterval(psPoll); psPoll = null; } }
+
+  function drawPruefstand() {
+    api('/pruefstand').then(function (r) {
+      var j = r.j || {}, list = j.eintraege || [], box = $('ps-liste');
+      if (!list.length) { box.innerHTML = '<span style="color:var(--ink3);font-size:14px">Noch kein Prüfstand-Lauf.</span>'; psStop(); return; }
+      // Nicht neu zeichnen, während jemand einen Kommentar tippt – ein Neuaufbau
+      // mitten im Satz würde die Eingabe wegwerfen.
+      var a = document.activeElement;
+      if (!(a && a.className && String(a.className).indexOf('ps-k') >= 0)) {
+        var mangel = list.filter(function (x) { return (x.befund || []).length || x.kommentar; }).length;
+        box.innerHTML = '<div style="font-size:13px;color:var(--ink3);margin-bottom:8px">' + psN(list.length, 'Lauf', 'Läufe') + ' · ' +
+          (j.offen ? j.offen + ' noch unterwegs' : 'alle fertig') + (mangel ? ' · <b style="color:#ff8a8a">' + mangel + ' mit Befund oder Kommentar</b>' : '') + '</div>' +
+          '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px">' + list.map(psKarte).join('') + '</div>';
+      }
+      if (j.offen) { if (!psPoll) psPoll = setInterval(drawPruefstand, 15000); } else psStop();
+    }).catch(function () { psStop(); });
+  }
+
+  $('ps-liste').addEventListener('input', function (ev) {
+    var t = ev.target;
+    if (!t || !t.className || String(t.className).indexOf('ps-k') < 0) return;
+    var id = t.getAttribute('data-job'), wert = t.value;
+    clearTimeout(psKomm[id]);
+    psKomm[id] = setTimeout(function () {
+      api('/pruefstand/kommentar', { method: 'POST', body: JSON.stringify({ jobId: id, kommentar: wert }) })
+        .then(function (r) { $('ps-msg').textContent = r.ok ? 'Kommentar gespeichert.' : 'Kommentar NICHT gespeichert!'; });
+    }, 700);
+  });
+
+  $('ps-neu').addEventListener('click', drawPruefstand);
+  $('ps-leeren').addEventListener('click', function () {
+    if (!confirm('Alle Läufe ohne Kommentar aus der Liste nehmen?\n\nLäufe mit Kommentar bleiben stehen – das ist deine Mängelliste.')) return;
+    api('/pruefstand/leeren', { method: 'POST', body: JSON.stringify({ nurOhneKommentar: true }) }).then(function (r) {
+      $('ps-msg').textContent = r.ok ? (psN(r.j.entfernt, 'Lauf', 'Läufe') + ' entfernt.') : 'Hat nicht geklappt.';
+      drawPruefstand();
+    });
+  });
+
+  // ---- Druckdateien auslagern ----
+  // Bewusst zwei Knöpfe: erst ansehen, dann löschen. Der Lösch-Knopf erscheint überhaupt
+  // erst nach einer Vorschau, und nur wenn es etwas zu löschen gibt.
+  function auZeigen(j, nachLauf) {
+    var out = $('au-out'), msg = $('au-msg');
+    if (!j || !j.ok) { out.innerHTML = '<span style="color:var(--bad)">' + esc((j && j.grund) || 'Prüfung fehlgeschlagen.') + '</span>'; $('au-los').style.display = 'none'; return; }
+    $('au-tage').textContent = j.tage;
+    var etwas = (j.originale + j.abgeleitet) > 0;
+    $('au-los').style.display = etwas && !nachLauf ? 'inline-block' : 'none';
+    var zeilen = [
+      '<b>' + j.originale + '</b> Original-Druckdateien (' + j.mbOriginale + ' MB) – auf Drive bestätigt',
+      '<b>' + j.abgeleitet + '</b> abgeleitete Dateien (' + j.mbAbgeleitet + ' MB) – aus dem Original neu baubar',
+      '<b>' + j.mbGesamt + ' MB</b> würden frei',
+      'Automatik: <b>' + (j.an ? 'an – läuft täglich' : 'aus') + '</b> (Schalter AUSLAGERN in Railway)'
+    ];
+    if (nachLauf) zeilen = ['<b style="color:var(--ok)">' + j.geloescht + ' Dateien gelöscht, ' + j.mbGesamt + ' MB frei.</b>' + (j.fehler ? ' ' + j.fehler + ' Fehler.' : '')].concat(zeilen.slice(3));
+    if (j.uebersprungenAnzahl) {
+      zeilen.push('<b>' + j.uebersprungenAnzahl + '</b> übersprungen:');
+      zeilen = zeilen.concat((j.uebersprungen || []).map(function (u) { return '<span style="color:var(--ink3)">· ' + esc(u.datei) + ' – ' + esc(u.grund) + '</span>'; }));
+    }
+    if (j.beispiele && j.beispiele.length && !nachLauf) zeilen.push('<span style="color:var(--ink3)">Beispiele: ' + esc(j.beispiele.slice(0, 4).join(', ')) + '</span>');
+    out.innerHTML = zeilen.join('<br>');
+    msg.textContent = '';
+  }
+  $('au-pruefen').addEventListener('click', function () {
+    $('au-msg').textContent = 'Wird geprüft … (jede Datei wird mit Drive verglichen, das dauert)';
+    api('/auslagern').then(function (r) { auZeigen(r.j, false); }).catch(function () { $('au-msg').textContent = 'Prüfung fehlgeschlagen.'; });
+  });
+  $('au-los').addEventListener('click', function () {
+    if (!confirm('Druckdateien lokal löschen?\n\nOriginale nur, wenn sie bestätigt auf Google Drive liegen. Sie werden bei Bedarf automatisch zurückgeholt.')) return;
+    $('au-msg').textContent = 'Wird gelöscht …';
+    api('/auslagern', { method: 'POST', body: '{}' }).then(function (r) { auZeigen(r.j, true); }).catch(function () { $('au-msg').textContent = 'Löschen fehlgeschlagen.'; });
+  });
+
+  // ---- Verbotene Zeichen & Parolen ----
+  function drawVerboten() {
+    api('/verboten').then(function (r) {
+      var j = r.j || {}; var e = j.eigene || {}; var g = j.grundstock || {};
+      $('vb-wort').value = (e.wort || []).join('\n'); $('vb-teil').value = (e.teil || []).join('\n');
+      $('vb-grund').textContent = 'Ganze Wörter und Wortfolgen:\n' + (g.wort || []).join(', ') + '\n\nBestandteile:\n' + (g.teil || []).join(', ');
+    });
+    api('/verboten/log').then(function (r) {
+      var l = (r.j && r.j.eintraege) || [];
+      if (!l.length) { $('vb-log').innerHTML = '<span style="color:var(--ink3);font-size:14px">Noch kein Treffer – gut so.</span>'; return; }
+      var QUELLE = { eingabe: 'Eingabe', namensliste: 'Kaderliste', upload: 'Hochgeladenes Bild', bild: 'Von Otto gezeichnet' };
+      $('vb-log').innerHTML = '<table style="width:100%;border-collapse:collapse;font-size:13px">' +
+        '<tr style="text-align:left;color:var(--ink3)"><th>Wann</th><th>Woher</th><th>Treffer</th><th>Eingabe</th><th>Motto</th><th>Spur</th></tr>' +
+        l.map(function (x) {
+          return '<tr style="border-top:1px solid var(--line)"><td>' + esc(new Date(x.at).toLocaleString('de-DE')) + '</td>' +
+            '<td>' + esc(QUELLE[x.quelle] || x.quelle || '') + '</td>' +
+            '<td style="color:var(--bad);font-weight:700">' + esc(x.wort || '') + '</td>' +
+            '<td style="color:var(--ink3)">' + esc(x.eingabe || '') + '</td>' +
+            '<td style="color:var(--ink3)">' + esc(x.motto || '') + '</td>' +
+            '<td style="color:var(--ink3);font-family:ui-monospace,monospace;font-size:11px">' + esc(x.spur || '') + '</td></tr>';
+        }).join('') + '</table>';
+    });
+  }
+  $('vb-save').addEventListener('click', function () {
+    var lines = function (id) { return $(id).value.split('\n').map(function (x) { return x.trim(); }).filter(Boolean); };
+    api('/verboten', { method: 'PUT', body: JSON.stringify({ wort: lines('vb-wort'), teil: lines('vb-teil') }) })
+      .then(function (r) { $('vb-msg').textContent = r.ok ? 'Gespeichert – gilt sofort. Der Grundstock bleibt unverändert bestehen.' : 'Speichern fehlgeschlagen.'; });
+  });
+  var vbTimer = null;
+  $('vb-test').addEventListener('input', function () {
+    clearTimeout(vbTimer);
+    vbTimer = setTimeout(function () {
+      var t = $('vb-test').value.trim(); if (!t) { $('vb-test-out').textContent = ''; return; }
+      api('/verboten/pruefen', { method: 'POST', body: JSON.stringify({ text: t }) }).then(function (r) {
+        var h = r.j && r.j.treffer;
+        $('vb-test-out').textContent = h ? 'GESPERRT – Treffer: ' + h.wort : 'frei – nichts Verbotenes gefunden';
+        $('vb-test-out').style.color = h ? 'var(--bad)' : 'var(--ok)';
+      });
+    }, 350);
+  });
+
+  var mkTimer = null;
+  $('mk-test').addEventListener('input', function () {
+    clearTimeout(mkTimer);
+    mkTimer = setTimeout(function () {
+      var t = $('mk-test').value.trim(); if (!t) { $('mk-test-out').textContent = ''; return; }
+      api('/marken/pruefen', { method: 'POST', body: JSON.stringify({ text: t }) }).then(function (r) { var h = r.j && r.j.treffer; $('mk-test-out').textContent = h ? 'GESPERRT – Treffer: ' + h.wort : 'frei – kein geschütztes Wort'; $('mk-test-out').style.color = h ? 'var(--bad)' : 'var(--ok)'; });
+    }, 350);
+  });
+  function mkBildPruefen(body) {
+    var out = $('mk-bild-out'); out.style.color = 'var(--ink3)'; out.textContent = 'Bild wird geprüft … (Text und Logo/Wappen, dauert ein paar Sekunden)';
+    api('/marken/bildpruefen', { method: 'POST', body: JSON.stringify(body) }).then(function (r) {
+      var j = r.j || {};
+      if (!r.ok) { out.style.color = 'var(--bad)'; out.textContent = j.error || 'Prüfung fehlgeschlagen.'; return; }
+      var logos = (j.logos || []).map(function (l) { return '– ' + (l.beschreibung || '?') + (l.echt ? ' → ECHTE MARKE' + (l.name ? ' (' + l.name + ')' : '') + (l.sicher ? ', sicher' : ', unsicher') : ' → unbedenklich'); });
+      out.style.color = j.pass ? 'var(--ok)' : 'var(--bad)';
+      out.textContent = (j.pass ? 'FREI – nichts Geschütztes erkannt.' : 'GESPERRT – ' + (j.reason || '')) + '\nText im Bild: ' + ((j.texts || []).join(' | ') || '–') + '\nLogos/Wappen:\n' + (logos.join('\n') || '– keine');
+    });
+  }
+  $('mk-bild-go').addEventListener('click', function () { var id = $('mk-bild-id').value.trim(); if (id) mkBildPruefen({ designId: id }); });
+  $('mk-bild-file').addEventListener('change', function () {
+    var f = this.files && this.files[0]; if (!f) return;
+    var rd = new FileReader(); rd.onload = function () { mkBildPruefen({ pngBase64: rd.result }); }; rd.readAsDataURL(f);
+  });
+
+  // Mail-Protokoll: Chef-Adresse + letzte Mails mit Brevo-Antwort
+  function drawMailLog() {
+    var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+    api('/maillog').then(function (r) {
+      var j = r.j || {}; var e = j.entries || [];
+      var chef = j.chef
+        ? ('<b>' + esc(j.chef) + '</b> (ADMIN_EMAIL)')
+        : ('<b style="color:var(--bad)">' + esc(j.fallback || '–') + '</b> – <b>ADMIN_EMAIL ist in Railway nicht gesetzt</b>: Chef-Mails (Fanclub-Nachweis, Mail-Test ohne Adresse) gehen an dieses Absender-Postfach, nicht an dich.');
+      $('ml-help').innerHTML = 'Chef-Adresse: ' + chef + ' ' + (j.brevo ? 'Brevo-Schlüssel ist gesetzt.' : '<b style="color:var(--bad)">Kein BREVO_API_KEY – es wird nichts verschickt.</b>') +
+        ' Jede Mail steht hier mit Brevo-Antwort: <b>angenommen</b> (mit messageId) heißt, Brevo hat sie übernommen – kommt sie trotzdem nicht an, liegt es an Absender-/Domain-Freigabe in Brevo oder am Spam-Ordner, nicht am Code.';
+      if (!e.length) { $('ml-box').innerHTML = '<p class="hint">Noch keine Mail verschickt.</p>'; return; }
+      var h = '<table><tr><th>Zeit</th><th>An</th><th>Betreff</th><th>Brevo</th></tr>';
+      e.forEach(function (m) {
+        var st = m.ok
+          ? '<span style="color:var(--ok)">angenommen</span>' + (m.messageId ? ' <code style="font-size:11px">' + esc(m.messageId) + '</code>' : '')
+          : (m.logged ? '<span style="color:var(--bad)">nicht gesendet (kein API-Key)</span>' : '<span style="color:var(--bad)">Fehler: ' + esc(m.error || '?') + '</span>');
+        h += '<tr><td style="white-space:nowrap">' + esc(String(m.at || '').replace('T', ' ').slice(0, 16)) + '</td><td>' + esc(m.to) + '</td><td>' + esc(m.subject) + '</td><td>' + st + '</td></tr>';
+      });
+      $('ml-box').innerHTML = h + '</table>';
+    });
+  }
+
+  // Backup: Stand + Knopf "Backup jetzt" (laeuft im Hintergrund, Stand wird nachgefragt)
+  function drawBackup() {
+    var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+    var mb = function (n) { return (Math.round((n || 0) / 1048576 * 10) / 10) + ' MB'; };
+    api('/backup').then(function (r) {
+      var j = r.j || {}; var e = j.entries || [];
+      var last = null; for (var i = 0; i < e.length; i++) { if (e[i].ok) { last = e[i]; break; } }
+      $('bk-help').innerHTML = (j.drive
+        ? 'Läuft automatisch einmal täglich ab ' + j.hour + ':00 Uhr UTC; die letzten ' + j.keep + ' Stände liegen in Drive unter „Motto Otto/Backups". '
+        : '<b style="color:var(--bad)">Google Drive ist nicht verbunden – es wird KEIN Backup gemacht.</b> Oben bei „Google Drive" verbinden. ')
+        + (last ? 'Letztes erfolgreiches Backup: <b>' + esc(last.at.replace('T', ' ').slice(0, 16)) + ' UTC</b> (' + mb(last.size) + '). ' : '<b>Noch kein erfolgreiches Backup.</b> ')
+        + 'Gesichert wird alles außer den Druckdateien – die liegen je Design ohnehin in Drive.';
+      $('bk-now').disabled = !!j.running; $('bk-now').textContent = j.running ? 'Backup läuft …' : 'Backup jetzt';
+      if (j.running) setTimeout(drawBackup, 5000); else $('bk-msg').textContent = '';
+      if (!e.length) { $('bk-box').innerHTML = ''; return; }
+      var h = '<table><tr><th>Zeit (UTC)</th><th>Auslöser</th><th>Ergebnis</th></tr>';
+      e.slice(0, 10).forEach(function (x) {
+        h += '<tr><td style="white-space:nowrap">' + esc(String(x.at || '').replace('T', ' ').slice(0, 16)) + '</td><td>' + esc(x.trigger) + '</td><td>'
+          + (x.ok ? '<span style="color:var(--ok)">ok</span> ' + esc(x.file || '') + ' · ' + mb(x.size) + (x.pruned ? ' · ' + x.pruned + ' alte entfernt' : '') : '<span style="color:var(--bad)">Fehler: ' + esc(x.error || '?') + '</span>')
+          + '</td></tr>';
+      });
+      $('bk-box').innerHTML = h + '</table>';
+    });
+  }
+  $('bk-now').addEventListener('click', function () {
+    $('bk-now').disabled = true; $('bk-msg').textContent = 'Gestartet …';
+    api('/backup', { method: 'POST', body: '{}' }).then(function () { setTimeout(drawBackup, 1500); });
+  });
+
+  var vzTimer = null;
+  function drawVorzeige() {
+    api('/vorzeige').then(function (r) {
+      var j = r.j || {}; var samples = j.samples || {}; var st = j.import || {};
+      // 'kachel' ist der Aufmacher des Mottos - der, der auf der Startseite gross zu sehen ist.
+      var styles = ['kachel','standard','streetart','meisterwerk','minimal','popart','vintage','tattoo','comic','japan','college','aquarell','neon'];
+      var html = '<table style="border-collapse:collapse;font-size:12.5px"><tr><th style="text-align:left;padding:4px 8px">Motto</th>' + styles.map(function (k) { return '<th style="padding:4px 6px;font-weight:600">' + k + '</th>'; }).join('') + '</tr>';
+      Object.keys(samples).forEach(function (slug) {
+        html += '<tr><td style="padding:4px 8px;white-space:nowrap">' + esc(slug) + '</td>' + styles.map(function (k) {
+          var id = samples[slug][k];
+          // "neu" gibt es auf JEDEM Platz - auch auf einem leeren. Der Server nimmt dann die
+          // Texte aus dem Manifest und zeichnet das erste Beispiel fuer diesen Platz.
+          var neu = '<button type="button" class="small" data-vz-neu="' + esc(slug) + '|' + k + '" title="Neu zeichnen lassen (dauert ein paar Minuten)" style="padding:1px 6px;font-size:11px">neu</button>';
+          if (!id) return '<td style="padding:2px 6px;text-align:center"><span style="color:var(--ink3)">–</span><br>' + neu + '</td>';
+          var bild = '/api/mo/stilbeispiel/' + esc(slug) + '/' + k + '.jpg?v=' + esc(id);
+          return '<td style="padding:2px 6px;text-align:center;white-space:nowrap">' +
+            '<a href="' + bild + '" target="_blank" title="' + esc(id) + '"><img src="' + bild + '" style="width:44px;height:44px;object-fit:cover;border-radius:4px"></a>' +
+            '<br><button type="button" class="small" data-vz-weg="' + esc(slug) + '|' + k + '" title="Dieses Beispiel entfernen" style="padding:1px 6px;font-size:11px">weg</button> ' + neu + '</td>';
+        }).join('') + '</tr>';
+      });
+      html += '</table>';
+      $('vz-box').innerHTML = html;
+      // Ein Beispiel entfernen: der Platz wird leer, das Bild selbst bleibt im Archiv liegen.
+      [].forEach.call($('vz-box').querySelectorAll('[data-vz-weg]'), function (b) {
+        b.addEventListener('click', function () {
+          var teile = b.getAttribute('data-vz-weg').split('|');
+          if (!confirm('Beispiel „' + teile[1] + '“ bei „' + teile[0] + '“ entfernen?')) return;
+          b.disabled = true;
+          api('/vorzeige/' + encodeURIComponent(teile[0]) + '/' + encodeURIComponent(teile[1]), {
+            method: 'PUT', body: JSON.stringify({ designId: '' })
+          }).then(function (r) {
+            $('vz-msg').textContent = r.ok ? 'Entfernt: ' + teile[0] + ' / ' + teile[1] : 'Fehler: ' + (r.j && r.j.error || r.status);
+            drawVorzeige();
+          });
+        });
+      });
+      // Neu zeichnen lassen: der Server macht das Bild selbst, mit denselben Texten wie bisher.
+      [].forEach.call($('vz-box').querySelectorAll('[data-vz-neu]'), function (b) {
+        b.addEventListener('click', function () {
+          var teile = b.getAttribute('data-vz-neu').split('|');
+          var was = teile[1] === 'kachel' ? 'den Aufmacher' : 'das Beispiel „' + teile[1] + '“';
+          if (!confirm('Für „' + teile[0] + '“ ' + was + ' neu zeichnen lassen?\n\nDas dauert ein paar Minuten und kostet eine Bildgenerierung. Das bisherige Bild bleibt stehen, bis das neue fertig ist.')) return;
+          b.disabled = true;
+          $('vz-msg').textContent = 'Wird gezeichnet …';
+          api('/vorzeige/erzeugen', { method: 'POST', body: JSON.stringify({ motto: teile[0], style: teile[1] }) }).then(function (r) {
+            b.disabled = false;
+            if (!r.ok) { $('vz-msg').textContent = 'Fehler: ' + (r.j && r.j.error || r.status); return; }
+            $('vz-msg').textContent = 'Wird gezeichnet – das dauert ein paar Minuten.';
+            clearTimeout(vzTimer); vzTimer = setTimeout(drawVorzeige, 8000);
+          });
+        });
+      });
+      if (st.running) { $('vz-msg').textContent = 'Import läuft: ' + st.done + ' / ' + st.total + (st.errors && st.errors.length ? ' · Fehler: ' + st.errors.length : ''); clearTimeout(vzTimer); vzTimer = setTimeout(drawVorzeige, 4000); }
+      else if (st.total) { $('vz-msg').textContent = 'Import fertig: ' + st.done + ' / ' + st.total + (st.errors && st.errors.length ? ' · Fehler: ' + st.errors.join(' | ') : ''); }
+    });
+  }
+  $('vz-import').addEventListener('click', function () {
+    var txt = $('vz-json').value.trim(); var body;
+    try { body = JSON.parse(txt); } catch (e) { $('vz-msg').textContent = 'Das ist kein gültiges JSON.'; return; }
+    api('/vorzeige/import', { method: 'POST', body: JSON.stringify(body) }).then(function (r) {
+      $('vz-msg').textContent = r.ok ? r.j.gestartet + ' Bilder werden importiert – das dauert ein paar Minuten.' : 'Fehler: ' + (r.j.error || r.status);
+      setTimeout(drawVorzeige, 3000);
+    });
+  });
+
+  // Mockup-Vorlagen: je Artikel und Ansicht eine Kachel. Das Bild ist mit da - ohne Ansehen
+  // waere jede Pruefung ein Blindflug, und genau daran erkennt man ein schiefes Mockup.
+  var vlTimer = null;
+  function drawVorlagen() {
+    api('/vorlagen').then(function (r) {
+      var zs = (r.j && r.j.zeilen) || [];
+      if (!zs.length) { $('vl-box').innerHTML = '<p style="color:var(--ink3);font-size:14px">Keine Vorlagen bekannt.</p>'; return; }
+      var proArtikel = {};
+      zs.forEach(function (z) { (proArtikel[z.artikel] = proArtikel[z.artikel] || []).push(z); });
+      var html = '';
+      Object.keys(proArtikel).forEach(function (a) {
+        var g = proArtikel[a];
+        html += '<div style="margin:0 0 14px"><b style="font-size:14px">' + esc(g[0].label) + '</b>'
+          + ' <span style="color:var(--ink3);font-size:12px">· Fläche ' + (g[0].weg === 'alpha' ? 'aus der Kontur' : 'über den Platzhalter') + '</span>'
+          + '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px">';
+        g.forEach(function (z) {
+          var titel = (z.ansicht === 'produkt' ? 'Produkt' : (z.situation || 'Situation'))
+            + (z.farbe === 'black' ? ' · schwarz' : (['tee','polo','hoodie','zip','tasse','beutel'].indexOf(z.artikel) >= 0 ? ' · weiß' : ''));
+          // Der Zugangsschluessel MUSS in die Adresse. Ein <img>-Tag schickt keine eigenen
+          // Kopfzeilen mit, also kommt der Token hier sonst nie an - die Route weist ab, und
+          // im Backend stand bei jeder fertigen Vorlage ein kaputtes Bildsymbol. Die Vorlagen
+          // selbst waren laengst da, man sah sie nur nicht.
+          var bild = z.bild
+            ? '<img src="' + z.bild + '?token=' + encodeURIComponent(token) + '&t=' + Date.now() + '" style="width:96px;height:96px;object-fit:contain;background:#fff;border-radius:6px;display:block">'
+            : '<div style="width:96px;height:96px;display:flex;align-items:center;justify-content:center;border:1px dashed var(--line);border-radius:6px;color:var(--ink3);font-size:12px">fehlt</div>';
+          var mass = z.gemessen ? z.gemessen.w + '×' + z.gemessen.h + ' px' : (z.da ? 'nicht gemessen' : '');
+          if (z.stimmig) mass = '<span style="color:#e5484d" title="Der Platzhalter sitzt vermutlich nicht auf der Druckstelle – nochmal erzeugen">' + esc(mass) + ' ⚠</span>';
+          else mass = esc(mass);
+          html += '<div style="text-align:center;font-size:11.5px">' + bild
+            + '<div style="margin-top:3px">' + esc(titel) + '</div>'
+            + '<div style="color:var(--ink3)">' + mass + '</div>'
+            + '<button type="button" class="small" data-vl-go="' + esc(z.artikel) + '|' + esc(z.ansicht) + '|' + esc(z.farbe) + '" style="margin-top:3px;padding:1px 7px;font-size:11px">erzeugen</button>'
+            + '</div>';
+        });
+        html += '</div></div>';
+      });
+      $('vl-box').innerHTML = html;
+      // Der Stand des laufenden Bildes. Ohne ihn sieht der Knopf aus, als passiere nichts -
+      // ein Bild dauert eine bis zwei Minuten.
+      var l = r.j.lauf || {};
+      var t = '';
+      if (l.laeuft) {
+        t = '<b>' + esc(l.was) + ' wird gerade gezeichnet …</b> seit ' + l.sekunden + ' s'
+          + (l.warten ? ' · noch ' + l.warten + ' in der Warteschlange' : ' · letztes in der Reihe');
+      } else if (l.warten) {
+        t = l.warten + ' warten noch.';
+      } else {
+        t = r.j.fehlen ? 'Es fehlen noch ' + r.j.fehlen + ' von ' + r.j.gesamt + ' Vorlagen.' : '<b>Alle ' + r.j.gesamt + ' Vorlagen sind da.</b>';
+      }
+      if (l.erledigt) t += ' · ' + l.erledigt + ' in dieser Sitzung erzeugt';
+      if (l.fehler) t += '<br><span style="color:#e5484d">Zuletzt nicht angenommen: ' + esc(l.fehler) + ' – die alte Vorlage bleibt stehen, einfach nochmal einreihen.</span>';
+      $('vl-msg').innerHTML = t;
+      clearTimeout(vlTimer);
+      if (l.laeuft || l.warten) vlTimer = setTimeout(drawVorlagen, 5000);
+      [].forEach.call($('vl-box').querySelectorAll('[data-vl-go]'), function (b) {
+        b.addEventListener('click', function () {
+          var t = b.getAttribute('data-vl-go').split('|');
+          b.disabled = true; b.textContent = 'läuft …';
+          $('vl-msg').textContent = 'Wird erzeugt – das dauert ein bis zwei Minuten.';
+          api('/vorlagen/erzeugen', { method: 'POST', body: JSON.stringify({ artikel: t[0], ansicht: t[1], farbe: t[2] }) }).then(function (r) {
+            b.disabled = false; b.textContent = 'erzeugen';
+            if (!r.ok) { $('vl-msg').textContent = 'Nicht eingereiht: ' + (r.j && r.j.error || r.status); return; }
+            // Der Server arbeitet die Reihe im Hintergrund ab - ab hier zeigt der Stand, was los ist.
+            clearTimeout(vlTimer); vlTimer = setTimeout(drawVorlagen, 1500);
+          });
+        });
+      });
+    });
+  }
+
+  $('vl-alle').addEventListener('click', function () {
+    api('/vorlagen').then(function (r) {
+      var offen = (r.j && r.j.fehlen) || 0;
+      if (!offen) { $('vl-msg').textContent = 'Es fehlt keine Vorlage.'; return; }
+      if (!confirm('Alle ' + offen + ' fehlenden Vorlagen erzeugen lassen?\n\nDas sind ' + offen + ' Bildgenerierungen, sie kosten Geld und laufen nacheinander – rechne mit gut ' + Math.ceil(offen * 1.5) + ' Minuten. Du kannst die Warteschlange jederzeit leeren.')) return;
+      api('/vorlagen/alle', { method: 'POST', body: '{}' }).then(function (r2) {
+        $('vl-msg').textContent = (r2.j && r2.j.eingereiht ? r2.j.eingereiht + ' eingereiht.' : 'Nichts eingereiht.') + ' Der Server arbeitet sie nacheinander ab.';
+        clearTimeout(vlTimer); vlTimer = setTimeout(drawVorlagen, 1500);
+      });
+    });
+  });
+  $('vl-orig').addEventListener('click', function () {
+    if (!confirm('Die echten Herstellerfotos zurückholen?\n\nAlles, was ein erzeugtes Bild über ein Produktfoto gelegt hat, wird verworfen und das Original neu geladen. Die Situationen (in Benutzung) bleiben. Alle fertigen Mockups werden neu gebaut.')) return;
+    $('vl-msg').textContent = 'Wird zurückgeholt …';
+    api('/vorlagen/originale', { method: 'POST', body: '{}' }).then(function (r) {
+      if (!r.ok) { $('vl-msg').textContent = 'Fehler: ' + (r.j && r.j.error || r.status); return; }
+      var g = (r.j && r.j.geholt) || [];
+      $('vl-msg').innerHTML = '<b style="color:#30a46c">' + g.length + ' Produktfotos zurückgeholt</b>'
+        + (g.length ? ' (' + esc(g.join(', ')) + ')' : '') + ' · ' + ((r.j && r.j.mockupsGeloescht) || 0) + ' Mockups werden neu gebaut.'
+        + ((r.j && r.j.schief && r.j.schief.length) ? '<br><span style="color:#e5484d">Nicht geklappt: ' + esc(r.j.schief.join(' | ')) + '</span>' : '');
+      drawVorlagen();
+    });
+  });
+  $('vl-stopp').addEventListener('click', function () {
+    api('/vorlagen/stopp', { method: 'POST', body: '{}' }).then(function (r) {
+      $('vl-msg').textContent = 'Warteschlange geleert (' + ((r.j && r.j.verworfen) || 0) + ' verworfen).'
+        + ((r.j && r.j.laeuftNoch) ? ' Das laufende Bild (' + r.j.laeuftNoch + ') wird noch fertig.' : '');
+      clearTimeout(vlTimer); vlTimer = setTimeout(drawVorlagen, 1500);
+    });
+  });
+
+  // Textil-Linie: je Artikel eine Zeile mit allem, was feststeht - und dem einen Feld fuer das,
+  // was fehlt. Die Herstellerseite ist verlinkt, weil das Bild NUR dort herkommen darf.
+  // Eine Meldung, die man auch sieht: oben ueber der Tabelle statt darunter. Bei siebzehn
+  // Zeilen stand sie vorher so weit unten, dass jede Rueckmeldung unsichtbar blieb - ein
+  // abgelehntes Bild sah damit genauso aus wie ein kaputter Knopf.
+  function meldung(text, art) {
+    var m = $('tl-msg');
+    if (!m) return;
+    m.innerHTML = art === 'warn' ? '<b style="color:#e5484d">' + esc(text) + '</b>'
+      : art === 'ok' ? '<b style="color:#30a46c">' + esc(text) + '</b>'
+      : esc(text);
+    m.scrollIntoView({ block: 'nearest' });
+  }
+
+  function drawTextilLinie() {
+    api('/textil-linie').then(function (r) {
+      var xs = (r.j && r.j.artikel) || [];
+      if (!xs.length) { $('tl-box').innerHTML = '<p style="color:var(--ink3);font-size:14px">Keine Artikel.</p>'; return; }
+      var html = '<table style="width:100%;border-collapse:collapse;font-size:12.5px">'
+        + '<tr style="color:var(--ink3);text-align:left">'
+        + '<th style="padding:6px">Stufe</th><th style="padding:6px">Artikel</th><th style="padding:6px">Nr.</th>'
+        + '<th style="padding:6px">Daten</th><th style="padding:6px">Foto</th><th style="padding:6px">Preis</th><th style="padding:6px">Bildadresse einfügen</th></tr>';
+      xs.forEach(function (a) {
+        var daten = a.farben + ' Farben · ' + a.gramm + ' g/m²';
+        var foto = a.bild
+          ? '<a href="' + a.bild + '" target="_blank"><img src="' + a.bild + '" style="width:40px;height:40px;object-fit:contain;border-radius:4px;background:#fff"></a>'
+          : '<span style="color:var(--ink3)">fehlt</span>';
+        html += '<tr style="border-top:1px solid var(--line)">'
+          + '<td style="padding:6px;white-space:nowrap">' + esc(a.stufe) + '</td>'
+          + '<td style="padding:6px"><b>' + esc(a.name) + '</b><br><span style="color:var(--ink3)">' + esc(a.kategorie) + '</span></td>'
+          + '<td style="padding:6px;white-space:nowrap"><a href="' + esc(a.quelle) + '" target="_blank" rel="noopener">' + esc(a.nummer) + ' ↗</a></td>'
+          + '<td style="padding:6px;color:var(--ink2);white-space:nowrap">' + esc(daten) + '<br><span style="color:var(--ink3)" title="' + esc(a.groessenAlle || '') + '">' + esc(a.passform) + ' · ' + esc(a.groessen) + '</span></td>'
+          + '<td style="padding:6px;text-align:center">' + foto + '</td>'
+          + '<td style="padding:6px;white-space:nowrap"><input type="text" data-tl-preis="' + esc(a.id) + '" value="' + (a.preisCent ? (a.preisCent/100).toFixed(2).replace('.', ',') : '') + '" placeholder="Preis" style="width:64px;font-size:12px;text-align:right"> €'
+          + ' <button type="button" class="small" data-tl-psave="' + esc(a.id) + '">ok</button></td>'
+          + '<td style="padding:6px"><div style="display:flex;gap:6px;align-items:center;min-width:250px">'
+          + '<input type="text" data-tl-url="' + esc(a.id) + '" placeholder="Bildadresse einfügen" value="' + esc(a.von || '') + '" style="flex:1;min-width:150px;font-size:12px">'
+          + '<button type="button" class="small" data-tl-go="' + esc(a.id) + '" style="flex:0 0 auto">holen</button></div></td>'
+          + '</tr>';
+      });
+      html += '</table>';
+      $('tl-box').innerHTML = html;
+      var offenBild = xs.filter(function (a) { return !a.bild; }).length;
+      var offenPreis = xs.filter(function (a) { return !a.preisCent; }).length;
+      $('tl-msg2').textContent = 'Es fehlen noch ' + offenBild + ' Produktfotos und ' + offenPreis + ' Preise (von ' + xs.length + ' Artikeln).'
+        + (offenBild || offenPreis ? '' : ' Alles vollständig.');
+      [].forEach.call($('tl-box').querySelectorAll('[data-tl-psave]'), function (b) {
+        b.addEventListener('click', function () {
+          var id = b.getAttribute('data-tl-psave');
+          var feld = $('tl-box').querySelector('[data-tl-preis="' + id + '"]');
+          b.disabled = true;
+          api('/textil-linie/preis', { method: 'POST', body: JSON.stringify({ id: id, preis: feld.value.trim() }) }).then(function (r) {
+            b.disabled = false;
+            if (!r.ok) { meldung((r.j && r.j.error) || ('Fehler ' + r.status), 'warn'); return; }
+            meldung(r.j && r.j.entfernt ? 'Preis entfernt.' : 'Preis gespeichert.', 'ok');
+            drawTextilLinie();
+          });
+        });
+      });
+      [].forEach.call($('tl-box').querySelectorAll('[data-tl-go]'), function (b) {
+        b.addEventListener('click', function () {
+          var id = b.getAttribute('data-tl-go');
+          var feld = $('tl-box').querySelector('[data-tl-url="' + id + '"]');
+          var url = feld.value.trim();
+          // Ohne Adresse passiert nichts Sichtbares - und genau das sah aus wie ein kaputter
+          // Knopf. Der Platzhalter im Feld ("https://…/foto.jpg") ist eben keine Eingabe.
+          if (!url) {
+            meldung('Im Feld steht noch keine Bildadresse. Öffne die Herstellerseite (Klick auf die Artikelnummer), '
+              + 'klick dort das Produktfoto mit der rechten Maustaste an, wähle „Bildadresse kopieren" und füge sie hier ein.', 'warn');
+            feld.focus(); return;
+          }
+          b.disabled = true; b.textContent = '…';
+          meldung('Wird geholt …');
+          api('/textil-linie/bild', { method: 'POST', body: JSON.stringify({ id: id, url: url }) }).then(function (r) {
+            b.disabled = false; b.textContent = 'holen';
+            if (!r.ok) { meldung((r.j && r.j.error) || ('Fehler ' + r.status), 'warn'); return; }
+            meldung('Foto geholt (' + Math.round(((r.j && r.j.bytes) || 0) / 1024) + ' kB).', 'ok');
+            drawTextilLinie();
+          });
+        });
+      });
+    });
+  }
+
+  function drawUsers() {
+    api('/users').then(function (r) {
+      var us = (r.j && r.j.users) || [];
+      if (!us.length) { $('users').innerHTML = '<p style="color:var(--ink3);font-size:14px">Noch keine Konten.</p>'; return; }
+      $('users').innerHTML = '<table style="width:100%;border-collapse:collapse;font-size:13.5px"><tr style="color:var(--ink3);text-align:left"><th style="padding:6px">E-Mail</th><th style="padding:6px">Designs</th><th style="padding:6px">frei genutzt</th><th style="padding:6px">Guthaben</th><th style="padding:6px">Mitglied</th><th style="padding:6px">letzter Login</th><th></th></tr>' +
+        us.map(function (u) {
+          return '<tr style="border-top:1px solid var(--line)"><td style="padding:6px">' + esc(u.email) + '</td><td style="padding:6px">' + u.designs + '</td><td style="padding:6px">' + u.freeUsed + '</td><td style="padding:6px">' + u.credits + '</td><td style="padding:6px">' + (u.plan ? esc(u.plan) + ' (' + u.planUsed + ' genutzt)' : '–') + '</td><td style="padding:6px">' + (u.lastLogin ? new Date(u.lastLogin).toLocaleString('de-DE') : '–') + '</td>' +
+            '<td style="padding:6px"><button type="button" class="small" data-credit="' + esc(u.id) + '">+5 Designs schenken</button></td></tr>';
+        }).join('') + '</table>';
+      [].forEach.call($('users').querySelectorAll('[data-credit]'), function (b) {
+        b.addEventListener('click', function () { api('/users/' + b.getAttribute('data-credit') + '/credits', { method: 'POST', body: JSON.stringify({ delta: 5 }) }).then(drawUsers); });
+      });
+    });
+  }
+
+  function drawProdukte() {
+    api('/produkte').then(function (r) {
+      if (!r.ok) return;
+      var prods = r.j.produkte || [], ms = r.j.mottos || [], st = r.j.state || {};
+      var head = '<tr><th style="text-align:left;padding:6px 8px;position:sticky;left:0;background:var(--card)">Motto</th>' +
+        prods.map(function (p) { return '<th style="padding:6px 6px;font-size:12px;white-space:nowrap">' + esc(p.label) + '</th>'; }).join('') + '</tr>';
+      var rows = ms.map(function (m) {
+        var cells = prods.map(function (p) {
+          var on = (st[m.slug] || []).indexOf(p.key) >= 0;
+          return '<td style="text-align:center;padding:4px"><input type="checkbox" class="prodtog" data-slug="' + esc(m.slug) + '" data-key="' + esc(p.key) + '"' + (on ? ' checked' : '') + '></td>';
+        }).join('');
+        return '<tr><td style="padding:6px 8px;font-weight:600;position:sticky;left:0;background:var(--card)">' + esc(m.name) +
+          '<br><span style="color:var(--ink3);font-size:11px;font-family:ui-monospace,monospace">' + esc(m.slug) + '</span></td>' + cells + '</tr>';
+      }).join('');
+      $('prod-box').innerHTML = '<table style="border-collapse:collapse;min-width:680px"><thead>' + head + '</thead><tbody>' + rows + '</tbody></table>';
+      [].forEach.call(document.querySelectorAll('.prodtog'), function (cb) {
+        cb.addEventListener('change', function () {
+          api('/produkte', { method: 'POST', body: JSON.stringify({ slug: cb.dataset.slug, key: cb.dataset.key, on: cb.checked }) }).then(function (rr) {
+            $('prod-msg').textContent = rr.ok ? 'gespeichert ✓' : 'Fehler beim Speichern';
+            setTimeout(function () { $('prod-msg').textContent = ''; }, 1500);
+          });
+        });
+      });
+    });
+  }
+
+  // Kaufformen: An/Aus je Form, Preis fuer die Datei pauschal, fuer das fertige Teil je Produkt.
+  function drawKaufformen() {
+    api('/kaufformen').then(function (r) {
+      if (!r.ok) return;
+      var formen = r.j.formen || [], prods = r.j.produkte || [], aktiv = r.j.aktiv || {}, preise = r.j.preise || {};
+      var eur = function (c) { return c > 0 ? (c / 100).toFixed(2) : ''; };
+      var html = formen.map(function (f) {
+        var an = aktiv[f.key] !== false;
+        var kopf = '<label style="display:flex;gap:8px;align-items:center;margin:0;font-weight:700;text-transform:none;letter-spacing:0;font-size:15px">' +
+          '<input type="checkbox" class="kf-on" data-k="' + esc(f.key) + '" style="width:auto"' + (an ? ' checked' : '') + '>' + esc(f.label) + '</label>';
+        var felder;
+        if (f.key === 'textil') {
+          felder = '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:8px;margin-top:9px">' +
+            prods.map(function (p) {
+              return '<label style="font-size:12px;color:var(--ink3)">' + esc(p.label) +
+                '<input type="number" step="0.01" min="0" class="kf-p" data-k="textil" data-g="' + esc(p.key) + '" value="' + esc(eur((preise.textil || {})[p.key] || 0)) + '" placeholder="auf Anfrage" style="width:100%"></label>';
+            }).join('') + '</div>';
+        } else {
+          felder = '<div style="margin-top:9px;max-width:200px"><label style="font-size:12px;color:var(--ink3)">Preis in €' +
+            '<input type="number" step="0.01" min="0" class="kf-p" data-k="' + esc(f.key) + '" value="' + esc(eur(preise[f.key] || 0)) + '" placeholder="auf Anfrage" style="width:100%"></label></div>';
+        }
+        return '<div style="border:1px solid var(--line);border-radius:10px;padding:12px 13px;margin-bottom:10px">' + kopf +
+          '<div style="font-size:12.5px;color:var(--ink3);margin-top:4px">' + (f.proStueck ? 'Preis je Stück' : 'Einmalpreis') + '</div>' + felder + '</div>';
+      }).join('');
+      $('kf-box').innerHTML = html;
+    });
+  }
+  if ($('kf-save')) $('kf-save').addEventListener('click', function () {
+    var aktiv = {}, preise = { textil: {} };
+    [].forEach.call(document.querySelectorAll('.kf-on'), function (cb) { aktiv[cb.dataset.k] = cb.checked; });
+    [].forEach.call(document.querySelectorAll('.kf-p'), function (inp) {
+      var c = Math.round((parseFloat(String(inp.value).replace(',', '.')) || 0) * 100);
+      if (inp.dataset.g) preise.textil[inp.dataset.g] = c; else preise[inp.dataset.k] = c;
+    });
+    api('/kaufformen', { method: 'POST', body: JSON.stringify({ aktiv: aktiv, preise: preise }) }).then(function (r) {
+      $('kf-msg').textContent = r.ok ? 'gespeichert ✓' : 'Fehler beim Speichern';
+      setTimeout(function () { $('kf-msg').textContent = ''; }, 1800);
+    });
+  });
+
+  function drawAnfragen() {
+    api('/anfragen').then(function (r) {
+      if (!r.ok) return;
+      var list = r.j.anfragen || [], kurz = {};
+      (r.j.formen || []).forEach(function (f) { kurz[f.key] = f.kurz; });
+      if (!list.length) { $('anf-box').innerHTML = '<div class="help">Noch keine Anfragen.</div>'; return; }
+      var th = ['Wann', 'Kaufform', 'Produkt', 'Menge', 'Design', 'Motto', 'Wer', 'E-Mail', 'Nachricht']
+        .map(function (t) { return '<th style="text-align:left;padding:6px 8px;font-size:12px;white-space:nowrap">' + t + '</th>'; }).join('');
+      var rows = list.map(function (a) {
+        var d = new Date(a.created);
+        var td = [
+          isNaN(d) ? '' : d.toLocaleString('de-DE'), kurz[a.form] || a.form, a.garment || '–', String(a.menge || 1),
+          a.designId, a.motto || '', a.name || '–', a.email || '', a.text || ''
+        ].map(function (v, i) {
+          return '<td style="padding:6px 8px;font-size:13px;vertical-align:top' + (i === 8 ? ';max-width:280px' : ';white-space:nowrap') + '">' + esc(v) + '</td>';
+        }).join('');
+        return '<tr>' + td + '</tr>';
+      }).join('');
+      $('anf-box').innerHTML = '<table style="border-collapse:collapse;min-width:900px"><thead><tr>' + th + '</tr></thead><tbody>' + rows + '</tbody></table>';
+    });
+  }
+
+  // Aufruf der oeffentlichen mo-Endpunkte (nicht /api/admin) mit dem Admin-Token als Master-Ersatz.
+  function moApi(path, body) {
+    return fetch(path, { method: 'POST', headers: { 'x-admin-token': token, 'content-type': 'application/json' }, body: JSON.stringify(body || {}) })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); });
+  }
+  // Pool nur auf Klick laden und seitenweise (40) rendern - bei tausenden Designs sonst endloses Scrollen
+  var scList = null, scPage = 1, SC_PAGE = 40;
+  function scVisible() { var b = $('sc-body'); return !!(b && !b.classList.contains('hide')); }
+  function scLabel() { $('sc-open').textContent = (scVisible() ? 'Pool einklappen' : 'Bewertungs-Pool anzeigen') + ' (' + (scList ? scList.length : '…') + ')'; }
+  function drawShowcase() {
+    api('/showcase').then(function (r) {
+      scList = (r.j && r.j.designs) || [];
+      scLabel();
+      if (scVisible()) scRender();
+    });
+  }
+  function scRender() {
+      var box = $('showcase'); if (!box || !scList) return;
+      var q = (($('sc-filter') && $('sc-filter').value) || '').trim().toLowerCase();
+      var all = q ? scList.filter(function (d) { return String(d.motto || '').toLowerCase().indexOf(q) >= 0 || String(d.designId || '').toLowerCase().indexOf(q) >= 0; }) : scList;
+      if (!all.length) { box.innerHTML = '<span style="color:var(--ink2);font-size:14px">' + (q ? 'Nichts gefunden.' : 'Noch keine Designs im Bewertungs-Pool.') + '</span>'; $('sc-more').style.display = 'none'; return; }
+      var list = all.slice(0, scPage * SC_PAGE);
+      $('sc-more').style.display = list.length < all.length ? 'inline-block' : 'none';
+      $('sc-more').textContent = 'Mehr laden (' + list.length + ' von ' + all.length + ')';
+      box.innerHTML = list.map(function (d) {
+        return '<div style="background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:8px">' +
+          '<img src="' + esc(d.image) + '" style="width:100%;border-radius:8px;background:#eee" loading="lazy">' +
+          '<div style="font-size:12px;color:var(--ink2);margin:6px 0 2px">' + esc(d.motto || '') + (d.count ? (' · ⭐ ' + d.avg + ' (' + d.count + ')') : '') + '</div>' +
+          // Wann entstanden - ohne die Zeit nützt die Sortierung nach Zeit nichts
+          (d.created ? '<div style="font-size:11px;color:var(--ink3)">' + esc(new Date(d.created).toLocaleString('de-DE', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })) + '</div>' : '') +
+          '<div style="font-family:ui-monospace,monospace;font-size:11px;color:var(--ink3);word-break:break-all">' + esc(d.designId) + '</div>' +
+          // Ein „nein“ vom Kunden ist keine Backend-Entscheidung und wird hier auch nicht überstimmt.
+          (d.kundenwunsch === false ? '<div style="font-size:11px;color:#ff8a8a;margin-top:4px">🔒 Kunde hat nicht freigegeben</div>'
+            : d.kundenwunsch === true ? '<div style="font-size:11px;color:var(--ink3);margin-top:4px">✓ vom Kunden freigegeben</div>' : '') +
+          '<div style="display:flex;gap:6px;margin-top:6px">' +
+            '<button type="button" class="sc-toggle" data-id="' + esc(d.designId) + '" data-on="' + (d.approved ? 1 : 0) + '"' + (d.kundenwunsch === false ? ' disabled title="Der Kunde hat dieses Design nicht für die Bewertung freigegeben."' : '') + ' style="flex:1;font-size:12px;padding:6px;border-radius:6px;border:1px solid var(--line);background:' + (d.approved ? '#ffe9a8' : 'var(--card)') + ';color:#1b1710;cursor:' + (d.kundenwunsch === false ? 'not-allowed;opacity:.5' : 'pointer') + '">' + (d.approved ? '★ in Bewertung' : '☆ gesperrt') + '</button>' +
+            '<button type="button" class="sc-del" data-id="' + esc(d.designId) + '" style="font-size:12px;padding:6px 8px;border-radius:6px;border:1px solid #5c2b2b;background:#2a1c1c;color:#ff8a8a;cursor:pointer">🗑</button>' +
+          '</div></div>';
+      }).join('');
+      [].forEach.call(box.querySelectorAll('.sc-toggle'), function (b) {
+        b.addEventListener('click', function () { var on = b.getAttribute('data-on') === '1'; b.disabled = true; moApi('/api/mo/showcase/approve', { designId: b.getAttribute('data-id'), approved: !on }).then(drawShowcase); });
+      });
+      [].forEach.call(box.querySelectorAll('.sc-del'), function (b) {
+        b.addEventListener('click', function () {
+          var id = b.getAttribute('data-id');
+          if (!confirm('Design ' + id + ' endgültig löschen?\nAus Bewertung, alle Dateien und Google Drive.')) return;
+          b.disabled = true; b.textContent = '…';
+          moApi('/api/mo/design/delete', { designId: id }).then(function (r) {
+            if (r.ok && r.j && r.j.ok) { $('sc-msg').textContent = 'Design gelöscht ✓ (' + ((r.j.removed || []).join(', ') || 'nichts gefunden') + ')'; }
+            else { $('sc-msg').textContent = 'Löschen fehlgeschlagen: ' + ((r.j && r.j.error) || 'Fehler'); }
+            drawShowcase();
+          }).catch(function () { $('sc-msg').textContent = 'Löschen fehlgeschlagen (Netzwerk).'; b.disabled = false; b.textContent = '🗑'; });
+        });
+      });
+  }
+  var fcLast = null; // letzte Freigabe-Aktion (fuer die Rueckmeldung in der Karte)
+  function drawApprovals() {
+    api('/approvals').then(function (r) {
+      var box = $('approvals'); if (!box) return;
+      var list = (r.j && r.j.approvals) || [];
+      if (!list.length) { box.innerHTML = '<span style="color:var(--ink2);font-size:14px">Keine Fanclub-Designs.</span>'; return; }
+      // Status als deutlicher Badge, Knoepfe passend zum Status; nach einer Aktion steht das Ergebnis (Mail ja/nein) in der Karte
+      var badge = {
+        submitted: ['EINGEREICHT – bitte prüfen', '#3a3110', '#ffd666'], pending: ['wartet auf Nachweis', '#2a2a33', '#bbb'],
+        approved: ['FREIGEGEBEN ✓', '#1c2a1e', '#8aff9c'], rejected: ['ABGELEHNT', '#2a1c1c', '#ff8a8a']
+      };
+      var btnS = function (bg, bd, fg) { return 'font-size:12px;padding:6px 8px;border-radius:6px;border:1px solid ' + bd + ';background:' + bg + ';color:' + fg + ';cursor:pointer'; };
+      box.innerHTML = list.map(function (d) {
+        var b = badge[d.status] || badge.pending;
+        var when = d.decidedAt || d.at || ''; when = when ? String(when).replace('T', ' ').slice(0, 16) : '';
+        var last = (fcLast && fcLast.id === d.designId) ? '<div style="margin-top:6px;font-size:12px;color:var(--ok)">' + esc(fcLast.text) + '</div>' : '';
+        return '<div style="background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:8px">' +
+          '<img src="' + esc(d.image) + '" style="width:100%;border-radius:8px;background:#eee" loading="lazy">' +
+          '<div style="margin:8px 0 4px"><span style="display:inline-block;padding:3px 8px;border-radius:6px;font-size:12px;font-weight:bold;background:' + b[1] + ';color:' + b[2] + '">' + b[0] + '</span>' + (when ? ' <span style="font-size:11px;color:var(--ink3)">' + esc(when) + '</span>' : '') + '</div>' +
+          '<div style="font-size:12px;color:var(--ink2)">' + esc(d.fanclub || d.motto || '') + '</div>' +
+          '<div style="font-family:ui-monospace,monospace;font-size:11px;color:var(--ink3);word-break:break-all">' + esc(d.designId) + '</div>' +
+          '<div style="font-size:12px;color:var(--ink3);margin-top:4px">' + (d.email ? 'Kunde: ' + esc(d.email) : 'keine Kundenadresse (Gast ohne Angabe) – bitte selbst informieren') + '</div>' +
+          (d.proof ? '<div style="margin-top:6px"><a href="' + esc(d.proof) + '" target="_blank" style="color:var(--accent);font-size:13px">Nachweis ansehen ↗</a></div>' : '<div style="margin-top:6px;font-size:12px;color:var(--ink3)">kein Nachweis hochgeladen</div>') +
+          last +
+          '<div style="display:flex;gap:6px;margin-top:8px">' +
+            (d.status !== 'approved' ? '<button type="button" class="fc-ok" data-id="' + esc(d.designId) + '" style="flex:1;' + btnS('#1c2a1e', '#2b5c33', '#8aff9c') + '">Freigeben</button>' : '') +
+            (d.status !== 'rejected' ? '<button type="button" class="fc-no" data-id="' + esc(d.designId) + '" style="' + btnS('#2a1c1c', '#5c2b2b', '#ff8a8a') + '">Ablehnen</button>' : '') +
+            (d.status === 'approved' ? '<button type="button" class="fc-undo" data-id="' + esc(d.designId) + '" style="flex:1;' + btnS('#2a2a33', '#444', '#bbb') + '">Freigabe zurücknehmen</button>' : '') +
+          '</div></div>';
+      }).join('');
+      var done = function (id, status) { return function (r) { var j = (r && r.j) || r || {}; fcLast = { id: id, text: (status === 'approved' ? 'Freigegeben' : status === 'rejected' ? 'Abgelehnt' : 'Zurückgesetzt') + (j.mailed ? ' · Kunde per Mail informiert (' + j.mailed + ')' : (status === 'pending' ? '' : ' · keine Kundenadresse, bitte selbst informieren')) }; drawApprovals(); }; };
+      [].forEach.call(box.querySelectorAll('.fc-ok'), function (b) {
+        b.addEventListener('click', function () { var id = b.getAttribute('data-id'); b.disabled = true; moApi('/api/mo/approval/set', { designId: id, status: 'approved' }).then(done(id, 'approved')); });
+      });
+      [].forEach.call(box.querySelectorAll('.fc-no'), function (b) {
+        b.addEventListener('click', function () {
+          var id = b.getAttribute('data-id');
+          var grund = prompt('Dieses Fanclub-Design ablehnen?\n\nOptional: kurzer Grund für den Kunden (steht in der Mail):', '');
+          if (grund === null) return;
+          b.disabled = true; moApi('/api/mo/approval/set', { designId: id, status: 'rejected', grund: grund.trim() }).then(done(id, 'rejected'));
+        });
+      });
+      [].forEach.call(box.querySelectorAll('.fc-undo'), function (b) {
+        b.addEventListener('click', function () { var id = b.getAttribute('data-id'); if (!confirm('Freigabe zurücknehmen? Das Design ist dann wieder gesperrt (keine Mail an den Kunden).')) return; b.disabled = true; moApi('/api/mo/approval/set', { designId: id, status: 'pending' }).then(done(id, 'pending')); });
+      });
+    });
+  }
+  $('fc-reload').addEventListener('click', drawApprovals);
+  $('sc-reload').addEventListener('click', drawShowcase);
+  $('sc-open').addEventListener('click', function () {
+    $('sc-body').classList.toggle('hide'); scPage = 1; scLabel();
+    if (scVisible()) { if (scList) scRender(); else drawShowcase(); }
+  });
+  $('sc-more').addEventListener('click', function () { scPage++; scRender(); });
+  var scFilterTimer = null;
+  $('sc-filter').addEventListener('input', function () { clearTimeout(scFilterTimer); scFilterTimer = setTimeout(function () { scPage = 1; scRender(); }, 250); });
+  // Pool komplett leeren - danach fuellt der Server ihn sofort mit den kuratierten Vorzeige-Designs
+  $('sc-purge-all').addEventListener('click', function () {
+    if (!confirm('Wirklich ALLE Designs aus dem Bewertungs-Pool nehmen? Der Pool wird danach automatisch aus den Vorzeige-Designs neu aufgebaut.')) return;
+    $('sc-purge-all').disabled = true; $('sc-msg').textContent = 'Wird geleert …';
+    moApi('/api/mo/showcase/purge', { all: true }).then(function (r) {
+      var j = (r && r.j) || r || {};
+      $('sc-msg').textContent = 'Entfernt: ' + (j.entfernt || 0) + ' · aus Vorzeige nachgefüllt: ' + (j.nachgefuellt || 0);
+      $('sc-purge-all').disabled = false; drawShowcase();
+    }).catch(function () { $('sc-msg').textContent = 'Das hat nicht geklappt.'; $('sc-purge-all').disabled = false; });
+  });
+  $('sc-purge-fan').addEventListener('click', function () {
+    if (!confirm('Alle „Lieblingsverein"-Designs aus der Bewertung nehmen?')) return;
+    moApi('/api/mo/showcase/purge', { motto: 'fan-shirt' }).then(function (r) { $('sc-msg').textContent = ((r.j && r.j.entfernt) || 0) + ' aus der Bewertung genommen.'; drawShowcase(); });
+  });
+
+  function drawJobs() {
+    var alle = $('jobs-alle') && $('jobs-alle').checked;
+    api('/jobs' + (alle ? '?alle=1' : '')).then(function (r) {
+      var jobs = (r.j && r.j.jobs) || [];
+      if ($('jobs-zahl')) $('jobs-zahl').textContent = jobs.length + ' gezeigt' + (r.j && r.j.ausgeblendet ? ', ' + r.j.ausgeblendet + ' Vorzeige/Automatik ausgeblendet' : '') + (r.j && r.j.gesamt ? ' · ' + r.j.gesamt + ' insgesamt' : '');
+      $('jobs').innerHTML = jobs.map(function (j) {
+        var vals = esc(Object.keys(j.values || {}).map(function (k) { return j.values[k]; }).filter(Boolean).join(' · '));
+        var extra = [];
+        if (j.style && j.style !== 'standard') extra.push('Stil: ' + j.style);
+        if (j.colors) extra.push('Farben: ' + j.colors);
+        if (j.variation) extra.push('Variante: ' + j.variation.split(';')[0]);
+        if (j.research && j.research.pun_source) extra.push('Recherche: ' + j.research.pun_source);
+        if (j.names && j.names.length) {
+          var sizes = (j.people || []).filter(function (p) { return p && p.size; }).length;
+          extra.push(j.names.length + ' Namen' + (sizes ? ' (' + sizes + ' mit Größe)' : '') + ': ' + j.names.slice(0, 4).join(', ') + (j.names.length > 4 ? ' …' : ''));
+          if (j.aufteilung && j.aufteilung !== 'vorne') extra.push(j.aufteilung === 'brust-kader' ? 'Hinten groß + Namensliste, vorne Brust-Print' : 'Vorne Motiv, hinten Namensliste');
+        }
+        if (extra.length) vals += '<br><span style="color:var(--accent)">' + esc(extra.join(' · ')) + '</span>';
+        return '<div style="background:var(--card);border:1px solid var(--line);border-radius:8px;overflow:hidden">' +
+          '<a href="' + esc(j.preview) + '" target="_blank"><img src="' + esc(j.mockup) + '" style="width:100%;display:block;aspect-ratio:1/1;object-fit:cover" loading="lazy"></a>' +
+          '<div style="padding:8px 10px;font-size:12.5px;color:var(--ink2)"><b style="color:var(--ink)">' + esc(j.motto) + '</b><br>' + esc(vals) + '<br><span style="font-family:var(--mono);font-size:11px">' + esc(j.designId) + '</span>' +
+          (j.von ? '<br><span style="color:var(--ink3)">von ' + esc(j.von) + (j.firma ? ' · Firma ' + esc(j.firma) : '') + (j.quelle ? ' · ' + esc(j.quelle) : '') + '</span>' : '') +
+          (j.hinweis ? '<br><span style="color:#ffc542">Druck: ' + esc(j.hinweis) + '</span>' : '') +
+          '</div></div>';
+      }).join('') || '<p style="color:var(--ink3);font-size:14px">Noch keine Entwürfe.</p>';
+    });
+  }
+
+  if ($('jobs-alle')) $('jobs-alle').addEventListener('change', drawJobs);
+  function drawList() {
+    $('list').innerHTML = all.map(function (m) {
+      return '<button class="item' + (current && current.slug === m.slug ? ' on' : '') + '" data-slug="' + m.slug + '">' +
+        '<b>' + esc(m.name) + '</b><small>' + esc(m.slug) + (m.active === false ? ' · <span class="off">versteckt</span>' : '') + '</small></button>';
+    }).join('') || '<p style="color:var(--ink3);font-size:14px">Noch keine Mottos.</p>';
+    [].forEach.call($('list').querySelectorAll('.item'), function (b) {
+      b.addEventListener('click', function () { load(b.dataset.slug); });
+    });
+  }
+
+  function esc(s) { return String(s == null ? '' : s).replace(/[<>&"]/g, function (c) { return ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' })[c]; }); }
+
+  function load(slug) {
+    current = all.filter(function (m) { return m.slug === slug; })[0] || null;
+    if (!current) return;
+    fill(current);
+    drawList();
+  }
+
+  $('new').addEventListener('click', function () {
+    current = null;
+    fill({ name: '', slug: '', order: 100, active: true, size: '1024x1536', intro: '', prompt: '', fields: [], upload: { mode: 'off', label: 'Logo oder Foto', hint: '', required: false, place: 'unten', widthPct: 38 } });
+    drawList();
+    msg('Neues Motto – noch nicht gespeichert.');
+  });
+
+  function fill(m) {
+    $('editor').classList.remove('hide');
+    $('empty').classList.add('hide');
+    $('e-name').value = m.name || '';
+    $('e-slug').value = m.slug || '';
+    $('e-order').value = m.order == null ? 100 : m.order;
+    $('e-size').value = m.size || '1024x1536';
+    $('e-active').checked = m.active !== false;
+    $('e-intro').value = m.intro || '';
+    $('e-headline').value = m.headline || '';
+    $('e-text').value = m.text || '';
+    $('e-sample').value = m.sample || '';
+    $('e-accent').value = m.accent || '#ffc542';
+    $('e-stylechoice').value = m.styleChoice === false ? '0' : '1';
+    $('e-colorchoice').value = m.colorChoice === false ? '0' : '1';
+    $('e-vary').value = m.vary === false ? '0' : '1';
+    $('e-bildstufe').value = m.bildStufe || '';
+    $('e-markenfrei').value = m.markenfrei ? '1' : '0';
+    $('e-gewerblich').value = m.gewerblich ? '1' : '0';
+    $('e-namezone').value = m.nameZone || 'unten';
+    $('e-research').value = m.research ? '1' : '0';
+    $('e-researchfield').value = m.researchField || '';
+    $('e-suggestions').value = m.suggestions || '';
+    $('e-suggestfield').value = m.suggestField || '';
+    $('e-namefont').value = m.nameFont || 'rund';
+    $('e-kader').value = m.kader === false ? '0' : '1';
+    $('e-listewort').value = m.listeWort || '';
+    $('e-variations').value = m.variations || '';
+    $('e-prompt').value = m.prompt || '';
+    $('e-backprompt').value = m.backPrompt || '';
+    $('e-backfield').value = m.backNamesField || '';
+    var u = m.upload || {};
+    $('u-mode').value = u.mode || 'off';
+    $('u-required').checked = !!u.required;
+    $('u-label').value = u.label || 'Logo oder Foto';
+    $('u-hint').value = u.hint || '';
+    $('u-place').value = u.place || 'unten';
+    $('u-width').value = u.widthPct || 38;
+    $('u-cobrand').checked = !!u.coBrand;
+    $('u-label2').value = u.label2 || '';
+    onMode();
+    $('fields').innerHTML = '';
+    (m.fields || []).forEach(addField);
+    $('preview-out').classList.add('hide');
+  }
+
+  $('u-mode').addEventListener('change', onMode);
+  function onMode() {
+    var v = $('u-mode').value;
+    $('u-extra').classList.toggle('hide', v === 'off');
+    $('u-place-row').classList.toggle('hide', v !== 'exact');
+    $('u-cobrand-row').classList.toggle('hide', v !== 'exact');
+  }
+
+  function addField(f) {
+    f = f || { key: '', label: '', type: 'text', required: false, printed: true, max: 30, placeholder: '', hint: '', options: [] };
+    var wrap = document.createElement('div');
+    wrap.className = 'frow';
+    wrap.innerHTML =
+      '<div class="line">' +
+        '<div><label>Beschriftung</label><input type="text" class="f-label" value="' + esc(f.label) + '" placeholder="z. B. Name"></div>' +
+        '<div><label>Kürzel im Prompt</label><input type="text" class="f-key" value="' + esc(f.key) + '" placeholder="name"></div>' +
+        '<div><label>Typ</label><select class="f-type"><option value="text">Textfeld</option><option value="select">Auswahl</option><option value="list">Namensliste (Rückseite)</option></select></div>' +
+        '<div><label>Max. Zeichen</label><input type="number" class="f-max" value="' + (f.max || 30) + '"></div>' +
+      '</div>' +
+      '<div class="line2">' +
+        '<div><label>Platzhalter</label><input type="text" class="f-ph" value="' + esc(f.placeholder) + '"></div>' +
+        '<div class="f-optwrap hide"><label>Auswahlmöglichkeiten, mit Komma getrennt</label><input type="text" class="f-opt" value="' + esc((f.options || []).join(', ')) + '"></div>' +
+        '<div style="display:flex;gap:14px;align-items:center;padding-bottom:8px">' +
+          '<label style="display:flex;gap:6px;align-items:center;margin:0;text-transform:none;letter-spacing:0;font-size:13.5px;color:var(--ink2)"><input type="checkbox" class="f-req" style="width:auto"' + (f.required ? ' checked' : '') + '>Pflicht</label>' +
+          '<label style="display:flex;gap:6px;align-items:center;margin:0;text-transform:none;letter-spacing:0;font-size:13.5px;color:var(--ink2)"><input type="checkbox" class="f-pr" style="width:auto"' + (f.printed !== false ? ' checked' : '') + '>steht im Bild</label>' +
+          '<label style="display:flex;gap:6px;align-items:center;margin:0;text-transform:none;letter-spacing:0;font-size:13.5px;color:var(--ink2)" title="Namensliste: ein Design, viele Namen. Der Name wird nicht von der KI gemalt, sondern als Schriftzug in ein freigehaltenes Band gesetzt."><input type="checkbox" class="f-pers" style="width:auto"' + (f.personal ? ' checked' : '') + '>je Person (Namensliste)</label>' +
+          '<button type="button" class="small danger f-del">Weg</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="tag"></div>';
+    $('fields').appendChild(wrap);
+
+    var typeSel = wrap.querySelector('.f-type');
+    // Feldtypen, die es hier nicht zum Anlegen gibt (Foto, Haken, Freitext, Kachelwahl mit Bild),
+    // bleiben beim Speichern, was sie sind - samt ihren Kacheln. Sie werden in der Motto-Datei gepflegt.
+    if (['text', 'select', 'list'].indexOf(f.type) < 0 && f.type) {
+      var fest = document.createElement('option'); fest.value = f.type;
+      fest.textContent = ({ upload: 'Foto (nur in der Datei)', checkbox: 'Haken (nur in der Datei)', textarea: 'Freitext (nur in der Datei)', wahl: 'Kachelwahl mit Bild (nur in der Datei)' })[f.type] || f.type;
+      typeSel.appendChild(fest);
+      wrap._festeOptionen = f.options || [];
+    }
+    typeSel.value = (['select', 'list', 'upload', 'checkbox', 'textarea', 'wahl'].indexOf(f.type) >= 0) ? f.type : 'text';
+    var optWrap = wrap.querySelector('.f-optwrap');
+    var keyIn = wrap.querySelector('.f-key');
+    var labIn = wrap.querySelector('.f-label');
+    var tag = wrap.querySelector('.tag');
+
+    function sync() {
+      optWrap.classList.toggle('hide', typeSel.value !== 'select');
+      if (!keyIn.value.trim() && labIn.value.trim()) keyIn.value = slug(labIn.value);
+      tag.textContent = keyIn.value.trim() ? 'im Prompt: {' + slug(keyIn.value) + '}' : '';
+    }
+    typeSel.addEventListener('change', sync);
+    labIn.addEventListener('input', sync);
+    keyIn.addEventListener('input', sync);
+    wrap.querySelector('.f-del').addEventListener('click', function () { wrap.remove(); });
+    sync();
+  }
+
+  function slug(s) {
+    return String(s || '').toLowerCase()
+      .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
+      .replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '').slice(0, 30);
+  }
+
+  $('addfield').addEventListener('click', function () { addField(); });
+
+  function collect() {
+    var fields = [].map.call($('fields').querySelectorAll('.frow'), function (w) {
+      var type = w.querySelector('.f-type').value;
+      return {
+        key: slug(w.querySelector('.f-key').value || w.querySelector('.f-label').value),
+        label: w.querySelector('.f-label').value.trim(),
+        type: type,
+        required: w.querySelector('.f-req').checked,
+        printed: w.querySelector('.f-pr').checked,
+        personal: w.querySelector('.f-pers').checked,
+        max: +w.querySelector('.f-max').value || 30,
+        placeholder: w.querySelector('.f-ph').value.trim(),
+        options: type === 'select' ? w.querySelector('.f-opt').value.split(',').map(function (s) { return s.trim(); }).filter(Boolean) : (type === 'wahl' ? (w._festeOptionen || []) : [])
+      };
+    }).filter(function (f) { return f.label || f.key; });
+
+    return {
+      name: $('e-name').value.trim(),
+      slug: slug($('e-slug').value || $('e-name').value),
+      order: +$('e-order').value || 100,
+      size: $('e-size').value,
+      active: $('e-active').checked,
+      intro: $('e-intro').value.trim(),
+      headline: $('e-headline').value.trim(),
+      text: $('e-text').value.trim(),
+      sample: $('e-sample').value.trim(),
+      accent: $('e-accent').value.trim() || '#ffc542',
+      styleChoice: $('e-stylechoice').value === '1',
+      colorChoice: $('e-colorchoice').value === '1',
+      vary: $('e-vary').value === '1',
+      bildStufe: $('e-bildstufe').value,
+      markenfrei: $('e-markenfrei').value === '1',
+      gewerblich: $('e-gewerblich').value === '1',
+      nameZone: $('e-namezone').value,
+      research: $('e-research').value === '1',
+      researchField: $('e-researchfield').value.trim(),
+      suggestions: $('e-suggestions').value,
+      suggestField: $('e-suggestfield').value.trim(),
+      nameFont: $('e-namefont').value,
+      kader: $('e-kader').value === '1',
+      listeWort: $('e-listewort').value.trim(),
+      variations: $('e-variations').value,
+      prompt: $('e-prompt').value,
+      backPrompt: $('e-backprompt').value,
+      backNamesField: $('e-backfield').value.trim(),
+      fields: fields,
+      upload: {
+        mode: $('u-mode').value,
+        required: $('u-required').checked,
+        label: $('u-label').value.trim() || 'Logo oder Foto',
+        hint: $('u-hint').value.trim(),
+        place: $('u-place').value,
+        widthPct: +$('u-width').value || 38,
+        coBrand: $('u-cobrand').checked,
+        label2: $('u-label2').value.trim()
+      }
+    };
+  }
+
+  $('save').addEventListener('click', function () {
+    var m = collect();
+    if (!m.name) { msg('Der Name fehlt.', 'err'); return; }
+    if ((m.prompt || '').trim().length < 30) { msg('Der Master-Prompt ist zu kurz.', 'err'); return; }
+    msg('Wird gespeichert …');
+    api('/mottos', { method: 'POST', body: JSON.stringify(m) }).then(function (r) {
+      if (!r.ok) { msg(r.j.error || 'Speichern fehlgeschlagen.', 'err'); return; }
+      msg('Gespeichert.', 'ok');
+      return api('/mottos').then(function (rr) {
+        all = rr.j.mottos || [];
+        current = all.filter(function (x) { return x.slug === r.j.motto.slug; })[0] || null;
+        drawList();
+        if (current) fill(current);
+      });
+    }).catch(function () { msg('Der Dienst ist nicht erreichbar.', 'err'); });
+  });
+
+  $('del').addEventListener('click', function () {
+    if (!current) { msg('Nichts ausgewählt.', 'err'); return; }
+    if (!confirm('„' + current.name + '" wirklich löschen?')) return;
+    api('/mottos/' + encodeURIComponent(current.slug), { method: 'DELETE' }).then(function () {
+      current = null;
+      $('editor').classList.add('hide');
+      $('empty').classList.remove('hide');
+      msg('Gelöscht.', 'ok');
+      return api('/mottos').then(function (rr) { all = rr.j.mottos || []; drawList(); });
+    });
+  });
+
+  $('preview').addEventListener('click', function () {
+    msg('');
+    api('/prompt-vorschau', { method: 'POST', body: JSON.stringify({ motto: collect(), values: {} }) }).then(function (r) {
+      var out = $('preview-out');
+      out.classList.remove('hide');
+      out.textContent = r.ok ? r.j.prompt : ('Fehler: ' + (r.j.error || 'unbekannt'));
+    });
+  });
+})();
+</script>
+</body>
+</html>

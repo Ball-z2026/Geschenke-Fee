@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Partner finden – Motto Otto</title>
+<meta name="description" content="Restaurants, Betriebe und Vereine mit eigenem Motto-Otto-Shop: Shirt, Hoodie, Poster und mehr mit ihrem Logo. Partner finden oder selbst Partner werden.">
+<link rel="icon" href="/favicon-64.png" type="image/png">
+<link rel="preload" href="/fonts/archivo-v1.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/marke.css">
+<link rel="stylesheet" href="/partner.css">
+</head>
+<body class="p-seite">
+<header class="mo-kopf"><div class="mo-in">
+  <a class="mo-marke" href="/"><img src="/logo.png" alt="" width="36" height="42">Motto Otto</a>
+  <nav class="mo-nav" aria-label="Hauptmenü">
+    <a href="/mottos">Mottos</a>
+    <a href="/so-gehts">So geht’s</a>
+    <a href="/firma">Firmen</a>
+    <a href="/partner" aria-current="page">Partner</a>
+    <a href="/event">Event</a>
+  </nav>
+  <a class="mo-knopf hell mo-konto" href="/konto">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8.5" r="4"/><path d="M4 21c1.4-4 4.4-6 8-6s6.6 2 8 6"/></svg>
+    Konto
+  </a>
+</div></header>
+
+<main class="p-wrap">
+  <section class="p-held">
+    <h1>Unsere <em>Partner</em></h1>
+    <p>Restaurants, Betriebe und Vereine mit eigenem kleinen Shop: Shirt, Hoodie oder Poster mit ihrem Logo, gestaltet mit deinem Namen.</p>
+    <div class="p-aktionen">
+      <a class="mo-knopf" href="/partner/werden">Partner werden</a>
+      <a class="mo-knopf hell" href="/partner/bereich">Partner-Login</a>
+    </div>
+  </section>
+
+  <div class="p-suche">
+    <input id="suche" type="search" placeholder="Name oder Ort, z. B. Luigi oder Jesteburg" aria-label="Partner suchen">
+    <button class="mo-knopf hell" id="naehe" type="button">In meiner Nähe</button>
+  </div>
+  <p id="status" class="p-klein" aria-live="polite"></p>
+  <div id="liste" class="p-liste"></div>
+
+  <section class="p-karte" style="margin-top:34px">
+    <h2>Dein eigener Shop bei Motto Otto</h2>
+    <p class="unter">Für Gastronomen, Betriebe und Vereine. Gedruckt wird erst, wenn jemand bestellt.</p>
+    <ol class="p-schritte">
+      <li>Anmelden mit Name, Anschrift und Logo. Du bekommst einen Link per Mail.</li>
+      <li>Im Partnerbereich wählst du, was es gibt: Shirt, Hoodie, Poster und mehr, dazu zwei oder drei Stile.</li>
+      <li>QR-Code auf den Tisch, ins Vereinsheim oder auf die Webseite. Wer hier ist oder scannt, landet direkt in deinem Shop.</li>
+    </ol>
+    <div class="p-aktionen"><a class="mo-knopf" href="/partner/werden">Jetzt Partner werden</a></div>
+  </section>
+</main>
+
+<script>
+(function () {
+  var alle = [], hier = null;
+  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var art = { gastro: 'Gastronomie', betrieb: 'Betrieb', verein: 'Verein' };
+  function km(a, b) {
+    var r = Math.PI / 180, dLat = (b[0] - a[0]) * r, dLon = (b[1] - a[1]) * r;
+    var x = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(a[0] * r) * Math.cos(b[0] * r) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    return 6371 * 2 * Math.asin(Math.min(1, Math.sqrt(x)));
+  }
+  function zeigen() {
+    var q = (document.getElementById('suche').value || '').toLowerCase().trim();
+    var l = alle.filter(function (p) { return !q || (p.name + ' ' + p.ort).toLowerCase().indexOf(q) >= 0; });
+    if (hier) l = l.map(function (p) { p.km = p.punkt ? km(hier, p.punkt) : 99999; return p; }).sort(function (a, b) { return a.km - b.km; });
+    document.getElementById('liste').innerHTML = l.map(function (p) {
+      var weit = hier && p.km < 99999 ? ' · ' + (p.km < 1 ? Math.round(p.km * 1000) + ' m' : p.km.toFixed(p.km < 10 ? 1 : 0).replace('.', ',') + ' km') : '';
+      return '<a class="p-partner" href="' + esc(p.tor) + '"><span class="lg" style="border:3px solid ' + esc(p.akzent) + '"><img src="' + esc(p.logo) + '" alt="" loading="lazy"></span>'
+        + '<span><b>' + esc(p.name) + '</b><span>' + esc(p.ort) + ' · ' + esc(art[p.art] || 'Partner') + esc(weit) + '</span></span></a>';
+    }).join('');
+    document.getElementById('status').textContent = l.length ? '' : (alle.length ? 'Kein Partner gefunden.' : '');
+  }
+  fetch('/api/partner/liste').then(function (r) { return r.json(); }).then(function (j) { alle = j.partner || []; zeigen(); })
+    .catch(function () { document.getElementById('status').textContent = 'Die Liste konnte nicht geladen werden.'; });
+  document.getElementById('suche').addEventListener('input', zeigen);
+  document.getElementById('naehe').addEventListener('click', function () {
+    if (!navigator.geolocation) { document.getElementById('status').textContent = 'Dein Browser kann den Standort nicht teilen.'; return; }
+    document.getElementById('status').textContent = 'Standort wird bestimmt …';
+    navigator.geolocation.getCurrentPosition(function (pos) { hier = [pos.coords.latitude, pos.coords.longitude]; document.getElementById('status').textContent = ''; zeigen(); },
+      function () { document.getElementById('status').textContent = 'Ohne Standort zeigen wir alle Partner.'; }, { timeout: 12000, maximumAge: 600000 });
+  });
+})();
+</script>
+</body>
+</html>

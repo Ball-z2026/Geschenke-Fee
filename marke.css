@@ -1,0 +1,75 @@
+/* Motto Otto - das gemeinsame Farbblatt aller Kundenseiten (1. Okt. 2026, Markus: "alle Designs
+   fuer die Seite jetzt hier"). Regeln: design-system/motto-otto/MASTER.md. Hier steht nur, was
+   JEDE Seite gleich hat: Schriften, Logo-Farben, der Kopf mit Logo, Menue und Konto, der Knopf.
+   Die Startseite (home-neu.html) traegt dieselben Werte noch inline - gleiche Zahlen, eine Quelle
+   folgt, wenn sie das naechste Mal angefasst wird. */
+@font-face{font-family:"Anton";src:url("/fonts/anton-v1.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Archivo";src:url("/fonts/archivo-v1.woff2") format("woff2");font-weight:400 900;font-display:swap}
+
+:root{
+  /* Farben aus dem Logo (gemessen, logo-vektor/MottoOtto-Logo-farben.md) */
+  --papier:#F6EDDD; --tinte:#000; --gruen:#77C500; --magenta:#E9166A; --beere:#AF0D6D;
+  --haut:#F9D9A7; --hemd:#E1E2E3; --text2:#4A4136;
+  /* Abgeleitet, Kontrast auf Papier gerechnet am 1. Okt.: text3 5,36 : 1, ok 5,39 : 1, warn 5,66 : 1 */
+  --text3:#6B5F4F; --ok-text:#2F6E00; --warn-text:#B42318;
+  --kontur:2.5px solid var(--tinte);
+  --stempel:4px 4px 0 var(--tinte);
+  --display:"Anton", "Arial Narrow", sans-serif;
+  --text:"Archivo", system-ui, sans-serif;
+}
+
+/* ---------- Kopf: Logo, Menue, Konto - auf jeder Seite gleich ---------- */
+.mo-kopf,.mo-kopf *{box-sizing:border-box}
+.mo-kopf{line-height:1.2;border-bottom:var(--kontur);background:var(--papier);position:sticky;top:0;z-index:40}
+.mo-kopf .mo-in{max-width:1120px;margin:0 auto;padding:8px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+.mo-marke{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--tinte);font:400 22px/1 var(--display);margin-right:auto;min-height:44px}
+.mo-marke img{width:36px;height:42px;object-fit:contain;display:block}
+.mo-nav{display:flex;flex-wrap:wrap;gap:2px 4px;order:3;width:100%}
+.mo-nav a{color:var(--tinte);text-decoration:none;font:700 15px/1.2 var(--text);padding:10px 9px;min-height:44px;display:inline-flex;align-items:center;border-radius:8px}
+.mo-nav a:hover{background:var(--haut)}
+/* 2. Okt.: unter 860 px eine Zeile statt Umbruch ("Event" stand sonst allein), notfalls zum Wischen. */
+@media (max-width:859px){
+  .mo-nav{flex-wrap:nowrap;justify-content:space-between;gap:0;overflow-x:auto;scrollbar-width:none}
+  .mo-nav::-webkit-scrollbar{display:none}
+  .mo-nav a{padding:10px 5px;font-size:14.5px;white-space:nowrap}
+}
+@media (max-width:359px){.mo-nav a{padding:10px 3px;font-size:13.5px}}
+.mo-nav a[aria-current="page"]{text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:6px;text-decoration-color:var(--magenta)}
+.mo-konto{order:2}
+@media (min-width:860px){
+  .mo-kopf .mo-in{padding:8px 24px}
+  .mo-nav{order:2;width:auto;margin-right:8px}
+  .mo-konto{order:3}
+}
+
+/* ---------- Der Knopf: Aufkleber mit Kontur und hartem Schatten ---------- */
+.mo-knopf{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:9px 18px;border:var(--kontur);border-radius:999px;background:var(--gruen);color:var(--tinte);font:800 15.5px/1.2 var(--text);text-decoration:none;box-shadow:var(--stempel);transition:transform .12s, box-shadow .12s;cursor:pointer}
+.mo-knopf:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--tinte)}
+.mo-knopf:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--tinte)}
+.mo-knopf.hell{background:#fff}
+.mo-knopf svg{width:18px;height:18px;flex:none}
+
+@media (prefers-reduced-motion: reduce){
+  .mo-knopf{transition:none}
+}
+
+/* ---------- Seiten, die noch die alten Farbnamen tragen (--bg, --card, --ink ...) ----------
+   1. Okt.: So geht's, Mottos, Stile, Konto, Firmen, Event, Rechtstexte. Die Seite setzt
+   class="mo-seite" an den body und belegt ihre alten Namen mit diesen Werten um; die
+   Regeln hier gelten fuer alle gleich. */
+.mo-seite{--bg:var(--papier);--bg2:#FBF5EA;--card:#fff;--card2:#FBF5EA;--line:#CBBFA9;
+  --ink:var(--tinte);--ink2:var(--text2);--ink3:var(--text3);
+  --accent:var(--gruen);--accent-ink:var(--tinte);--ok:var(--ok-text);--warn:var(--warn-text);--bad:var(--warn-text);
+  background:var(--papier);color:var(--tinte)}
+.mo-seite h1,.mo-seite h2{font-family:var(--display);font-weight:400;letter-spacing:.005em;line-height:1.02;color:var(--tinte)}
+.mo-seite a{color:var(--beere)}
+.mo-seite :focus{outline:none}
+.mo-seite :focus-visible{outline:3px solid var(--tinte);outline-offset:3px;box-shadow:0 0 0 7px var(--magenta);border-radius:6px}
+.mo-seite input:not([type=checkbox]):not([type=radio]):not([type=file]):not([type=range]),.mo-seite select,.mo-seite textarea{background:#fff;border:2px solid var(--tinte);border-radius:8px;color:var(--tinte);font-size:16px !important}
+.mo-seite .wruf{background:var(--gruen);color:var(--tinte);border:var(--kontur);box-shadow:var(--stempel)}
+.mo-seite .wruf:hover,.mo-seite .wruf:focus{background:var(--gruen);border-color:var(--tinte)}
+.mo-seite footer.site,.mo-seite footer{color:var(--text2)}
+/* Der Kopf bleibt schwarz, auch wenn die Seite Links in Beere setzt */
+.mo-kopf .mo-marke,.mo-kopf .mo-nav a,.mo-kopf .mo-knopf{color:var(--tinte)}
+/* Keine gesperrten Versal-Etiketten (MASTER.md 4) */
+.mo-seite *{text-transform:none !important}

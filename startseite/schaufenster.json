@@ -1,0 +1,53 @@
+{
+ "_hinweis": "Schaufenster der Startseite (Markus, 1. Okt.: 'rotierende Bilder auf der gleichen Stelle ... mit wirklich schoenen Designs'). Von Hand ausgewaehlt am 1. Okt. aus 428 freigegebenen Designs: 16 Anlaesse, 13 Stile, jedes Design getragen auf seiner Textilfarbe angesehen (kein dunkles Design auf dunklem Shirt) und mit dem Stil, der im Auftrag steht (Designs ohne festgehaltenen Stil sind nicht dabei - Markus: der Stil, der dransteht, muss der sein, der auf dem Shirt ist). Reihenfolge = Reihenfolge auf der Seite. Neues Design: Nummer hier eintragen, vorher getragen ansehen. 2. Okt. (Markus: 'warum immer ein T-Shirt und immer die gleiche Groesse ... mal Hoodie, mal klein, mal gross, mal was auf dem Ruecken' - 'wir haben doch eigene Masse und die soll doch nutzen'): je Eintrag teil (tee | hoodie, Vorgabe tee) und druck = eines der Masse aus dem Groessen-Schritt (brust-klein 8 x 8, brust 10 x 10, streifen 25 x 10, brust-gross 28 x 20, ruecken 30 x 35; mockups.js DRUCK_MASSE), leer = das Mass der Druckdatei. Das Mass muss zur Form des Designs passen (ein hochkantes Design nicht in den Streifen). Abi nicht auf den Ruecken: dort stehen beim Abi-Shirt die Namen. Ruecken nimmt die Rueckseite des Designs, wenn es eine hat. 3. Okt. (Markus: 'Warum sind die eigentlich noch nicht ausgetauscht?'): alle 16 Eintraege zeigen jetzt auf die neuen Entwuerfe ({vorzeige: <motto>, stil: <stil>}, Bild im Repo, siehe vorzeige-designs.json 'schaufenster'); teil und druck wie am 2. Okt. Eine Nummer (id) geht weiter. 9. Okt. (Markus: 'Mach gerne neue' - und 'nicht auf Schwarz'): von den 16 Eintraegen fielen 13 durch die Regeln (Brett, Sichtbarkeit), live liefen 1 bis 3 Bilder. Neu: zwoelf Designs, im Backend am 9. Okt. gezeichnet (volle Leinwand, heller Stoff), jedes gemessen (brett.js: voll deckend unter 45, auf Weiss zeigbar) und einzeln angesehen; nur helle Shirts und Hoodies, kein Schwarz. Karneval ist raus (Markus, 9. Okt.: 'Karneval ist aber eher gerade in Koeln, mit einer Narrenkappe und nicht so wie ein Eulenspiegel') - das Comic-Design trug Harlekin und Federmaske; neu ist MO-KARNEVAL-20261009-LVFQ (Vintage, Koelner Tanzmariechen, Dom, Hohenzollernbruecke, Kamelle; voll deckend 29, auf Weiss zeigbar), gezeichnet mit mottos.js KOELN_KARNEVAL. Abi, Geburtstag und Baby fehlen, bis ein neues Design die Feinlinien-Messung auf Weiss besteht.",
+ "designs": [
+  {
+   "id": "MO-JUNGGESE-20261009-XEBX",
+   "druck": "ruecken"
+  },
+  {
+   "id": "MO-DARTS-20261009-TPF6"
+  },
+  {
+   "id": "MO-MOTORRAD-20261009-TWNL",
+   "teil": "hoodie",
+   "druck": "brust"
+  },
+  {
+   "id": "MO-ANGLERSH-20261009-UPLE"
+  },
+  {
+   "id": "MO-MALLEFAH-20261009-ES79",
+   "druck": "ruecken"
+  },
+  {
+   "id": "MO-HOCHZEIT-20261009-5QRV",
+   "druck": "brust-gross"
+  },
+  {
+   "id": "MO-KARNEVAL-20261009-LVFQ"
+  },
+  {
+   "id": "MO-HANDWERK-20261009-W6P4",
+   "teil": "hoodie"
+  },
+  {
+   "id": "MO-BOWLING-20261009-5F6E"
+  },
+  {
+   "id": "MO-VEREINSJ-20261009-MG2A",
+   "druck": "ruecken"
+  },
+  {
+   "id": "MO-SPRUECHE-20261009-3CDZ"
+  },
+  {
+   "id": "MO-JAEGERSH-20261009-KTBL",
+   "teil": "hoodie",
+   "druck": "brust-klein"
+  },
+  {
+   "id": "MO-LANDWIRT-20261009-VF3J"
+  }
+ ]
+}

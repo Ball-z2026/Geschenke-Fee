@@ -1,0 +1,1072 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Motto Otto – Sag Otto, dein Motto</title>
+<meta name="description" content="Abi, JGA, Malle, Verein, Firma: Ihr nennt den Anlass, Otto zeichnet euer Design. Der erste Entwurf ist ohne Konto.">
+<meta name="theme-color" content="#F6EDDD">
+<link rel="icon" href="/favicon-64.png" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="canonical" href="__CANONICAL__">
+<meta property="og:type" content="website">
+<meta property="og:url" content="__CANONICAL__">
+<meta property="og:site_name" content="Motto Otto">
+<meta property="og:title" content="Motto Otto – Sag Otto, dein Motto">
+<meta property="og:description" content="Shirts, Hoodies und mehr für eure Gruppe oder als Geschenk: Ihr nennt den Anlass, Otto zeichnet euer Design.">
+<meta name="twitter:card" content="summary_large_image">
+<!-- Nur Angaben, die stimmen: keine Bewertungen, keine Preise (siehe ldStartseite in server.js) -->
+<script type="application/ld+json">__LD_JSON__</script>
+<!-- Startseite seit 1. Okt. 2026 (Markus: "uebernehmen"). Regeln: design-system/motto-otto/MASTER.md
+     und pages/startseite.md. Alle Inhalte kommen aus denselben Schnittstellen wie home.html;
+     hart eingebaut ist nur der Rahmen. -->
+<link rel="preload" href="/fonts/anton-v1.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/archivo-v1.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:"Anton";src:url("/fonts/anton-v1.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Archivo";src:url("/fonts/archivo-v1.woff2") format("woff2");font-weight:400 900;font-display:swap}
+
+:root{
+  /* Farben aus dem Logo (gemessen, logo-vektor/MottoOtto-Logo-farben.md) */
+  --papier:#F6EDDD; --tinte:#000; --gruen:#77C500; --magenta:#E9166A; --beere:#AF0D6D;
+  --haut:#F9D9A7; --hemd:#E1E2E3; --text2:#4A4136;
+  --kontur:2.5px solid var(--tinte);
+  --stempel:4px 4px 0 var(--tinte);
+  --rand:16px;
+  --display:"Anton", "Arial Narrow", sans-serif;
+  --text:"Archivo", system-ui, sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--papier);color:var(--tinte);font:400 16.5px/1.55 var(--text);overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:var(--beere);text-underline-offset:3px;text-decoration-thickness:2px}
+h1,h2,h3{margin:0;font-weight:400}
+h1,h2{font-family:var(--display);line-height:1;letter-spacing:.005em}
+h3{font-weight:800;font-size:19px;line-height:1.25}
+p{margin:0}
+.wrap{max-width:1120px;margin:0 auto;padding:0 var(--rand)}
+.leise{color:var(--text2)}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Fokus: schwarzer Rahmen plus Magenta-Ring - auf Papier wie auf Gruen sichtbar */
+:focus{outline:none}
+:focus-visible{outline:3px solid var(--tinte);outline-offset:3px;box-shadow:0 0 0 7px var(--magenta);border-radius:6px}
+
+/* ---------- Wunsch (5. Okt., Markus: "absoluter Highlight-Button relativ oben ... tippt oder spricht seinen Wunsch nur ein") ---------- */
+/* 6. Okt., Markus: "sieht einfach nur ein bisschen aus wie draufgeklatscht ... ueberhaupt nicht ins Design eingebettet".
+   Kein gruener Kasten mehr: Otto fragt selbst - sein Bild im Kreis wie im Laufband, die Eingabe ist seine Sprechblase
+   (Papier, Kontur, Stempel), der Knopf ist derselbe gruene .knopf wie "Foto waehlen". */
+.wunsch{padding:20px 0 6px}
+.wunsch-reihe{display:grid;grid-template-columns:72px minmax(0,1fr);gap:14px;align-items:start}
+.wunsch-otto{width:72px;height:72px;border-radius:50%;border:var(--kontur);background:var(--hemd);object-fit:cover;box-shadow:var(--stempel);margin-top:6px}
+/* 6. Okt., Markus: Otto spricht mit Markus' Stimme - antippen, und er sagt Moin. Mit der Stimme wackelt er ein bisschen. */
+.wunsch-otto-knopf{position:relative;align-self:start;padding:0;border:0;background:none;cursor:pointer;border-radius:50%;line-height:0}
+.wunsch-otto-knopf:focus-visible{outline:3px solid var(--beere,#b0145c);outline-offset:3px}
+.otto-ton{position:absolute;right:-4px;bottom:-2px;width:26px;height:26px;border-radius:50%;background:var(--gruen,#7ED321);border:2px solid var(--tinte,#1d1b20);display:grid;place-items:center;color:var(--tinte,#1d1b20)}
+.wunsch-otto-knopf.spricht .wunsch-otto{animation:ottoSpricht .32s ease-in-out infinite alternate}
+.wunsch-otto-knopf.spricht .otto-ton{animation:ottoTon .5s ease-in-out infinite alternate}
+@keyframes ottoSpricht{from{transform:rotate(-3deg) scale(1)}to{transform:rotate(3deg) scale(1.05)}}
+@keyframes ottoTon{from{transform:scale(1)}to{transform:scale(1.15)}}
+@media (prefers-reduced-motion:reduce){.wunsch-otto-knopf.spricht .wunsch-otto,.wunsch-otto-knopf.spricht .otto-ton{animation:none}}
+.wunsch-blase{position:relative;background:#fff;border:var(--kontur);border-radius:20px;box-shadow:var(--stempel);padding:14px 14px 12px}
+/* 6. Okt., Markus: "die Sprechblase ist nicht zu sehen" - "Da darf ruhig Bewegung rein: wenn Otto spricht, darf die Sprechblase
+   kommen, und wenn er aufhoert zu sprechen, soll sie weg sein." Eine Comic-Blase aus Ottos Mund, ploppt auf und wieder weg. */
+.wunsch-reihe{position:relative}
+.otto-sagt{position:absolute;z-index:6;left:calc(16px + 50px);top:-14px;right:16px;max-width:520px;margin:0;padding:12px 16px;background:#fff;border:var(--kontur);border-radius:18px;box-shadow:var(--stempel);font-size:18px;line-height:1.35;font-weight:800;color:var(--tinte,#1d1b20);transform-origin:0 100%}
+.otto-sagt::before{content:'';position:absolute;left:-14px;bottom:10px;border:12px solid transparent;border-right-color:var(--tinte,#1d1b20)}
+.otto-sagt::after{content:'';position:absolute;left:-9px;bottom:12px;border:10px solid transparent;border-right-color:#fff}
+.otto-sagt.rein{animation:ottoSagtRein .38s cubic-bezier(.2,1.4,.4,1) both}
+.otto-sagt.raus{animation:ottoSagtRaus .28s ease-in both}
+@keyframes ottoSagtRein{from{opacity:0;transform:scale(.4) rotate(-6deg)}to{opacity:1;transform:none}}
+@keyframes ottoSagtRaus{from{opacity:1;transform:none}to{opacity:0;transform:scale(.6) translateY(6px)}}
+@media (min-width:860px){.otto-sagt{left:calc(24px + 118px);top:-10px;font-size:20px}}
+@media (prefers-reduced-motion:reduce){.otto-sagt.rein,.otto-sagt.raus{animation:none}}
+.wunsch-blase::before,.wunsch-blase::after{content:"";position:absolute;top:26px;width:0;height:0;border-style:solid}
+.wunsch-blase::before{left:-15px;border-width:10px 15px 10px 0;border-color:transparent var(--tinte) transparent transparent}
+.wunsch-blase::after{left:-10px;top:29px;border-width:7px 11px 7px 0;border-color:transparent #fff transparent transparent}
+.wunsch-blase h2{font:400 clamp(24px,5.4vw,34px)/1.05 var(--display);letter-spacing:.2px;margin:0 0 10px}
+.wunsch-zeile{display:flex;gap:8px;align-items:stretch}
+.wunsch-zeile textarea{flex:1;min-height:54px;max-height:160px;resize:vertical;font:500 17px/1.4 var(--text);padding:11px 12px;border:2px solid var(--tinte);border-radius:12px;background:var(--papier);color:var(--tinte)}
+.wunsch-zeile textarea::placeholder{color:var(--text2)}
+.wunsch-mik{flex:0 0 54px;height:54px;border:var(--kontur);border-radius:50%;background:#fff;color:var(--tinte);cursor:pointer;display:flex;align-items:center;justify-content:center;align-self:center}
+.wunsch-mik.an{background:var(--magenta);color:#fff}
+.wunsch-unten{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-top:12px}
+.wunsch-los{min-height:48px;padding:0 26px;font-size:17px}
+.wunsch-los:disabled{opacity:.6;cursor:wait}
+.wunsch-frage{margin-top:10px;display:grid;gap:10px;text-align:left}
+.wunsch-frage p{margin:0;font-size:16px;line-height:1.45;color:var(--tinte,#1d1b20)}
+.wunsch-frage-knoepfe{display:flex;flex-wrap:wrap;gap:10px}
+.wunsch-frage .knopf{min-height:46px;padding:0 20px;font-size:16px}
+.wunsch-frage .knopf-leise{background:transparent}
+.wunsch-meldung{font-weight:700}
+.wunsch-meldung:empty{display:none}
+@media (min-width:860px){.wunsch-reihe{gap:22px;grid-template-columns:104px minmax(0,1fr)}.wunsch-otto{width:104px;height:104px}.wunsch-blase{padding:18px 22px 16px}.wunsch-blase::before{top:38px}.wunsch-blase::after{top:41px}}
+@media (max-width:420px){.wunsch-reihe{grid-template-columns:58px minmax(0,1fr);gap:12px}.wunsch-otto{width:58px;height:58px}}
+
+/* ---------- Kopf ---------- */
+.kopf{border-bottom:var(--kontur);background:var(--papier);position:sticky;top:0;z-index:20}
+.kopf .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;padding-top:8px;padding-bottom:8px}
+.marke{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--tinte);font:400 22px/1 var(--display);margin-right:auto;min-height:44px}
+.marke img{width:36px;height:42px;object-fit:contain}
+.nav{display:flex;flex-wrap:wrap;gap:2px 4px;order:3;width:100%}
+.nav a{color:var(--tinte);text-decoration:none;font-weight:700;font-size:15px;padding:10px 9px;min-height:44px;display:inline-flex;align-items:center;border-radius:8px}
+.nav a:hover{background:var(--haut)}
+.konto-knopf{order:2}
+/* 2. Okt.: auf dem Handy brach das Menue um - "Event" stand allein in einer zweiten Zeile (gemessen
+   bei 390 px). Unter 860 px eine Zeile, gleichmaessig verteilt; reicht die Breite nie, wird gewischt. */
+@media (max-width:859px){
+  .nav{flex-wrap:nowrap;justify-content:space-between;gap:0;overflow-x:auto;scrollbar-width:none}
+  .nav::-webkit-scrollbar{display:none}
+  .nav a{padding:10px 5px;font-size:14.5px;white-space:nowrap}
+}
+@media (max-width:359px){.nav a{padding:10px 3px;font-size:13.5px}}
+@media (min-width:860px){
+  .nav{order:2;width:auto;margin-right:8px}
+  .konto-knopf{order:3}
+}
+
+/* ---------- Knoepfe ---------- */
+.knopf{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:9px 18px;border:var(--kontur);border-radius:999px;background:var(--gruen);color:var(--tinte);font:800 15.5px/1.2 var(--text);text-decoration:none;box-shadow:var(--stempel);transition:transform .12s, box-shadow .12s;cursor:pointer}
+.knopf:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--tinte)}
+.knopf:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--tinte)}
+.knopf.hell{background:#fff}
+.knopf svg{width:18px;height:18px;flex:none}
+
+/* ---------- Aufmacher: die Ueberschrift mit dem wechselnden Wort ---------- */
+.held{padding:16px 0 40px;overflow:hidden}
+.held .wrap{display:grid;gap:16px;grid-template-areas:"titel" "text" "los"}
+.held h1{grid-area:titel}.los{grid-area:los}.held-text{grid-area:text}
+.held h1{font-size:clamp(40px,11.5vw,88px)}
+.held .satz{margin-top:4px;font-size:18px;line-height:1.5;max-width:30em}
+.los{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center}
+.knopf.gross{min-height:56px;padding:12px 26px;font-size:18px}
+@media (min-width:860px){
+  .held{padding:48px 0 64px}
+}
+/* 4. Okt., Markus: "Wir brauchen eine effektive Loesung, dass man sofort sieht, was es eigentlich alles
+   gibt - einer coolen Laufschrift oder Aehnliches." Zwei Dinge: das Laufband unter dem Kopf (echte
+   Designs auf den Artikeln, jedes antippbar) und das wechselnde Wort in der Ueberschrift.
+   Bei "weniger Bewegung" steht beides still, das Band laesst sich wischen. */
+.laufband{border-bottom:var(--kontur);background:#fff;overflow:hidden;position:relative}
+.lb-spur{display:flex;width:max-content}
+.lb-liste{display:flex;gap:10px;margin:0;padding:10px 5px;list-style:none}
+.lb-liste a{display:flex;align-items:center;gap:8px;min-height:56px;padding:4px 14px 4px 4px;border:2px solid var(--tinte);border-radius:999px;background:var(--papier);color:var(--tinte);text-decoration:none;font:800 15px/1.1 var(--text);white-space:nowrap}
+.lb-liste img{width:48px;height:60px;object-fit:cover;border-radius:999px;border:2px solid var(--tinte);background:#fff;flex:none}
+.lb-liste a.ohne{padding:4px 16px;background:var(--gruen)}
+.lb-liste a:hover,.lb-liste a:focus-visible{background:var(--tinte);color:var(--papier)}
+@media (prefers-reduced-motion:no-preference){
+  .lb-spur{animation:laufen 38s linear infinite}
+  .laufband:hover .lb-spur,.laufband:focus-within .lb-spur{animation-play-state:paused}
+  @keyframes laufen{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+}
+@media (prefers-reduced-motion:reduce){
+  .laufband{overflow-x:auto}
+  .lb-spur .lb-liste[aria-hidden]{display:none}
+}
+.held h1 .wort{color:var(--beere);display:inline-block}
+@media (min-width:860px){.held h1 .wort{display:block}}  /* schmale Spalte: das Wort auf eigener Zeile, sonst springt die Hoehe */
+@media (prefers-reduced-motion:no-preference){
+  .held h1 .wort.neu{animation:wortein .35s cubic-bezier(.2,.9,.3,1.2)}
+  @keyframes wortein{from{opacity:0;transform:translateY(.35em)}to{opacity:1;transform:none}}
+}
+
+/* ---------- Suche und Schnellwahl ---------- */
+.gruppe .suche{margin-top:24px;position:relative;max-width:560px}
+.suche label{display:block;font-weight:800;font-size:15px;margin-bottom:8px}
+.feld{display:flex;align-items:center;background:#fff;border:var(--kontur);border-radius:12px;box-shadow:var(--stempel)}
+.feld svg{width:22px;height:22px;margin-left:14px;flex:none}
+.feld input{flex:1;min-width:0;border:0;background:transparent;font:500 17px/1.3 var(--text);padding:14px 14px 14px 10px;color:var(--tinte);border-radius:12px}
+.feld input::placeholder{color:#6b6157}
+.feld input:focus-visible{outline:none;box-shadow:none}
+.feld:focus-within{outline:3px solid var(--tinte);outline-offset:3px;box-shadow:0 0 0 7px var(--magenta)}
+.treffer{position:absolute;left:0;right:0;top:calc(100% + 8px);background:#fff;border:var(--kontur);border-radius:12px;box-shadow:var(--stempel);list-style:none;margin:0;padding:6px;z-index:10;max-height:320px;overflow:auto}
+.treffer[hidden]{display:none}
+.treffer li{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:8px;cursor:pointer;font-weight:700}
+.treffer li[aria-selected="true"],.treffer li:hover{background:var(--haut)}
+.treffer li.nix{font-weight:500;cursor:default;background:none}
+.punkt{width:12px;height:12px;border-radius:50%;border:2px solid var(--tinte);flex:none}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.chip{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;border:var(--kontur);border-radius:999px;background:#fff;color:var(--tinte);text-decoration:none;font-weight:800;font-size:15px;transition:transform .12s, box-shadow .12s}
+.chip:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--tinte)}
+.frei{margin-top:18px;font-size:15px;max-width:34em}
+
+/* ---------- Abschnitte ---------- */
+.abschnitt{padding:56px 0;border-top:var(--kontur);scroll-margin-top:118px}
+@media (min-width:860px){.abschnitt{scroll-margin-top:68px}}
+.abschnitt h2{font-size:clamp(34px,9vw,56px)}
+.abschnitt .lead{margin-top:10px;max-width:36em}
+.kopfzeile{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+@media (min-width:860px){.abschnitt{padding:88px 0}}
+
+/* ---------- Galerie ---------- */
+.pfeile{display:none;gap:10px}
+.pfeile button{width:48px;height:48px;border:var(--kontur);border-radius:50%;background:#fff;box-shadow:var(--stempel);cursor:pointer;display:grid;place-items:center;padding:0;color:var(--tinte)}
+.pfeile button:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--tinte)}
+.pfeile svg{width:20px;height:20px}
+@media (min-width:860px){.pfeile{display:flex}}
+.band{list-style:none;margin:24px 0 0;padding:4px var(--rand) 14px;display:grid;grid-auto-flow:column;grid-auto-columns:min(72vw,260px);gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 var(--rand);overscroll-behavior-x:contain;scrollbar-width:thin}
+@media (min-width:1152px){.band{padding-left:calc((100vw - 1120px)/2 + var(--rand))}}
+.band li{scroll-snap-align:start}
+.design{display:block;text-decoration:none;color:var(--tinte);background:#fff;border:var(--kontur);border-radius:14px;overflow:hidden;box-shadow:var(--stempel);transition:transform .12s, box-shadow .12s}
+.design:hover{transform:translate(-1px,-1px);box-shadow:6px 6px 0 var(--tinte)}
+.design .bild{aspect-ratio:1/1;background:var(--hemd);border-bottom:var(--kontur)}
+.design img{width:100%;height:100%;object-fit:cover}
+.design .unter{padding:10px 12px 12px}
+.design b{display:block;font-weight:800;font-size:15.5px;line-height:1.3}
+.design span{display:block;font-size:14px;color:var(--text2);margin-top:2px}
+.design small{display:block;font-size:12.5px;color:var(--text2);margin-top:3px;letter-spacing:.01em}   /* 6. Okt.: welches Teil (Hersteller, Modell, Stufe) */
+.band-leer{margin-top:20px;font-weight:600}
+
+/* ---------- Schaufenster: ein Platz, die Designs wechseln darin (Markus, 1. Okt.) ---------- */
+.sf-wrap{display:grid;gap:20px;grid-template-areas:"text" "buehne" "knoepfe"}
+.sf-text{grid-area:text}.sf-buehne{grid-area:buehne}.sf-knoepfe{grid-area:knoepfe}
+.sf-buehne{position:relative;aspect-ratio:1/1;width:100%;max-width:560px;border:var(--kontur);border-radius:16px;overflow:hidden;background:var(--hemd);box-shadow:var(--stempel)}
+.sf-liste{list-style:none;margin:0;padding:0;position:absolute;inset:0}
+.sf-bild{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .9s ease,visibility 0s linear .9s}
+.sf-bild.an{opacity:1;visibility:visible;z-index:1;transition:opacity .9s ease}
+.sf-bild a{display:block;width:100%;height:100%;color:var(--tinte);text-decoration:none}
+.sf-bild img{width:100%;height:100%;object-fit:cover}
+.sf-unter{position:absolute;left:12px;bottom:12px;max-width:calc(100% - 24px);background:#fff;border:var(--kontur);border-radius:12px;padding:8px 14px;box-shadow:3px 3px 0 var(--tinte)}
+.sf-unter b{display:block;font-weight:800;font-size:16px;line-height:1.25}
+.sf-unter span{display:block;font-size:14px;color:var(--text2)}
+.sf-knoepfe{display:flex;gap:12px;align-items:center}
+.sf-knoepfe[hidden]{display:none}
+.sf-knoepfe [hidden]{display:none}   /* hidden gilt fuer SVG-Pfade nicht von selbst */
+.sf-knoepfe button{width:48px;height:48px;border:var(--kontur);border-radius:50%;background:#fff;box-shadow:var(--stempel);cursor:pointer;display:grid;place-items:center;padding:0;color:var(--tinte)}
+.sf-knoepfe button:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--tinte)}
+.sf-knoepfe svg{width:20px;height:20px}
+.sf-knoepfe .sf-nr{font-weight:700;font-size:15px;color:var(--text2);margin-left:4px}
+@media (min-width:860px){
+  .sf-wrap{grid-template-columns:1fr 1fr;column-gap:56px;grid-template-rows:auto 1fr;grid-template-areas:"text buehne" "knoepfe buehne";align-items:start}
+  .sf-knoepfe{align-self:start}
+  .sf-buehne{justify-self:end}
+}
+
+/* ---------- Hervorgehoben ---------- */
+.hervor{display:grid;gap:20px;margin-top:24px}
+.karte{display:grid;border:var(--kontur);border-radius:16px;overflow:hidden;background:#fff;box-shadow:var(--stempel);text-decoration:none;color:var(--tinte)}
+.karte .bild{background:var(--hemd);aspect-ratio:4/3;border-bottom:var(--kontur)}
+.karte .bild img{width:100%;height:100%;object-fit:cover}
+.karte .text{padding:18px 18px 20px;display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.karte h3{font:400 30px/1 var(--display)}
+.karte .knopf{margin-top:6px}
+.karte.exklusiv{background:var(--tinte);color:var(--papier)}
+.karte.exklusiv .bild{border-color:var(--papier)}
+.karte.exklusiv .leise{color:#d9cdb8}
+.siegel{display:inline-flex;align-items:center;gap:6px;background:var(--magenta);color:var(--tinte);border:2px solid var(--papier);border-radius:999px;padding:4px 12px;font-weight:800;font-size:14px}
+@media (min-width:860px){
+  .karte{grid-template-columns:1.1fr 1fr}
+  .karte .bild{aspect-ratio:auto;min-height:300px;border-bottom:0;border-right:var(--kontur)}
+  .karte .text{padding:32px;justify-content:center}
+  .karte h3{font-size:44px}
+}
+
+
+/* ---------- Zweiter Weg, Gruppe, Konsens ---------- */
+.zweit{font-weight:800;color:var(--tinte);min-height:44px;display:inline-flex;align-items:center;text-decoration-thickness:2px}
+.gruppe{background:var(--gruen)}
+.gruppe .lead,.gruppe .frei{color:var(--tinte)}
+.gruppe .suche{margin-top:28px}
+.konsens{background:var(--tinte);color:var(--papier);border-top-color:var(--tinte)}
+.konsens h2{color:var(--papier);max-width:16em}
+.konsens .lead{color:#e6dccb}
+.fuer{display:inline-block;background:var(--magenta);color:var(--tinte);border:2px solid var(--papier);border-radius:999px;padding:4px 14px;font-weight:800;font-size:14.5px;margin-bottom:14px}
+.k-schritte{list-style:none;margin:32px 0 0;padding:0;display:grid;gap:16px}
+@media (min-width:860px){.k-schritte{grid-template-columns:1fr 1fr 1.3fr;gap:20px}}
+.k-schritte li{border:2.5px solid var(--papier);border-radius:14px;padding:20px;display:grid;gap:8px;align-content:start}
+.k-schritte svg{width:44px;height:44px;color:var(--gruen)}
+.k-schritte h3{color:var(--papier);font:400 26px/1.05 var(--display)}
+.k-schritte p{color:#e6dccb;font-size:15.5px}
+.k-schritte li.stark{background:var(--gruen);border-color:var(--gruen)}
+.k-schritte li.stark svg,.k-schritte li.stark h3,.k-schritte li.stark p{color:var(--tinte)}
+.k-wo{margin-top:20px;color:#e6dccb;font-size:15px}
+.k-fuer{margin-top:28px;font-weight:800;color:var(--papier)}
+.k-mottos{margin-top:12px}
+.k-mottos .chip{border-color:var(--papier)}
+.galerie{background:var(--papier)}
+
+.tueren{display:grid;gap:16px;margin-top:24px}
+@media (min-width:860px){.tueren{grid-template-columns:1fr 1fr;gap:20px}}
+.tuer{background:#fff;border:var(--kontur);border-radius:14px;padding:18px;display:grid;gap:8px;align-content:start;box-shadow:var(--stempel)}
+.tuer.einzel{background:var(--haut)}
+.tuer h3{font:400 28px/1 var(--display)}
+.tuer p{font-size:15.5px;max-width:36em}
+.tuer .chips{margin-top:6px}
+.tuer .chip{font-size:14.5px;min-height:42px;padding:7px 14px}
+
+/* ---------- Alle Mottos ---------- */
+.raster{list-style:none;margin:28px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media (min-width:640px){.raster{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (min-width:960px){.raster{grid-template-columns:repeat(4,minmax(0,1fr));gap:22px}}
+.motto{display:flex;flex-direction:column;height:100%;text-decoration:none;color:var(--tinte);background:#fff;border:var(--kontur);border-radius:14px;overflow:hidden;transition:transform .12s, box-shadow .12s}
+.motto:hover{transform:translate(-2px,-2px);box-shadow:var(--stempel)}
+.motto .bild{position:relative;aspect-ratio:1/1;background:var(--tc,var(--haut));border-bottom:var(--kontur);display:grid;place-items:center}
+.motto .bild img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.motto .glyph{font:400 56px/1 var(--display);color:var(--tinte);opacity:.55}
+.filter{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
+.filter button{min-height:44px;padding:9px 16px;border:var(--kontur);border-radius:999px;background:#fff;color:var(--tinte);font:700 15px/1.2 var(--text);cursor:pointer}
+.filter button.an{background:var(--tinte);color:var(--papier)}
+.raster li[hidden]{display:none}
+.motto .frei-hinweis{display:block;padding:0 12px 12px;font-size:13px;font-weight:700;color:var(--beere,#9B1D5A)}
+.motto .name{display:flex;align-items:center;gap:8px;padding:10px 12px 12px;font-weight:800;font-size:15.5px;line-height:1.25;hyphens:auto;-webkit-hyphens:auto;overflow-wrap:break-word;min-width:0}
+.motto.frei-kachel{background:var(--magenta)}
+.motto.frei-kachel .bild{background:var(--haut)}
+.motto.frei-kachel .name{color:var(--tinte)}
+.lade{margin-top:24px;font-weight:600}
+
+/* ---------- Ablauf ---------- */
+.ablauf{background:var(--haut)}
+.schritte{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:18px;counter-reset:s}
+@media (min-width:700px){.schritte{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1040px){.schritte{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.schritt{background:#fff;border:var(--kontur);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:8px;position:relative}
+.schritt .nr{width:40px;height:40px;border:var(--kontur);border-radius:50%;background:var(--gruen);display:grid;place-items:center;font:400 22px/1 var(--display)}
+.schritt img{position:absolute;right:10px;top:8px;width:72px;height:72px;object-fit:contain}
+.schritt p{font-size:15.5px}
+.hinweis{margin-top:24px;display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center}
+.hinweis p{font-weight:600}
+
+/* ---------- Fuss ---------- */
+.fuss{border-top:var(--kontur);padding:36px 0 44px;background:var(--papier)}
+.fuss .wrap{display:grid;gap:18px}
+.fuss nav{display:flex;flex-wrap:wrap;gap:4px 6px}
+.fuss nav a{color:var(--tinte);font-weight:700;padding:10px 8px;min-height:44px;display:inline-flex;align-items:center}
+.fuss p{font-size:14.5px;color:var(--text2);max-width:40em}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+<a class="vh" href="#inhalt">Zum Inhalt springen</a>
+
+<header class="kopf">
+  <div class="wrap">
+    <a class="marke" href="/"><img src="/logo.png" alt="" width="36" height="42">Motto Otto</a>
+    <nav class="nav" aria-label="Hauptmenü">
+      <a href="#mottos">Mottos</a>
+      <a href="/so-gehts">So geht’s</a>
+      <a href="/firma">Firmen</a>
+      <a href="/partner">Partner</a>
+      <a href="/event">Event</a>
+    </nav>
+    <a class="knopf hell konto-knopf" href="/konto">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8.5" r="4"/><path d="M4 21c1.4-4 4.4-6 8-6s6.6 2 8 6"/></svg>
+      Konto
+    </a>
+  </div>
+</header>
+
+<main id="inhalt">
+  <nav class="laufband" aria-label="Das macht Otto">
+    <div class="lb-spur">
+      <ul class="lb-liste"><li><a href="#gruppe"><img src="/startseite/laufband/tshirt.webp" alt="" width="48" height="60" decoding="async">T-Shirts</a></li><li><a href="#gruppe"><img src="/startseite/laufband/hoodie.webp" alt="" width="48" height="60" decoding="async">Hoodies</a></li><li><a href="#artikel"><img src="/startseite/laufband/kissen.webp" alt="" width="48" height="60" decoding="async">Kissen</a></li><li><a href="#gruppe"><img src="/startseite/laufband/tshirt-schwarz.webp" alt="" width="48" height="60" decoding="async">Gruppen-Shirts</a></li><li><a href="#artikel"><img src="/startseite/laufband/poster.webp" alt="" width="48" height="60" decoding="async">Poster</a></li><li><a href="#gruppe"><img src="/startseite/laufband/beutel.webp" alt="" width="48" height="60" decoding="async">Beutel</a></li><li><a href="#artikel"><img src="/startseite/laufband/strandtuch.webp" alt="" width="48" height="60" decoding="async">Strandtücher</a></li><li><a class="ohne" href="#gruppe">Für eure Gruppe</a></li><li><a class="ohne" href="#gruppe">Als Geschenk</a></li><li><a class="ohne" href="#abstimmen">Gemeinsam abstimmen</a></li></ul>
+      <ul class="lb-liste" aria-hidden="true"><li><a tabindex="-1" href="#gruppe"><img src="/startseite/laufband/tshirt.webp" alt="" width="48" height="60" decoding="async">T-Shirts</a></li><li><a tabindex="-1" href="#gruppe"><img src="/startseite/laufband/hoodie.webp" alt="" width="48" height="60" decoding="async">Hoodies</a></li><li><a tabindex="-1" href="#artikel"><img src="/startseite/laufband/kissen.webp" alt="" width="48" height="60" decoding="async">Kissen</a></li><li><a tabindex="-1" href="#gruppe"><img src="/startseite/laufband/tshirt-schwarz.webp" alt="" width="48" height="60" decoding="async">Gruppen-Shirts</a></li><li><a tabindex="-1" href="#artikel"><img src="/startseite/laufband/poster.webp" alt="" width="48" height="60" decoding="async">Poster</a></li><li><a tabindex="-1" href="#gruppe"><img src="/startseite/laufband/beutel.webp" alt="" width="48" height="60" decoding="async">Beutel</a></li><li><a tabindex="-1" href="#artikel"><img src="/startseite/laufband/strandtuch.webp" alt="" width="48" height="60" decoding="async">Strandtücher</a></li><li><a tabindex="-1" class="ohne" href="#gruppe">Für eure Gruppe</a></li><li><a tabindex="-1" class="ohne" href="#gruppe">Als Geschenk</a></li><li><a tabindex="-1" class="ohne" href="#abstimmen">Gemeinsam abstimmen</a></li></ul>
+    </div>
+  </nav>
+  <section class="wunsch" aria-labelledby="wunsch-h">
+    <div class="wrap wunsch-reihe">
+      <p class="otto-sagt" id="otto-sagt" aria-live="polite" hidden></p>
+      <button type="button" class="wunsch-otto-knopf" id="otto-spricht" aria-label="Otto antippen – er sagt Moin"><img class="wunsch-otto" src="/api/mo/otto/nimmt-auf.png" width="104" height="104" alt=""><span class="otto-ton" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg></span></button>
+      <div class="wunsch-blase">
+        <h2 id="wunsch-h">Sag Otto einfach, was du willst.</h2>
+        <div class="wunsch-zeile">
+          <label class="vh" for="wunsch-text">Dein Wunsch</label>
+          <textarea id="wunsch-text" rows="2" placeholder="z. B. JGA für Jana, pink und frech" enterkeyhint="go"></textarea>
+          <button type="button" class="wunsch-mik" id="wunsch-mik" aria-label="Wunsch einsprechen" hidden><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button>
+        </div>
+        <div class="wunsch-unten">
+          <button type="button" class="knopf wunsch-los" id="wunsch-los">Design bauen</button>
+          <div class="wunsch-meldung" id="wunsch-meldung" role="status" aria-live="polite"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="held" aria-labelledby="held-h">
+    <div class="wrap">
+      <h1 id="held-h" aria-label="Selfie rein. Shirt, Hoodie und mehr raus.">Selfie rein.<br><span class="wort" id="wort" aria-hidden="true">T-Shirt</span><span aria-hidden="true"> raus.</span></h1>
+      <div class="held-text">
+        <p class="satz">Ihr nennt den Anlass, Otto zeichnet euer Design – auf Shirt, Hoodie, Kissen oder Poster. Für die ganze Gruppe oder als Geschenk.</p>
+      </div>
+      <div class="los">
+        <a class="knopf gross" href="#gruppe">Zu den Shirts</a>
+        <a class="zweit" href="#artikel">Kissen, Poster und mehr</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Markus, 1. Okt.: "Irgendwo noch ein Fleckchen, wo wir rotierende Bilder auf der gleichen
+       Stelle haben. Mit wirklich schoenen Designs." Die Auswahl ist von Hand (startseite/
+       schaufenster.json), die Bilder setzt der Server ein (schaufensterHtml). Ohne Bilder bleibt
+       der Abschnitt zu. Wechselt nur, solange er zu sehen ist; prefers-reduced-motion: nur Knoepfe. -->
+  <section class="abschnitt schaufenster" id="schaufenster" aria-labelledby="sf-h"__SCHAUFENSTER_AUS__>
+    <div class="wrap sf-wrap">
+      <div class="sf-text">
+        <h2 id="sf-h">Das hat Otto gezeichnet</h2>
+        <p class="lead">Echte Designs aus echten Aufträgen, jedes zu einem anderen Anlass. Darunter steht, in welchem Stil Otto es gezeichnet hat. Tipp drauf, dann landest du bei dem Motto und kannst dir deins machen.</p>
+      </div>
+      <div class="sf-buehne" role="group" aria-roledescription="Karussell" aria-label="Designs von Otto">
+        <ul class="sf-liste" id="sf-liste" aria-live="off">__SCHAUFENSTER__</ul>
+      </div>
+      <div class="sf-knoepfe" id="sf-knoepfe">
+        <button type="button" id="sf-zurueck" aria-label="Voriges Design"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <button type="button" id="sf-halt" aria-label="Anhalten"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="sf-pause" d="M9 6v12M15 6v12"/><path class="sf-spiel" d="M8 5.5v13l11-6.5z" hidden/></svg></button>
+        <button type="button" id="sf-weiter" aria-label="Nächstes Design"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+        <span class="sf-nr" id="sf-nr" aria-hidden="true"></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="abschnitt gruppe" id="gruppe" aria-labelledby="gruppe-h">
+    <div class="wrap kopfzeile">
+      <div>
+        <h2 id="gruppe-h">Shirts und mehr</h2>
+        <p class="lead">Ihr nennt den Anlass, Otto zeichnet das Design. Auf Shirt, Polo, Hoodie, Zip-Jacke oder Beutel – für die ganze Gruppe oder als einzelnes Stück.</p>
+      </div>
+      <div class="pfeile">
+        <button type="button" data-band="band-textil" data-richtung="-1" aria-label="Shirts zurück"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <button type="button" data-band="band-textil" data-richtung="1" aria-label="Shirts weiter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+      </div>
+    </div>
+    <!-- Markus, 1. Okt.: "es kommt ja ueberhaupt nicht mehr rueber, dass wir auch Einzelstuecke
+         machen fuer Geburtstage, Geburt etc." Zwei gleichwertige Tueren. Welche Mottos wohin
+         gehoeren, steht in gruppen-mottos.json (Feld gruppe aus /api/mo/mottos). -->
+    <div class="wrap tueren">
+      <div class="tuer">
+        <h3>Für eure Gruppe</h3>
+        <p>Abi, JGA, Malle, Verein, Firma: ein Design für alle, auf Wunsch mit jedem Namen. Wer mag, lässt die Gruppe abstimmen.</p>
+        <div class="chips" id="chips-gruppe"></div>
+      </div>
+      <div class="tuer einzel">
+        <h3>Für dich oder als Geschenk</h3>
+        <p>Ein einzelnes Stück: zum Geburtstag, zur Geburt, für Opa, fürs Haustier oder zum Hobby.</p>
+        <div class="chips" id="chips-einzel"></div>
+      </div>
+    </div>
+    <ul class="band" id="band-textil" aria-label="Echte Designs auf Textil"></ul>
+    <div class="wrap">
+      <div class="suche">
+        <label for="suche">Zu welchem Anlass?</label>
+        <div class="feld">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg>
+          <input id="suche" type="text" autocomplete="off" placeholder="Abi, Kegeltour, Hochzeit …"
+                 role="combobox" aria-expanded="false" aria-controls="treffer" aria-autocomplete="list">
+        </div>
+        <ul class="treffer" id="treffer" role="listbox" aria-label="Passende Mottos" hidden></ul>
+      </div>
+      <p class="frei leise">Den ersten Entwurf gibt es ohne Konto, nach dem Anmelden fünf weitere. Jeder danach kostet 1 € und wird beim Kauf verrechnet.<span id="preis-ab"></span></p>
+    </div>
+  </section>
+
+  <!-- Markus, 1. Okt.: "Was noch unser Highlight ist, wenn eine Gruppe eine Abstimmung macht ...
+       aus diesen ganzen Kommentaren wird der beliebteste Artikel eigenstaendig umdesignt ... das
+       muessen wir ausarbeiten als Mega Highlight." So laeuft es im Code (abstimmung.js,
+       consensusDesign in server.js): Link per WhatsApp-Gruppe oder Mail, 1-5 Sterne je Design,
+       Kommentar und Wunschartikel; bei Fristende wird der Gewinner mit den Kommentaren neu gezeichnet.
+       "Gibt es weltweit noch nicht" steht bewusst NICHT auf der Seite - eine Alleinstellung muss
+       man belegen koennen. -->
+  <section class="abschnitt konsens" id="abstimmen" aria-labelledby="konsens-h">
+    <div class="wrap">
+      <p class="fuer">Für Gruppen</p>
+      <h2 id="konsens-h">Drucken ist einfach. Sich einigen nicht.</h2>
+      <p class="lead">Zehn Leute, zehn Meinungen – welches Design kommt aufs Shirt? Genau daran hakt es bei jeder Gruppe. Wir haben das Problem erkannt und die Lösung gebaut: Alle stimmen ab, sagen, was ihnen gefällt, und Otto zeichnet daraus das Design, hinter dem alle stehen.</p>
+      <ol class="k-schritte">
+        <li>
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 12h32v20H20l-8 6v-6H8z"/><path d="M17 22h14M24 15l7 7-7 7"/></svg>
+          <h3>Link in die Gruppe</h3>
+          <p>Du schickst deine Entwürfe als Link in den WhatsApp-Chat oder per Mail. Wer abstimmt, gibt nur seinen Namen ein – ohne Konto.</p>
+        </li>
+        <li>
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round" aria-hidden="true"><path d="M24 7l4.9 10 11 1.6-8 7.8 1.9 11L24 32.2 14.2 37.4l1.9-11-8-7.8 11-1.6z"/></svg>
+          <h3>Sterne und ehrliche Worte</h3>
+          <p>Jeder vergibt Sterne und schreibt dazu, was ihm besonders gut gefällt und was gar nicht. Du siehst, wer schon abgestimmt hat.</p>
+        </li>
+        <li class="stark">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M30 8l10 10-20 20-11 2 2-11z"/><path d="M26 12l10 10"/><path d="M38 34v8M34 38h8"/></svg>
+          <h3>Otto zeichnet den Konsens</h3>
+          <p>Endet die Abstimmung, liest Otto alle Kommentare und zeichnet das beliebteste Design neu – mit den Wünschen der Gruppe. Nicht einfach der Sieger nach Sternen, sondern das Design, das alle gemeint haben.</p>
+        </li>
+      </ol>
+      <p class="k-fuer" id="k-fuer-titel" hidden>Die Abstimmung gibt es bei diesen Anlässen:</p>
+      <div class="chips k-mottos" id="k-mottos" aria-labelledby="k-fuer-titel"></div>
+      <p class="k-wo">Sobald du mehrere Entwürfe zu einem Motto hast, steht unter dem Design „Zur Abstimmung schicken“. Die Frist wählst du selbst: 2 bis 7 Tage.</p>
+    </div>
+  </section>
+
+  <section class="abschnitt galerie" id="artikel" aria-labelledby="galerie-h">
+    <div class="wrap kopfzeile">
+      <div>
+        <h2 id="galerie-h">Und für jeden Artikel ein eigenes Design</h2>
+        <p class="lead">Tasse, Kissen, Poster, Handtuch: Otto zeichnet das Design für das Maß des Artikels, nicht einfach das Shirt-Motiv draufgesetzt. Jedes Bild hier stammt aus einem echten Auftrag.</p>
+      </div>
+      <div class="pfeile">
+        <button type="button" data-band="band" data-richtung="-1" aria-label="Artikel zurück"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <button type="button" data-band="band" data-richtung="1" aria-label="Artikel weiter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+      </div>
+    </div>
+    <ul class="band" id="band" aria-label="Echte Designs auf weiteren Artikeln"></ul>
+    <p class="wrap band-leer" id="band-leer" hidden>Die Galerie lädt gerade nicht. Unten stehen alle Mottos – dort gibt es die Beispiele auch.</p>
+  </section>
+
+  <section class="abschnitt" id="hervor-abschnitt" aria-labelledby="hervor-h" hidden>
+    <div class="wrap">
+      <h2 id="hervor-h">Gerade besonders</h2>
+      <div class="hervor" id="hervor"></div>
+    </div>
+  </section>
+
+  <section class="abschnitt" id="mottos" aria-labelledby="mottos-h">
+    <div class="wrap">
+      <h2 id="mottos-h">Alle __MOTTO_ZAHL__ Mottos</h2>
+      <p class="lead">Anlass antippen, Otto führt euch Schritt für Schritt durch. Euer Anlass fehlt? Dann nehmt <a href="/m/freestyle"><b>Dein Freestyle</b></a>.</p>
+      <div class="filter" role="group" aria-label="Mottos filtern">
+        <button type="button" class="an" data-filter="" aria-pressed="true">Alle</button>
+        <button type="button" data-filter="gruppe" aria-pressed="false">Für eure Gruppe</button>
+        <button type="button" data-filter="einzeln" aria-pressed="false">Als Geschenk oder für dich</button>
+      </div>
+      <ul class="raster" id="raster">__MOTTO_KACHELN__</ul>
+      <p class="lade" id="mottos-status" role="status" hidden>Mottos werden geladen …</p>
+      <noscript><p class="lade">Ohne JavaScript steht die ganze Liste unter <a href="/mottos">/mottos</a>.</p></noscript>
+    </div>
+  </section>
+
+  <section class="abschnitt ablauf" aria-labelledby="ablauf-h">
+    <div class="wrap">
+      <h2 id="ablauf-h">So läuft es</h2>
+      <ol class="schritte">
+        <li class="schritt">
+          <img src="/api/mo/otto/nimmt-auf.png" alt="" width="72" height="72" loading="lazy" decoding="async" onerror="this.remove()">
+          <span class="nr" aria-hidden="true">1</span>
+          <h3>Motto wählen</h3>
+          <p>Ein paar Felder: Motto, Ort, Jahrgang. Logo und Namensliste, wenn ihr wollt.</p>
+        </li>
+        <li class="schritt">
+          <img src="/api/mo/otto/zeichnet.png" alt="" width="72" height="72" loading="lazy" decoding="async" onerror="this.remove()">
+          <span class="nr" aria-hidden="true">2</span>
+          <h3>Otto zeichnet</h3>
+          <p>Der Entwurf steht meist in unter fünf Minuten. Gefällt er nicht ganz, kommt der nächste.</p>
+        </li>
+        <li class="schritt">
+          <span class="nr" aria-hidden="true">3</span>
+          <h3>Gemeinsam abstimmen</h3>
+          <p>Nur für Gruppen: Link herumschicken, alle bewerten, Otto zeichnet daraus den Konsens. <a href="#abstimmen">So geht’s</a></p>
+        </li>
+        <li class="schritt">
+          <img src="/api/mo/otto/jubelt.png" alt="" width="72" height="72" loading="lazy" decoding="async" onerror="this.remove()">
+          <span class="nr" aria-hidden="true">4</span>
+          <h3>Bestellen</h3>
+          <p>Produkt, Größe und Menge wählen, ab in den Warenkorb und direkt bezahlen. Dann geht’s in den Druck.</p>
+        </li>
+      </ol>
+      <div class="hinweis">
+        <p id="preis-zeile">Lieferzeit: 4–5 Arbeitstage nach vollständiger Bezahlung.</p>
+        <a class="knopf hell" href="/so-gehts">Alles genau erklärt</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="fuss">
+  <div class="wrap">
+    <a class="marke" href="/"><img src="/logo.png" alt="" width="36" height="42" loading="lazy">Motto Otto</a>
+    <nav aria-label="Rechtliches und Konto">
+      <a href="/konto">Konto</a>
+      <a href="/impressum">Impressum</a>
+      <a href="/datenschutz">Datenschutz</a>
+      <a href="/nutzungsbedingungen">Nutzungsbedingungen</a>
+      <a href="/widerruf">Widerruf</a>
+    </nav>
+    <p>Jedes Produkt wird auf Bestellung gefertigt und in Deutschland veredelt.</p>
+  </div>
+</footer>
+
+<script src="/preise.js" defer></script>
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function holen(url) {
+    return fetch(url, { headers: { accept: 'application/json' } }).then(function (r) {
+      if (!r.ok) throw new Error(url + ': HTTP ' + r.status);
+      return r.json();
+    });
+  }
+  // Nichts faengt still: jeder Ausfall steht in der Konsole mit Adresse und Grund.
+  function melden(wo, e) { console.error('Vorschau-Start, ' + wo + ':', e && e.message ? e.message : e); }
+  function sicherFarbe(c) { return /^#[0-9a-f]{3,8}$/i.test(String(c || '')) ? c : '#F9D9A7'; }
+  function teilName(id) {
+    try { if (window.MoPreise && MoPreise.istBekannt(id)) return MoPreise.label(id); } catch (e) { melden('Teilname', e); }
+    return '';
+  }
+
+  // ---------- Das wechselnde Wort (4. Okt.) ----------
+  // "Selfie rein. T-Shirt raus." - das Wort wechselt alle 2,2 s durch die Artikel, nur solange die
+  // Ueberschrift zu sehen ist und die Seite vorn liegt; bei "weniger Bewegung" bleibt "T-Shirt".
+  (function () {
+    var w = $('wort'); if (!w) return;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var WORTE = ['T-Shirt', 'Hoodie', 'Kissen', 'Poster', 'Beutel', 'Strandtuch'];
+    var i = 0, sichtbar = true, uhr = null;
+    function weiter() {
+      i = (i + 1) % WORTE.length;
+      w.textContent = WORTE[i];
+      w.classList.remove('neu'); void w.offsetWidth; w.classList.add('neu');
+    }
+    function planen() {
+      clearInterval(uhr); uhr = null;
+      if (sichtbar && !document.hidden) uhr = setInterval(weiter, 2200);
+    }
+    document.addEventListener('visibilitychange', planen);
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { sichtbar = e[0].isIntersecting; planen(); }).observe(w);
+    planen();
+  })();
+
+  // ---------- Mottos ----------
+  var MOTTOS = [];
+  function mottoBild(m, box) {
+    var img = new Image();
+    img.alt = ''; img.loading = 'lazy'; img.decoding = 'async'; img.width = 400; img.height = 400;
+    var versuche = ['/api/mo/motto-kachel/' + encodeURIComponent(m.slug) + '.jpg'];
+    if (m.hasSample) versuche.push('/api/mo/sample/' + encodeURIComponent(m.slug) + '.jpg');
+    var i = 0;
+    img.onerror = function () { i++; if (i < versuche.length) img.src = versuche[i]; else img.remove(); };
+    img.onload = function () { var g = box.querySelector('.glyph'); if (g) g.remove(); };
+    img.src = versuche[0];
+    box.appendChild(img);
+  }
+  function mottoKachel(m, extra) {
+    var li = el('li');
+    var a = el('a', 'motto' + (extra ? ' ' + extra : ''));
+    a.href = '/m/' + encodeURIComponent(m.slug);
+    a.style.setProperty('--tc', sicherFarbe(m.accent));
+    var bild = el('div', 'bild');
+    bild.appendChild(el('span', 'glyph', (m.name || '?').charAt(0)));
+    mottoBild(m, bild);
+    var name = el('span', 'name');
+    var p = el('span', 'punkt'); p.style.background = sicherFarbe(m.accent); p.setAttribute('aria-hidden', 'true');
+    name.appendChild(p); name.appendChild(document.createTextNode(m.name || m.slug));
+    a.appendChild(bild); a.appendChild(name); li.appendChild(a);
+    return li;
+  }
+  function hervorKarte(m, exklusiv) {
+    var a = el('a', 'karte' + (exklusiv ? ' exklusiv' : ''));
+    a.href = '/m/' + encodeURIComponent(m.slug);
+    var bild = el('div', 'bild');
+    mottoBild(m, bild);
+    var t = el('div', 'text');
+    if (exklusiv) t.appendChild(el('span', 'siegel', 'Exklusive Linie'));
+    t.appendChild(el('h3', null, m.name || m.slug));
+    var satz = m.intro || m.headline || m.text || '';
+    if (satz) t.appendChild(el('p', 'leise', satz));
+    var k = el('span', 'knopf', exklusiv ? 'Linie ansehen' : 'Motto öffnen');
+    t.appendChild(k);
+    a.appendChild(bild); a.appendChild(t);
+    return a;
+  }
+
+  function mottosZeigen(liste) {
+    MOTTOS = liste;
+    var freestyle = liste.filter(function (m) { return m.freestyle || m.slug === 'freestyle'; })[0];
+    var exklusiv = liste.filter(function (m) { return m.membersOnly; });
+    var normal = liste.filter(function (m) { return m !== freestyle; });
+
+    // Hervorgehoben: die exklusive Linie (falls es sie gibt)
+    var hv = $('hervor');
+    exklusiv.forEach(function (m) { hv.appendChild(hervorKarte(m, true)); });
+    if (hv.children.length) $('hervor-abschnitt').hidden = false;
+
+    // Raster: alle Mottos in der Reihenfolge der Schnittstelle, Freestyle als letzte Kachel
+    // Die Kacheln kommen fertig vom Server (startseiteNeuHtml) - nur wenn sie fehlen, baut sie das Skript.
+    var r = $('raster');
+    if (!r.children.length) {
+      normal.forEach(function (m) { r.appendChild(mottoKachel(m)); });
+      if (freestyle) r.appendChild(mottoKachel(freestyle, 'frei-kachel'));
+    }
+    $('mottos-h').textContent = 'Alle ' + normal.length + ' Mottos';
+    $('mottos-status').hidden = true;
+
+    // Zwei Tueren: Gruppe und Einzelstueck (ohne Freestyle - der hat einen eigenen Weg)
+    function chipsIn(ziel, liste) {
+      liste.forEach(function (m) {
+        var a = el('a', 'chip'); a.href = '/m/' + encodeURIComponent(m.slug);
+        var p = el('span', 'punkt'); p.style.background = sicherFarbe(m.accent); p.setAttribute('aria-hidden', 'true');
+        a.appendChild(p); a.appendChild(document.createTextNode(m.name)); ziel.appendChild(a);
+      });
+    }
+    var eigeneWege = function (m) { return m.freestyle || m.membersOnly; };
+    chipsIn($('chips-gruppe'), normal.filter(function (m) { return m.gruppe && !eigeneWege(m); }).slice(0, 8));
+    // Geschenk-Anlaesse zuerst (Markus nennt Geburtstag und Geburt), der Rest in der Reihenfolge der Liste
+    var VORN = ['geburtstag', 'geburt-baby', 'familie'];
+    var rang = function (m) { var i = VORN.indexOf(m.slug); return i < 0 ? VORN.length : i; };
+    chipsIn($('chips-einzel'), normal.filter(function (m) { return !m.gruppe && !eigeneWege(m); })
+      .map(function (m, i) { return { m: m, i: i }; })
+      .sort(function (a, b) { return rang(a.m) - rang(b.m) || a.i - b.i; }).map(function (x) { return x.m; }));
+
+    // Abstimmung: nur bei Gruppen-Mottos (gruppe kommt aus gruppen-mottos.json ueber /api/mo/mottos)
+    var km = $('k-mottos');
+    normal.filter(function (m) { return m.gruppe; }).forEach(function (m) {
+      var a = el('a', 'chip'); a.href = '/m/' + encodeURIComponent(m.slug);
+      var p = el('span', 'punkt'); p.style.background = sicherFarbe(m.accent); p.setAttribute('aria-hidden', 'true');
+      a.appendChild(p); a.appendChild(document.createTextNode(m.name)); km.appendChild(a);
+    });
+    if (km.children.length) $('k-fuer-titel').hidden = false;
+
+  }
+
+  holen('/api/mo/mottos').then(function (d) {
+    var liste = (d && d.mottos || []).filter(function (m) { return m && m.slug && m.active !== false; });
+    if (!liste.length) throw new Error('leere Liste');
+    mottosZeigen(liste);
+  }).catch(function (e) {
+    melden('Mottos', e);
+    var s = $('mottos-status');
+    if ($('raster').children.length) return;   // die Kacheln vom Server stehen schon da
+    s.hidden = false;
+    s.textContent = 'Die Mottos ließen sich gerade nicht laden. ';
+    var a = el('a', null, 'Zur Liste aller Mottos'); a.href = '/mottos'; s.appendChild(a);
+  });
+
+  // ---------- Suche ----------
+  var feld = $('suche'), box = $('treffer'), aktiv = -1, aktuell = [];
+  function norm(s) { return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/ß/g, 'ss'); }
+  function suchen(q) {
+    q = norm(q).trim();
+    if (!q) return [];
+    return MOTTOS.filter(function (m) {
+      return norm(m.name).indexOf(q) >= 0 || norm(m.slug).indexOf(q) >= 0 || norm(m.intro).indexOf(q) >= 0;
+    }).sort(function (a, b) { return norm(a.name).indexOf(q) - norm(b.name).indexOf(q); }).slice(0, 8);
+  }
+  function offen(ja) { box.hidden = !ja; feld.setAttribute('aria-expanded', ja ? 'true' : 'false'); }
+  function markieren(i) {
+    aktiv = i;
+    [].forEach.call(box.children, function (li, j) { li.setAttribute('aria-selected', j === i ? 'true' : 'false'); });
+    if (i >= 0 && box.children[i]) { feld.setAttribute('aria-activedescendant', box.children[i].id); box.children[i].scrollIntoView({ block: 'nearest' }); }
+    else feld.removeAttribute('aria-activedescendant');
+  }
+  function zeigen() {
+    var q = feld.value;
+    aktuell = suchen(q);
+    box.textContent = '';
+    if (!q.trim()) { offen(false); return; }
+    if (!aktuell.length) {
+      var nix = el('li', 'nix');
+      nix.appendChild(document.createTextNode('Kein Motto gefunden – '));
+      var a = el('a', null, 'mit „Dein Freestyle“ geht es trotzdem'); a.href = '/m/freestyle';
+      nix.appendChild(a); box.appendChild(nix); offen(true); markieren(-1); return;
+    }
+    aktuell.forEach(function (m, i) {
+      var li = el('li'); li.id = 'treffer-' + i; li.setAttribute('role', 'option');
+      var p = el('span', 'punkt'); p.style.background = sicherFarbe(m.accent);
+      li.appendChild(p); li.appendChild(document.createTextNode(m.name));
+      li.addEventListener('mousedown', function (e) { e.preventDefault(); location.href = '/m/' + encodeURIComponent(m.slug); });
+      box.appendChild(li);
+    });
+    offen(true); markieren(0);
+  }
+  feld.addEventListener('input', zeigen);
+  feld.addEventListener('focus', function () { if (feld.value.trim()) zeigen(); });
+  feld.addEventListener('blur', function () { setTimeout(function () { offen(false); }, 120); });
+  feld.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowDown' && aktuell.length) { e.preventDefault(); markieren(Math.min(aktiv + 1, aktuell.length - 1)); }
+    else if (e.key === 'ArrowUp' && aktuell.length) { e.preventDefault(); markieren(Math.max(aktiv - 1, 0)); }
+    else if (e.key === 'Enter') {
+      var m = aktuell[aktiv >= 0 ? aktiv : 0];
+      if (m) { e.preventDefault(); location.href = '/m/' + encodeURIComponent(m.slug); }
+    } else if (e.key === 'Escape') { offen(false); }
+  });
+
+  // ---------- Schaufenster: ein Platz, die Designs wechseln ----------
+  (function () {
+    var liste = $('sf-liste'), knoepfe = $('sf-knoepfe');
+    if (!liste || !knoepfe) return;
+    var bilder = [].slice.call(liste.children);
+    var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var i = 0, takt = null, sichtbar = false, drauf = false, angehalten = still;
+    var halt = $('sf-halt');
+    if (still) halt.hidden = true;   // ohne Bewegung gibt es nichts anzuhalten
+    function laden(li) { var img = li && li.querySelector('img'); if (img && !img.getAttribute('src') && img.dataset.src) img.src = img.dataset.src; }
+    function nummer() { $('sf-nr').textContent = bilder.length ? (i + 1) + ' / ' + bilder.length : ''; }
+    function zeigen(n) {
+      if (!bilder.length) return;
+      i = (n + bilder.length) % bilder.length;
+      bilder.forEach(function (li, k) {
+        var an = k === i;
+        li.classList.toggle('an', an);
+        if (an) li.removeAttribute('aria-hidden'); else li.setAttribute('aria-hidden', 'true');
+        var a = li.querySelector('a'); if (a) { if (an) a.removeAttribute('tabindex'); else a.setAttribute('tabindex', '-1'); }
+      });
+      laden(bilder[i]); laden(bilder[(i + 1) % bilder.length]);   // das naechste schon vorladen
+      nummer();
+    }
+    function weg(li) {   // ein Bild laedt nicht: es nimmt sich aus der Reihe, nie ein kaputtes Symbol
+      var k = bilder.indexOf(li); if (k < 0) return;
+      melden('Schaufenster', new Error('Bild laedt nicht: ' + ((li.querySelector('img') || {}).alt || '')));
+      bilder.splice(k, 1); li.remove();
+      if (!bilder.length) { $('schaufenster').hidden = true; return; }
+      if (bilder.length < 2) knoepfe.hidden = true;
+      zeigen(k < i ? i - 1 : i);
+    }
+    bilder.forEach(function (li) {
+      var img = li.querySelector('img'); if (!img) return;
+      img.addEventListener('error', function () { weg(li); });
+      if (img.complete && img.getAttribute('src') && !img.naturalWidth) weg(li);
+    });
+    if (bilder.length < 2) { knoepfe.hidden = true; nummer(); return; }
+    function planen() {
+      clearInterval(takt); takt = null;
+      if (!angehalten && sichtbar && !drauf && !document.hidden) takt = setInterval(function () { zeigen(i + 1); }, 4000);
+    }
+    function vonHand(r) { liste.setAttribute('aria-live', 'polite'); zeigen(i + r); planen(); }
+    $('sf-zurueck').addEventListener('click', function () { vonHand(-1); });
+    $('sf-weiter').addEventListener('click', function () { vonHand(1); });
+    halt.addEventListener('click', function () {
+      angehalten = !angehalten;
+      halt.setAttribute('aria-label', angehalten ? 'Weiterlaufen lassen' : 'Anhalten');
+      halt.querySelector('.sf-pause').toggleAttribute('hidden', angehalten);
+      halt.querySelector('.sf-spiel').toggleAttribute('hidden', !angehalten);
+      planen();
+    });
+    var buehne = liste.parentNode;
+    // Anhalten unter dem Mauszeiger nur mit echter Maus: auf dem Handy loest ein Tippen ein
+    // "mouseenter" ohne "mouseleave" aus, und das Bild stuende danach fuer immer still.
+    if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      buehne.addEventListener('mouseenter', function () { drauf = true; planen(); });
+      buehne.addEventListener('mouseleave', function () { drauf = false; planen(); });
+    }
+    buehne.addEventListener('focusin', function () { drauf = true; planen(); });
+    buehne.addEventListener('focusout', function () { drauf = false; planen(); });
+    document.addEventListener('visibilitychange', planen);
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (e) { sichtbar = e[0].isIntersecting; if (sichtbar) laden(bilder[(i + 1) % bilder.length]); planen(); }, { threshold: 0.4 }).observe(buehne);
+    } else { sichtbar = true; }
+    zeigen(0); planen();
+  })();
+
+  // ---------- Galerie ----------
+  // Derselbe Aufruf wie in home.html: freigegebene Designs aus echten Auftraegen, quer durch die Artikel.
+  // Textil zuerst (das Hauptgeschaeft), alles andere im zweiten Band.
+  var TEXTIL = { tee: 1, polo: 1, hoodie: 1, zip: 1, beutel: 1 };
+  function bandFuellen(bandId, designs, max) {
+    var band = $(bandId);
+    designs.slice(0, max).forEach(function (d, i) {
+      if (!d || !d.image) return;
+      var li = el('li');
+      var a = el('a', 'design');
+      a.href = d.ziel || ('/m/' + encodeURIComponent(d.motto || ''));
+      var b = el('div', 'bild');
+      var img = new Image();
+      img.alt = (d.mottoName || 'Design') + (d.stil ? ', Stil ' + d.stil : '');
+      img.loading = 'lazy'; img.decoding = 'async'; img.width = 520; img.height = 520;
+      img.onerror = function () { li.remove(); };
+      img.src = d.image;
+      b.appendChild(img);
+      var u = el('div', 'unter');
+      u.appendChild(el('b', null, d.mottoName || ''));
+      var teil = teilName(d.teil);
+      var zeile = [d.stil, teil].filter(Boolean).join(' auf ');
+      if (zeile) u.appendChild(el('span', null, zeile));
+      if (d.linieName) u.appendChild(el('small', null, d.linieName));
+      a.appendChild(b); a.appendChild(u); li.appendChild(a); band.appendChild(li);
+    });
+    return band.children.length;
+  }
+  function galerieZeigen(designs) {
+    var textil = designs.filter(function (d) { return d && TEXTIL[d.teil]; });
+    var rest = designs.filter(function (d) { return d && !TEXTIL[d.teil]; });
+    if (!bandFuellen('band-textil', textil, 12)) $('band-textil').hidden = true;
+    if (!bandFuellen('band', rest, 12)) artikelErsatz();
+  }
+  // 9. Okt. (Rundgang): freigegeben sind bisher nur Textil-Designs - die Galerie fuer Kissen & Co. blieb
+  // leer und meldete "laedt gerade nicht". Dann zeigt sie die Artikel selbst, jeweils als echtes
+  // Produktfoto mit einem unserer Beispiel-Designs (startseite/artikel, wie im Otto-Weg). Der Satz
+  // "Jedes Bild hier stammt aus einem echten Auftrag" stimmt dann nicht und faellt weg.
+  function artikelErsatz() {
+    holen('/api/mo/freestyle/artikel').then(function (k) {
+      var g = (k && k.gruppen) || {}, liste = [];
+      Object.keys(g).forEach(function (n) { if (n !== 'Textil') g[n].forEach(function (a) { liste.push(a); }); });
+      var designs = liste.map(function (a) { return { image: '/startseite/artikel/' + encodeURIComponent(a.id) + '.webp', ziel: '/otto?artikel=' + encodeURIComponent(a.id), mottoName: a.name }; });
+      if (!bandFuellen('band', designs, 16)) { $('band-leer').hidden = false; return; }
+      var lead = document.querySelector('#artikel .lead');
+      if (lead) lead.textContent = lead.textContent.replace(/\s*Jedes Bild hier stammt aus einem echten Auftrag\.?/, '');
+    }).catch(function (e) { melden('Galerie', e); $('band-leer').hidden = false; });
+  }
+  function blaettern(bandId, richtung) {
+    var band = $(bandId), li = band.querySelector('li');
+    var schritt = li ? li.getBoundingClientRect().width + 16 : 280;
+    band.scrollBy({ left: richtung * schritt * 2, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  }
+  [].forEach.call(document.querySelectorAll('.pfeile button'), function (k) {
+    k.addEventListener('click', function () { blaettern(k.dataset.band, +k.dataset.richtung); });
+  });
+
+  // Die Teilnamen kommen aus /preise.js (defer) - darum erst nach dem Laden der Seite zeichnen.
+  function nachPreise(f) { if (document.readyState === 'complete') f(); else window.addEventListener('load', f, { once: true }); }
+  var galerie = holen('/api/mo/showcase?mode=rate&limit=40&vielfalt=1').then(function (d) { return (d && d.designs) || []; });
+  galerie.then(function (designs) { nachPreise(function () { galerieZeigen(designs); }); })
+    .catch(function (e) { melden('Galerie', e); artikelErsatz(); });
+
+  // ---------- Preiszeile aus preise.cjs ----------
+  nachPreise(function () {
+    try {
+      var P = window.MoPreise;
+      if (!P || !P.TEXTIL || !P.TEXTIL.tee) return;
+      var ab = P.TEXTIL.tee.starter;
+      $('preis-zeile').textContent = 'Shirts ab ' + P.euro(ab) + '. Lieferzeit: 4–5 Arbeitstage nach vollständiger Bezahlung.';
+    } catch (e) { melden('Preise', e); }
+  });
+})();
+</script>
+<script>
+// 2. Okt.: Filter ueber den Mottos - dieselbe Teilung wie die zwei Tueren (gruppen-mottos.json).
+(function () {
+  var knoepfe = document.querySelectorAll('.filter button');
+  knoepfe.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var f = b.getAttribute('data-filter');
+      knoepfe.forEach(function (x) { var an = x === b; x.classList.toggle('an', an); x.setAttribute('aria-pressed', an ? 'true' : 'false'); });
+      document.querySelectorAll('#raster > li').forEach(function (li) { li.hidden = !!f && li.getAttribute('data-art') !== f; });
+    });
+  });
+})();
+</script>
+<script>
+// Der Wunsch: tippen oder sprechen (Web Speech API, Deutsch), dann fuellt der Server das passende Motto aus.
+(function () {
+  var t = document.getElementById('wunsch-text'), los = document.getElementById('wunsch-los'), mik = document.getElementById('wunsch-mik'), meld = document.getElementById('wunsch-meldung');
+  if (!t || !los) return;
+  // 6. Okt., Markus: steht ein geschuetzter Name im Wunsch, wird nichts gebaut - Otto sagt es lieb und fragt, ob er es
+  // im aehnlichen Stil machen soll. Ja -> der Server beschreibt den Look frei nach (ausweg), Nein -> Wunsch neu sagen.
+  function markeFrage(j, text) {
+    meld.innerHTML = '';
+    var box = document.createElement('div'); box.className = 'wunsch-frage'; box.id = 'wunsch-frage';
+    var p = document.createElement('p'); p.textContent = j.hinweis || 'Das ist ein geschützter Name. Soll ich etwas im ähnlichen Stil machen?';
+    var ja = document.createElement('button'); ja.type = 'button'; ja.className = 'knopf'; ja.id = 'wunsch-ja'; ja.textContent = 'Ja, gerne';
+    var nein = document.createElement('button'); nein.type = 'button'; nein.className = 'knopf knopf-leise'; nein.id = 'wunsch-nein'; nein.textContent = 'Nein, ich sag es anders';
+    var reihe = document.createElement('div'); reihe.className = 'wunsch-frage-knoepfe'; reihe.appendChild(ja); reihe.appendChild(nein);
+    box.appendChild(p); box.appendChild(reihe); meld.appendChild(box);
+    ja.addEventListener('click', function () { senden({ ausweg: true }); });
+    nein.addEventListener('click', function () { meld.textContent = 'Alles klar – sag mir deinen Wunsch einfach ohne „' + (j.wort || 'den Namen') + '“.'; t.focus(); t.select(); });
+    window.MoWunschFrage = { ja: function () { ja.click(); }, nein: function () { nein.click(); } };
+    try { if (window.MoGespraech && window.MoGespraech.sag) window.MoGespraech.sag('marke'); } catch (e) { /* ohne Stimme */ }
+  }
+  var mikBenutzt = false;
+  function senden(extra) {
+    var text = t.value.trim();
+    if (text.length < 3) { meld.textContent = 'Sag Otto kurz, was drauf soll.'; t.focus(); return; }
+    window.MoWunschFrage = null;
+    // 6. Okt., Markus ("Wir testen den Ablauf so"): der Wunsch geht an Otto (/otto) - er fragt nur noch, was fehlt (Artikel, fuer wen,
+    // Anlass oder eigene Idee) und zeigt dazu die passenden Kacheln. Das Mikro bleibt dort an, wenn hier gesprochen wurde.
+    if (!extra) { location.href = '/otto?w=' + encodeURIComponent(text) + (mikBenutzt ? '&m=1' : ''); return; }
+    los.disabled = true; los.textContent = extra && extra.ausweg ? 'Otto macht es im ähnlichen Stil …' : 'Otto liest deinen Wunsch …'; meld.textContent = '';
+    var body = { text: text }; if (extra && extra.ausweg) body.ausweg = true;
+    fetch('/api/mo/wunsch', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (r) {
+        if (r.ok && r.j.ziel) { location.href = r.j.ziel; return; }
+        los.disabled = false; los.textContent = 'Design bauen';
+        if (r.j && r.j.frage === 'marke') { markeFrage(r.j, text); return; }
+        meld.textContent = (r.j && r.j.hinweis) || 'Das hat nicht geklappt. Bitte noch einmal.';
+      })
+      .catch(function () { los.disabled = false; los.textContent = 'Design bauen'; meld.textContent = 'Keine Verbindung. Bitte noch einmal.'; });
+  }
+  los.addEventListener('click', function () { senden(); });
+  t.addEventListener('keydown', function (e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); senden(); } });
+  // 6. Okt., Markus: "Die Mikrofon-Seite schneidet wieder bei den Woertern ab. Lass das doch bitte unbegrenzt" - und die
+  // Text-KI dazu. Das Mikrofon hoert, bis man es wieder antippt (continuous; beendet der Browser nach einer Pause selbst,
+  // geht es sofort weiter). Danach zieht die Text-KI den Text glatt (/api/mo/text-glaetten, kuerzt nichts); "Original"
+  // holt das Gesprochene zurueck.
+  function glaetten() {
+    var original = t.value.trim();
+    if (original.length < 3) return;
+    meld.textContent = 'Otto räumt deinen Text auf …';
+    fetch('/api/mo/text-glaetten', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ text: original }) })
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        if (!j || j.unveraendert || !j.text || t.value.trim() !== original) { meld.textContent = ''; return; }
+        t.value = j.text;
+        meld.innerHTML = 'Otto hat deinen Text aufgeräumt. <button type="button" id="wunsch-original" style="font:inherit;font-weight:700;text-decoration:underline;background:none;border:0;padding:0;cursor:pointer;color:inherit">Original zeigen</button>';
+        var o = document.getElementById('wunsch-original');
+        if (o) o.addEventListener('click', function () { t.value = original; meld.textContent = 'Das Original steht wieder drin.'; });
+      })
+      .catch(function () { meld.textContent = ''; });
+  }
+  // 6. Okt., Markus: "Bau das mal auf der Seite ein, damit ich ein Feeling dafuer bekomme" - Otto sagt seinen Satz mit Markus'
+  // Stimme (otto-stimme/<satz>.mp3, aufgenommen auf /admin/stimme). Nur nach einem Tipp - Browser spielen Ton nie von selbst.
+  var ottoKnopf = document.getElementById('otto-spricht'), ottoSpricht = false, stimme = null, ottoAudio = null;
+  function stimmeLaden() {
+    if (!stimme) stimme = fetch('/otto-stimme/saetze.json').then(function (r) { return r.json(); }).catch(function () { return { saetze: {}, stand: {} }; });
+    return stimme;
+  }
+  var sagtEl = document.getElementById('otto-sagt');
+  var wegUhr = null;
+  function ottoZeigt(text) {
+    if (!sagtEl || !text) return;
+    clearTimeout(wegUhr);
+    sagtEl.textContent = text; sagtEl.hidden = false;
+    sagtEl.classList.remove('raus', 'rein'); void sagtEl.offsetWidth; sagtEl.classList.add('rein');
+  }
+  function ottoStill() {
+    if (!sagtEl || sagtEl.hidden) return;
+    sagtEl.classList.remove('rein'); void sagtEl.offsetWidth; sagtEl.classList.add('raus');
+    clearTimeout(wegUhr); wegUhr = setTimeout(function () { sagtEl.hidden = true; sagtEl.classList.remove('raus'); }, 300);
+  }
+  function ottoSag(satz, danach) {
+    stimmeLaden().then(function (j) {
+      var v = j && j.stand && j.stand[satz];
+      ottoZeigt(j && j.saetze && j.saetze[satz]);   // die Blase kommt, solange Otto spricht
+      if (!v) { wegUhr = setTimeout(ottoStill, 3200); if (danach) danach(); return; }   // ohne Aufnahme: so lange, wie man zum Lesen braucht
+      try { if (ottoAudio) ottoAudio.pause(); } catch (e) { /* egal */ }
+      ottoAudio = new Audio('/otto-stimme/' + satz + '.mp3?v=' + v);
+      ottoSpricht = true; if (ottoKnopf) ottoKnopf.classList.add('spricht');
+      var ende = function () { ottoSpricht = false; ottoStill(); if (ottoKnopf) ottoKnopf.classList.remove('spricht'); if (danach) { var d = danach; danach = null; d(); } };
+      ottoAudio.onended = ende; ottoAudio.onerror = ende;
+      var p = ottoAudio.play(); if (p && p.catch) p.catch(ende);
+    });
+  }
+  if (ottoKnopf) ottoKnopf.addEventListener('click', function () { if (ottoSpricht && ottoAudio) { try { ottoAudio.pause(); } catch (e) { /* egal */ } ottoSpricht = false; ottoStill(); ottoKnopf.classList.remove('spricht'); return; } ottoSag('start'); });
+  window.MoOttoSag = ottoSag;
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR || !mik) return;
+  mik.hidden = false;
+  var rec = null, hoeren = false, vorher = '', fertig = '';
+  function aus() { mik.classList.remove('an'); mik.setAttribute('aria-label', 'Wunsch einsprechen'); }
+  function starten() {
+    rec = new SR(); rec.lang = 'de-DE'; rec.interimResults = true; rec.continuous = true;
+    rec.onresult = function (ev) {
+      var zw = '';
+      if (ottoSpricht) return;   // was das Mikro hoert, solange Otto spricht, ist Otto selbst
+      for (var i = ev.resultIndex; i < ev.results.length; i++) { var s = ev.results[i][0].transcript; if (ev.results[i].isFinal) fertig += s + ' '; else zw += s; }
+      t.value = vorher + (fertig + zw).trim();
+    };
+    rec.onerror = function (ev) { if (ev.error === 'not-allowed' || ev.error === 'service-not-allowed') { hoeren = false; meld.textContent = 'Bitte das Mikrofon erlauben – oder einfach tippen.'; } };
+    rec.onend = function () {
+      rec = null;
+      if (hoeren) { vorher = t.value ? t.value.replace(/\s*$/, ' ') : ''; fertig = ''; try { starten(); return; } catch (e) { hoeren = false; } }
+      aus(); glaetten();
+    };
+    rec.start();
+  }
+  mik.addEventListener('click', function () {
+    if (hoeren) { hoeren = false; if (rec) { try { rec.stop(); } catch (e) { aus(); } } return; }
+    hoeren = true; mikBenutzt = true; vorher = t.value ? t.value.replace(/\s*$/, ' ') : ''; fertig = '';
+    mik.classList.add('an'); mik.setAttribute('aria-label', 'Zuhören beenden'); meld.textContent = 'Otto hört zu … zum Beenden noch einmal aufs Mikro tippen.';
+    try { starten(); } catch (e) { hoeren = false; aus(); meld.textContent = 'Nicht verstanden – einfach noch mal oder tippen.'; return; }
+    // beim ersten Mal in dieser Sitzung begruesst Otto zuerst - das Mikro laeuft schon, ueberhoert ihn aber
+    var schon = false; try { schon = sessionStorage.getItem('mo_begruesst') === '1'; sessionStorage.setItem('mo_begruesst', '1'); } catch (e) { /* egal */ }
+    if (!schon) ottoSag('start', function () { if (hoeren) meld.textContent = 'Otto hört zu … zum Beenden noch einmal aufs Mikro tippen.'; });
+  });
+  // Beim Absenden waehrend des Zuhoerens erst aufhoeren
+  los.addEventListener('click', function () { if (hoeren) { hoeren = false; if (rec) try { rec.stop(); } catch (e) { /* egal */ } } }, true);
+})();
+</script>
+<script src="/otto-gespraech.js" defer></script>
+</body>
+</html>

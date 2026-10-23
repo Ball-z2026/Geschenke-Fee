@@ -1,0 +1,1193 @@
+{
+  "version": 2,
+  "created": "2026-09-09T10:57:29.520Z",
+  "note": "Vorzeige-Designs je Motto und Stil (23 Mottos x 11 Stile), erzeugt mit den Original-Prompts der Seite. Bild-URL = base + id + ext. Dateiname = vorzeige_<motto>_<stil>.png (motto ohne Bindestrich). | 21. Sept.: artikel-Eintraege = fuer einen Artikel gezeichnete Designs (Platz <stil>@<artikel>). | 23. Sept.: Abi in den sechs Hell-Stilen neu gezeichnet - der Stil entscheidet das Textil (STIL_TEXTIL in mottos.js).",
+  "base": "https://mcp.markusassemacher.de/generated/",
+  "ext": ".png",
+  "size": "1024x1536",
+  "count": 259,
+  "mottos": {
+    "abi": {
+      "values": {
+        "motto": "ABInauten",
+        "jahr": "2026",
+        "schule": "Gymnasium Hittfeld",
+        "ort": "Seevetal"
+      },
+      "textile": "dunkel",
+      "styleTextile": {
+        "aquarell": "hell",
+        "vintage": "hell",
+        "tattoo": "hell",
+        "comic": "hell",
+        "japan": "hell",
+        "popart": "hell",
+        "meisterwerk": "hell"
+      },
+      "styles": {
+        "standard": "07e0960b-b443-4a95-a480-7bd719e9a7f7",
+        "streetart": "d1f6f98e-e122-4982-81ef-1fb11f203fb2",
+        "graffiti": "https://ballz-image-mcp-production.up.railway.app/generated/48eae622-94e3-4851-9df4-efc6c67a701b.png",
+        "meisterwerk": "https://ballz-image-mcp-production.up.railway.app/generated/573b9b53-ae13-41e3-9d73-2613d85a386e.png",
+        "minimal": "4eb176e2-304e-4991-929a-0eccbe4223c6",
+        "popart": "https://ballz-image-mcp-production.up.railway.app/generated/19b746dc-aa1b-4c8f-91bc-cf25e626b6ab.png",
+        "vintage": "https://ballz-image-mcp-production.up.railway.app/generated/854cc63b-5d26-4a26-adda-7c8bfedc81b6.png",
+        "tattoo": "https://ballz-image-mcp-production.up.railway.app/generated/ac99ba7c-2240-489c-8237-b8a631e89965.png",
+        "comic": "https://ballz-image-mcp-production.up.railway.app/generated/9f9c5c32-a44c-4496-9906-ef9f0118460f.png",
+        "japan": "https://ballz-image-mcp-production.up.railway.app/generated/9d12f5f3-7b28-466c-bdd7-1c6aa8fab118.png",
+        "college": "1f6d8765-5a1d-4c3d-b47b-459b3e251f5e",
+        "aquarell": "1a9ba892-90d3-41d1-84cb-ecda6efcd321",
+        "fotoreal": "https://ballz-image-mcp-production.up.railway.app/generated/ee68465d-0a3c-4163-8729-6084ef0330ea.png",
+        "neon": "d06c8e5b-8815-46d8-aec8-a4356a87136a",
+        "robotic": "https://ballz-image-mcp-production.up.railway.app/generated/d7232b99-6935-4cb9-b31d-12899ecbd97a.png"
+      },
+      "kachel": "https://ballz-image-mcp-production.up.railway.app/generated/f9c7ad24-403e-48bb-812c-c3c1de0f41a2.png",
+      "kachelValues": {
+        "motto": "ABIrama",
+        "schule": "Gymnasium Hittfeld",
+        "ort": "Hittfeld",
+        "jahr": "2026"
+      },
+      "kachelTextile": "dunkel",
+      "schaufenster": {
+        "style": "japan",
+        "textile": "hell",
+        "datei": "startseite/schaufenster/abi.webp",
+        "values": {
+          "motto": "ABInauten",
+          "jahr": "2026",
+          "schule": "Gymnasium Hittfeld",
+          "ort": "Seevetal"
+        }
+      }
+    },
+    "junggesellenabschied": {
+      "values": {
+        "name": "LARS",
+        "stadt": "Hamburg",
+        "datum": "12.07.2026",
+        "rolle": "BRÄUTIGAM"
+      },
+      "textile": "dunkel",
+      "styleTextile": {
+        "aquarell": "hell",
+        "vintage": "hell",
+        "tattoo": "hell",
+        "comic": "hell",
+        "japan": "hell",
+        "popart": "hell",
+        "meisterwerk": "hell"
+      },
+      "styles": {
+        "standard": "4183c69b-0bf1-44d6-9493-09d900e9a115",
+        "streetart": "40ef998b-8f7f-4a74-bee7-e9c71cc53ce5",
+        "graffiti": "https://ballz-image-mcp-production.up.railway.app/generated/cc925f8a-3aa7-4cd8-9962-5d906d63fe6e.png",
+        "meisterwerk": "https://ballz-image-mcp-production.up.railway.app/generated/0375194a-d116-402e-842b-76208ae1a84a.png",
+        "minimal": "db4957fe-f5a7-4cf9-b909-9f0f1a22e437",
+        "popart": "https://ballz-image-mcp-production.up.railway.app/generated/72f174b4-e44f-4e47-bcb0-0cf915055ae8.png",
+        "vintage": "https://ballz-image-mcp-production.up.railway.app/generated/932531a0-a046-4d26-b5b2-91913964cc5f.png",
+        "tattoo": "https://ballz-image-mcp-production.up.railway.app/generated/f2992c50-5d81-4f4f-8f26-d9ff84f43c1a.png",
+        "comic": "https://ballz-image-mcp-production.up.railway.app/generated/eaae06e1-0f76-407a-aca9-97c1758113c9.png",
+        "japan": "https://ballz-image-mcp-production.up.railway.app/generated/41bdc9c5-23b3-443a-ba95-fe9b13ef7ee6.png",
+        "college": "9c0d4f3f-cc38-44d8-8f1e-d24fb865fe17",
+        "aquarell": "57a175c6-2f8f-4460-a0b2-74be2ebdaae3",
+        "fotoreal": "https://ballz-image-mcp-production.up.railway.app/generated/17365123-902a-44b3-8e0d-9634a195c463.png",
+        "neon": "efb9f01b-e76e-47b6-a559-b62ff58dbd0e",
+        "robotic": "https://ballz-image-mcp-production.up.railway.app/generated/26b69339-33d8-4116-a07e-91869473ad19.png"
+      },
+      "kachel": "https://ballz-image-mcp-production.up.railway.app/generated/039c507e-4114-4fb8-8211-73a9f387ff8b.png",
+      "kachelValues": {
+        "name": "LARS",
+        "rolle": "BRÄUTIGAM",
+        "spruch": "Zeugen des Untergangs",
+        "stadt": "Hamburg",
+        "datum": "12.07.2026"
+      },
+      "kachelTextile": "dunkel",
+      "artikel": {
+        "strandtuch": {
+          "style": "comic",
+          "textile": "hell",
+          "url": "https://ballz-image-mcp-production.up.railway.app/generated/108e8810-7dbb-4487-b3b9-d65792e8de08.png",
+          "note": "21. Sept.: Strandtuch 70x140, LARS in Hamburg"
+        }
+      },
+      "schaufenster": {
+        "style": "vintage",
+        "textile": "hell",
+        "datei": "startseite/schaufenster/junggesellenabschied.webp",
+        "values": {
+          "name": "LARS",
+          "stadt": "Hamburg",
+          "datum": "12.07.2026",
+          "rolle": "BRÄUTIGAM"
+        }
+      }
+    },
+    "malle-fahrt": {
+      "kachel": "https://ballz-image-mcp-production.up.railway.app/generated/74400222-9c1f-4c7a-a5ed-3ed6f8028a99.png",
+      "kachelTextile": "dunkel",
+      "values": {
+        "crew": "Die Strandhaie",
+        "jahr": "2026",
+        "spruch": "Wir kommen wieder"
+      },
+      "textile": "dunkel",
+      "styleTextile": {
+        "aquarell": "hell",
+        "meisterwerk": "hell",
+        "popart": "hell",
+        "vintage": "hell",
+        "tattoo": "hell",
+        "comic": "hell",
+        "japan": "hell"
+      },
+      "styles": {
+        "standard": "4fa4933b-6cd2-4a0c-a815-1725878c91ae",
+        "streetart": "97ab1da0-da95-4b5b-85f0-fd81317aef72",
+        "graffiti": "https://ballz-image-mcp-production.up.railway.app/generated/d816e865-d78d-4d8c-915f-9f36dae68525.png",
+        "meisterwerk": "https://ballz-image-mcp-production.up.railway.app/generated/bc8b84fd-8af1-490c-9691-23792fd825e0.png",
+        "minimal": "c6d9e253-5d2d-45e4-87d2-5449a841b269",
+        "popart": "https://ballz-image-mcp-production.up.railway.app/generated/2fd61f3d-63df-4c06-a5f7-27bfc245eba7.png",
+        "vintage": "https://ballz-image-mcp-production.up.railway.app/generated/10ba0f35-0bd3-4719-ba95-425ef25df923.png",
+        "tattoo": "https://ballz-image-mcp-production.up.railway.app/generated/02d4ce7f-6985-4e67-8a33-322f0490a3cf.png",
+        "comic": "https://ballz-image-mcp-production.up.railway.app/generated/d176b42d-71da-41ff-be55-98a6bfd2a101.png",
+        "japan": "https://ballz-image-mcp-production.up.railway.app/generated/24f30ef3-de79-4f8d-ab6a-b90933d45fd7.png",
+        "college": "a11162da-459c-41aa-857f-88bb1fb943b3",
+        "aquarell": "005ebe92-9d99-4080-9c24-42f93277d0ed",
+        "fotoreal": "https://ballz-image-mcp-production.up.railway.app/generated/a318792f-dbca-4e01-b83b-05541b65c629.png",
+        "neon": "fd281ca5-9421-4771-833a-2cc688fccbdc",
+        "robotic": "https://ballz-image-mcp-production.up.railway.app/generated/dba26e96-1a0c-4385-96ca-174ca3038307.png"
+      },
+      "kachelValues": {
+        "crew": "Die Strandhaie",
+        "jahr": "2026",
+        "spruch": "Wir kommen wieder"
+      },
+      "artikel": {
+        "handtuch": {
+          "style": "popart",
+          "textile": "hell",
+          "url": "https://ballz-image-mcp-production.up.railway.app/generated/b4ecab8f-379b-423c-8b64-19c336d706a7.png",
+          "note": "21. Sept.: Handtuch 50x100, Strandhaie"
+        }
+      },
+      "schaufenster": {
+        "style": "comic",
+        "textile": "hell",
+        "datei": "startseite/schaufenster/malle-fahrt.webp",
+        "values": {
+          "crew": "Die Strandhaie",
+          "jahr": "2026",
+          "spruch": "Wir kommen wieder"
+        }
+      }
+    },
+    "geburtstag": {
+      "kachel": "3134b91a-e440-47c6-9946-b346c64b9a96",
+      "kachelTextile": "hell",
+      "values": {
+        "name": "Steffi",
+        "alter": "40",
+        "spruch": "Legendär seit 1986"
+      },
+      "textile": "dunkel",
+      "styleTextile": {
+        "aquarell": "hell",
+        "meisterwerk": "hell"
+      },
+      "styles": {
+        "standard": "455ccc04-7a5a-4ee6-a092-26bcf4fcaa75",
+        "streetart": "8f66e950-1eff-4589-9a4a-4bebb1aaac28",
+        "graffiti": "https://ballz-image-mcp-production.up.railway.app/generated/e0de267e-ac89-413f-a510-3919d9021e8a.png",
+        "meisterwerk": "https://ballz-image-mcp-production.up.railway.app/generated/6cb93b8b-aabe-421d-8377-16a4b336bcc3.png",
+        "minimal": "1c033620-9176-4825-adbc-869095478f92",
+        "popart": "77ce77cc-47f5-4742-85a3-a6c5bf01b5bf",
+        "vintage": "a2767bbb-011d-41e9-9b34-94ed92c5bfc7",
+        "tattoo": "7920f6c5-c683-46c3-844f-a16d91f60eba",
+        "comic": "d01e00d5-45e7-440e-ba78-b8d02b710fd4",
+        "japan": "e35a597e-d639-4a0a-a2f0-eeb016da3748",
+        "college": "69fb58f9-0761-4872-8f6c-dcf043d5959e",
+        "aquarell": "88d24ed5-7401-4526-b884-d3ef147af115",
+        "fotoreal": "https://ballz-image-mcp-production.up.railway.app/generated/863ca084-6acb-46d5-899c-49d50f0b698f.png",
+        "neon": "3eb39ca0-3a78-4c16-a424-8fe4fcdb1bba",
+        "robotic": "https://ballz-image-mcp-production.up.railway.app/generated/16048dd0-f9dd-45e8-8491-560714621f1c.png"
+      },
+      "schaufenster": {
+        "style": "aquarell",
+        "textile": "hell",
+        "datei": "startseite/schaufenster/geburtstag.webp",
+        "values": {
+          "name": "Steffi",
+          "alter": "40",
+          "jahrgang": "1986",
+          "spruch": "Legendär seit 1986"
+        }
+      }
+    },
+    "kegeltour": {
+      "values": {
+        "club": "Alle Neune",
+        "ziel": "Hamburg",
+        "jahr": "2026",
+        "spruch": "Gut Holz!"
+      },
+      "textile": "dunkel",
+      "styleTextile": {
+        "aquarell": "hell",
+        "meisterwerk": "hell"
+      },
+      "styles": {
+        "standard": "b544351b-955c-4db4-9acd-b3c0742dd0c3",
+        "streetart": "212e8975-68c4-482f-87e0-558114264633",
+        "graffiti": "https://ballz-image-mcp-production.up.railway.app/generated/d7e24304-6a2a-42a3-ad3d-efe126e6937c.png",
+        "meisterwerk": "https://ballz-image-mcp-production.up.railway.app/generated/210720bb-1e37-4a20-b6aa-ff2e3c2161bc.png",
+        "minimal": "e3d367a4-ebd0-4326-a370-54e98ee74c69",
+        "popart": "279933fe-2bb0-41c1-ae96-757945d8cd84",
+        "vintage": "756b6458-c46a-4282-bf0d-e8a66e086091",
+        "tattoo": "6694cef0-fe4e-4b16-bac2-bbd0d0321747",
+        "comic": "77a8126a-45cc-4212-b8f7-4ccf3c6fb76a",
+        "japan": "7acd01e9-f18f-4cee-9de2-863697b871b1",
+        "college": "bf4d2fae-c730-48ab-bb2d-31e6d6613279",
+        "aquarell": "dd694e11-7e18-4106-b08c-3bf0bd71f22e",
+        "fotoreal": "https://ballz-image-mcp-production.up.railway.app/generated/42557914-fdc7-42da-9911-7bd666b4a88b.png",
+        "neon": "17f40990-2010-4fd4-9b5c-0d9c13d4866d",
+        "robotic": "https://ballz-image-mcp-production.up.railway.app/generated/deecf04e-cd82-4378-8823-f5cfedf63871.png"
+      }
+    },
+    "fanclub": {
+      "values": {
+        "fanclub": "Nordkurve Harmstorf",
+        "ort": "Harmstorf",
+        "jahr": "1998"
+      },
+      "textile": "dunkel",
+      "styleTextile": {
+        "aquarell": "hell",
+        "meisterwerk": "hell"
+      },
+      "styles": {
+        "standard": "92fff932-d7a2-4fc7-9b27-c84d3f2a180d",
+        "streetart": "977dc81b-10ce-46c6-9ace-86fbc12ad4e5",
+        "graffiti": "https://ballz-image-mcp-production.up.railway.app/generated/9b495ba4-8983-4f0f-b903-825e72481e7c.png",
+        "meisterwerk": "https://ballz-image-mcp-production.up.railway.app/generated/fd95d7ad-8c5f-4e18-9a32-190a32dd2489.png",
+        "minimal": "586610aa-f71e-4535-a6fd-24788df9591c",
+        "popart": "f9a055b7-7dcb-47e0-822b-8931e91e7dbe",
+        "vintage": "1ffbb9dc-d8e6-48f3-ba26-3aee7c38c172",
+        "tattoo": "c5150bed-4d30-4764-a731-234eda112583",
+        "comic": "c31fe637-a9d5-4db7-8a0e-7ebdfa02e4ad",
+        "japan": "d1b3446f-c69c-47ca-994b-a2e34867ae6e",
+        "college": "6c162cdb-44b6-4d2c-991c-6bc17a88f7b6",
+        "aquarell": "8f1e7985-189c-4931-918c-e7f3639edc14",
+        "fotoreal": "https://ballz-image-mcp-production.up.railway.app/generated/633540d4-8fd5-467a-b72e-1ca5847cddba.png",
+        "neon": "66f97774-24a6-4b50-b9f7-21c426cc9940",
+        "robotic": "https://ballz-image-mcp-production.up.railway.app/generated/e470c71b-694c-4bc9-8c73-cf96f7924f5b.png"
+      },
+      "note": "Logo-Loch fuer die Vorzeige-Designs durch Ball+Fahnen-Motiv ersetzt"
+    },
+    "vereinsjubilaeum": {
+      "kachel": "919d33e1-c2d7-458f-8204-1dbcb163436f",
+      "kachelTextile": "hell",
+      "values": {
+        "verein": "TSV Harmstorf",
+        "jahre": "75",
+        "gruendung": "1951"
+      },
+      "textile": "dunkel",
+      "styleTextile": {
+        "aquarell": "hell",
+        "meisterwerk": "hell"
+      },
+      "styles": {
+        "standard": "66bb92d4-1cf9-456a-ad28-0b256c41e1dd",
+        "streetart": "4c0f4b9b-988c-408a-9e48-09905f02c6c6",
+        "graffiti": "https://ballz-image-mcp-production.up.railway.app/generated/3ad586b5-c4a5-41f2-b57c-972f005805c3.png",
+        "meisterwerk": "https://ballz-image-mcp-production.up.railway.app/generated/a0b14215-8160-473f-9320-62fe9353f1b0.png",
+        "minimal": "75f8c387-0ebf-4f9a-ba6f-edff7bed4707",
+        "popart": "e7a15313-bf05-4db4-8110-05ad3edd8074",
+        "vintage": "7f870dd2-3550-4266-bcd7-7e311d81c7fd",
+        "tattoo": "76f6fab9-707e-43e6-9459-e066f71e1906",
+        "comic": "afe6dc68-0f23-455e-a1ec-5ee0f47aada6",
+        "japan": "f9ac0a4e-2805-418d-8797-512b7f05bf79",
+        "college": "3f77cf61-05ea-43ce-bcba-7d521b2a3dd6",
+        "aquarell": "868ee090-fe78-41a9-94f8-79da8c3995a9",
+        "fotoreal": "https://ballz-image-mcp-production.up.railway.app/generated/bf632206-3d75-4172-ad8f-1cd9e5f06b5f.png",
+        "neon": "24811611-4dd6-426d-8eae-a2678c1716c8",
+        "robotic": "https://ballz-image-mcp-production.up.railway.app/generated/c538dc61-9cbe-47e8-b1c3-95952612ec0a.png"
+      },
+      "note": "Wappen-Loch fuer die Vorzeige-Designs durch Ball+Lorbeer ersetzt",
+      "schaufenster": {
+        "style": "robotic",
+        "textile": "dunkel",
+        "datei": "startseite/schaufenster/vereinsjubilaeum.webp",
+        "values": {
+          "verein": "TSV Harmstorf",
+          "jahre": "75",
+          "gruendung": "1951"
+        }
+      }
+    },
+    "tier-shirt": {
+      "values": {
+        "tiername": "Nelli",
+        "spruch": "Chefin im Haus"
+      },
+      "textile": "dunkel",
+      "styleTextile": {
+        "aquarell": "hell",
+        "meisterwerk": "hell"
+      },
+      "styles": {
+        "standard": "5e14a6c8-6dbb-4c18-9186-dd7c2812d734",
+        "streetart": "be680f0d-75d9-4ddc-b665-33bd879b5da0",
+        "meisterwerk": "https://ballz-image-mcp-production.up.railway.app/generated/d768ee83-4d5f-4309-91b6-7a1e6e7d6edc.png",
+        "minimal": "f0152496-56c9-4647-8339-bd135e1f68dc",
+        "popart": "f694406d-d1c9-421a-8404-f6644a396a9e",
+        "vintage": "3136a343-de7a-4aa2-9262-7f4bc832879f",
+        "tattoo": "5cf78eb1-87a3-4b9b-9494-d63b42eaea55",
+        "comic": "3b586abb-dad3-48e2-afb1-363fd0eb74ac",
+        "japan": "6a84f1f1-d324-4030-b5cd-be983e9ccddd",
+        "college": "aa45d234-2459-4331-98b5-644a85ed5f2e",
+        "neon": "c2e143b3-6434-43d2-9838-455bc4c37a86",
+        "aquarell": "72c316e5-1352-4fb1-ae46-04f23a5ab59a"
+      },
+      "note": "Ohne Referenzfoto: Beispielhund (Australian Shepherd) im Prompt beschrieben",
+      "artikel": {
+        "hundedecke": {
+          "style": "vintage",
+          "textile": "hell",
+          "url": "https://ballz-image-mcp-production.up.railway.app/generated/7a7616c3-78d9-48bb-b843-d0622bda2e8d.png",
+          "note": "21. Sept.: Hundedecke 70x50, Nelli (Australian Shepherd)"
+        },
+        "napfunterlage": {
+          "style": "comic",
+          "textile": "hell",
+          "url": "https://ballz-image-mcp-production.up.railway.app/generated/716a2a77-459e-413a-bc61-e6f7976e0313.png",
+          "values": {
+            "tiername": "Bello",
+            "spruch": "Futterstation"
+          }
+        }
+      }
+    },
+    "firmenausflug": {
+      "values": {
+        "firma": "Team Buchhaltung",
+        "ziel": "Ostsee-Tour",
+        "jahr": "2026"
+      },
+      "textile": "dunkel",
+      "styleTextile": {
+        "aquarell": "hell",
+        "meisterwerk": "hell"
+      },
+      "styles": {
+        "standard": "b0a17ac8-1f53-41a8-969a-e27f2366d44c",
+        "streetart": "a68393bb-47fd-406c-abad-e77145543d31",
+        "graffiti": "https://ballz-image-mcp-production.up.railway.app/generated/ec0c2b4c-37a3-45dd-ab4b-ee0c9e421a8b.png",
+        "meisterwerk": "https://ballz-image-mcp-production.up.railway.app/generated/89dc165b-04c1-46fb-9137-96e1e2fe6d53.png",
+        "minimal": "70ace03c-ed58-4e39-87d7-9aa02b304c21",
+        "popart": "2b632591-3908-44b8-bba2-d54617a266f0",
+        "vintage": "a7f56856-028b-4ecc-8794-3fe34e76ef76",
+        "tattoo": "0cacb2de-abd0-4491-9dbe-e9121cc94b42",
+        "comic": "44715ae5-8cf7-4488-8ecd-fd5df8a7753f",
+        "japan": "0ba117f2-ce64-4bf1-910c-e744e8baa4bc",
+        "college": "2a5317a3-9e28-4fde-a59a-e21b81e8f5f9",
+        "aquarell": "b3470a1b-8239-45f8-8579-b38d9e7a66cf",
+        "fotoreal": "https://ballz-image-mcp-production.up.railway.app/generated/f3c8da4d-3cdd-4e49-b61f-35ab1cda75c9.png",
+        "neon": "0e049272-47d2-4cda-8077-420867bd61eb",
+        "robotic": "https://ballz-image-mcp-production.up.railway.app/generated/d3f9d02c-4bb7-44f8-8b6f-198f8a4c3e19.png"
+      },
+      "note": "Logo-Bereich fuer die Vorzeige-Designs weggelassen"
+    },
+    "schulmotto": {
+      "values": {
+        "motto": "Klassenfahrt 2026 – wir überleben alles",
+        "klasse": "Klasse 10b",
+        "schule": "Realschule Buchholz",
+        "jahr": "2026"
+      },
+      "textile": "dunkel",
+      "styleTextile": {
+        "aquarell": "hell",
+        "meisterwerk": "hell"
+      },
+      "styles": {
+        "standard": "2d00c4e7-1a17-48a4-8a55-2334be5bad6d",
+        "streetart": "7eb7fbc1-d4d6-4f55-a7df-04a7ee1f1a45",
+        "meisterwerk": "https://ballz-image-mcp-production.up.railway.app/generated/a79a9934-d1a0-4252-8a2d-f8de2ca29894.png",
+        "minimal": "566dfd7c-d0d1-4031-bd15-5d58ce9869b1",
+        "popart": "d4e4ebab-7c06-4f3a-88e1-b591095547e2",
+        "vintage": "22cc23f1-7081-4958-9353-f5fb492040b4",
+        "tattoo": "b578b357-2b84-4d83-a661-0645e630000e",
+        "comic": "c0050a64-0d14-4d20-83e0-ec20b082a5c7",
+        "japan": "57a18ca0-5039-464d-bc0d-9b5af533f628",
+        "college": "7e4beaa5-97ac-40f2-828d-dc7cdf2c79e6",
+        "neon": "5fe66b6f-afd4-4283-9c80-4ce3fd834166",
+        "aquarell": "963273ef-a752-4fc8-8778-ff63332ba1f4"
+      }
+    },
+    "abschlussfahrt": {
+      "kachel": "8eeb1dc9-b7b1-4bb0-82b4-25cc425d5eb5",
+      "kachelTextile": "hell",
+      "values": {
+        "crew": "TSV Harmstorf D-Jugend",
+        "ziel": "Prag",
+        "jahr": "2026",
+        "sportart": "Fußball",
+        "spruch": "Einmal und nie wieder"
+      },
+      "textile": "dunkel",
+      "styleTextile": {
+        "aquarell": "hell",
+        "meisterwerk": "hell"
+      },
+      "styles": {
+        "standard": "e41113ee-d1d9-44cf-ad8e-fac4ef9e1a63",
+        "minimal": "b2075ba0-4ec5-4222-9482-222b51265b43",
+        "comic": "1cb658e7-1333-4b8b-ad5b-b7811bef636b",
+        "neon": "38b22e3b-d507-4b10-8d27-8b13b33fba17",
+        "streetart": "2e3b8527-1aae-43a0-b853-d228a7117d3e",
+        "meisterwerk": "https://ballz-image-mcp-production.up.railway.app/generated/7394ef41-4b13-4fa9-af47-c22cb7136f71.png",
+        "popart": "3d4876e6-150d-437c-9256-0ad64494da0e",
+        "vintage": "b2116e82-c26a-441c-a20a-d4eab76ba91c",
+        "tattoo": "ed3bc67d-790d-46db-afb3-97a81235d24d",
+        "japan": "1df8e8b4-bd3d-4f6a-a43f-b13dd35b60db",
+        "college": "ae5531ee-9d58-4283-951b-9e08b80019eb",
+        "aquarell": "eab3ddee-c1ef-49a7-b5df-4108c3c4c57b"
+      },
+      "note": "Logo-Loch fuer die Vorzeige-Designs durch Ball+Wimpel+Koffer ersetzt"
+    },
+    "kinder-tiershirt": {
+      "kachel": "c82c1cf2-b1fc-48c5-878e-405c32565f21",
+      "kachelTextile": "hell",
+      "values": {
+        "kindname": "Mia",
+        "tier": "Dino",
+        "alter": "6"
+      },
+      "textile": "dunkel",
+      "styleTextile": {
+        "aquarell": "hell",
+        "meisterwerk": "hell"
+      },
+      "styles": {
+        "standard": "8e4bbe2c-020e-4899-9190-73accdff7e85",
+        "streetart": "8bf4ba7d-f4f9-49e3-a2bb-c7afba63ff65",
+        "meisterwerk": "https://ballz-image-mcp-production.up.railway.app/generated/9b513af2-1f65-4dbb-94ff-85335e055889.png",
+        "minimal": "ca9247c0-3427-4dca-8fb9-3a5603ea484a",
+        "popart": "afd6926e-db99-40b5-bbbe-f9ad719d5d49",
+        "vintage": "4484358f-8666-4912-ada1-4cb1190e2793",
+        "tattoo": "27d238e2-377d-4491-8fe6-ff578d400bbb",
+        "comic": "7f2703f9-9ffc-4898-ade8-f944b529ae09",
+        "japan": "2af4aba7-d1d5-4d5e-9a41-a230745baba2",
+        "college": "9197da12-5681-4ac8-bd5d-2825f0a9615c",
+        "neon": "1d72525d-4daf-4d1f-ba47-f73e6f5958a2",
+        "aquarell": "a7157e0f-5539-43c8-aa60-117eddf7121d"
+      },
+      "artikel": {
+        "sticker": {
+          "style": "comic",
+          "textile": "hell",
+          "url": "https://ballz-image-mcp-production.up.railway.app/generated/6e3514fb-726c-483a-9312-dd87adaf3fa0.png",
+          "values": {
+            "kindname": "Mia",
+            "tier": "Fuchs",
+            "alter": "6"
+          }
+        },
+        "brotdose": {
+          "style": "comic",
+          "textile": "hell",
+          "url": "https://ballz-image-mcp-production.up.railway.app/generated/dc1774ce-4d66-4cf8-8a90-c7511768ad22.png",
+          "values": {
+            "kindname": "Mia",
+            "tier": "Fuchs",
+            "alter": "6"
+          }
+        }
+      }
+    },
+    "angler-shirt": {
+      "kachel": "68469017-49d9-4a1a-8642-cabc53ed189a",
+      "kachelTextile": "hell",
+      "values": {
+        "spruch": "Petri Heil",
+        "name": "Jörg",
+        "gewaesser": "Elbe"
+      },
+      "textile": "dunkel",
+      "styleTextile": {
+        "aquarell": "hell",
+        "meisterwerk": "hell"
+      },
+      "styles": {
+        "standard": "ddb7552c-50b7-4c01-aa8c-25eba0366373",
+        "streetart": "05d4561b-e42e-4e18-9ca2-1bc6ad6c3249",
+        "meisterwerk": "https://ballz-image-mcp-production.up.railway.app/generated/56919e69-dde9-4551-af04-1050126cd532.png",
+        "minimal": "1cea1792-285b-4381-9076-987f2061c857",
+        "popart": "4ae09236-6989-415b-8ddf-3b515bbf1216",
+        "vintage": "ed93f04b-3d1c-4fba-9fef-9e4aba877718",
+        "tattoo": "f65db08d-299d-46bc-8793-dff562b50ea9",
+        "comic": "4f939bb7-d855-48a6-9983-7f9b308fb1c8",
+        "japan": "3427e9f8-08a6-4cf6-ba97-6a79794d5052",
+        "college": "ace53973-4c75-4b6f-bd91-8a9a369ec5cf",
+        "neon": "de669e77-f1fa-4536-afc8-012aeab98074",
+        "aquarell": "a6c61d97-5642-47a6-8c7c-0d0ead77acbc"
+      },
+      "schaufenster": {
+        "style": "meisterwerk",
+        "textile": "hell",
+        "datei": "startseite/schaufenster/angler-shirt.webp",
+        "values": {
+          "spruch": "Petri Heil",
+          "name": "Jörg",
+          "gewaesser": "Elbe"
+        }
+      }
+    },
+    "jaeger-shirt": {
+      "values": {
+        "spruch": "Waidmannsheil",
+        "name": "Klaus",
+        "revier": "Harmstorf"
+      },
+      "textile": "dunkel",
+      "styleTextile": {
+        "aquarell": "hell",
+        "meisterwerk": "hell"
+      },
+      "styles": {
+        "standard": "b5e44179-2a29-4a97-8b8e-24b7e3b619fb",
+        "streetart": "15aeba36-6363-4b37-8eff-bbb76f6a3b1a",
+        "meisterwerk": "https://ballz-image-mcp-production.up.railway.app/generated/b704dca3-7c2f-40d9-b87b-f5f8a2ac0971.png",
+        "minimal": "e8eb37eb-057f-4516-9a2d-0892d2ab5be8",
+        "popart": "d5e791d2-6313-490a-9931-ab493b698bd8",
+        "vintage": "d7d71d5d-d107-4a6c-9e49-38a0acd6faa6",
+        "tattoo": "01bcf3dd-9cf1-43a0-aff2-3065c574fb52",
+        "comic": "2add3796-f590-4803-ac40-2ac8672e6f80",
+        "japan": "7cb4dc4f-a88e-4b4c-8a33-8dc2844947b3",
+        "college": "9316a6d0-f853-462a-a68b-20959d8cd9b7",
+        "neon": "4b0f8378-5efe-4b89-9ae0-f82f1baf1ddd",
+        "aquarell": "fa0db54a-06d0-4b6c-b33d-9528955bebd2"
+      },
+      "schaufenster": {
+        "style": "aquarell",
+        "textile": "hell",
+        "datei": "startseite/schaufenster/jaeger-shirt.webp",
+        "values": {
+          "spruch": "Waidmannsheil",
+          "name": "Klaus",
+          "revier": "Harmstorf"
+        }
+      }
+    },
+    "landwirt-shirt": {
+      "kachel": "79bc85eb-08bc-4540-a8e7-641fb32fcbd5",
+      "kachelTextile": "hell",
+      "values": {
+        "spruch": "Landwirt aus Leidenschaft",
+        "name": "Hinrich",
+        "hof": "Hof Meyer"
+      },
+      "textile": "dunkel",
+      "styleTextile": {
+        "aquarell": "hell",
+        "meisterwerk": "hell"
+      },
+      "styles": {
+        "standard": "6f8eb7f7-6124-47e8-9459-52e89e950ee1",
+        "streetart": "926ae7ae-8214-4594-a01c-7ae19f86961e",
+        "meisterwerk": "https://ballz-image-mcp-production.up.railway.app/generated/65877a41-a732-49e1-881f-f56d6bcfa2c8.png",
+        "minimal": "1b405ea6-ddf5-4ef0-8dc5-3692f3a2c5a2",
+        "popart": "c2fdc493-6514-4de7-805b-f51aa8348f35",
+        "vintage": "90f05435-ecab-4b28-a62f-4d8c30cee62b",
+        "tattoo": "d812be18-b25b-417a-8382-33fad9f67622",
+        "comic": "2a1c77c6-1293-4e20-9a9f-3f0d20666c74",
+        "japan": "d461c68c-ddff-4c9d-a8d6-27c88ef4d79a",
+        "college": "51f2ba93-6be7-45aa-b320-a799ab0dc871",
+        "neon": "a1ec8d22-c9b2-45ae-ac49-9e826f0a70e3",
+        "aquarell": "b9bfb81f-3ab0-408f-a37f-9a579f07655a"
+      }
+    },
+    "motorrad-shirt": {
+      "values": {
+        "spruch": "Leben auf zwei Rädern",
+        "name": "Die Nordlichter",
+        "ort": "Harz"
+      },
+      "textile": "dunkel",
+      "styleTextile": {
+        "aquarell": "hell",
+        "meisterwerk": "hell"
+      },
+      "styles": {
+        "standard": "ea2e7566-cfb2-4b4e-b404-54babe59996f",
+        "streetart": "f018ec57-77b7-4e10-b7fa-ad2d440569be",
+        "meisterwerk": "https://ballz-image-mcp-production.up.railway.app/generated/3391bd44-957e-460d-b5ed-f561a5f8464c.png",
+        "minimal": "1040def8-3b8c-4c1a-9f31-dfff9e047237",
+        "popart": "6fc28fce-deff-4580-b5e6-b103efc09454",
+        "vintage": "08c545ed-cd1f-4753-8f2e-0290f6d69ef4",
+        "tattoo": "eef11802-6037-4b9a-8641-f0f70b64b490",
+        "comic": "e84722aa-880a-4f9e-8843-16a9981e20b0",
+        "japan": "9d395ec6-2cd7-4413-b3f3-4c6f165cf6ad",
+        "college": "62cf52f0-5206-4e06-9386-13565211bd6b",
+        "neon": "92d9eca4-333e-44b0-bca1-23cc94219289",
+        "aquarell": "68f46905-dfcd-42d9-8b17-2deb9c372e6e"
+      },
+      "schaufenster": {
+        "style": "streetart",
+        "textile": "dunkel",
+        "datei": "startseite/schaufenster/motorrad-shirt.webp",
+        "values": {
+          "spruch": "Leben auf zwei Rädern",
+          "name": "Die Nordlichter",
+          "ort": "Harz"
+        }
+      }
+    },
+    "sprueche-shirt": {
+      "kachel": "98ecb446-5280-4616-a92b-358b1634390e",
+      "kachelTextile": "hell",
+      "values": {
+        "spruch": "Sarkasmus ist meine Superkraft",
+        "wunsch": "Kaffee-Liebe",
+        "icon": "Kaffee",
+        "sub": "seit 1985"
+      },
+      "textile": "dunkel",
+      "styleTextile": {
+        "aquarell": "hell",
+        "meisterwerk": "hell"
+      },
+      "styles": {
+        "standard": "d051ca24-6e96-4340-b2a2-da05df9b2dcf",
+        "streetart": "fbd88648-623a-4dbc-99b2-bc61670ccd28",
+        "meisterwerk": "https://ballz-image-mcp-production.up.railway.app/generated/3027c94a-258d-42ca-91ea-0ca0a386ea37.png",
+        "minimal": "92690164-505b-4600-9606-80c9adc7cdd9",
+        "popart": "18009f96-f044-4c62-8df4-cd251f88fac0",
+        "vintage": "384a9e26-7cc0-4535-b7a3-5c15c04f4ce2",
+        "tattoo": "5bf1d2b3-ff33-41b8-98d4-1260936ca84f",
+        "comic": "a286fb3f-889a-4a82-aed8-fec5065d21c4",
+        "japan": "266f678a-c96f-4f4b-a1ca-165c67d66581",
+        "college": "a552152f-4d01-4982-bf30-98004b130118",
+        "neon": "ec5af183-21af-4865-9802-ad0ae2d49362",
+        "aquarell": "baa668b3-4bcd-4138-8077-dd13fb727ac5"
+      },
+      "artikel": {
+        "mousepad": {
+          "style": "neon",
+          "textile": "dunkel",
+          "url": "https://ballz-image-mcp-production.up.railway.app/generated/66fe6dca-0825-46b4-9532-2fc72ef99878.png",
+          "note": "21. Sept.: XXL-Mousepad 70x30, Sarkasmus"
+        }
+      },
+      "schaufenster": {
+        "style": "minimal",
+        "textile": "dunkel",
+        "datei": "startseite/schaufenster/sprueche-shirt.webp",
+        "values": {
+          "spruch": "Was ist der Unterschied zwischen Frauen und Wasser?"
+        }
+      }
+    },
+    "karneval": {
+      "values": {
+        "gruppe": "Die Rheinjecken",
+        "stadt": "Köln",
+        "jahr": "2026",
+        "spruch": "Alaaf"
+      },
+      "textile": "dunkel",
+      "styleTextile": {
+        "aquarell": "hell",
+        "meisterwerk": "hell"
+      },
+      "styles": {
+        "standard": "1b2afde9-39b7-4eaf-9193-284c0f2bf809",
+        "streetart": "d9c0cbbf-6296-440c-998c-7c5d749d1407",
+        "meisterwerk": "https://ballz-image-mcp-production.up.railway.app/generated/f5066f01-81e6-44f1-aa1b-17441a367317.png",
+        "minimal": "a38ac858-a550-45d8-b167-84bf66159240",
+        "popart": "32f27a6b-aaf7-4c38-a9c1-6544be5e3e16",
+        "vintage": "d3436d1d-c8c9-4182-b6a9-ef4a57404c6c",
+        "tattoo": "48213688-6d13-4f39-a630-1478b29d1cf6",
+        "comic": "8d9c040f-fa56-4bbd-a1fb-0fb61d874979",
+        "japan": "f942a48a-8231-4f2e-a78c-849a574fb661",
+        "college": "12873f00-4e96-45de-ae29-9aa3c06f383a",
+        "neon": "fa1dd20b-66bb-49a1-847f-53a9b05d2c37",
+        "aquarell": "d9f1bc20-1303-4a1f-9b59-c7cd3e9a5e6f"
+      },
+      "schaufenster": {
+        "style": "meisterwerk",
+        "textile": "hell",
+        "datei": "startseite/schaufenster/karneval.webp",
+        "values": {
+          "gruppe": "Die Rheinjecken",
+          "stadt": "Köln",
+          "jahr": "2026",
+          "spruch": "Alaaf"
+        }
+      }
+    },
+    "familie": {
+      "kachel": "975733d2-dae8-4b23-acb5-f7c0a3ca6388",
+      "kachelTextile": "hell",
+      "values": {
+        "rolle": "Opa",
+        "spruch": "der Beste",
+        "namen": "Mia, Ben & Lea"
+      },
+      "textile": "dunkel",
+      "styleTextile": {
+        "aquarell": "hell",
+        "meisterwerk": "hell"
+      },
+      "styles": {
+        "standard": "5933e36e-5c99-4bfe-8de4-90df68fe8380",
+        "streetart": "0f17946e-581e-4136-9d86-399fd6d10ae0",
+        "meisterwerk": "https://ballz-image-mcp-production.up.railway.app/generated/4de443e2-abd2-44b3-b65a-48734f82fa84.png",
+        "minimal": "c40a75ea-bb29-438d-9237-70034c6f6470",
+        "popart": "134ce011-7caf-46f0-8a09-18e45b5cb8b4",
+        "vintage": "fe7e1a24-51c1-42fd-856e-81d8c65de259",
+        "tattoo": "1d4c1d9f-6fef-4c75-a777-4da6dad0de01",
+        "comic": "673bf3cf-1e95-46c2-aa2f-a962b152e72f",
+        "japan": "ccc112b4-1fb5-4d89-a9fb-cb92dc1f5277",
+        "college": "87fc0f3f-157f-421d-be92-414618a351a0",
+        "neon": "3b4dc43a-1e0d-4895-a9ee-605b1f3f9d41",
+        "aquarell": "4ab7f005-66ae-49bd-96e2-b4ac1188144e"
+      },
+      "artikel": {
+        "fussmatte": {
+          "style": "college",
+          "textile": "hell",
+          "url": "https://ballz-image-mcp-production.up.railway.app/generated/845cbf4b-803c-49aa-96aa-5abb9b892544.png",
+          "values": {
+            "rolle": "Familie",
+            "name": "Müller",
+            "spruch": "Willkommen",
+            "namen": "Mia, Ben & Lea"
+          }
+        },
+        "tuerschild": {
+          "style": "vintage",
+          "textile": "hell",
+          "url": "https://ballz-image-mcp-production.up.railway.app/generated/7543ed75-8a73-4148-a3ba-58feadb44939.png",
+          "values": {
+            "rolle": "Familie",
+            "name": "Müller",
+            "spruch": "Herzlich willkommen",
+            "namen": "Mia, Ben & Lea"
+          }
+        },
+        "tasse": {
+          "style": "comic",
+          "textile": "hell",
+          "url": "https://ballz-image-mcp-production.up.railway.app/generated/caf9c882-f744-42c8-b00e-e96f4d060596.png",
+          "values": {
+            "rolle": "Oma",
+            "spruch": "die Beste",
+            "namen": "Mia, Ben & Lea"
+          }
+        },
+        "brett": {
+          "style": "vintage",
+          "textile": "hell",
+          "url": "https://ballz-image-mcp-production.up.railway.app/generated/22a6a28f-c174-431d-8dd7-c1b77c006f5b.png",
+          "values": {
+            "rolle": "Familie",
+            "name": "Müller",
+            "spruch": "Hier wird mit Liebe gekocht",
+            "namen": "Mia, Ben & Lea"
+          }
+        }
+      }
+    },
+    "fan-shirt": {
+      "values": {
+        "verein": "HSV",
+        "stadt": "Hamburg",
+        "spruch": "Hier schlägt mein Herz"
+      },
+      "textile": "dunkel",
+      "styleTextile": {
+        "aquarell": "hell",
+        "meisterwerk": "hell"
+      },
+      "styles": {
+        "standard": "9ee31795-62b4-4422-9f7e-9ce1ddd0a64e",
+        "streetart": "96294e25-2d62-44c2-a8b3-d7f79883222f",
+        "meisterwerk": "https://ballz-image-mcp-production.up.railway.app/generated/33c7027c-5350-43d0-8f7a-44f797e8b629.png",
+        "minimal": "3b05d79d-127a-4f83-984e-e8b2efac90db",
+        "popart": "50925edd-f031-4222-abb2-0bb8e7783061",
+        "vintage": "c5d7a941-60dd-4599-8e3c-1421f163b89e",
+        "tattoo": "8eb27757-c6cc-4a6e-b420-a60ddeecc281",
+        "comic": "08c4aacb-36e6-4d61-be36-e99c58ab9daa",
+        "japan": "90e906a1-4e8c-4e5a-9032-6b649cb01314",
+        "college": "394d8fd3-5362-4352-9490-34c99e40fd89",
+        "neon": "67107c04-d47a-4f23-b991-5e5ee7bfb9eb",
+        "aquarell": "509d2abf-5518-49cd-9ccd-7e3eb9835e27"
+      },
+      "note": "Lizenzsicher: Vereinsname wird NICHT gedruckt (nur Stadt + Vereinsfarben + Spruch); Feld verein nur fuer die Recherche"
+    },
+    "geburt-baby": {
+      "kachel": "b4ca55ad-2f3d-4854-88d0-bf273739b12d",
+      "kachelTextile": "hell",
+      "values": {
+        "spruch": "Willkommen auf der Welt",
+        "babyname": "Emma",
+        "geburtsdatum": "08.09.2026",
+        "uhrzeit": "07:14",
+        "gewicht": "3480 g",
+        "groesse": "52 cm",
+        "geburtsort": "Hamburg",
+        "koordinaten": "53.4604° N, 9.9829° E"
+      },
+      "textile": "dunkel",
+      "styleTextile": {
+        "aquarell": "hell",
+        "meisterwerk": "hell"
+      },
+      "styles": {
+        "standard": "4c2db7cf-9ed3-429e-bea9-daee8189b8f7",
+        "streetart": "05b8ee71-eb88-4ae2-a676-aa9b570bb015",
+        "meisterwerk": "https://ballz-image-mcp-production.up.railway.app/generated/10b0a705-f970-421b-ab4b-490bdb6a0b82.png",
+        "minimal": "6c68eccf-2ce3-4786-8402-6b8ee236fd32",
+        "popart": "5924fd26-ca84-4afd-959d-d13630891ca0",
+        "vintage": "a731800e-935a-4fa0-9f6e-2b94f63197b8",
+        "tattoo": "607f379f-106e-4879-97ae-a82addc2bf9b",
+        "comic": "3e3922ec-4e2e-4967-bcdb-f4ccbdd21861",
+        "japan": "4f157d37-75de-4732-bdc9-4264ee052829",
+        "college": "78a60017-b692-4ae3-a68c-69ddb7764ea1",
+        "neon": "a2758ae6-9e92-4d56-9d3c-90ce2ab80943",
+        "aquarell": "8efa41d0-1ca7-4337-839b-1af66fc8eb66"
+      },
+      "artikel": {
+        "kissen": {
+          "style": "aquarell",
+          "textile": "hell",
+          "url": "https://ballz-image-mcp-production.up.railway.app/generated/4c9d9180-9c41-49dc-90db-5706f1e551e8.png",
+          "note": "21. Sept.: Kissen 40x40, Elefant auf dem Mond"
+        },
+        "poster": {
+          "style": "aquarell",
+          "textile": "hell",
+          "url": "https://ballz-image-mcp-production.up.railway.app/generated/ee7c7b4d-94b0-425c-98dc-ac27767cd0b7.png",
+          "values": {
+            "spruch": "Willkommen auf der Welt",
+            "babyname": "Emma",
+            "geburtsdatum": "08.09.2026",
+            "uhrzeit": "07:14",
+            "gewicht": "3480",
+            "groesse": "52"
+          }
+        }
+      },
+      "schaufenster": {
+        "style": "popart",
+        "textile": "hell",
+        "datei": "startseite/schaufenster/geburt-baby.webp",
+        "values": {
+          "spruch": "Willkommen im Wahnsinn",
+          "babyname": "Lasse",
+          "geburtsdatum": "27.09.2025"
+        }
+      }
+    },
+    "meister-shirt": {
+      "values": {
+        "titel": "Meister",
+        "team": "TSV Harmstorf",
+        "sportart": "Fußball",
+        "sportart_frei": "",
+        "liga": "Kreisliga A",
+        "aufstieg_in": "",
+        "saison": "2025/26",
+        "spruch": "Wir sind wieder da!"
+      },
+      "textile": "dunkel",
+      "styleTextile": {
+        "aquarell": "hell",
+        "meisterwerk": "hell"
+      },
+      "styles": {
+        "standard": "fb6a8e87-b549-4fae-8f5a-21aebacd5f45",
+        "streetart": "96aa6a24-b5d1-4abb-bb07-557f5c5a31bc",
+        "meisterwerk": "https://ballz-image-mcp-production.up.railway.app/generated/0761e010-b02a-43fd-8c8e-57de0f33702d.png",
+        "minimal": "69e5874d-6e58-431a-aeb9-4637659674a1",
+        "popart": "12aa8ef5-ecd8-4106-8d58-e1962cb8cd58",
+        "vintage": "9ed1627f-edae-468e-866a-2ce74de5cbf2",
+        "tattoo": "99eb4cbb-28ce-4d19-bc2c-0de06641ec6a",
+        "comic": "14fabcd6-c336-47b7-8f7f-b23b7c9004c3",
+        "japan": "6ea3cf5a-b031-4323-81eb-f5e7f432d7e7",
+        "college": "4bd77969-044d-4b03-a47d-6da97a5962fb",
+        "neon": "2edf9e15-f54f-408a-8d4f-480b2bd75ee0",
+        "aquarell": "017e7beb-9f30-4712-8e34-b86b26d557cf"
+      },
+      "note": "Fassung 8 (9. Sept. 2026): Motto nach Trend-Recherche umgebaut - 11 klassische Meistershirt-Layouts (grosses Jahr, Pokal, Lorbeerkranz, Krone, Stern, Jubel-Silhouetten, Rundwappen, Aufstiegspfeil, Fanschal, Trikotnummer, Konfetti), je Stil ein anderes Layout und eine andere Sportart (Fussball, Basketball, Handball, Tischtennis, Volleyball, Eishockey, Rugby, Kegeln, Judo, American Football, Dart). Bilder ersetzen die vom 8. Sept."
+    },
+    "handwerker-shirt": {
+      "values": {
+        "firma": "Dachdeckerei Petersen",
+        "gewerk": "Dachdecker",
+        "gewerk_frei": "",
+        "ort": "Buchholz",
+        "spruch": "Wir sind oben"
+      },
+      "textile": "dunkel",
+      "styleTextile": {
+        "aquarell": "hell",
+        "meisterwerk": "hell"
+      },
+      "styles": {
+        "standard": "5c5249fb-9ecb-4085-99d9-e39063e12b45",
+        "streetart": "62b43a66-4168-4998-9cae-c4797a38b0bc",
+        "meisterwerk": "https://ballz-image-mcp-production.up.railway.app/generated/de8e830d-ec43-425c-8e46-4c67f87f36ab.png",
+        "minimal": "16dd23ee-6459-43f7-9ddb-061ad636d3aa",
+        "popart": "523dffd4-6547-4e8f-b420-074bc67dafac",
+        "vintage": "50ed4e13-0e6d-4ae4-b264-64622ce3c265",
+        "comic": "17642b78-48d8-4a5f-8878-7eee0214a2cf",
+        "japan": "13480c5d-4e7c-4b33-9d15-693062ca753d",
+        "college": "e7629855-5265-419f-a127-6fc6f775f53a",
+        "neon": "f9cb2c9f-7776-40d1-b28d-05f7bb8f0ce9",
+        "tattoo": "https://ballz-image-mcp-production.up.railway.app/generated/fb8f8ea6-6407-46a7-be9e-e0cb8defc65a.png",
+        "aquarell": "5d029ab3-3063-4938-b446-2e6f599e62b1"
+      },
+      "note": "Fassung 10 (9. Sept. 2026): alle 11 Bilder neu - Logo-Integration. Oben steht das Firmenlogo (in der Galerie ein gezeichnetes Beispiel-Emblem, auf der Seite das echte Logo des Kunden). Je Stil eine andere Emblem-Form (breit, hoch, rund, quadratisch) und ein anderer Rahmen, der das Logo umarmt (Sonnenstrahlen, Farbspritzer, Lorbeer, Blitze, Sprechblasen-Burst, Band, Schwalben+Rosen, Speedlines, Wolkenbaender+Bluete, Sternenbogen, Laserstrahlen); im Emblem das Werkzeug des jeweiligen Gewerks. Auf der Live-Seite liest der Server Form + Farben des hochgeladenen Logos aus (describeLogo) und schreibt sie in den Prompt, danach wird das Logo in die umschlossene Flaeche eingesetzt.",
+      "schaufenster": {
+        "style": "vintage",
+        "textile": "hell",
+        "datei": "startseite/schaufenster/handwerker-shirt.webp",
+        "values": {
+          "firma": "Tischlerei Brandt",
+          "gewerk": "Tischler",
+          "ort": "Buchholz",
+          "spruch": "Aus Holz gemacht"
+        }
+      }
+    },
+    "weihnachtsfeier": {
+      "kachel": "https://ballz-image-mcp-production.up.railway.app/generated/a4228f32-46cd-442f-a622-d4bfa37931b0.png",
+      "kachelTextile": "dunkel",
+      "values": {
+        "gruppe": "Team Nordlicht",
+        "jahr": "2026",
+        "spruch": "Glühwein-Gang"
+      },
+      "textile": "dunkel",
+      "styles": {
+        "standard": "https://ballz-image-mcp-production.up.railway.app/generated/24775936-5cc3-417c-a966-e46d0afcb607.png",
+        "streetart": "https://ballz-image-mcp-production.up.railway.app/generated/816d9d6c-14aa-4951-a55c-56b074edd93b.png",
+        "graffiti": "https://ballz-image-mcp-production.up.railway.app/generated/45fb1002-6d5f-4bbd-acd6-3b3383c0701a.png",
+        "meisterwerk": "https://ballz-image-mcp-production.up.railway.app/generated/1a5add3f-ad3d-4a85-bdc8-18a4e528ce68.png",
+        "minimal": "https://ballz-image-mcp-production.up.railway.app/generated/46b92f2f-31d9-4aee-939c-75b50ffc9373.png",
+        "popart": "https://ballz-image-mcp-production.up.railway.app/generated/58c24284-4b30-4d4a-bed1-71016e8bbd26.png",
+        "vintage": "https://ballz-image-mcp-production.up.railway.app/generated/84db9dc8-2bc4-4c7f-8fe9-6cab9ce7f323.png",
+        "tattoo": "https://ballz-image-mcp-production.up.railway.app/generated/02b9b871-dcbb-4f25-a474-5b2ffe366fed.png",
+        "comic": "https://ballz-image-mcp-production.up.railway.app/generated/10b185bc-f1e9-40e7-b487-313ddd5fc7dc.png",
+        "japan": "https://ballz-image-mcp-production.up.railway.app/generated/5cb859d3-80a4-4dcb-9bed-50804c6cbfa6.png",
+        "college": "https://ballz-image-mcp-production.up.railway.app/generated/440e92e4-7c93-489e-a3aa-af75d631eb26.png",
+        "aquarell": "https://ballz-image-mcp-production.up.railway.app/generated/31d2e342-f03b-4ba5-8630-08cf0db66853.png",
+        "fotoreal": "https://ballz-image-mcp-production.up.railway.app/generated/5087cce8-65af-41a6-822c-c0c0a6bf9f55.png",
+        "neon": "https://ballz-image-mcp-production.up.railway.app/generated/9e305ff0-147e-47f2-9efd-e0a1f4786df8.png",
+        "robotic": "https://ballz-image-mcp-production.up.railway.app/generated/80327ebf-601d-4080-9b4d-6ae6ebced043.png"
+      },
+      "styleTextile": {
+        "aquarell": "hell",
+        "meisterwerk": "hell"
+      },
+      "schaufenster": {
+        "style": "tattoo",
+        "textile": "hell",
+        "datei": "startseite/schaufenster/weihnachtsfeier.webp",
+        "values": {
+          "gruppe": "Team Nordlicht",
+          "jahr": "2026",
+          "spruch": "Glühwein-Gang"
+        }
+      }
+    },
+    "hochzeit": {
+      "kachelTextile": "hell",
+      "values": {
+        "paar": "Clara & Ben",
+        "datum": "12. Juli 2026",
+        "spruch": "Just Married"
+      },
+      "textile": "hell",
+      "styles": {},
+      "artikel": {
+        "kissen": {
+          "style": "aquarell",
+          "textile": "hell",
+          "note": "21. Sept.: Kissen 40x40, Strand mit zwei Liegestuehlen, runde Kordel · 9. Okt.: Vorname durch \"Clara\" ersetzt, nur der Namensbereich (werkzeug/name-tauschen.mjs)",
+          "datei": "vorzeige/hochzeit/kissen.jpg"
+        },
+        "acrylbild": {
+          "style": "meisterwerk",
+          "textile": "hell",
+          "note": "21. Sept.: Acrylbild A4, tanzendes Paar unter Lichterkette, Wappenschild · 9. Okt.: Vorname durch \"Clara\" ersetzt, nur der Namensbereich (werkzeug/name-tauschen.mjs)",
+          "datei": "vorzeige/hochzeit/acrylbild.jpg"
+        },
+        "handtuch": {
+          "style": "minimal",
+          "textile": "hell",
+          "note": "21. Sept.: Handtuch 50x100, Strand mit Liegestuehlen, zwei Farben · 9. Okt.: Vorname durch \"Clara\" ersetzt, nur der Namensbereich (werkzeug/name-tauschen.mjs)",
+          "datei": "vorzeige/hochzeit/handtuch.jpg"
+        },
+        "strandtuch": {
+          "style": "popart",
+          "textile": "hell",
+          "note": "21. Sept.: Strandtuch 70x140, zwei Tauben mit Band · 9. Okt.: Vorname durch \"Clara\" ersetzt, nur der Namensbereich (werkzeug/name-tauschen.mjs)",
+          "datei": "vorzeige/hochzeit/strandtuch.jpg"
+        },
+        "gepaeckanhaenger": {
+          "style": "tattoo",
+          "textile": "hell",
+          "note": "21. Sept.: Gepaeckanhaenger 7x10, Strand, Old-School-Flash · 9. Okt.: Vorname durch \"Clara\" ersetzt, nur der Namensbereich (werkzeug/name-tauschen.mjs)",
+          "datei": "vorzeige/hochzeit/gepaeckanhaenger.jpg"
+        },
+        "mousepad": {
+          "style": "neon",
+          "textile": "dunkel",
+          "note": "21. Sept.: XXL-Mousepad 70x30, Rosenherz in Neon · 9. Okt.: Vorname durch \"Clara\" ersetzt, nur der Namensbereich (werkzeug/name-tauschen.mjs)",
+          "datei": "vorzeige/hochzeit/mousepad.jpg"
+        },
+        "shopper": {
+          "style": "graffiti",
+          "textile": "hell",
+          "note": "23. Sept.: neu im Quadrat fuer die 30 x 30 cm Druckflaeche gezeichnet (vorher 38x42, das ganze Beuteltuch). Markus: \"Die Beutel sind nicht ordentlich befuellt.\" · 9. Okt.: Vorname durch \"Clara\" ersetzt, nur der Namensbereich (werkzeug/name-tauschen.mjs)",
+          "datei": "vorzeige/hochzeit/shopper.png"
+        },
+        "tuerschild": {
+          "style": "vintage",
+          "textile": "hell",
+          "note": "21. Sept. im Backend gezeichnet, stand nicht im Manifest · 9. Okt.: Vorname durch \"Clara\" ersetzt, nur der Namensbereich (werkzeug/name-tauschen.mjs)",
+          "datei": "vorzeige/hochzeit/tuerschild.jpg"
+        },
+        "fussmatte": {
+          "style": "standard",
+          "textile": "hell",
+          "note": "21. Sept. im Backend gezeichnet, stand nicht im Manifest · 9. Okt.: Vorname durch \"Clara\" ersetzt, nur der Namensbereich (werkzeug/name-tauschen.mjs)",
+          "datei": "vorzeige/hochzeit/fussmatte.jpg"
+        },
+        "hundedecke": {
+          "style": "comic",
+          "textile": "hell",
+          "note": "21. Sept. im Backend gezeichnet, stand nicht im Manifest · 9. Okt.: Vorname durch \"Clara\" ersetzt, nur der Namensbereich (werkzeug/name-tauschen.mjs)",
+          "datei": "vorzeige/hochzeit/hundedecke.jpg"
+        },
+        "napfunterlage": {
+          "style": "japan",
+          "textile": "hell",
+          "note": "21. Sept. im Backend gezeichnet, stand nicht im Manifest · 9. Okt.: Vorname durch \"Clara\" ersetzt, nur der Namensbereich (werkzeug/name-tauschen.mjs)",
+          "datei": "vorzeige/hochzeit/napfunterlage.jpg"
+        }
+      },
+      "styleTextile": {
+        "meisterwerk": "hell"
+      },
+      "schaufenster": {
+        "style": "popart",
+        "textile": "hell",
+        "datei": "startseite/schaufenster/hochzeit.webp",
+        "values": {
+          "paar": "Clara & Ben",
+          "datum": "12. Juli 2026",
+          "spruch": "Just Married"
+        }
+      },
+      "stylesHinweis": "9. Okt.: die 15 Stilbeispiele trugen einen gesperrten Vornamen - neu gezeichnet im Backend (POST /api/admin/vorzeige/erzeugen, Clara & Ben, volle Leinwand) samt Bleistift, Glitzer, Disco; sie stehen nur auf dem Volume. Ein Eintrag hier wuerde sie beim Start ersetzen.",
+      "kachelDatei": "vorzeige/hochzeit/kachel.png",
+      "plaetzeWeg": [
+        "streetart@shopper"
+      ]
+    },
+    "darts": {
+      "kachel": "https://ballz-image-mcp-production.up.railway.app/generated/65697b86-271c-400c-a5c3-bf5fec0dc6a4.png",
+      "kachelTextile": "dunkel",
+      "values": {
+        "team": "Dart Devils",
+        "spruch": "180!",
+        "ort": "Zum Anker",
+        "jahr": "2026"
+      },
+      "textile": "dunkel",
+      "styles": {
+        "standard": "https://ballz-image-mcp-production.up.railway.app/generated/09e300b9-2515-4e98-8f2c-c626acea71f2.png",
+        "streetart": "https://ballz-image-mcp-production.up.railway.app/generated/95b6ff5d-3cbf-4b87-b12f-e19a4357b3d1.png",
+        "graffiti": "https://ballz-image-mcp-production.up.railway.app/generated/832a4db4-3218-4938-ae64-025b563fb56c.png",
+        "meisterwerk": "https://ballz-image-mcp-production.up.railway.app/generated/d0383781-b879-4f56-a4a0-83230c009b0b.png",
+        "minimal": "https://ballz-image-mcp-production.up.railway.app/generated/e5bc6272-bd7e-46df-b72b-531b972c803d.png",
+        "popart": "https://ballz-image-mcp-production.up.railway.app/generated/38a14880-f0d0-46ff-84ac-3dfbc237852f.png",
+        "vintage": "https://ballz-image-mcp-production.up.railway.app/generated/d4676826-7c1d-44a2-8ed9-b73c9a7567d0.png",
+        "tattoo": "https://ballz-image-mcp-production.up.railway.app/generated/7b6a825d-0620-4642-8689-c7a94b141bf4.png",
+        "comic": "https://ballz-image-mcp-production.up.railway.app/generated/cbced20e-3d77-4878-bb6b-b3c6aa80dfd7.png",
+        "japan": "https://ballz-image-mcp-production.up.railway.app/generated/2397251f-23c8-44ae-b297-9e643dba872d.png",
+        "college": "https://ballz-image-mcp-production.up.railway.app/generated/80c50707-02c7-4745-832c-9405284c773c.png",
+        "aquarell": "https://ballz-image-mcp-production.up.railway.app/generated/a8b03287-66d0-474d-87cc-77473efb8392.png",
+        "fotoreal": "https://ballz-image-mcp-production.up.railway.app/generated/250614ce-faae-432d-a011-495c6f3852a7.png",
+        "neon": "https://ballz-image-mcp-production.up.railway.app/generated/1d5f2dc2-a14a-421d-8b68-e1a367b76c95.png",
+        "robotic": "https://ballz-image-mcp-production.up.railway.app/generated/a0a177fa-1d2b-4990-ba00-6d058df6c023.png"
+      },
+      "styleTextile": {
+        "aquarell": "hell",
+        "meisterwerk": "hell"
+      },
+      "schaufenster": {
+        "style": "graffiti",
+        "textile": "dunkel",
+        "datei": "startseite/schaufenster/darts.webp",
+        "values": {
+          "team": "Dart Devils",
+          "spruch": "180!",
+          "ort": "Zum Anker",
+          "jahr": "2026"
+        }
+      }
+    },
+    "bowling": {
+      "kachel": "https://ballz-image-mcp-production.up.railway.app/generated/20be1fc7-d4d4-4c2c-8670-4b15aaa08696.png",
+      "kachelTextile": "hell",
+      "values": {
+        "team": "Pin Destroyers",
+        "spruch": "Alle Zehn",
+        "ort": "Bowlingcenter Nord",
+        "jahr": "2026"
+      },
+      "textile": "hell",
+      "styles": {
+        "standard": "https://ballz-image-mcp-production.up.railway.app/generated/704f3cc8-9549-49ee-b3ef-8354f624af73.png",
+        "streetart": "https://ballz-image-mcp-production.up.railway.app/generated/adbe88b9-0af6-4212-913b-1d841f8c7d35.png",
+        "graffiti": "https://ballz-image-mcp-production.up.railway.app/generated/e5599c2d-e272-436f-9624-51641ec6e599.png",
+        "meisterwerk": "https://ballz-image-mcp-production.up.railway.app/generated/0c9e82f6-89eb-497a-8deb-dbc145c24e4e.png",
+        "minimal": "https://ballz-image-mcp-production.up.railway.app/generated/f6dbac17-295a-4319-9a9c-6b3fa09f9d11.png",
+        "popart": "https://ballz-image-mcp-production.up.railway.app/generated/bd2b4908-eec1-450f-b67f-fb088fff7115.png",
+        "vintage": "https://ballz-image-mcp-production.up.railway.app/generated/e6e3164e-4fa6-49a1-97f3-0afe6cfd2293.png",
+        "tattoo": "https://ballz-image-mcp-production.up.railway.app/generated/cf6e38ef-02d9-4514-803c-226395582d5a.png",
+        "comic": "https://ballz-image-mcp-production.up.railway.app/generated/0b03325f-5237-4a82-b95c-4c2bd87699b2.png",
+        "japan": "https://ballz-image-mcp-production.up.railway.app/generated/42bf7398-747e-466e-807a-8fa003bc2373.png",
+        "college": "https://ballz-image-mcp-production.up.railway.app/generated/3d568c94-479f-4714-8080-d2c1f2008885.png",
+        "aquarell": "https://ballz-image-mcp-production.up.railway.app/generated/603d1695-9eb6-4b2e-9a54-c2215047a93a.png",
+        "fotoreal": "https://ballz-image-mcp-production.up.railway.app/generated/1bc9fa03-c2b9-470c-b1ae-945668632763.png",
+        "neon": "https://ballz-image-mcp-production.up.railway.app/generated/5df3adeb-3f68-440e-a928-e6c01220b1da.png",
+        "robotic": "https://ballz-image-mcp-production.up.railway.app/generated/419a970f-c2d1-4301-bb78-e427d4f129be.png"
+      },
+      "styleTextile": {
+        "meisterwerk": "hell"
+      },
+      "schaufenster": {
+        "style": "fotoreal",
+        "textile": "dunkel",
+        "datei": "startseite/schaufenster/bowling.webp",
+        "values": {
+          "team": "Pin Destroyers",
+          "spruch": "Alle Zehn",
+          "ort": "Bowlingcenter Nord",
+          "jahr": "2026"
+        }
+      }
+    }
+  },
+  "_kachelHinweis": "kachel darf eine nackte Kennung (dann base+id+ext) ODER eine vollstaendige Adresse sein. kachelValues beschreibt, was WIRKLICH auf dem Kachelbild steht - die Stilbeispiele desselben Mottos zeigen oft andere Beispielwerte, und der Auftragszettel darf nicht luegen.",
+  "_schaufensterHinweis": "3. Okt.: je Motto 'schaufenster' = das Design fuer das Schaufenster der Startseite (startseite/schaufenster.json zeigt mit {vorzeige, stil} darauf). Das Bild liegt im Repo unter datei (startseite/schaufenster/<motto>.webp, verlustfrei), angelegt beim Start als Platz <stil>#schaufenster. Entwuerfe vom 2. Okt. (Auswahl von Markus' Seite, je Motto einer von zwei), Handwerk neu am 3. Okt."
+}

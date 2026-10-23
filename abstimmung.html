@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Motto Otto · Abstimmung</title>
+<!-- Fassung 79: Hier stand die Einbindung von fonts.googleapis.com. Das bedeutete fuer jeden
+     Besucher drei Wege hintereinander, bevor die Schrift da ist: eine zweite, fremde Adresse
+     aufloesen und verschluesseln, dort ein Stylesheet holen, darin erst die Adresse der
+     Schriftdatei lesen, dann die Schrift holen. Jetzt liegen beide Schriften bei uns, werden
+     schon beim Lesen des Kopfes geholt und sind auf Latein zugeschnitten. Archivo traegt als
+     Variable Font alle Staerken von 400 bis 900 in einer einzigen Datei. -->
+<link rel="preload" href="/fonts/archivo-v1.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:"Archivo";src:url("/fonts/archivo-v1.woff2") format("woff2");font-weight:400 900;font-style:normal;font-display:swap}
+</style>
+<link rel="icon" href="/favicon-64.png" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style>
+  :root{--bg:#14131a;--card:#1d1c25;--card2:#26242f;--ink:#f4f2f7;--ink2:#b6b1c2;--ink3:#8b8598;--line:#35323f;--accent:#ffc542;--accent-ink:#1b1710;--win:#5fcf95;--sans:"Archivo",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5}
+  .wrap{max-width:560px;margin:0 auto;padding:18px 16px 60px}
+  /* Einheitliche Kopfzeile + Fusszeile (alle Kundenseiten) */
+  .topbar{position:sticky;top:0;z-index:40;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);background:rgba(20,19,26,.8);border-bottom:1px solid var(--line)}
+  .topbar .in{max-width:1120px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .topbar .lg{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink)}
+  .topbar .lg img{height:38px;width:auto;display:block}
+  .topbar .lg b{font-weight:900;font-size:20px;letter-spacing:-.02em;white-space:nowrap}
+  .topbar .lg b span{color:#ffc542}
+  .topbar nav{display:flex;gap:8px}
+  .topbar nav a{color:var(--ink2);text-decoration:none;font-size:14px;font-weight:600;border:1px solid var(--line);padding:8px 14px;border-radius:999px;white-space:nowrap}
+  .topbar nav a:hover{color:var(--ink);border-color:var(--ink3)}
+  footer.site{margin:44px 0 0;color:var(--ink3);font-size:13px;border-top:1px solid var(--line);padding-top:18px;line-height:1.6}
+  footer.site a{color:inherit}
+  h1{font-size:22px;line-height:1.25;margin:0 0 6px}
+  .sub{color:var(--ink3);font-size:14px;margin:0 0 18px}
+  .cand{display:block;width:100%;text-align:left;background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px;margin:0 0 14px;cursor:pointer;transition:border-color .15s,box-shadow .15s}
+  .cand:hover{border-color:var(--accent)}
+  .cand.on{border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,197,66,.35)}
+  .cand img{width:100%;border-radius:10px;display:block;background:var(--card2)}
+  .cand .row{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
+  .cand .lbl{font-weight:800}
+  .cand .st{color:var(--ink3);font-size:13px}
+  .cand .pick{font-size:13px;font-weight:800;color:var(--accent)}
+  .bar{height:12px;background:var(--card2);border-radius:6px;overflow:hidden;margin-top:8px}
+  .bar i{display:block;height:100%;background:var(--accent)}
+  .bar i.win{background:var(--win)}
+  .count{font-size:13px;color:var(--ink2);margin-top:4px}
+  .btn{font:inherit;font-weight:800;padding:13px 18px;border-radius:10px;border:0;background:var(--accent);color:var(--accent-ink);cursor:pointer;width:100%}
+  .btn.sec{background:var(--card);border:1px solid var(--line);color:var(--ink)}
+  .btn.wa{background:#25d366;color:#fff}
+  .btn+.btn{margin-top:10px}
+  .who{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0}
+  .who button{font:inherit;font-weight:700;padding:12px 16px;border-radius:10px;border:1px solid var(--line);background:var(--card);cursor:pointer}
+  .note{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin:14px 0;font-size:14px}
+  .ok{color:var(--win);font-weight:800}
+  .toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--card2);color:var(--ink);border:1px solid var(--line);padding:11px 18px;border-radius:10px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none}
+  .toast.show{opacity:1}
+  .muted{color:var(--ink3);font-size:13px}
+  .stars5{display:flex;gap:6px;margin-top:10px}
+  .stars5 .s{font-size:30px;line-height:1;cursor:pointer;color:var(--ink3);user-select:none;transition:transform .1s}
+  .stars5 .s:active{transform:scale(1.2)}
+  .stars5 .s.on{color:var(--accent)}
+  .cand.rated{border-color:var(--accent);box-shadow:0 0 0 2px rgba(255,197,66,.3)}
+  .avg{font-size:13px;color:var(--ink2);margin-top:7px}
+  .cmtwrap{margin:16px 0 6px}
+  .cmt{width:100%;margin-top:6px;font:inherit;font-size:15px;padding:11px 13px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);resize:vertical;min-height:52px}
+  .comments{margin-top:16px}
+  .comments .c{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:9px 12px;margin-bottom:8px;font-size:14px}
+  .bar i.avgbar{background:var(--accent)}
+  .dcmt{width:100%;margin-top:8px;font:inherit;font-size:14px;padding:9px 11px;border:1px solid var(--line);border-radius:9px;background:var(--card2);color:var(--ink);resize:vertical;min-height:40px}
+  .dcmts{margin-top:8px}
+  .dcmts .c{font-size:13px;color:var(--ink2);padding:5px 0;border-top:1px dashed var(--line)}
+  .wishwrap{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:16px 0}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .chip{font:inherit;font-size:14px;font-weight:700;padding:9px 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--card2);color:var(--ink2);cursor:pointer;user-select:none}
+  .chip.on{border-color:var(--accent);background:var(--accent);color:var(--accent-ink)}
+  .chip .n{opacity:.7;font-weight:800;margin-left:4px}
+  .kv{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--line);font-size:14px}
+  .big{font-size:30px;font-weight:900}
+  a{color:var(--accent)}
+  .wruf-zeile{margin:14px 0 6px;text-align:center}
+  .wruf{display:inline-block;background:#ffc542;color:#1a1712;border:2px solid #ffc542;border-radius:999px;font-weight:800;font-size:15px;line-height:1.2;padding:12px 26px;text-decoration:none;box-shadow:0 2px 10px rgba(255,197,66,.25)}
+  .wruf:hover,.wruf:focus{background:#ffd775;border-color:#ffd775;text-decoration:none;outline:none}
+  /* Fassung 74: Wer hat wie bewertet. Eine Zeile je Person, eine Spalte je Design.
+     Der Rahmen scrollt waagerecht, die Namensspalte bleibt stehen - auf dem Handy ist das
+     der Unterschied zwischen lesbar und unbenutzbar. */
+  .tafel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:16px 0}
+  .tafelroll{overflow-x:auto;margin-top:10px;-webkit-overflow-scrolling:touch}
+  .tafel table{border-collapse:collapse;font-size:14px;min-width:100%}
+  .tafel th,.tafel td{padding:7px 9px;text-align:center;white-space:nowrap;border-top:1px solid var(--line)}
+  .tafel thead th{border-top:0;color:var(--ink3);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+  .tafel .nm{position:sticky;left:0;background:var(--card);text-align:left;font-weight:700;z-index:1}
+  .tafel thead .nm{background:var(--card)}
+  .tafel td.z{color:var(--ink3)}
+  .tafel td.top{color:var(--accent);font-weight:900}
+  .tafel .sieger{color:var(--accent)}
+  .tafel tbody tr.offen .nm{font-weight:600;color:var(--ink3)}
+  .tafel tfoot td{border-top:2px solid var(--line);font-weight:800;color:var(--ink2)}
+  .tafel .qz{font-size:11px;color:var(--ink3);font-weight:600;margin-left:5px}
+  .tafelnote{font-size:13px;color:var(--ink3);margin:10px 0 0}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="in">
+  <a class="lg" href="/"><img src="/logo.png" alt="Otto" onerror="this.style.display='none'"><b>Motto <span>Otto</span></b></a>
+  <nav><a href="/mottos">Alle Mottos</a><a href="/stile">Alle Stile</a><a href="/konto">Mein Konto</a></nav>
+</div></div>
+<div class="wrap">
+  <div id="app"><p class="muted">Lädt …</p></div>
+  <footer class="site">Motto Otto · Jedes Produkt wird auf Bestellung gefertigt und in Deutschland veredelt. · <a href="/impressum">Impressum</a> · <a href="/datenschutz">Datenschutz</a> · <a href="/agb">AGB</a></footer>
+  <!-- Fassung 73 (Markus, 17. Sept.): Der Widerruf gehoert sichtbar auf die Seite, nicht als
+       kleiner Link zwischen anderen. Eigener, hervorgehobener Knopf unter der Fusszeile. -->
+  <div class="wruf-zeile"><a class="wruf" href="/widerruf">Vertrag widerrufen oder kündigen</a></div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+  var $ = function(id){return document.getElementById(id);};
+  var app = $('app');
+  function toast(t){var e=$('toast');e.textContent=t;e.classList.add('show');setTimeout(function(){e.classList.remove('show');},2200);}
+  function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c];});}
+  function api(path,opt){return fetch(path,opt).then(function(r){return r.json().then(function(j){return {status:r.status,body:j};});});}
+
+  // Route bestimmen
+  var parts = location.pathname.split('/').filter(Boolean); // ['abstimmung', id] oder ['a', id, groupToken]
+  var pollId, t, groupToken=null;
+  if (parts[0]==='a') { pollId=parts[1]; groupToken=parts[2]; t=groupToken; }
+  else { pollId=parts[1]; t=new URLSearchParams(location.search).get('t')||''; }
+
+  var state = { poll:null, mode:null, name:null, myRatings:{}, myComment:'', myDesignComments:{}, myWishes:[] };
+
+  function fmt(iso){try{return new Date(iso).toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'});}catch(e){return iso;}}
+
+  // Gruppen-Modus: eigene Bewertung lokal merken (Server kennt Gruppen-Stimmen nur pro Name)
+  function lsKey(){ return 'mo_vote_'+pollId+'_'+String(state.name||'').toLowerCase(); }
+  function saveLocal(){ if(state.mode!=='gruppe') return; try{ localStorage.setItem(lsKey(), JSON.stringify({ratings:state.myRatings,comment:state.myComment,designComments:state.myDesignComments,wishes:state.myWishes})); }catch(e){} }
+  function loadLocal(){ if(state.mode!=='gruppe') return; try{ var d=JSON.parse(localStorage.getItem(lsKey())||'{}'); if(d.ratings) state.myRatings=d.ratings; if(typeof d.comment==='string') state.myComment=d.comment; if(d.designComments) state.myDesignComments=d.designComments; if(Array.isArray(d.wishes)) state.myWishes=d.wishes; }catch(e){} }
+
+  // Fassung 89: eine sichtbare Rueckmeldung. Markus: "Waere natuerlich schoen, dass man einen
+  // Hinweis bekommt, dass erfolgreich irgendwas getan wurde." Bis jetzt gab es auf dieser Seite
+  // ueberhaupt keine - jeder Knopf tat still seine Arbeit oder eben nicht.
+  // Sie legt sich oben ueber die Seite, bleibt acht Sekunden und geht dann von selbst.
+  var hinweisTimer=null;
+  function hinweis(text,art){
+    var d=document.getElementById('hinweis');
+    if(!d){ d=document.createElement('div'); d.id='hinweis';
+      d.style.cssText='position:fixed;left:50%;transform:translateX(-50%);top:12px;z-index:99;max-width:92vw;'
+        +'padding:11px 16px;border-radius:12px;font-size:14.5px;font-weight:600;line-height:1.4;'
+        +'box-shadow:0 6px 22px rgba(0,0,0,.35);text-align:center';
+      document.body.appendChild(d); }
+    d.style.background = art==='warn' ? '#e5484d' : art==='ok' ? '#30a46c' : '#333';
+    d.style.color='#fff';
+    d.textContent=text; d.style.display='block';
+    clearTimeout(hinweisTimer); hinweisTimer=setTimeout(function(){ d.style.display='none'; },8000);
+  }
+
+  // Solange das Konsens-Design gezeichnet wird, alle sechs Sekunden nachsehen - sonst muesste
+  // man von Hand neu laden, um zu erfahren, ob es fertig ist.
+  var konsensTimer=null;
+  function konsensBeobachten(p){
+    clearTimeout(konsensTimer);
+    if(p && p.konsensLaeuft) konsensTimer=setTimeout(load,6000);
+  }
+
+  function load(){
+    api('/api/mo/abstimmung/'+encodeURIComponent(pollId)+'/kandidaten?t='+encodeURIComponent(t)).then(function(r){
+      if(r.status!==200){ app.innerHTML='<div class="note">'+esc(r.body&&r.body.error||'Dieser Link ist ungültig oder abgelaufen.')+'</div>'; return; }
+      state.poll=r.body; state.mode=r.body.mode;
+      if(state.mode==='personal'){ state.myRatings=r.body.myRatings||{}; state.myComment=r.body.myComment||''; state.myDesignComments=r.body.myDesignComments||{}; state.myWishes=r.body.myWishes||[]; }
+      konsensBeobachten(r.body);
+      if(state.mode==='orga') return renderOrga();
+      if(state.mode==='gruppe' && !state.name) return renderWho();
+      if(state.mode==='gruppe') loadLocal();
+      renderVote();
+    });
+  }
+
+  // Gruppen-Modus: "Wer bist du?"
+  // kleine Live-Liste: wer schon abgestimmt hat (auf der Gruppen-Seite sichtbar, damit die Orga es ohne Extra-Link sieht)
+  function votedHintHtml(names){
+    if(!names||!names.length) return '';
+    return '<div class="note" style="margin:10px 0"><b>Schon abgestimmt ('+names.length+')</b><p class="muted" style="margin:6px 0 0">'+names.map(esc).join(', ')+'</p></div>';
+  }
+  function votedHint(p){ return '<div id="voted-hint">'+votedHintHtml(p.abgestimmtNamen)+'</div>'; }
+  // Liste nachladen und nur diesen Block ersetzen - stoert weder Sterne noch Kommentarfelder
+  function refreshVotedHint(){
+    if(state.mode!=='gruppe') return;
+    api('/api/mo/abstimmung/'+encodeURIComponent(pollId)+'/kandidaten?t='+encodeURIComponent(t)).then(function(r){
+      if(r.status!==200||!r.body) return;
+      state.poll.abgestimmtNamen=r.body.abgestimmtNamen||[];
+      var el=$('voted-hint'); if(el) el.innerHTML=votedHintHtml(state.poll.abgestimmtNamen);
+    });
+  }
+  function renderWho(){
+    var p=state.poll;
+    var hasList=(p.people||[]).length>0;
+    app.innerHTML='<h1>'+esc(p.mottoName)+': Wer bist du?</h1>'+
+      '<p class="sub">'+(hasList?'Tipp auf deinen Namen oder gib ihn ein':'Gib deinen Namen ein')+' – dann stimmst du ab. (Bis '+fmt(p.closes)+')</p>'+
+      votedHint(p)+
+      '<div class="who" id="who"></div>'+
+      '<div style="display:flex;gap:8px;margin-top:10px">'+
+        '<input id="who-name" placeholder="Dein Name" autocomplete="name" style="flex:1;font:inherit;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)">'+
+        '<button class="btn" id="who-go" style="width:auto">Weiter</button>'+
+      '</div>';
+    var who=$('who');
+    (p.people||[]).forEach(function(n){
+      var b=document.createElement('button'); b.textContent=n; b.onclick=function(){ state.name=n; renderVote(); };
+      who.appendChild(b);
+    });
+    function go(){ var v=($('who-name').value||'').trim(); if(!v){ $('who-name').focus(); return; } state.name=v; renderVote(); }
+    $('who-go').onclick=go;
+    $('who-name').addEventListener('keydown',function(e){ if(e.key==='Enter'){ e.preventDefault(); go(); } });
+  }
+
+  function starsWidget(designId, mine){
+    var h='<div class="stars5" data-d="'+esc(designId)+'">';
+    for(var i=1;i<=5;i++) h+='<span class="s'+(i<=mine?' on':'')+'" data-v="'+i+'" role="button" aria-label="'+i+' Sterne">★</span>';
+    return h+'</div>';
+  }
+  function avgLine(s, win){
+    var pct=Math.round(((s.avg||0)/5)*100);
+    return '<div class="avg">⭐ '+(s.avg||0)+' · '+s.count+' '+(s.count===1?'Bewertung':'Bewertungen')+'</div>'+
+      '<div class="bar"><i class="avgbar'+(win?' win':'')+'" style="width:'+pct+'%"></i></div>';
+  }
+  // "Selbst ein Design anlegen" -> direkt zur Seite dieses Mottos
+  function createCta(){
+    var p=state.poll; if(!p||!p.mottoSlug) return '';
+    return '<a class="btn" href="/m/'+encodeURIComponent(p.mottoSlug)+'" style="display:block;text-align:center;text-decoration:none;margin-top:18px">Selbst ein Design anlegen →</a>'+
+      '<p class="muted" style="text-align:center;margin-top:6px">Lust auf ein eigenes '+esc(p.mottoName)+'-Design? Otto legt sofort los.</p>';
+  }
+  function commentsBlock(list){
+    if(!list||!list.length) return '';
+    var h='<div class="comments"><b>Kommentare</b>';
+    list.forEach(function(c){ h+='<div class="c"><b>'+esc(c.name)+':</b> '+esc(c.text)+'</div>'; });
+    return h+'</div>';
+  }
+  // Kommentare, die zu genau EINEM Design gehören (aufgedeckt bei Orga/Ende)
+  function dcmtsBlock(list){
+    if(!list||!list.length) return '';
+    var h='<div class="dcmts">';
+    list.forEach(function(c){ h+='<div class="c"><b>'+esc(c.name)+':</b> '+esc(c.text)+'</div>'; });
+    return h+'</div>';
+  }
+  // Artikel-Wunsch-Chips ("Was wünscht ihr euch?")
+  function wishSection(){
+    var p=state.poll; var arts=p.articles||[];
+    if(!arts.length) return '';
+    var h='<div class="wishwrap"><b>Was wünscht ihr euch?</b>'+
+      '<p class="muted" style="margin:4px 0 0">Tippt an, auf welche Artikel ihr das Design gerne hättet.</p><div class="chips" id="wishchips">';
+    arts.forEach(function(a){
+      var on=state.myWishes.indexOf(a.key)>=0;
+      h+='<span class="chip'+(on?' on':'')+'" data-k="'+esc(a.key)+'">'+esc(a.label)+'</span>';
+    });
+    return h+'</div></div>';
+  }
+
+  function renderVote(){
+    var p=state.poll;
+    var done = p.expired || p.closed;
+    var head = done ? '<h1>'+esc(p.mottoName)+': Ergebnis</h1><p class="sub">Die Abstimmung ist beendet.</p>'
+      : '<h1>'+esc(p.mottoName)+': Bewerte die Designs</h1><p class="sub">'+
+        (state.mode==='personal'?('Hallo '+esc(p.voterName)+'! '):(state.name?('Hallo '+esc(state.name)+'! '):''))+
+        'Vergib 1–5 Sterne für jedes Design. Bis '+fmt(p.closes)+'.</p>';
+    var html=head+(state.mode==='gruppe'?votedHint(p):'');
+    (p.candidates||[]).forEach(function(c){
+      var mine = +(state.myRatings[c.designId]||0);
+      var s = (p.stat&&p.stat[c.designId]) ? p.stat[c.designId] : {avg:0,count:0};
+      var win = p.winners&&p.winners.indexOf(c.designId)>=0;
+      html+='<div class="cand'+(mine?' rated':'')+'" data-d="'+esc(c.designId)+'">'+
+        '<img src="'+esc(c.img)+'" alt="Design '+c.nr+'">'+
+        '<div class="row"><span class="lbl">Design '+c.nr+(win?' 🏆':'')+'</span><span class="st">'+esc(c.style)+(mine&&!done?' · deine Wertung':'')+'</span></div>';
+      if(!done) html+=starsWidget(c.designId, mine);
+      if(done || s.count) html+=avgLine(s, win);
+      if(!done){
+        html+='<textarea class="dcmt" data-dc="'+esc(c.designId)+'" maxlength="300" placeholder="Kommentar zu Design '+c.nr+' (optional) …">'+esc(state.myDesignComments[c.designId]||'')+'</textarea>';
+      }
+      if(done) html+=dcmtsBlock(c.comments);
+      html+='</div>';
+    });
+    if(!done) html+=wishSection();
+    if(!done){
+      html+='<div class="cmtwrap"><b>Gesamt-Kommentar (optional)</b>'+
+        '<textarea class="cmt" id="cmt" maxlength="500" placeholder="Allgemeines Feedback fürs Orga-Team …">'+esc(state.myComment)+'</textarea>'+
+        '<button class="btn" id="cmt-save" style="margin-top:8px">Kommentar & Wünsche speichern</button></div>'+
+        '<p class="muted">Sterne und Kommentare werden sofort gespeichert – du kannst bis zur Frist alles ändern.</p>';
+    }
+    if(done) html+=commentsBlock(p.comments);
+    html+=createCta();
+    app.innerHTML=html;
+    if(!done){
+      Array.prototype.forEach.call(app.querySelectorAll('.stars5 .s'),function(st){
+        st.addEventListener('click',function(){
+          var wrap=st.parentNode, did=wrap.getAttribute('data-d'), v=+st.getAttribute('data-v');
+          var cur=+(state.myRatings[did]||0);
+          rate(did, v===cur?0:v);
+        });
+      });
+      // Design-Kommentar beim Verlassen des Feldes speichern
+      Array.prototype.forEach.call(app.querySelectorAll('.dcmt'),function(ta){
+        ta.addEventListener('blur',function(){
+          var did=ta.getAttribute('data-dc'), val=(ta.value||'').trim();
+          if(val===(state.myDesignComments[did]||'')) return;
+          saveDesignComment(did, val);
+        });
+      });
+      // Wunsch-Chips umschalten
+      Array.prototype.forEach.call(app.querySelectorAll('#wishchips .chip'),function(ch){
+        ch.addEventListener('click',function(){
+          var k=ch.getAttribute('data-k'), i=state.myWishes.indexOf(k);
+          if(i>=0) state.myWishes.splice(i,1); else state.myWishes.push(k);
+          ch.classList.toggle('on'); saveWishes();
+        });
+      });
+      $('cmt-save').addEventListener('click',function(){ saveComment(($('cmt').value||'').trim()); });
+    }
+  }
+
+  function rate(designId, stars){
+    var payload={ t:t, designId:designId, stars:stars };
+    if(state.mode==='gruppe') payload.name=state.name;
+    api('/api/mo/abstimmung/'+encodeURIComponent(pollId)+'/stimme',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(payload)}).then(function(r){
+      if(r.status!==200){ toast(r.body&&r.body.error||'Das hat nicht geklappt.'); if(r.body&&r.body.closed){ load(); } return; }
+      if(stars===0) delete state.myRatings[designId]; else state.myRatings[designId]=stars;
+      if(r.body.stat) state.poll.stat=r.body.stat;
+      saveLocal();
+      toast(stars===0?'Wertung entfernt':'Danke! '+stars+(stars===1?' Stern':' Sterne')+' gespeichert.');
+      if(r.body.closed){ load(); return; }
+      renderVote();
+      refreshVotedHint();
+    });
+  }
+
+  function saveComment(text){
+    var payload={ t:t, comment:text };
+    if(state.mode==='gruppe') payload.name=state.name;
+    api('/api/mo/abstimmung/'+encodeURIComponent(pollId)+'/stimme',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(payload)}).then(function(r){
+      if(r.status!==200){ toast(r.body&&r.body.error||'Das hat nicht geklappt.'); if(r.body&&r.body.closed){ load(); } return; }
+      state.myComment=text; saveLocal();
+      toast('Gespeichert. Danke!');
+      if(r.body.closed){ load(); return; }
+      refreshVotedHint();
+    });
+  }
+
+  function saveDesignComment(designId, text){
+    var payload={ t:t, designId:designId, dcomment:text };
+    if(state.mode==='gruppe') payload.name=state.name;
+    api('/api/mo/abstimmung/'+encodeURIComponent(pollId)+'/stimme',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(payload)}).then(function(r){
+      if(r.status!==200){ toast(r.body&&r.body.error||'Das hat nicht geklappt.'); if(r.body&&r.body.closed){ load(); } return; }
+      if(text) state.myDesignComments[designId]=text; else delete state.myDesignComments[designId];
+      saveLocal(); toast('Kommentar gespeichert.');
+      if(r.body.closed){ load(); return; }
+      refreshVotedHint();
+    });
+  }
+
+  function saveWishes(){
+    var payload={ t:t, wishes:state.myWishes.slice() };
+    if(state.mode==='gruppe') payload.name=state.name;
+    api('/api/mo/abstimmung/'+encodeURIComponent(pollId)+'/stimme',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(payload)}).then(function(r){
+      if(r.status!==200){ toast(r.body&&r.body.error||'Das hat nicht geklappt.'); if(r.body&&r.body.closed){ load(); } return; }
+      saveLocal();
+      if(r.body.closed){ load(); return; }
+      refreshVotedHint();
+    });
+  }
+
+  // Orga-Dashboard
+  // Teilnehmer-Übersicht (nur Orga): wer ist eingeladen, wer hat abgestimmt, wer hat noch nichts gemacht
+  function teilnehmerBlock(p){
+    var inv=p.eingeladen||[]; var extra=p.extraAbstimmer||[];
+    if(!inv.length && !extra.length) return '';
+    var h='<div class="note"><b>Teilnehmer</b>';
+    if(inv.length){
+      var done=inv.filter(function(x){return x.done;}).length;
+      h+='<p class="muted" style="margin:6px 0 6px">Eingeladen: '+inv.length+' · abgestimmt: '+done+' · offen: '+(inv.length-done)+'</p>';
+      inv.forEach(function(x){
+        h+='<div style="padding:4px 0;border-top:1px solid var(--line)"><span style="display:inline-block;width:20px;color:'+(x.done?'#5fcf95':'#ff8f6b')+';font-weight:bold">'+(x.done?'✓':'○')+'</span>'+esc(x.name)+(x.done?'':' <span class="muted">– hat noch nicht abgestimmt</span>')+'</div>';
+      });
+    }
+    if(extra.length) h+='<p class="muted" style="margin:10px 0 0">'+(inv.length?'Zusätzlich über den Link abgestimmt: ':'Über den Gruppen-Link abgestimmt: ')+extra.map(esc).join(', ')+'</p>';
+    if(!inv.length) h+='<p class="muted" style="margin:6px 0 0">Für diese Abstimmung wurde keine Einladungsliste genutzt – der Link ist offen. Wer keinen Namen eingibt, erscheint hier nicht.</p>';
+    return h+'</div>';
+  }
+  // Fassung 74 (Markus, 17. Sept.: "Es wäre natürlich schön, dass derjenige, der die Abstimmung
+  // macht, sieht, wer wie bewertet hat – und das übersichtlich"): Eine Zeile je Person, eine
+  // Spalte je Design, die höchste Note jeder Person hervorgehoben. Darunter der Schnitt je
+  // Design, damit Einzelstimmen und Gesamtbild im selben Bild stehen.
+  function tafelBlock(p){
+    var t=p.tafel||[]; var c=p.candidates||[];
+    if(!t.length||!c.length) return '';
+    var abgestimmt=t.filter(function(z){return !z.offen;}).length;
+    var h='<div class="tafel"><b>Wer hat wie bewertet</b>'+
+      '<p class="muted" style="margin:6px 0 0">'+abgestimmt+' von '+t.length+' haben bewertet. Die hellgelbe Zahl ist der Favorit der Person.</p>'+
+      '<div class="tafelroll"><table><thead><tr><th class="nm">Name</th>';
+    c.forEach(function(x){
+      var win=p.winners&&p.winners.indexOf(x.designId)>=0;
+      h+='<th'+(win?' class="sieger"':'')+'>'+x.nr+(win?' 🏆':'')+'</th>';
+    });
+    h+='<th>Ø</th></tr></thead><tbody>';
+    t.forEach(function(z){
+      h+='<tr'+(z.offen?' class="offen"':'')+'><td class="nm">'+esc(z.name)+
+        (z.quelle==='gruppe'?'<span class="qz">Link</span>':'')+'</td>';
+      c.forEach(function(x){
+        var s=z.sterne[x.designId];
+        var top=z.favorit&&z.favorit.indexOf(x.designId)>=0;
+        h+='<td class="'+(s?(top?'top':''):'z')+'">'+(s?s+'★':'–')+'</td>';
+      });
+      h+='<td class="z">'+(z.bewertet?z.schnitt:(z.offen?'offen':'–'))+'</td></tr>';
+    });
+    h+='</tbody><tfoot><tr><td class="nm">Schnitt</td>';
+    c.forEach(function(x){
+      var s=(p.stat&&p.stat[x.designId])?p.stat[x.designId]:{avg:0,count:0};
+      h+='<td>'+(s.count?s.avg:'–')+'</td>';
+    });
+    h+='<td></td></tr></tfoot></table></div>';
+    // Wer etwas geschrieben hat, steht mit seinem Satz direkt unter seiner Zeile - sonst muss
+    // die Orga zwischen Tabelle und Kommentarliste hin und her springen.
+    var mitText=t.filter(function(z){ return z.kommentar || Object.keys(z.designKommentare||{}).length; });
+    if(mitText.length){
+      h+='<div style="margin-top:12px">';
+      mitText.forEach(function(z){
+        h+='<div class="dcmts" style="border-top:1px solid var(--line);padding:8px 0 2px"><b style="font-size:14px">'+esc(z.name)+'</b>';
+        if(z.kommentar) h+='<div class="c" style="border-top:0">'+esc(z.kommentar)+'</div>';
+        c.forEach(function(x){
+          var dk=(z.designKommentare||{})[x.designId];
+          if(dk) h+='<div class="c">Zu '+x.nr+': '+esc(dk)+'</div>';
+        });
+        h+='</div>';
+      });
+      h+='</div>';
+    }
+    h+='<p class="tafelnote">Diese Übersicht sieht nur du als Orga. Die anderen sehen ihre eigene Bewertung und die Durchschnitte, nie fremde Stimmen.</p>';
+    return h+'</div>';
+  }
+  function renderOrga(){
+    var p=state.poll;
+    var waText='Stimmt ab über unser '+p.mottoName+'-Design! Bis '+fmt(p.closes)+' bewerten: '+p.gruppenLink;
+    var waHref='https://wa.me/?text='+encodeURIComponent(waText);
+    var html='<h1>'+esc(p.mottoName)+' · Abstimmung</h1>'+
+      '<p class="sub">'+(p.closed?'Beendet.':'Läuft bis '+fmt(p.closes)+'.')+'</p>'+
+      '<div class="note"><div class="big">'+p.abgestimmt+' / '+p.teilnehmer+'</div><div class="muted">haben bewertet</div></div>'+
+      teilnehmerBlock(p);
+    (p.candidates||[]).forEach(function(c){
+      var s=(p.stat&&p.stat[c.designId])?p.stat[c.designId]:{avg:0,count:0}; var win=p.winners&&p.winners.indexOf(c.designId)>=0;
+      html+='<div class="cand'+(win?' rated':'')+'" style="cursor:default"><img src="'+esc(c.img)+'"><div class="row"><span class="lbl">Design '+c.nr+(win?' 🏆':'')+'</span><span class="st">'+esc(c.style)+'</span></div>'+
+        avgLine(s, win)+dcmtsBlock(c.comments)+'</div>';
+    });
+    // Die Tafel steht NACH den Designs: vorher wären "1, 2, 3" in den Spalten nur Zahlen ohne Bild.
+    var tafel=tafelBlock(p);
+    html+=tafel;
+    // Die Kommentare stehen schon in der Tafel, jeweils unter dem Namen. Zweimal dasselbe
+    // untereinander macht eine Übersicht wieder unübersichtlich.
+    if(!tafel) html+=commentsBlock(p.comments);
+    // Fassung 89: Der Kasten sagt jetzt, WO das Konsens-Design gerade steht. Vorher erschien er
+    // erst, wenn das Design fertig war - in der Zwischenzeit stand da nichts, und beim
+    // Fehlschlag fuer immer nichts. Markus fragte deshalb zu Recht, wie man es startet: gar
+    // nicht, es laeuft von selbst - nur sah man das nirgends.
+    // Fassung 90: Wenn das Design fertig ist oder nicht geklappt hat, kann der Organisator es
+    // noch einmal zeichnen lassen. Vorher gab es genau einen Versuch je Abstimmung - wer ein
+    // unbrauchbares Ergebnis bekam, hatte keinen Weg zurueck.
+    // Fassung 90: Auf welchem Textil das Konsens-Design entsteht, muss sichtbar sein und
+    // wählbar bleiben. Markus: "Das Design war von vornherein auf helles Textil eingestellt,
+    // dann musst du das doch mit übernehmen." Übernommen wird es jetzt – und wenn es doch
+    // einmal danebengeht, stellt man es hier in einem Klick um.
+    var textilZeile = p.konsensTextil
+      ? '<p class="muted" style="margin:6px 0 0;font-size:13px">Textil: <b>'+(p.konsensTextil==='hell'?'hell':'dunkel')+'</b>'+(p.konsensTextilQuelle?' – übernommen vom '+esc(p.konsensTextilQuelle):'')+'</p>'
+      : '';
+    var nochmalBtn = '<div style="margin-top:10px"><button class="btn sec" id="konsensNeu">Konsens-Design neu erzeugen</button>'+
+      '<div style="margin-top:8px;font-size:13px" class="muted">Textil dafür: '+
+      '<label style="margin-right:10px"><input type="radio" name="ktex" value="" checked> wie bisher</label>'+
+      '<label style="margin-right:10px"><input type="radio" name="ktex" value="hell"> hell</label>'+
+      '<label><input type="radio" name="ktex" value="dunkel"> dunkel</label></div></div>';
+    if(p.konsensDesignId){
+      // Das Bild gehört hierher, nicht als Verweis auf eine andere Seite: es ist genau denselben
+      // Weg entfernt wie die Entwürfe oben, die ihr Bild seit jeher zeigen.
+      var konsensBild = p.konsensImg
+        ? '<div class="cand" style="cursor:default;margin:10px 0 0"><img src="'+esc(p.konsensImg)+'" alt="Konsens-Design"></div>'
+        : '';
+      html+='<div class="note"><b>Konsens-Design ist fertig</b><p class="muted" style="margin:6px 0 0">Aus euren Kommentaren ist ein neues, verbessertes Design entstanden – es steht auch in „Meine Designs".</p>'+konsensBild+textilZeile+nochmalBtn+'<p class="muted" style="margin:8px 0 0;font-size:13px">Gefällt es nicht? Ein neuer Versuch liest dieselben Kommentare noch einmal. Das bisherige Design bleibt in „Meine Designs" erhalten, und die Gruppe bekommt dafür keine zweite Mail.</p></div>';
+    } else if(p.konsensLaeuft){
+      html+='<div class="note"><b>Konsens-Design wird gezeichnet …</b><p class="muted" style="margin:6px 0 0">Otto liest gerade eure Kommentare und macht daraus ein neues Design. Das dauert ein bis zwei Minuten – die Seite aktualisiert sich von selbst.</p></div>';
+    } else if(p.konsensFehler){
+      html+='<div class="note"><b>Konsens-Design hat nicht geklappt</b><p class="muted" style="margin:6px 0 0">'+esc(p.konsensFehler)+'<br>Der Gewinner oben gilt trotzdem.</p>'+nochmalBtn+'</div>';
+    }
+    // Meistgewünschte Artikel
+    if(p.wishStat && p.articles){
+      var wr=p.articles.map(function(a){return {label:a.label,n:p.wishStat[a.key]||0};}).filter(function(x){return x.n>0;}).sort(function(a,b){return b.n-a.n;});
+      if(wr.length){
+        html+='<div class="wishwrap"><b>Meistgewünschte Artikel</b><div class="chips">';
+        wr.forEach(function(w){ html+='<span class="chip on">'+esc(w.label)+'<span class="n">'+w.n+'×</span></span>'; });
+        html+='</div></div>';
+      }
+    }
+    html+='<div class="note"><b>WhatsApp-Gruppe</b><p class="muted" style="margin:6px 0 10px">Teile den Abstimmungs-Link in eurer Gruppe – jeder gibt seinen Namen ein und bewertet die Designs.</p>'+
+      '<a class="btn wa" href="'+waHref+'" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none">In WhatsApp teilen</a>'+
+      // Fassung 74 (Markus, 17. Sept.): WhatsApp laesst beim direkten Teilen hoechstens fuenf
+      // Chats auswaehlen. Wer eine Stufe oder eine Mannschaft erreichen will, kommt damit nicht
+      // weit - und merkt es erst mittendrin. Also vorher sagen.
+      '<p class="muted" style="margin:10px 0 0;font-size:13px">WhatsApp lässt beim direkten Teilen höchstens <b>fünf Chats</b> auswählen. Ab fünf Leuten lohnt sich eine Gruppe: Gruppe anlegen, hier den Link kopieren und dort einfügen.</p>'+
+      '<button class="btn sec" id="copy" style="margin-top:10px">Gruppen-Link kopieren</button></div>';
+    if(!p.closed){
+      html+='<button class="btn sec" id="remind">Erinnerung an Nicht-Abstimmer schicken</button>'+
+        '<button class="btn sec" id="close" style="margin-top:10px">Abstimmung jetzt beenden & Ergebnis schicken</button>';
+      if(p.offen&&p.offen.length) html+='<p class="muted" style="margin-top:10px">Noch offen: '+p.offen.map(esc).join(', ')+'</p>';
+    }
+    html+=createCta();
+    app.innerHTML=html;
+    $('copy').onclick=function(){ (navigator.clipboard&&navigator.clipboard.writeText(p.gruppenLink)||Promise.reject()).then(function(){toast('Link kopiert');},function(){ prompt('Link kopieren:',p.gruppenLink); }); };
+    if($('remind')) $('remind').onclick=function(){ api('/api/mo/abstimmung/'+encodeURIComponent(pollId)+'/erinnern?t='+encodeURIComponent(p.orgaToken),{method:'POST'}).then(function(r){ toast(r.status===200?('Erinnert: '+r.body.erinnert):(r.body&&r.body.error||'Fehler')); }); };
+    if($('konsensNeu')) $('konsensNeu').onclick=function(){
+      if(!confirm('Konsens-Design noch einmal aus euren Kommentaren zeichnen lassen?'))return;
+      var b=$('konsensNeu'); b.disabled=true; var alt=b.textContent; b.textContent='Wird gestartet …';
+      var gew=document.querySelector('input[name="ktex"]:checked');
+      var tx=gew&&gew.value?('&textil='+encodeURIComponent(gew.value)):'';
+      // api() liefert hier {status, body} - nicht {ok, status, j} wie im Backend.
+      api('/api/mo/abstimmung/'+encodeURIComponent(pollId)+'/konsens-neu?t='+encodeURIComponent(p.orgaToken)+tx,{method:'POST'}).then(function(r){
+        b.disabled=false; b.textContent=alt;
+        if(r.status!==200){ hinweis('Konnte nicht gestartet werden: '+((r.body&&r.body.error)||('Fehler '+r.status)),'warn'); return; }
+        hinweis(r.body.schonUnterwegs
+          ? 'Es wird gerade schon eines gezeichnet – einen Moment.'
+          : 'Otto zeichnet ein neues Konsens-Design. Das dauert ein bis zwei Minuten – die Seite aktualisiert sich von selbst.','ok');
+        load();
+      }).catch(function(){ b.disabled=false; b.textContent=alt; hinweis('Konnte nicht gestartet werden.','warn'); });
+    };
+    if($('close')) $('close').onclick=function(){
+      if(!confirm('Abstimmung jetzt beenden?'))return;
+      // Fassung 89: Rueckmeldung, sofort. Vorher blieb der Knopf einfach stehen, waehrend der
+      // Server minutenlang ein Design zeichnete - das sah aus, als sei nichts passiert.
+      var b=$('close'); b.disabled=true; var alt=b.textContent; b.textContent='Wird beendet …';
+      api('/api/mo/abstimmung/'+encodeURIComponent(pollId)+'/schliessen?t='+encodeURIComponent(p.orgaToken),{method:'POST'}).then(function(r){
+        b.disabled=false; b.textContent=alt;
+        if(r.status!==200){ hinweis('Konnte nicht beendet werden: '+((r.body&&r.body.error)||('Fehler '+r.status)),'warn'); return; }
+        hinweis(r.body.konsens==='laeuft'
+          ? 'Abstimmung beendet. Otto zeichnet jetzt aus euren Kommentaren das Konsens-Design – das dauert ein bis zwei Minuten.'
+          : 'Abstimmung beendet.','ok');
+        load();
+      }).catch(function(){ b.disabled=false; b.textContent=alt; hinweis('Konnte nicht beendet werden.','warn'); });
+    };
+  }
+
+  load();
+  // Orga-Ansicht alle 20s aktualisieren
+  setInterval(function(){ if(state.mode==='orga') load(); else if(state.mode==='gruppe' && state.name) refreshVotedHint(); },20000);
+})();
+</script>
+</body>
+</html>

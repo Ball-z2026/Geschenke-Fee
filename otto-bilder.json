@@ -1,0 +1,23 @@
+{
+  "_hinweis": "Bilder der Figur Otto. Ausgeliefert unter /api/mo/otto/<name>.png. Reihenfolge beim Ausliefern: erst das Volume (storage/otto/), dann der Ordner otto/ im Repo. Eine URL traegt man hier nur ein, wenn ein Bild NICHT im Repo liegt - der Server holt es dann beim Start und legt es aufs Volume. Weder Datei noch URL = die Stelle auf der Seite bleibt leer.",
+  "_grundsatz": "Otto wird NICHT nachgezeichnet und NICHT nachgeneriert. Fassung 76, Markus: 'Die Figur muss natuerlich Otto sein!!!', 'Das ist nicht Otto, wir muessen das Original nehmen', '100 % nimmst du den echten!!! Das ist unsere Figur.' und der Grund dahinter: 'Wenn wir uns in der eigenen Figur nicht widerspiegeln, wie sollen wir da Vertrauen aufbauen?' Jedes Bild hier ist ein Ausschnitt aus Material von Markus. Ein Nachbau in SVG bleibt ein Strichmann mit pinker Kappe, und ein neu generierter Otto bleibt ein Fremder. Wo es kein echtes Otto-Bild gibt, steht auf der Seite lieber gar keine Figur - das Bild nimmt sich per onerror selbst heraus.",
+  "_herkunft": "arbeitet.png stammt aus einem Standbild von Markus. nimmt-auf.png, zeichnet.png und jubelt.png sind Einzelbilder aus Markus' Video otto_fanclub.mp4 (38 s, 1080x1920), geschnitten bei Sekunde 6,5 / 20,5 / 2,5 und quadratisch beschnitten.",
+  "_gewicht": "Ladezeiten, Markus: 'ihr muesst bei allem drauf achten, dass die Ladezeiten gering sind.' Die drei Haltungen laufen auf der Startseite in einem 78-px-Rundbild, deshalb 256x256 mit Palette (8-13 kB je Bild). arbeitet.png steht groesser im Kopf der Startseite, deshalb 480x480 (22 kB). Alle vier zusammen wiegen 53 kB - vorher waren es 1,17 MB. Neue Haltungen bitte genauso einpflegen: auf die Anzeigegroesse x2 verkleinern, dann sharp .png({palette:true,colors:128,effort:10}).",
+  "arbeitet": {
+    "url": "",
+    "beschreibung": "Otto am Schreibtisch, zeichnet mit dem Stift, Funken fliegen. Liegt als otto/arbeitet.png im Repo, 480x480. Laeuft im Kopf der Startseite, solange die Uhr laeuft."
+  },
+  "nimmt-auf": {
+    "url": "",
+    "beschreibung": "Otto haelt einen Ordner und ein Handy hoch und grinst - er nimmt auf, was ihr ihm gebt. Liegt als otto/nimmt-auf.png im Repo, 256x256. Steht bei Schritt 1 'Ihr sagt, worum es geht'."
+  },
+  "zeichnet": {
+    "url": "",
+    "beschreibung": "Otto in Grossaufnahme mit dem gruenen Stift, gelbe Funken daneben. Liegt als otto/zeichnet.png im Repo, 256x256. Steht bei Schritt 2 'Otto macht das Design'."
+  },
+  "jubelt": {
+    "url": "",
+    "beschreibung": "Otto jubelt mit beiden Armen hoch, Menge im Hintergrund. Liegt als otto/jubelt.png im Repo, 256x256. Steht bei Schritt 3 'Ihr waehlt, worauf' - bewusst OHNE Kleidungsstueck in der Hand, denn worauf gedruckt wird, entscheidet der Kunde (Markus, Fassung 76: 'du hast schon wieder ueberall ein Teil draufstehen, ich moechte das nicht sehen')."
+  },
+  "_selfie": "jubel-gross.png (Sekunde 1,8) und daumen-gross.png (Sekunde 4,6) sind Einzelbilder aus Markus' Video otto_fanclub.mp4 in voller Breite (1080 px, ohne Untertitel). Sie stehen NICHT auf einer Seite (Ladezeit egal), sondern sind Ottos 'Selfie' fuer die Beispiele von 'Gruesse aus' - das Bildmodell bekommt sie als Vorlage per URL. 19. Sept. 2026, Markus: 'Du hast doch wunderbares Material fuer Otto, naemlich den Film.'"
+}

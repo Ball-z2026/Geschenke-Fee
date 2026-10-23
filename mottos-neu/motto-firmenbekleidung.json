@@ -1,0 +1,88 @@
+{
+  "slug": "firmenbekleidung",
+  "name": "Firmenbekleidung",
+  "order": 15,
+  "active": true,
+  "intro": "Arbeitskleidung mit eurem Logo – für Handwerk, Handel, Pflege, Gastro, Logistik und jeden anderen Betrieb. Entweder ein gestaltetes Design um euer Logo herum, oder ganz schlicht: nur euer Logo, sauber gesetzt. Ihr wählt, wo auf dem Produkt gedruckt wird.",
+  "headline": "Eure Firma, sauber auf jedem Produkt",
+  "text": "Das hochgeladene Logo wird unverändert eingesetzt – nicht nachgezeichnet, nicht neu erfunden. Wollt ihr ein Design, wird es um das Logo herum gebaut: Form und Größe der freien Fläche richten sich nach eurem Logo, und das Motiv umarmt sie. Wollt ihr keins, setzen wir nur euer Logo – der Klassiker ist ein kleines Brustlogo, dazu auf Wunsch ein großer Rückenprint. Für jede gewählte Platzierung entsteht eine eigene Druckdatei im richtigen Format.",
+  "size": "1024x1536",
+  "accent": "#3d7bd6",
+  "styleChoice": true,
+  "moodChoice": true,
+  "placementChoice": true,
+  "colorChoice": true,
+  "markenfrei": true,
+  "kader": true,
+  "vary": true,
+  "nameZone": "unten",
+  "fields": [
+    {
+      "key": "firma",
+      "label": "Firmenname",
+      "type": "text",
+      "required": true,
+      "max": 32,
+      "placeholder": "z. B. Elektro Timmermann"
+    },
+    {
+      "key": "zusatz",
+      "label": "Zusatz oder Slogan",
+      "type": "text",
+      "required": false,
+      "max": 40,
+      "placeholder": "z. B. Elektrotechnik seit 1994",
+      "hint": "Steht klein unter dem Firmennamen."
+    },
+    {
+      "key": "ort",
+      "label": "Ort",
+      "type": "text",
+      "required": false,
+      "max": 24,
+      "placeholder": "z. B. Buchholz"
+    },
+    {
+      "key": "branche",
+      "label": "Branche",
+      "type": "text",
+      "required": false,
+      "printed": false,
+      "max": 40,
+      "placeholder": "z. B. Elektrotechnik",
+      "hint": "Steht nicht auf dem Produkt – bestimmt nur, welche Werkzeuge und Motive gezeigt werden."
+    },
+    {
+      "key": "abteilung",
+      "label": "Abteilung oder Team",
+      "type": "text",
+      "required": false,
+      "max": 26,
+      "placeholder": "z. B. Montage"
+    },
+    {
+      "key": "namen",
+      "label": "Namen der Mitarbeiter",
+      "type": "text",
+      "required": false,
+      "personal": true,
+      "max": 24,
+      "placeholder": "Jens\nMurat\nSandra",
+      "hint": "Jeder bekommt sein Produkt mit eigenem Namen – Logo und Motiv bleiben gleich."
+    }
+  ],
+  "upload": {
+    "mode": "exact",
+    "label": "Euer Firmenlogo",
+    "hint": "PNG mit freigestelltem Hintergrund wird am schönsten. Wird unverändert eingesetzt, nicht nachgezeichnet.",
+    "required": true,
+    "place": "mitte",
+    "widthPct": 40,
+    "coBrand": true,
+    "label2": "Zweites Logo (Partner, Innung, Sponsor)"
+  },
+  "prompt": "Corporate workwear print for a company, isolated on a plain empty background.\n\nLeave one clearly bounded empty area for the company's own logo, which is added afterwards as a real file. Draw nothing inside it.\n\nLettering - every text exactly as given, nothing else:\n- The company name reads exactly \"{firma}\" as the dominant lettering.\n[[- A smaller line reads exactly \"{zusatz}\".]]\n[[- A small line reads exactly \"{ort}\".]]\n[[- A small badge reads exactly \"{abteilung}\".]]\nNo other words, no invented claims, no phone numbers, no web addresses.\n\n[[The trade is {branche}. Build the surrounding motif from the real tools and materials of exactly this trade.]]\n\nProfessional workwear: clear and confident, calm enough that the logo stays the strongest element.",
+  "variations": "the trade's two main tools cross behind the reserved area, their ends showing at the sides, name curving under it\na ring of the trade's materials closes around the reserved area, name arching over the ring\nsun rays fan out from behind the reserved area across the whole width, name in a solid bar beneath them\na ribbon banner passes behind the reserved area with its ends fluttering out, the name riding on the ribbon\nthe reserved area sits on a built pedestal made of the trade's materials, the workplace rising left and right of it\nsparks, chips or dust burst outward from behind the reserved area, name set into the burst\na seal shape hugs the reserved area, the company name curving along its outer edge like a stamp\nthe reserved area is framed by a doorway or gate built from the trade's own material, name across the lintel\none large tool silhouette runs diagonally behind the reserved area, name stepping along the tool",
+  "suggestions": "Handwerk & Bau\nElektro & Sanitär\nMontage & Service\nLogistik & Fuhrpark\nPflege & Gesundheit\nGastronomie & Hotel\nHandel & Filiale\nProduktion & Werkstatt\nGarten & Landschaft\nReinigung & Facility",
+  "nurLogo": true
+}

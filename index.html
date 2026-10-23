@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Motto Otto</title>
+<!-- Fassung 79: Hier stand die Einbindung von fonts.googleapis.com. Das bedeutete fuer jeden
+     Besucher drei Wege hintereinander, bevor die Schrift da ist: eine zweite, fremde Adresse
+     aufloesen und verschluesseln, dort ein Stylesheet holen, darin erst die Adresse der
+     Schriftdatei lesen, dann die Schrift holen. Jetzt liegen beide Schriften bei uns, werden
+     schon beim Lesen des Kopfes geholt und sind auf Latein zugeschnitten. Archivo traegt als
+     Variable Font alle Staerken von 400 bis 900 in einer einzigen Datei. -->
+<link rel="preload" href="/fonts/archivo-v1.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:"Archivo";src:url("/fonts/archivo-v1.woff2") format("woff2");font-weight:400 900;font-style:normal;font-display:swap}
+</style>
+<link rel="icon" href="/favicon-64.png" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style>
+  :root{
+    --bg:#14131a; --card:#1d1c25; --card2:#26242f; --line:#35323f;
+    --ink:#f4f2f7; --ink2:#b6b1c2; --ink3:#8b8598;
+    --accent:#ffc542; --accent-ink:#1b1710; --ok:#5fcf95; --warn:#ff8f6b;
+    --sans:"Archivo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55}
+  .wrap{max-width:620px;margin:0 auto;padding:34px 20px 90px}
+  header{margin-bottom:26px}
+  .brand{font-weight:800;font-size:30px;letter-spacing:-.02em;margin:0}
+  .brand span{color:var(--accent)}
+  .claim{color:var(--ink2);margin:6px 0 0;font-size:16px}
+  /* Einheitliche Kopfzeile + Fusszeile (alle Kundenseiten) */
+  .topbar{position:sticky;top:0;z-index:40;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);background:rgba(20,19,26,.8);border-bottom:1px solid var(--line)}
+  .topbar .in{max-width:1120px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .topbar .lg{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink)}
+  .topbar .lg img{height:38px;width:auto;display:block}
+  .topbar .lg b{font-weight:900;font-size:20px;letter-spacing:-.02em;white-space:nowrap}
+  .topbar .lg b span{color:#ffc542}
+  .topbar nav{display:flex;gap:8px}
+  .topbar nav a{color:var(--ink2);text-decoration:none;font-size:14px;font-weight:600;border:1px solid var(--line);padding:8px 14px;border-radius:999px;white-space:nowrap}
+  .topbar nav a:hover{color:var(--ink);border-color:var(--ink3)}
+  footer.site{margin:44px 0 0;color:var(--ink3);font-size:13px;border-top:1px solid var(--line);padding-top:18px;line-height:1.6}
+  footer.site a{color:inherit}
+
+  .field{margin-bottom:18px}
+  label{display:block;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);font-weight:700;margin-bottom:6px}
+  input[type=text],select,textarea{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font:inherit;font-size:16px;appearance:none}
+  select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8'><path d='M1 1l5 5 5-5' fill='none' stroke='%238b8598' stroke-width='1.6'/></svg>");background-repeat:no-repeat;background-position:right 14px center}
+  input:focus,select:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+  .miss input,.miss select,.miss .drop{border-color:var(--warn)}
+  .hint{font-size:13px;color:var(--ink3);margin-top:6px}
+  .intro{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:8px;padding:12px 14px;color:var(--ink2);font-size:15px;margin-bottom:22px}
+
+  .drop{border:1.5px dashed var(--line);border-radius:8px;background:var(--card);padding:18px;text-align:center;cursor:pointer}
+  .drop:hover{border-color:var(--accent)}
+  .drop b{display:block;font-size:15px;margin-bottom:2px}
+  .drop small{color:var(--ink3)}
+  .thumb{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px}
+  .thumb img{width:60px;height:60px;object-fit:contain;background:var(--card2);border-radius:6px}
+  .thumb .n{flex:1;min-width:0;font-size:14px;color:var(--ink2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .thumb button{background:none;border:1px solid var(--line);color:var(--ink2);border-radius:6px;padding:6px 11px;font:inherit;font-size:13px;cursor:pointer}
+
+  .check{display:flex;flex-wrap:wrap;gap:6px 14px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:11px 13px;font-size:13.5px;margin:24px 0 12px}
+  .check span{white-space:nowrap;color:var(--ink3)}
+  .check span.done{color:var(--ok)}
+  .check span.todo{color:var(--warn);font-weight:700}
+
+  .go{width:100%;padding:16px;border:0;border-radius:9px;background:var(--accent);color:var(--accent-ink);font:inherit;font-weight:800;font-size:16.5px;letter-spacing:.01em;cursor:pointer}
+  .go[disabled]{background:var(--card2);color:var(--ink3);cursor:default}
+  .bar{height:6px;border-radius:3px;background:var(--line);margin-top:12px;overflow:hidden}
+  .bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .6s linear}
+  .status{margin-top:10px;font-size:14.5px;color:var(--ink2);min-height:20px}
+  .status.err{color:var(--warn)}
+
+  .result{margin-top:26px}
+  .result img{width:100%;border:1px solid var(--line);border-radius:10px;display:block;background:var(--card)}
+  .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+  .tabs button,.colors button{font:inherit;font-size:14px;font-weight:700;padding:9px 14px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink2);cursor:pointer}
+  .tabs button.on,.colors button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+  .colors{display:flex;gap:6px;margin:0 0 10px}
+  .colors button{padding:7px 12px;font-size:13px}
+  .colors button i{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:7px;vertical-align:-1px;border:1px solid rgba(255,255,255,.35)}
+  .view{font-size:12.5px;color:var(--ink3);margin:-4px 0 8px}
+  .meta{font-size:12.5px;color:var(--ink3);margin-top:8px;letter-spacing:.05em}
+  .hide{display:none}
+  .busy .field,.busy .drop{opacity:.5;pointer-events:none}
+  .sugg{display:flex;flex-direction:column;gap:8px}
+  .chip{display:flex;flex-direction:column;gap:2px;width:100%;font:inherit;padding:10px 13px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;text-align:left}
+  .chip b{font-size:14.5px;font-weight:800;letter-spacing:.01em}
+  .chip span{font-size:12.5px;color:var(--ink3);line-height:1.35}
+  .chip:hover{border-color:var(--accent)}
+  .sugg-intro{font-size:14px;color:var(--ink2);margin-bottom:10px;line-height:1.4}
+  .wruf-zeile{margin:14px 0 6px;text-align:center}
+  .wruf{display:inline-block;background:#ffc542;color:#1a1712;border:2px solid #ffc542;border-radius:999px;font-weight:800;font-size:15px;line-height:1.2;padding:12px 26px;text-decoration:none;box-shadow:0 2px 10px rgba(255,197,66,.25)}
+  .wruf:hover,.wruf:focus{background:#ffd775;border-color:#ffd775;text-decoration:none;outline:none}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="in">
+  <a class="lg" href="/"><img src="/logo.png" alt="Otto" onerror="this.style.display='none'"><b>Motto <span>Otto</span></b></a>
+  <nav><a href="/mottos">Alle Mottos</a><a href="/stile">Alle Stile</a><a href="/konto">Mein Konto</a></nav>
+</div></div>
+<div class="wrap" id="app">
+  <header>
+    <h1 class="brand">Sag <span>Otto</span>, dein Motto!</h1>
+    <p class="claim">Motto wählen, Angaben machen – euer Design in unter 5 Minuten.</p>
+  </header>
+
+  <div class="field" id="f-motto">
+    <label for="motto">Wofür ist das Shirt?</label>
+    <select id="motto"><option value="">wird geladen …</option></select>
+  </div>
+
+  <div class="intro hide" id="intro"></div>
+
+  <div id="fields"></div>
+
+  <div class="field hide" id="f-style">
+    <label for="style">Stil</label>
+    <select id="style"></select>
+    <div class="hint" id="style-hint"></div>
+  </div>
+
+  <div class="field hide" id="f-colors">
+    <label for="colors">Lieblingsfarben – optional</label>
+    <input type="text" id="colors" maxlength="40" placeholder="z. B. Schwarz &amp; Gold">
+    <div class="hint">Prägen die Farben des ganzen Designs. Leer lassen für die Stil-Farben.</div>
+  </div>
+
+  <div class="field" id="f-textile">
+    <label>Textilfarbe</label>
+    <div class="colors" id="textile">
+      <button type="button" data-x="dunkel" class="on"><i style="background:#111"></i>Dunkles Textil</button>
+      <button type="button" data-x="hell"><i style="background:#f4f4f4"></i>Helles Textil</button>
+    </div>
+    <div class="hint">Bestimmt, ob die Schrift hell oder dunkel gedruckt wird.</div>
+  </div>
+
+  <div class="field hide" id="f-upload">
+    <label id="up-label">Logo oder Foto</label>
+    <div class="drop" id="drop">
+      <b>Bild auswählen</b>
+      <small>oder hierher ziehen · JPG, PNG oder WEBP</small>
+    </div>
+    <div class="thumb hide" id="thumb">
+      <img id="thumb-img" alt="">
+      <div class="n" id="thumb-name"></div>
+      <button type="button" id="thumb-del">Entfernen</button>
+    </div>
+    <input type="file" id="file" accept="image/*" style="display:none">
+    <div class="hint" id="up-hint"></div>
+  </div>
+
+  <div class="check" id="check"></div>
+  <button class="go" id="go" disabled>Bitte zuerst ein Motto wählen</button>
+  <div class="bar hide" id="bar"><i id="fill"></i></div>
+  <div class="status" id="status"></div>
+
+  <div class="result hide" id="result">
+    <div class="tabs" id="tabs"></div>
+    <div class="colors" id="colors">
+      <button type="button" data-c="black" class="on"><i style="background:#111"></i>Schwarz</button>
+      <button type="button" data-c="white"><i style="background:#f4f4f4"></i>Weiß</button>
+    </div>
+    <div class="view" id="view"></div>
+    <img id="img" alt="Deine Vorschau">
+    <div class="meta" id="meta"></div>
+  </div>
+  <footer class="site">Motto Otto · Jedes Produkt wird auf Bestellung gefertigt und in Deutschland veredelt. · <a href="/impressum">Impressum</a> · <a href="/datenschutz">Datenschutz</a> · <a href="/agb">AGB</a></footer>
+  <!-- Fassung 73 (Markus, 17. Sept.): Der Widerruf gehoert sichtbar auf die Seite, nicht als
+       kleiner Link zwischen anderen. Eigener, hervorgehobener Knopf unter der Fusszeile. -->
+  <div class="wruf-zeile"><a class="wruf" href="/widerruf">Vertrag widerrufen oder kündigen</a></div>
+</div>
+
+<script>
+(function () {
+  var API = '/api/mo';
+  var $ = function (id) { return document.getElementById(id); };
+  var app = $('app'), sel = $('motto'), intro = $('intro'), fieldsBox = $('fields');
+  var fUpload = $('f-upload'), drop = $('drop'), file = $('file'), thumb = $('thumb');
+  var check = $('check'), go = $('go'), bar = $('bar'), fill = $('fill'), status = $('status');
+  var result = $('result'), img = $('img'), meta = $('meta'), tabs = $('tabs'), colors = $('colors'), view = $('view');
+  var fStyle = $('f-style'), styleSel = $('style'), styleHint = $('style-hint'), fColors = $('f-colors'), colorsIn = $('colors'), textileBox = $('textile');
+  var textile = 'dunkel';
+  var shown = { preview: '', mockups: null, tab: 'tee', color: 'black' };
+
+  function updateStyleHint() {
+    var s = (current && current.styles || []).filter(function (x) { return x.key === styleSel.value; })[0];
+    styleHint.textContent = s && s.desc ? s.desc : '';
+  }
+  styleSel.addEventListener('change', updateStyleHint);
+  [].forEach.call(textileBox.querySelectorAll('button'), function (b) {
+    b.addEventListener('click', function () {
+      textile = b.dataset.x;
+      [].forEach.call(textileBox.querySelectorAll('button'), function (x) { x.classList.toggle('on', x === b); });
+    });
+  });
+
+  function drawResult() {
+    var m = shown.mockups || {};
+    var keys = Object.keys(m);
+    tabs.innerHTML = keys.map(function (k) { return '<button type="button" data-t="' + k + '"' + (shown.tab === k ? ' class="on"' : '') + '>' + esc(m[k].label) + '</button>'; }).join('') +
+      '<button type="button" data-t="motiv"' + (shown.tab === 'motiv' ? ' class="on"' : '') + '>Nur das Motiv</button>';
+    [].forEach.call(tabs.querySelectorAll('button'), function (b) { b.addEventListener('click', function () { shown.tab = b.dataset.t; drawResult(); }); });
+    [].forEach.call(colors.querySelectorAll('button'), function (b) { b.classList.toggle('on', b.dataset.c === shown.color); });
+    if (shown.tab === 'motiv' || !m[shown.tab]) {
+      colors.classList.add('hide'); view.textContent = '';
+      img.src = shown.preview;
+    } else {
+      colors.classList.remove('hide');
+      view.textContent = m[shown.tab].label + ' · Ansicht von ' + m[shown.tab].view + ' · Vorschau, Druck sitzt auf dem echten Textil ähnlich';
+      img.src = m[shown.tab][shown.color];
+    }
+  }
+  [].forEach.call(colors.querySelectorAll('button'), function (b) { b.addEventListener('click', function () { shown.color = b.dataset.c; drawResult(); }); });
+
+  var all = [], current = null, uploadId = null, poll = null, tick = null, started = 0, phase = '';
+
+  function esc(s) { return String(s == null ? '' : s).replace(/[<>&"]/g, function (c) { return ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' })[c]; }); }
+  function say(t, err) { status.textContent = t || ''; status.className = 'status' + (err ? ' err' : ''); }
+
+  function fetchJson(url, opts, tries) {
+    var n = tries == null ? 2 : tries;
+    return fetch(url, opts).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (j) { return { ok: r.ok, status: r.status, j: j }; });
+    }).catch(function (e) {
+      if (n > 0) return new Promise(function (res) { setTimeout(res, 900); }).then(function () { return fetchJson(url, opts, n - 1); });
+      throw e;
+    });
+  }
+
+  fetchJson(API + '/mottos', undefined, 3).then(function (r) {
+    all = (r.j && r.j.mottos) || [];
+    if (!all.length) { sel.innerHTML = '<option value="">noch keine Mottos angelegt</option>'; say('Es ist noch kein Motto angelegt.', true); return; }
+    sel.innerHTML = '<option value="">bitte wählen</option>' + all.map(function (m) { return '<option value="' + esc(m.slug) + '">' + esc(m.name) + '</option>'; }).join('');
+    var pre = new URLSearchParams(location.search).get('motto');
+    if (pre && all.some(function (m) { return m.slug === pre; })) { sel.value = pre; }
+    pick();
+  }).catch(function () {
+    sel.innerHTML = '<option value="">nicht erreichbar</option>';
+    say('Der Dienst ist gerade nicht erreichbar. Bitte die Seite neu laden.', true);
+  });
+
+  sel.addEventListener('change', pick);
+
+  function pick() {
+    current = all.filter(function (m) { return m.slug === sel.value; })[0] || null;
+    uploadId = null;
+    thumb.classList.add('hide');
+    fieldsBox.innerHTML = '';
+    intro.classList.add('hide');
+    result.classList.add('hide');
+    say('');
+
+    if (!current) { fUpload.classList.add('hide'); fStyle.classList.add('hide'); fColors.classList.add('hide'); refresh(); return; }
+
+    if (current.intro) { intro.textContent = current.intro; intro.classList.remove('hide'); }
+
+    fieldsBox.innerHTML = current.fields.map(function (f) {
+      var id = 'v_' + f.key;
+      var input = f.type === 'select'
+        ? '<select id="' + id + '"><option value="">bitte wählen</option>' + f.options.map(function (o) { return '<option value="' + esc(o) + '">' + esc(o) + '</option>'; }).join('') + '</select>'
+        : '<input type="text" id="' + id + '" maxlength="' + f.max + '" placeholder="' + esc(f.placeholder) + '">';
+      return '<div class="field" id="f_' + f.key + '"><label for="' + id + '">' + esc(f.label) + (f.required ? '' : ' – optional') + '</label>' + input + (f.hint ? '<div class="hint">' + esc(f.hint) + '</div>' : '') + '</div>';
+    }).join('');
+
+    current.fields.forEach(function (f) {
+      var el = $('v_' + f.key);
+      el.addEventListener('input', refresh);
+      el.addEventListener('change', refresh);
+    });
+
+    // Empfehlungen (Motto-Vorschläge) als anklickbare Chips, direkt NACH dem Bezug-Feld.
+    // Reihenfolge: Motto -> Bezug -> Empfehlungen. Ein Klick übernimmt das Motto.
+    if (current.suggestions && current.suggestions.length) {
+      var rf = current.researchField || 'motto';
+      var anchor = $('f_bezug') || $('f_' + rf) || fieldsBox.firstElementChild;
+      var html = '<div class="field" id="f-suggest"><div class="sugg-intro">Ihr habt selbst noch keine Idee? Dann hier ein paar Vorschläge – so könnte es aussehen. Zum Übernehmen einfach antippen:</div><div class="sugg">' +
+        current.suggestions.map(function (s) {
+          var parts = String(s).split(/\s+[–-]\s+/);
+          var motto = parts[0].trim();
+          var rest = parts.slice(1).join(' – ').trim();
+          return '<button type="button" class="chip" data-motto="' + esc(motto) + '"><b>' + esc(motto) + '</b>' + (rest ? '<span>' + esc(rest) + '</span>' : '') + '</button>';
+        }).join('') +
+        '</div></div>';
+      if (anchor) anchor.insertAdjacentHTML('afterend', html); else fieldsBox.insertAdjacentHTML('beforeend', html);
+      [].forEach.call(document.querySelectorAll('#f-suggest .chip'), function (b) {
+        b.addEventListener('click', function () {
+          var mEl = $('v_' + rf);
+          if (mEl) { mEl.value = b.getAttribute('data-motto'); mEl.focus(); refresh(); }
+        });
+      });
+    }
+
+    // Stil-Auswahl (sofern im Motto nicht abgeschaltet)
+    if (current.styleChoice !== false && current.styles && current.styles.length) {
+      styleSel.innerHTML = current.styles.map(function (s) {
+        return '<option value="' + esc(s.key) + '">' + esc(s.label) + '</option>';
+      }).join('');
+      styleSel.value = 'standard';
+      updateStyleHint();
+      fStyle.classList.remove('hide');
+    } else {
+      fStyle.classList.add('hide');
+    }
+    // Lieblingsfarben (sofern nicht abgeschaltet)
+    colorsIn.value = '';
+    fColors.classList.toggle('hide', current.colorChoice === false);
+    // Textil zuruecksetzen auf dunkel
+    textile = 'dunkel';
+    [].forEach.call(textileBox.querySelectorAll('button'), function (x) { x.classList.toggle('on', x.dataset.x === 'dunkel'); });
+
+    if (current.upload && current.upload.mode !== 'off') {
+      $('up-label').textContent = current.upload.label + (current.upload.required ? '' : ' – optional');
+      $('up-hint').textContent = current.upload.hint || '';
+      fUpload.classList.remove('hide');
+    } else {
+      fUpload.classList.add('hide');
+    }
+    refresh();
+  }
+
+  drop.addEventListener('click', function () { file.click(); });
+  drop.addEventListener('dragover', function (e) { e.preventDefault(); });
+  drop.addEventListener('drop', function (e) { e.preventDefault(); if (e.dataTransfer.files[0]) send(e.dataTransfer.files[0]); });
+  file.addEventListener('change', function () { if (file.files[0]) send(file.files[0]); });
+  $('thumb-del').addEventListener('click', function () { uploadId = null; thumb.classList.add('hide'); drop.classList.remove('hide'); refresh(); });
+
+  function send(f) {
+    if (f.size > 8 * 1024 * 1024) { say('Das Bild ist größer als 8 MB. Bitte ein kleineres nehmen.', true); return; }
+    say('Bild wird hochgeladen …');
+    var rd = new FileReader();
+    rd.onload = function () {
+      fetchJson(API + '/upload', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ dataUrl: rd.result }) }, 1)
+        .then(function (r) {
+          if (!r.ok || !r.j.uploadId) { say('Das Bild konnte nicht gelesen werden. Bitte ein anderes nehmen.', true); return; }
+          uploadId = r.j.uploadId;
+          $('thumb-img').src = rd.result;
+          $('thumb-name').textContent = f.name + ' · ' + r.j.width + ' × ' + r.j.height;
+          thumb.classList.remove('hide');
+          drop.classList.add('hide');
+          say('');
+          refresh();
+        }).catch(function () { say('Hochladen fehlgeschlagen. Bitte noch einmal versuchen.', true); });
+    };
+    rd.readAsDataURL(f);
+  }
+
+  function values() {
+    var v = {};
+    if (current) current.fields.forEach(function (f) { var el = $('v_' + f.key); v[f.key] = el ? el.value.trim() : ''; });
+    return v;
+  }
+
+  function refresh() {
+    if (!current) {
+      check.innerHTML = '<span class="todo">○ Motto</span>';
+      go.textContent = 'Bitte zuerst ein Motto wählen';
+      go.disabled = true;
+      return;
+    }
+    var v = values();
+    var items = [['Motto', true]];
+    var missing = null;
+
+    current.fields.forEach(function (f) {
+      var ok = !f.required || !!v[f.key];
+      if (f.required) items.push([f.label, ok]);
+      var box = $('f_' + f.key);
+      if (box) box.classList.toggle('miss', !ok);
+      if (!ok && !missing) missing = f.label;
+    });
+
+    if (current.upload && current.upload.mode !== 'off' && current.upload.required) {
+      var uok = !!uploadId;
+      items.push([current.upload.label, uok]);
+      fUpload.classList.toggle('miss', !uok);
+      if (!uok && !missing) missing = current.upload.label;
+    }
+
+    check.innerHTML = items.map(function (p) {
+      return '<span class="' + (p[1] ? 'done' : 'todo') + '">' + (p[1] ? '&#10003; ' : '&#9675; ') + esc(p[0]) + '</span>';
+    }).join('');
+
+    if (app.classList.contains('busy')) return;
+    go.textContent = missing ? ('Bitte noch ausfüllen: ' + missing) : 'Design erzeugen';
+    go.disabled = !!missing;
+  }
+
+  function stopRun() {
+    clearInterval(poll); clearInterval(tick);
+    app.classList.remove('busy');
+    bar.classList.add('hide'); fill.style.width = '0';
+    refresh();
+  }
+  function fmt(ms) { var s = Math.floor(ms / 1000); return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2); }
+
+  go.addEventListener('click', function () {
+    if (!current || go.disabled) return;
+    clearInterval(poll); clearInterval(tick);
+    app.classList.add('busy');
+    go.disabled = true;
+    go.textContent = 'Dein Design entsteht …';
+    result.classList.add('hide');
+    bar.classList.remove('hide');
+    started = Date.now();
+    phase = 'Auftrag wird angenommen';
+    tick = setInterval(function () {
+      var el = Date.now() - started;
+      fill.style.width = Math.min(95, el / 900) + '%';
+      say(phase + ' … ' + fmt(el));
+    }, 500);
+
+    fetchJson(API + '/generate', {
+      method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        motto: current.slug,
+        values: values(),
+        uploadId: uploadId,
+        style: (current.styleChoice !== false && !fStyle.classList.contains('hide')) ? styleSel.value : 'standard',
+        colors: (current.colorChoice !== false) ? colorsIn.value.trim() : '',
+        textile: textile
+      })
+    }, 1).then(function (r) {
+      var j = r.j || {};
+      if (!r.ok || !j.jobId) {
+        stopRun();
+        // Konten/Kontingent aktiv (ACCOUNTS=on): freundlich zum Konto leiten
+        if (j.error === 'anmelden' || j.error === 'bezahlen') {
+          status.className = 'status err';
+          status.innerHTML = (j.error === 'anmelden'
+            ? 'Deine kostenlosen Designs sind aufgebraucht. Melde dich kurz an (ohne Passwort) – deine Entwürfe kommen mit. '
+            : 'Dein Kontingent ist aufgebraucht. In deinem Konto bekommst du mehr Designs. ')
+            + '<a href="/konto" style="color:#ffc542;font-weight:700;text-decoration:none">Zum Konto →</a>';
+          return;
+        }
+        var m = 'Das hat nicht geklappt. Bitte noch einmal versuchen.';
+        if (j.error === 'tageslimit') m = 'Für heute ist das Kontingent aufgebraucht. Morgen geht es weiter.';
+        else if (j.error === 'feld fehlt') m = 'Es fehlt noch: ' + (j.feld || 'ein Feld');
+        else if (j.error === 'zeichen nicht erlaubt') m = 'In „' + (j.feld || 'einem Feld') + '" stehen Zeichen, die wir nicht drucken können.';
+        else if (j.error === 'auswahl ungueltig') m = 'Bitte bei „' + (j.feld || 'der Auswahl') + '" etwas aus der Liste wählen.';
+        else if (j.error === 'upload fehlt') m = 'Für dieses Motto brauchen wir noch dein Bild.';
+        else if (j.error === 'upload nicht gefunden') m = 'Das Bild ist verloren gegangen. Bitte noch einmal hochladen.';
+        else if (r.status >= 500) m = 'Der Dienst hat einen Fehler gemeldet. Bitte noch einmal versuchen.';
+        say(m, true);
+        return;
+      }
+      phase = 'In der Warteschlange';
+      var jobId = j.jobId;
+      poll = setInterval(function () {
+        if (Date.now() - started > 6 * 60000) { stopRun(); say('Das dauert ungewöhnlich lange. Bitte noch einmal versuchen.', true); return; }
+        fetchJson(API + '/job/' + jobId, undefined, 1).then(function (rr) {
+          var s = rr.j || {};
+          if (s.status === 'running') phase = 'Bild wird gezeichnet';
+          if (s.status === 'done') {
+            stopRun(); say('Fertig.');
+            shown.preview = s.preview; shown.mockups = s.mockups || null; shown.tab = s.mockups ? 'tee' : 'motiv';
+            shown.color = (s.textile === 'hell' ? 'white' : 'black');
+            drawResult();
+            meta.textContent = 'Design-Nummer ' + s.designId;
+            result.classList.remove('hide');
+            result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          } else if (s.status === 'qa_failed') {
+            stopRun(); say('Dieser Versuch ist nicht sauber geworden. Probier es noch einmal – jeder Lauf sieht anders aus.', true);
+          } else if (s.status === 'error') {
+            stopRun(); say('Beim Zeichnen ist etwas schiefgegangen. Bitte noch einmal versuchen.', true);
+          }
+        }).catch(function () { });
+      }, 3000);
+    }).catch(function () {
+      stopRun();
+      say('Der Dienst ist nicht erreichbar. Bitte Verbindung prüfen und noch einmal versuchen.', true);
+    });
+  });
+
+  refresh();
+})();
+</script>
+</body>
+</html>

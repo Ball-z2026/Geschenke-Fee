@@ -1,0 +1,798 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>__TITLE__</title>
+<meta name="description" content="__DESC__">
+<meta property="og:title" content="__TITLE__">
+<meta property="og:description" content="__DESC__">
+<meta property="og:image" content="__OG__">
+<!-- Fassung 79: Hier stand die Einbindung von fonts.googleapis.com. Das bedeutete fuer jeden
+     Besucher drei Wege hintereinander, bevor die Schrift da ist: eine zweite, fremde Adresse
+     aufloesen und verschluesseln, dort ein Stylesheet holen, darin erst die Adresse der
+     Schriftdatei lesen, dann die Schrift holen. Jetzt liegen beide Schriften bei uns, werden
+     schon beim Lesen des Kopfes geholt und sind auf Latein zugeschnitten. Archivo traegt als
+     Variable Font alle Staerken von 400 bis 900 in einer einzigen Datei. -->
+<link rel="preload" href="/fonts/archivo-v1.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/anton-v1.woff2" as="font" type="font/woff2" crossorigin>
+<!-- 1. Okt.: gemeinsames Farbblatt aller Kundenseiten (Logo-Farben, Schriften, Kopf) -->
+<link rel="stylesheet" href="/marke.css?v=__ASSET_V__">
+<style>
+@font-face{font-family:"Archivo";src:url("/fonts/archivo-v1.woff2") format("woff2");font-weight:400 900;font-style:normal;font-display:swap}
+</style>
+<link rel="canonical" href="__CANONICAL__">
+<meta property="og:type" content="website">
+<meta property="og:url" content="__CANONICAL__">
+<meta property="og:site_name" content="Motto Otto">
+<meta name="twitter:card" content="summary_large_image">
+<!-- Fassung 78: Der Weg zu dieser Seite in der Form, die Google in den Suchergebnissen als
+     Pfad anzeigt (Motto Otto > Anlaesse > Abi) statt einer nackten Adresse. -->
+<script type="application/ld+json">__LD_JSON__</script>
+<link rel="icon" href="/favicon-64.png" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<!-- Fassung 77: Die Logik der Seite steht in einer eigenen Datei (gut fuer jeden zweiten
+     Aufruf, weil sie dann aus dem Zwischenspeicher kommt). Ohne diese Zeile waere der erste
+     Aufruf aber langsamer als vorher: der Browser muesste erst die ganze Seite lesen und dann
+     das Skript holen - zwei Wege nacheinander, im schlechten Netz eine Drittelsekunde extra.
+     Gemessen: 838 ms vorher, 1050 ms mit Auslagerung, mit diesem Vorabruf wieder darunter.
+     preload heisst: hol es jetzt schon, parallel zum Lesen der Seite. -->
+<link rel="preload" as="script" href="/motto-seite.js?v=__ASSET_V__">
+<style>
+  :root{
+    /* 1. Okt. (Markus: die Seiten nach der Startseite "sehen ueberhaupt nicht mehr so schoen aus"):
+       dieselben Namen wie bisher, jetzt mit den Logo-Farben aus marke.css. Hell auf Papier,
+       Gruen fuer "los", die Farbe des Mottos nur noch als Streifen (--motto). */
+    --bg:var(--papier); --card:#fff; --card2:#FBF5EA; --line:#CBBFA9;
+    --ink:var(--tinte); --ink2:var(--text2); --ink3:var(--text3);
+    --accent:var(--gruen); --accent-ink:var(--tinte); --ok:var(--ok-text); --warn:var(--warn-text);
+    --motto:__ACCENT__;
+    --sans:"Archivo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55}
+  .wrap{max-width:620px;margin:0 auto;padding:26px 20px 90px}
+  header{margin-bottom:26px}
+  /* Einheitliche Kopfzeile + Fusszeile (alle Kundenseiten) */
+  footer.site{margin:44px 0 0;color:var(--ink3);font-size:13px;border-top:1px solid var(--line);padding-top:18px;line-height:1.6}
+  footer.site a{color:inherit}
+  .hero{display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:8px}
+  .hero img{width:100%;border-radius:12px;border:1px solid var(--line);display:block}
+  .hero h2{font-size:26px;line-height:1.15;margin:0 0 8px;font-weight:800}
+  .hero p{color:var(--ink2);margin:0;font-size:15.5px}
+  .brand{font-weight:800;font-size:34px;letter-spacing:-.02em;margin:0}
+  .brand span{color:var(--accent)}
+  .claim{color:var(--ink2);margin:6px 0 0;font-size:16px}
+
+  .field{margin-bottom:18px}
+  label{display:block;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);font-weight:700;margin-bottom:6px}
+  input[type=text],select,textarea{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font:inherit;font-size:16px;appearance:none}
+  select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8'><path d='M1 1l5 5 5-5' fill='none' stroke='%238b8598' stroke-width='1.6'/></svg>");background-repeat:no-repeat;background-position:right 14px center}
+  input:focus,select:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+  .miss input,.miss select,.miss .drop{border-color:var(--warn)}
+  .hint{font-size:13px;color:var(--ink3);margin-top:6px}
+  .intro{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:8px;padding:12px 14px;color:var(--ink2);font-size:15px;margin-bottom:22px}
+
+  .drop{border:1.5px dashed var(--line);border-radius:8px;background:var(--card);padding:18px;text-align:center;cursor:pointer}
+  .drop:hover{border-color:var(--accent)}
+  .drop b{display:block;font-size:15px;margin-bottom:2px}
+  /* Fassung 37: waehrend des Hochladens steht der Fortschritt IM Feld, nicht nur unten in der Statuszeile */
+  .drop.laeuft{border-style:solid;border-color:var(--accent);cursor:progress}
+  .drop.laeuft b:before{content:"";display:inline-block;width:14px;height:14px;margin-right:8px;vertical-align:-2px;border:2px solid var(--accent);border-right-color:transparent;border-radius:50%;animation:dreh .8s linear infinite}
+  @keyframes dreh{to{transform:rotate(360deg)}}
+  .drop small{color:var(--ink3)}
+  .thumb{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px}
+  .thumb img{width:60px;height:60px;object-fit:contain;background:var(--card2);border-radius:6px}
+  .thumb .n{flex:1;min-width:0;font-size:14px;color:var(--ink2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .thumb button{background:none;border:1px solid var(--line);color:var(--ink2);border-radius:6px;padding:6px 11px;font:inherit;font-size:13px;cursor:pointer}
+  /* Fassung 35: Logo-Preflight - Achtung, Logo nicht brauchbar / nur maessig; Otto kann es nachzeichnen */
+  /* Fassung 56: nachbessern und merken */
+  .preflight .pf-merk{display:block;margin-top:10px;font-size:13.5px;color:var(--ink2)}
+  .preflight .pf-korr{margin-top:12px;padding-top:10px;border-top:1px solid var(--line);font-size:14px}
+  .preflight .pf-korr textarea{display:block;width:100%;box-sizing:border-box;margin:8px 0;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card2);color:var(--ink);font:inherit;font-size:14.5px;resize:vertical}
+  .preflight{margin-top:8px;border:1px solid var(--warn);border-radius:8px;padding:12px 13px;background:color-mix(in srgb, var(--warn) 8%, var(--card));display:flex;gap:12px;align-items:flex-start}
+  .preflight.gut{border-color:var(--ok);background:color-mix(in srgb, var(--ok) 7%, var(--card))}
+  /* Vorschau auf hellem Schachbrett: schwarze UND weisse Logoteile bleiben erkennbar */
+  .preflight img{width:72px;height:72px;object-fit:contain;border-radius:6px;flex:0 0 auto;image-rendering:auto;padding:4px;
+    background-color:#f2f2f2;background-image:linear-gradient(45deg,#d9d9d9 25%,transparent 25%,transparent 75%,#d9d9d9 75%),linear-gradient(45deg,#d9d9d9 25%,transparent 25%,transparent 75%,#d9d9d9 75%);background-size:12px 12px;background-position:0 0,6px 6px}
+  .preflight .t{flex:1;min-width:0;font-size:14px;line-height:1.45;color:var(--ink2)}
+  .preflight .t b{display:block;color:var(--ink);font-size:14.5px;margin-bottom:3px}
+  .preflight .t ul{margin:4px 0 0;padding-left:18px}
+  .preflight .k{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+  .preflight .k button{font:inherit;font-size:13.5px;font-weight:800;padding:8px 13px;border-radius:8px;border:1px solid var(--line);background:var(--card2);color:var(--ink);cursor:pointer}
+  .preflight .k button.haupt{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+  .preflight .k button:disabled{opacity:.55;cursor:default}
+
+  .check{display:flex;flex-wrap:wrap;gap:6px 14px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:11px 13px;font-size:13.5px;margin:24px 0 12px}
+  .check span{white-space:nowrap;color:var(--ink3)}
+  .check span.done{color:var(--ok)}
+  .check span.todo{color:var(--warn);font-weight:700}
+
+  .go{width:100%;padding:16px;border:0;border-radius:9px;background:var(--accent);color:var(--accent-ink);font:inherit;font-weight:800;font-size:16.5px;letter-spacing:.01em;cursor:pointer}
+  .go[disabled]{background:var(--card2);color:var(--ink3);cursor:default}
+  .bar{height:6px;border-radius:3px;background:var(--line);margin-top:12px;overflow:hidden}
+  .bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .6s linear}
+  .status{margin-top:10px;font-size:14.5px;color:var(--ink2);min-height:20px}
+  .status.err{color:var(--warn)}
+  .marke-frage{margin:10px 0 14px;display:grid;gap:10px}
+  .marke-knoepfe{display:flex;flex-wrap:wrap;gap:10px}
+  .marke-knoepfe button{min-height:48px;padding:0 22px;border-radius:999px;border:var(--kontur,2px solid #1d1b20);background:var(--gruen,#7ED321);color:var(--tinte,#1d1b20);font:inherit;font-weight:800;font-size:16px;cursor:pointer}
+  .marke-knoepfe button.leise{background:transparent}
+  .marke-knoepfe button:disabled{opacity:.6;cursor:wait}
+  .marke-eigen{display:grid;gap:4px;font-size:14px}
+  .marke-eigen input{font-size:16px}
+
+  .result{margin-top:26px}
+  .result img{width:100%;border:1px solid var(--line);border-radius:10px;display:block;background:var(--card)}
+  .result img.laedt{opacity:.45;transition:opacity .2s}
+  .result .bild-hinweis{font-size:13px;font-weight:700;color:var(--ink2);margin:6px 0 0}
+  .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+  .tabs button,.colors button{font:inherit;font-size:14px;font-weight:700;padding:9px 14px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink2);cursor:pointer}
+  .tabs button.on,.colors button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+  .colors{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+  .colors button{padding:7px 12px;font-size:13px}
+  .colors button i{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:7px;vertical-align:-1px;border:1px solid rgba(255,255,255,.35)}
+  .view{font-size:12.5px;color:var(--ink3);margin:-4px 0 8px}
+  /* „Darf mein Design bewertet werden?" - der Kunde entscheidet ueber seinen eigenen Entwurf */
+  .teilen{margin:14px 0 2px;border:1px solid var(--line);border-radius:12px;background:var(--card);padding:12px 14px}
+  /* label{} setzt seitenweit Grossbuchstaben - hier ist es Fliesstext, also zuruecknehmen */
+  .teilen-sw{display:flex;align-items:flex-start;gap:12px;cursor:pointer;margin:0;text-transform:none;letter-spacing:normal}
+  .teilen-sw input{position:absolute;opacity:0;width:0;height:0}
+  .teilen-knopf{flex:0 0 auto;width:44px;height:26px;border-radius:999px;background:var(--card2);border:1px solid var(--line);position:relative;transition:background .15s,border-color .15s;margin-top:1px}
+  .teilen-knopf:after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--ink3);transition:transform .15s,background .15s}
+  .teilen-sw input:checked + .teilen-knopf{background:var(--accent);border-color:var(--accent)}
+  .teilen-sw input:checked + .teilen-knopf:after{transform:translateX(18px);background:var(--accent-ink)}
+  .teilen-sw input:focus-visible + .teilen-knopf{outline:2px solid var(--accent);outline-offset:2px}
+  .teilen-sw input:disabled + .teilen-knopf{opacity:.45;cursor:not-allowed}
+  .teilen-txt b{display:block;font-size:14px;font-weight:800;color:var(--ink);line-height:1.3}
+  .teilen-txt em{display:block;font-style:normal;font-size:12.5px;color:var(--ink3);margin-top:3px;line-height:1.45}
+  .teilen-msg{font-size:12.5px;color:var(--ink3);margin-top:8px;min-height:0}
+  .teilen-msg.gut{color:var(--accent)}
+  .alsoon{margin:16px 0 4px}
+  .alsoon-h{font-size:14px;font-weight:800;color:var(--ink);margin:0 0 8px}
+  .alsoon-h span{color:var(--ink3);font-weight:600}
+  .alsoon-row{display:flex;gap:10px;overflow-x:auto;padding:2px 2px 8px;-webkit-overflow-scrolling:touch}
+  .alsoon-card{flex:0 0 auto;width:96px;border:1px solid var(--line);border-radius:10px;background:var(--card);cursor:pointer;padding:6px;text-align:center;transition:border-color .15s}
+  .alsoon-card:hover{border-color:var(--accent)}
+  .alsoon-card.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+  .alsoon-card img{width:100%;height:84px;object-fit:cover;border-radius:6px;display:block;background:var(--card2);border:0}
+  .alsoon-card b{display:block;font-size:12px;font-weight:700;color:var(--ink2);margin-top:5px;line-height:1.2}
+  /* Kaufformen: Druckdatei oder fertiges Teil */
+  .kf{margin:20px 0 4px;border-top:1px solid var(--line);padding-top:18px}
+  .kf-h{font-size:15px;font-weight:800;color:var(--ink);margin:0 0 10px}
+  .kf-h span{display:block;color:var(--ink3);font-weight:600;font-size:13.5px;margin-top:2px}
+  .kf-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(212px,1fr));gap:10px}
+  .kf-card{border:1px solid var(--line);border-radius:12px;background:var(--card);padding:13px 14px 14px;cursor:pointer;text-align:left;font:inherit;color:inherit;display:flex;flex-direction:column;transition:border-color .15s}
+  .kf-card:hover{border-color:var(--accent)}
+  .kf-card.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+  .kf-card .fuer{font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)}
+  .kf-card b{display:block;font-size:15.5px;font-weight:800;margin:6px 0 5px;line-height:1.25}
+  .kf-card em{font-style:normal;color:var(--ink3);font-size:13px;line-height:1.45;flex:1}
+  .kf-card .preis{margin-top:9px;font-size:15px;font-weight:800;color:var(--accent)}
+  .kf-card .preis small{color:var(--ink3);font-weight:600;font-size:12px}
+  .kf-form{margin-top:14px;border:1px solid var(--line);border-radius:12px;background:var(--card);padding:14px}
+  .kf-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+  .kf-fields label{display:flex;flex-direction:column;gap:5px;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3)}
+  .kf-fields label.hide{display:none}  /* schlaegt die Zeile darueber - sonst bliebe das Feld sichtbar */
+  .kf-fields input,.kf-fields select{width:100%;padding:10px 11px;font-size:15px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font-family:inherit;text-transform:none;letter-spacing:0;font-weight:400}
+  .kf-form textarea{margin-top:10px;min-height:72px}
+  /* Textil-Stufen: Ottos Starter / Liebling / Deluxe */
+  .kf-stufen{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:9px;margin-bottom:12px}
+  .kf-stufe{border:1px solid var(--line);border-radius:11px;background:var(--bg);padding:12px 13px;cursor:pointer;
+    text-align:left;font:inherit;color:inherit;position:relative;transition:.15s}
+  .kf-stufe:hover{border-color:var(--accent)}
+  .kf-stufe.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent);background:var(--card2)}
+  .kf-stufe b{display:block;font-size:15px;font-weight:800}
+  .kf-stufe .pr{display:block;font-size:19px;font-weight:900;color:var(--accent);margin-top:6px;letter-spacing:-.01em}
+  .kf-stufe .pr s{color:var(--ink3);font-weight:600;font-size:13px;margin-left:6px;letter-spacing:0}
+  .kf-stufe em{font-style:normal;display:block;color:var(--ink3);font-size:12.5px;margin-top:3px}
+  .kf-stufe .tipp{position:absolute;top:-9px;right:9px;background:var(--accent);color:var(--accent-ink);
+    font-size:10.5px;font-weight:900;letter-spacing:.07em;text-transform:uppercase;padding:3px 8px;border-radius:999px}
+  .kf-seite{display:flex;gap:11px;align-items:flex-start;padding:12px 13px;border:1px solid var(--line);
+    border-radius:11px;background:var(--bg);margin-bottom:12px;cursor:pointer}
+  .kf-seite input{width:auto;margin-top:3px;flex:0 0 auto}
+  .kf-seite b{display:block;font-size:15px;font-weight:800}
+  .kf-seite em{font-style:normal;color:var(--ink3);font-size:13px}
+  .kf-rechnung{margin-top:12px;border-top:1px solid var(--line);padding-top:12px;font-size:15px}
+  .kf-rechnung .z{display:flex;justify-content:space-between;gap:12px;padding:4px 0;color:var(--ink2)}
+  .kf-rechnung .z b{font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+  .kf-rechnung .z.gesamt{border-top:1px solid var(--line);margin-top:6px;padding-top:9px;font-size:17px;color:var(--ink);font-weight:800}
+  .kf-rechnung .z.gesamt b{font-size:22px;font-weight:900;color:var(--accent)}
+  .kf-rechnung .frei{color:var(--gruen);font-weight:700}
+  .kf-rechnung .fuss{color:var(--ink3);font-size:12.5px;margin-top:8px;line-height:1.4}
+  .kf-korb{margin-top:12px;border:2px dashed var(--line);border-radius:10px;padding:8px 12px}
+  .kf-korb .kz{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:5px 0;font-size:14.5px}
+  .kf-korb .kz button{border:0;background:none;color:var(--ink3);font:inherit;font-size:13px;text-decoration:underline;cursor:pointer;padding:6px}
+  .kf-korb .kh{font-size:13px;font-weight:800;color:var(--ink3);margin-bottom:2px}
+  .kf-knoepfe button#kf-send{font-weight:800}
+  .kauf-leiste{position:sticky;bottom:0;z-index:7;background:var(--bg);padding:10px 0 12px;margin-top:10px}
+  .kauf-leiste .go{margin:0}
+  #kf-form{scroll-margin-top:130px}
+  .kf-knoepfe{position:sticky;bottom:0;z-index:6;background:#fff;padding:10px 0 8px;margin-top:8px;border-top:1px solid var(--line)}
+  .vote-cands{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px}
+  .vc{position:relative;border:2px solid var(--line);border-radius:10px;padding:6px;cursor:pointer;display:block;background:var(--card)}
+  .vc img{width:100%;border-radius:6px;display:block;background:var(--card2)}
+  .vc span{display:block;font-size:12px;font-weight:700;color:var(--ink2);margin-top:5px}
+  .vc input{position:absolute;top:9px;left:9px;transform:scale(1.25)}
+  .vote-create label{font-size:14px}
+  .meta{font-size:12.5px;color:var(--ink3);margin-top:8px;letter-spacing:.05em}
+  textarea{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font:inherit;font-size:16px;min-height:110px;resize:vertical}
+  .names-tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px;font-size:13.5px;color:var(--ink3)}
+  .names-tools button{font:inherit;font-size:13.5px;padding:8px 12px;border-radius:7px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+  /* Namensliste zum direkten Ausfuellen: breit als Tabelle, auf dem Handy je Person eine Karte */
+  .nl{border:1px solid var(--line);border-radius:10px;background:var(--card);overflow:hidden}
+  .nl-row{display:grid;grid-template-columns:34px minmax(0,1.6fr) 92px minmax(0,1fr) 34px;gap:8px;align-items:center;padding:7px 10px;border-top:1px solid var(--line)}
+  .nl-row.kontakt{grid-template-columns:34px minmax(0,1.4fr) 84px minmax(0,.9fr) minmax(0,1.3fr) minmax(0,.9fr) 104px 34px}
+  .nl-head{border-top:0;background:rgba(255,255,255,.03);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);padding-top:9px;padding-bottom:9px}
+  .nl-n{font-size:12.5px;color:var(--ink3);text-align:center}
+  .nl input,.nl select{width:100%;padding:9px 10px;font-size:15px;border:1px solid var(--line);border-radius:7px;background:var(--bg);color:var(--ink);font-family:inherit;min-width:0}
+  .nl select{padding-right:26px}
+  .nl-head span{padding:0 2px}
+  /* Fassung 90: 28 x 28 px war der Loeschknopf - zu klein fuer einen Daumen, die Browser-Abnahme
+     hat ihn auf iPhone und Android beanstandet. Sichtbar bleibt er zart, die Trefferflaeche ist 40 px. */
+  .nl-del{font:inherit;font-size:16px;line-height:1;min-width:40px;min-height:40px;display:inline-flex;align-items:center;justify-content:center;padding:0;border:0;border-radius:8px;background:transparent;color:var(--ink3);cursor:pointer}
+  .nl-del:hover{color:#e06565;background:rgba(224,101,101,.1)}
+  /* Fassung 90: Umschalter zwischen Situation ("In Benutzung") und sachlicher Ansicht ("Masze & Flaeche") */
+  .view .ansicht-wahl{display:inline-flex;gap:6px;margin-left:8px;vertical-align:middle;flex-wrap:wrap}
+  .view .ansicht-wahl button{font:inherit;font-size:12.5px;font-weight:800;min-height:34px;padding:5px 12px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink2);cursor:pointer}
+  .view .ansicht-wahl button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+  .nl-foot{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:9px 10px;border-top:1px solid var(--line);font-size:13px;color:var(--ink3)}
+  .nl-foot button{font:inherit;font-size:13.5px;padding:8px 12px;border-radius:7px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+  .nl-foot .zahl{margin-left:auto}
+  /* Auf dem Handy je Person eine kleine Karte: Name oben, darunter Größe/Artikel und ggf. die Kontakte paarweise */
+  @media (max-width:720px){
+    .nl-head{display:none}
+    .nl-row,.nl-row.kontakt{grid-template-columns:22px minmax(0,1fr) minmax(0,1fr) 28px;row-gap:6px;padding:9px 10px}
+    .nl-row>.nl-n{grid-area:1/1}
+    .nl-row>.nl-name{grid-area:1/2/2/4}
+    .nl-row>.nl-del{grid-area:1/4}
+    .nl-row>.nl-size{grid-area:2/2}
+    .nl-row>.nl-art{grid-area:2/3}
+    .nl-row>.nl-mail{grid-area:3/2/4/4}
+    .nl-row>.nl-tel{grid-area:4/2}
+    .nl-row>.nl-rolle{grid-area:4/3}
+    .nl input,.nl select{padding:8px 9px;font-size:16px}
+  }
+  .namesel{display:flex;gap:8px;align-items:center;margin:0 0 10px;flex-wrap:wrap}
+  .namesel select{width:auto;min-width:200px;padding:9px 34px 9px 12px;font-size:14px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .chips button{font:inherit;font-size:13px;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink2);cursor:pointer}
+  .chips button:hover{border-color:var(--accent);color:var(--ink)}
+  .sugg-intro{font-size:14px;color:var(--ink2);margin:2px 0 8px;line-height:1.4}
+  .sugg{display:flex;flex-direction:column;gap:8px}
+  .sugg .s{display:flex;flex-direction:column;gap:2px;width:100%;font:inherit;padding:10px 13px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;text-align:left}
+  .sugg .s b{font-size:14.5px;font-weight:800;letter-spacing:.01em}
+  .sugg .s span{font-size:12.5px;color:var(--ink3);line-height:1.35}
+  .sugg .s:hover{border-color:var(--accent)}
+  /* 2. Okt.: Groessen als Kacheln, zwei je Reihe; die gewaehlte wie ein gewaehlter Stil */
+  .sugg.groessen{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .sugg.groessen .s{min-height:64px;justify-content:center}
+  .sugg.groessen .s.on{border-color:var(--accent);box-shadow:inset 0 0 0 2px var(--accent);background:var(--card2)}
+  .sugg.groessen .s.on b::after{content:" ✓"}
+  .rate-overlay{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(10,9,14,.74);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);animation:rf .25s ease}
+  @keyframes rf{from{opacity:0}to{opacity:1}}
+  @keyframes rp{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:none}}
+  @keyframes rspin{to{transform:rotate(360deg)}}
+  .rate-card{width:100%;max-width:420px;max-height:92vh;overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;text-align:center;box-shadow:0 24px 70px rgba(0,0,0,.55);animation:rp .3s cubic-bezier(.2,.9,.3,1.25)}
+  .rate-top{display:flex;align-items:center;gap:12px;justify-content:center;margin-bottom:16px}
+  .rate-spin{width:22px;height:22px;flex:none;border:3px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:rspin 1s linear infinite}
+  .rate-top-h{font-weight:800;font-size:15px;text-align:left}
+  .rate-top-s{font-size:12.5px;color:var(--ink3);text-align:left}
+  .rate-h{font-size:14px;color:var(--ink2);margin-bottom:14px}
+  .rate-card img{width:100%;border-radius:12px;background:var(--card2);display:block}
+  .rate-bild{position:relative;width:100%;max-width:260px;margin:0 auto}
+  .rate-motto{font-weight:800;margin:12px 0 2px;font-size:16px}
+  /* Der Stil gehoert sichtbar dazu - sonst gefaellt einem ein Design und man weiss nicht,
+     wonach man suchen soll. Unter dem Namen, im selben Grau wie alles andere, ist er
+     durchgerutscht. Darum sitzt er jetzt AUF dem Bild, wo das Auge ohnehin hinsieht,
+     in der Signalfarbe. Oben links, weil die Druckregeln dort 6 % Rand frei lassen. */
+  .rate-stil{position:absolute;top:8px;left:8px;z-index:2;padding:4px 11px;border-radius:999px;
+    background:var(--accent);color:var(--accent-ink);font-size:13px;font-weight:800;
+    letter-spacing:.01em;box-shadow:0 3px 12px rgba(0,0,0,.45);pointer-events:none}
+  .rate-stil:empty{display:none}
+  .rate-stil:before{content:"Stil ";font-weight:700;opacity:.65}
+  .stars{display:flex;justify-content:center;gap:8px;font-size:42px;line-height:1;margin:6px 0}
+  .stars button{background:none;border:0;cursor:pointer;color:var(--line);padding:0 2px;transition:color .12s,transform .12s}
+  .stars button:hover{transform:scale(1.18)}
+  .stars button.on{color:var(--accent)}
+  .rate-done{min-height:20px;font-size:13.5px;color:var(--ok);margin-top:6px;font-weight:700}
+  .rate-skip{margin-top:12px;background:none;border:0;color:var(--ink3);font:inherit;font-size:14px;cursor:pointer;text-decoration:underline}
+  /* „Keine Lust zu warten?" - Adresse hinterlegen und die Seite zumachen */
+  .warte-mail{margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+  .warte-auf{background:none;border:0;color:var(--accent);font:inherit;font-size:14px;font-weight:700;cursor:pointer;padding:0;text-align:center;width:100%}
+  .warte-row{display:flex;gap:7px;margin-top:4px}
+  .warte-row input{flex:1;min-width:0;padding:11px 12px;font:inherit;font-size:15px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+  .warte-row button{flex:0 0 auto;padding:11px 14px;font:inherit;font-size:14px;font-weight:800;border:0;border-radius:8px;background:var(--accent);color:var(--accent-ink);cursor:pointer}
+  .warte-row button:disabled{opacity:.55;cursor:default}
+  .warte-msg{font-size:12.5px;color:var(--ink3);margin-top:8px;line-height:1.45}
+  .warte-msg.gut{color:var(--ok)}
+  /* Nach dem Eintragen der Adresse muss das Fenster auch ZUGEHEN - vorher gab es hier
+     keinen Knopf, und "Du kannst die Seite zumachen" allein hat niemand geglaubt. */
+  .warte-zu{display:block;width:100%;margin-top:10px;padding:11px 14px;font:inherit;font-size:14px;font-weight:800;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);cursor:pointer}
+  .warte-zu.hide{display:none}
+  .rate-card{position:relative;overflow-x:hidden}
+  .rate-mute{position:absolute;top:12px;right:14px;background:none;border:0;color:var(--ink3);font-size:18px;line-height:1;cursor:pointer;opacity:.7}
+  .rate-mute:hover{opacity:1}
+  .stars button.hit{animation:starpop .42s ease}
+  @keyframes starpop{0%{transform:scale(1)}45%{transform:scale(1.45)}100%{transform:scale(1)}}
+  .rate-burst{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;font-size:30px;opacity:0}
+  .rate-burst.go{animation:rburst .9s ease forwards}
+  @keyframes rburst{0%{opacity:0;transform:translate(-50%,-30%) scale(.6)}25%{opacity:1}100%{opacity:0;transform:translate(-50%,-170%) scale(1.25)}}
+  .top{margin-top:44px}
+  .top-h{font-size:18px;margin:0 0 12px}
+  .top-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+  .top-card{background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .top-card img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;background:var(--card2)}
+  .top-card .m{padding:7px 9px;font-size:12px;color:var(--ink3)}
+  .top-card .m b{color:var(--ink);font-size:12.5px}
+  .styles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+  .pk-versteckt{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+  /* 2. Okt.: Foto-Knopf der Gruppen-Mottos (Foto zuerst) */
+  .foto-waehlen{margin:6px 0 10px;min-height:52px;font-size:17px}
+  .foto-waehlen .sym{width:22px;height:22px}
+  .pk-link{background:none;border:0;padding:6px 0;color:var(--ink2);font:inherit;font-size:14px;text-decoration:underline;cursor:pointer}
+  /* 20. Sept. (Markus: "eine Abfolge ... nichts scrollen und eintragen"): ein Bildschirm je Frage,
+     abfolge.js verschiebt die Kaesten der Seite in Schritte. Kopf mit Zurueck und Zaehler, Balken,
+     grosser Weiter-Knopf, zum Schluss die Zusammenfassung als Liste mit "Aendern". */
+  #abfolge{margin:6px 0 18px}
+  /* Mit Abfolge steht der erste Schritt gleich unter der Ueberschrift: der lange Text und die
+     Stil-Galerie im Kopf fallen weg (die Stile kommen als eigener Schritt mit denselben Bildern). */
+  body.mit-abfolge .hero p,body.mit-abfolge .gallery,body.mit-abfolge #hero-img{display:none}
+  body.mit-abfolge .hero h2{font-size:22px;margin-bottom:2px}
+  body.mit-abfolge header{margin-bottom:10px}
+  .ab-kopf{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:40px}
+  .ab-zurueck{font:inherit;font-size:15px;font-weight:700;background:none;border:0;color:var(--ink2);cursor:pointer;padding:8px 10px 8px 0;min-height:40px}
+  .ab-zurueck.unsichtbar{visibility:hidden}
+  .ab-zaehler{font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);font-weight:700}
+  .ab-balken{height:6px;border-radius:3px;background:var(--line);overflow:hidden;margin:2px 0 18px}
+  .ab-balken i{display:block;height:100%;width:0;background:var(--accent);transition:width .35s ease}
+  .ab-schritt{display:none;animation:abrein .25s ease}
+  .ab-schritt.on{display:block}
+  @keyframes abrein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .ab-titel{font-size:24px;line-height:1.15;margin:0 0 6px;font-weight:800}
+  .ab-text{margin:0 0 16px;color:var(--ink2);font-size:15px}
+  .ab-inhalt .field{margin-bottom:16px}
+  .ab-einzel .ab-inhalt .field > label:first-child{display:none}   /* ein Feld: die Frage steht schon als Titel */
+  .ab-fuss{margin-top:8px}
+  .ab-weiter{display:block;width:100%;padding:16px;border:0;border-radius:12px;background:var(--accent);color:var(--accent-ink);font:inherit;font-weight:800;font-size:16.5px;cursor:pointer}
+  .ab-weiter.offen{background:var(--card2);color:var(--ink2);border:1px solid var(--line)}
+  .ab-fehlt{min-height:18px;font-size:13.5px;color:var(--warn);margin-top:8px;font-weight:700}
+  /* 21. Sept.: "Gewaehlt: ..." sofort nach dem Tipp, Hinweis bei freiwilligen Schritten */
+  .ab-gewaehlt{min-height:20px;font-size:14.5px;font-weight:800;color:var(--ok,#2e9e5b);margin:0 0 8px}
+  .ab-optional{margin:0 0 10px;font-size:13.5px;color:var(--ink2)}
+  /* Groessen als Knoepfe (Ergebnis): die Wahl ist sichtbar, nicht in einem Auswahlfeld versteckt */
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chips button{padding:8px 13px;border:1px solid var(--line);border-radius:999px;background:var(--card2);color:var(--ink);font:inherit;font-weight:700;font-size:14px;cursor:pointer;min-width:44px}
+  .chips button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+  .ab-liste{margin:0 0 18px;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+  .ab-zeile{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;width:100%;text-align:left;font:inherit;color:inherit;background:none;border:0;border-top:1px solid var(--line);padding:12px 14px;cursor:pointer}
+  .ab-zeile:first-child{border-top:0}
+  .ab-zeile-t{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);font-weight:700}
+  .ab-zeile-w{grid-row:2;font-size:15.5px;font-weight:700;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .ab-zeile-a{grid-row:1/3;align-self:center;font-size:13.5px;color:var(--accent);font-weight:700}
+  .ab-zeile.offen .ab-zeile-w{color:var(--warn)}
+  #abfolge .check{margin-top:0}
+  /* Kachelwahl: das Beispiel in seiner echten Form auf hellem Karton, nicht beschnitten */
+  .styles.wahl{grid-template-columns:repeat(2,1fr)}
+  /* 26. Sept.: Ohne Beispielbild ist die Wahl ein schmaler SCHALTER (die Form der Karte, beim Stil) -
+     keine zweite Kachelwand. Das Kaestchen links zeigt das echte Seitenverhaeltnis, quer/hoch/lang. */
+  .styles.wahl.form{grid-template-columns:repeat(3,1fr);gap:8px}
+  .styles.wahl.form button{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:10px 8px}
+  .styles.wahl.form button b{font-size:14px}
+  .styles.wahl.form button small{font-variant-numeric:tabular-nums;margin-top:0}
+  /* Gleiche HOEHE fuer alle drei Kaestchen - dann stehen die Beschriftungen auf einer Linie.
+     Die Breite kommt aus dem Seitenverhaeltnis (aspect-ratio am Element), nicht aus dem CSS. */
+  .styles.wahl.form .wahl-form{height:38px;width:auto;border:2px solid var(--ink3);border-radius:2px;background:var(--card2)}
+  .styles.wahl.form button.on .wahl-form{border-color:var(--accent)}
+  .styles.wahl button.pic .wahl-bild{display:flex;align-items:center;justify-content:center;aspect-ratio:1/1;background:#efe9de;padding:10px}
+  .styles.wahl button.pic .wahl-bild img{max-width:100%;max-height:100%;width:auto;height:auto;aspect-ratio:auto;object-fit:contain;box-shadow:0 4px 14px rgba(0,0,0,.25);border-radius:3px}
+  .styles button{font:inherit;text-align:left;padding:10px 12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+  .styles button b{display:block;font-size:14.5px}
+  .styles button small{display:block;color:var(--ink3);font-size:12.5px;margin-top:2px}
+  .styles button.on{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);background:var(--card2)}
+  .styles button.on b{color:var(--accent)}
+  .styles.schmal{grid-template-columns:repeat(auto-fill,minmax(124px,1fr))}
+  .styles.schmal button b{font-size:14px}
+  .styles.schmal button small{font-variant-numeric:tabular-nums}
+  /* 4. Okt.: Vorne/hinten - drei Kacheln mit kleiner Zeichnung, untereinander, damit der Satz Platz hat */
+  .styles.auf-wahl{grid-template-columns:1fr}
+  .styles.auf-wahl button{display:grid;grid-template-columns:78px 1fr;column-gap:12px;align-items:center;text-align:left}
+  .styles.auf-wahl .auf-bild{grid-row:1 / span 2;color:var(--ink)}
+  .ab-enter{font-size:14px;color:var(--ink3);margin:6px 0 0}
+  .hide{display:none}
+  .busy .field,.busy .drop,.busy .styles{opacity:.5;pointer-events:none}
+  /* Stil-Kacheln mit Beispielbild + Stil-Galerie */
+  .styles button.pic{padding:0;overflow:hidden}
+  .styles button.pic img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;background:var(--card2)}
+  .styles button.pic b{padding:8px 12px 0}.styles button.pic small{padding:0 12px 10px}
+  /* Fassung 68: Figuren zeigen, nicht nur benennen. Gibt es ein freigegebenes Design mit dieser
+     Figurenart, steht es als Beispielbild im Knopf; sonst eine gezeichnete Miniatur (SVG). */
+  .styles button.pic svg{display:block;width:100%;aspect-ratio:1/1;background:var(--card2)}
+  .styles button.pic.on svg{background:#22202b}
+  .gallery{margin:18px 0 6px}
+  .gallery h3{font-size:16px;margin:0 0 8px}
+  .gallery p{margin:0 0 10px;color:var(--ink3);font-size:13.5px}
+  .gallery .row{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x mandatory}
+  .gallery .row a{flex:0 0 150px;scroll-snap-align:start;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--card);text-decoration:none;color:var(--ink)}
+  .gallery .row a img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;background:var(--card2)}
+  .gallery .row a span{display:block;font-size:12.5px;font-weight:700;padding:6px 8px}
+  .gallery .row a:hover{border-color:var(--accent)}
+  .wruf-zeile{margin:14px 0 6px;text-align:center}
+  .wruf{display:inline-block;background:#ffc542;color:#1a1712;border:2px solid #ffc542;border-radius:999px;font-weight:800;font-size:15px;line-height:1.2;padding:12px 26px;text-decoration:none;box-shadow:0 2px 10px rgba(255,197,66,.25)}
+  .wruf:hover,.wruf:focus{background:#ffd775;border-color:#ffd775;text-decoration:none;outline:none}
+
+  /* ===== 1. Okt.: die Mottoseite in den Logo-Farben (MASTER.md) =====
+     Die Regeln oben bleiben, wie sie sind; hier wird nur umgefaerbt und die Aufkleber-Form gesetzt:
+     schwarze Kontur um alles, was man antippt, harter Schatten, Anton fuer Ueberschriften.
+     Gruen ist Flaeche, nie Schrift auf Papier (1,85 : 1) - wo vorher die Akzentfarbe als SCHRIFT
+     stand, steht jetzt Beere (5,83 : 1). */
+  body{background:var(--papier);color:var(--tinte);font-size:16.5px}
+  :focus{outline:none}
+  :focus-visible{outline:3px solid var(--tinte);outline-offset:3px;box-shadow:0 0 0 7px var(--magenta);border-radius:6px}
+  a{color:var(--beere)}
+  .hero h2,.ab-titel,.brand{font-family:var(--display);font-weight:400;letter-spacing:.005em;line-height:1.02}
+  .hero h2{font-size:34px}
+  body.mit-abfolge .hero h2{font-size:30px;margin-bottom:6px}
+  .ab-titel{font-size:32px;margin-bottom:8px}
+  .brand span,.kf-card .preis,.kf-stufe .pr,.kf-rechnung .z.gesamt b,.warte-auf,.ab-zeile-a,.styles button.on b,.teilen-msg.gut{color:var(--beere)}
+  .kf-rechnung .frei{color:var(--ok-text)}
+  label{color:var(--text2)}
+  .hint,.ab-text{color:var(--text2)}
+  /* Eingaben und Karten: weiss mit Kontur */
+  input[type=text],select,textarea,.kf-fields input,.kf-fields select,.nl input,.nl select,.warte-row input{background:#fff;border:2px solid var(--tinte);border-radius:8px;color:var(--tinte)}
+  input:focus,select:focus,textarea:focus{outline:3px solid var(--tinte);outline-offset:2px;box-shadow:0 0 0 6px var(--magenta);border-color:var(--tinte)}
+  .intro{background:#fff;border:var(--kontur);border-left:8px solid var(--motto);border-radius:14px;color:var(--text2)}
+  .drop{background:#fff;border:2.5px dashed var(--tinte);border-radius:14px}
+  .drop:hover{border-color:var(--beere)}
+  .sugg .s,.styles button,.kf-card,.kf-stufe,.vc,.alsoon-card,.top-card,.gallery .row a,.ab-liste,.nl,.kf-form,.teilen,.thumb,.check{background:#fff;border:2px solid var(--tinte);border-radius:14px}
+  .sugg .s:hover,.styles button:hover,.kf-card:hover,.kf-stufe:hover,.alsoon-card:hover,.gallery .row a:hover{border-color:var(--tinte);box-shadow:var(--stempel)}
+  .styles button.on,.kf-card.on,.kf-stufe.on,.alsoon-card.on{background:var(--haut);border-color:var(--tinte);box-shadow:var(--stempel)}
+  .styles button.on b{color:var(--tinte)}
+  .styles button.pic.on svg{background:var(--haut)}
+  .styles.wahl.form .wahl-form{border-color:var(--tinte)}
+  .styles.wahl.form button.on .wahl-form{border-color:var(--tinte);background:var(--gruen)}
+  /* Knoepfe: der grosse Weg ist gruen mit Kontur und Stempel, der Nebenweg weiss */
+  .go,.ab-weiter,.warte-row button,.preflight .k button.haupt{background:var(--gruen);color:var(--tinte);border:var(--kontur);box-shadow:var(--stempel);border-radius:999px;transition:transform .12s,box-shadow .12s}
+  .go:active,.ab-weiter:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--tinte)}
+  .go[disabled]{background:var(--card2);color:var(--text3);box-shadow:none;border-style:dashed}
+  .ab-weiter.offen{background:#fff;color:var(--tinte);border:var(--kontur);box-shadow:var(--stempel)}
+  .warte-zu,.names-tools button,.nl-foot button,.thumb button,.preflight .k button{background:#fff;color:var(--tinte);border:2px solid var(--tinte);border-radius:999px}
+  .tabs button,.colors button,.chips button,.view .ansicht-wahl button{background:#fff;color:var(--tinte);border:2px solid var(--tinte);border-radius:999px}
+  .tabs button.on,.colors button.on,.chips button.on,.view .ansicht-wahl button.on{background:var(--tinte);color:#fff;border-color:var(--tinte)}
+  .colors button i{border-color:var(--tinte)}
+  .chips button:hover{border-color:var(--tinte);color:var(--tinte);background:var(--haut)}
+  .kf-stufe .tipp{background:var(--magenta);color:var(--tinte);border:2px solid var(--tinte)}
+  /* Fortschritt: schwarzer Rahmen, gruene Fuellung */
+  .ab-balken,.bar{height:12px;border-radius:999px;background:#fff;border:2px solid var(--tinte)}
+  .ab-zaehler{color:var(--text2);letter-spacing:.04em}
+  .ab-zurueck{color:var(--tinte)}
+  .ab-gewaehlt{color:var(--ok-text)}
+  .ab-zeile-t{color:var(--text2)}
+  .result img,.rate-card img,.vc img,.gallery .row a img,.top-card img,.alsoon-card img{background:var(--hemd)}
+  .result img{border:var(--kontur);border-radius:14px}
+  .rate-card{background:var(--papier);border:var(--kontur);box-shadow:8px 8px 0 var(--tinte)}
+  .rate-stil{background:var(--gruen);color:var(--tinte);border:2px solid var(--tinte);box-shadow:none}
+  .stars button{color:#CBBFA9}
+  .stars button.on{color:var(--magenta)}
+  .nl-head{background:var(--card2)}
+  .nl-del:hover{color:var(--warn-text);background:#FDECEA}
+  .wruf{background:var(--gruen);color:var(--tinte);border:var(--kontur);box-shadow:var(--stempel)}
+  .wruf:hover,.wruf:focus{background:var(--gruen);border-color:var(--tinte)}
+  footer.site{color:var(--text2);border-top:var(--kontur)}
+  /* Alle Eingaben gleich (auch Zahl, Mail, Telefon), und ein fehlendes Feld bleibt rot umrandet */
+  input:not([type=checkbox]):not([type=radio]):not([type=file]):not([type=range]){background:#fff;border:2px solid var(--tinte);border-radius:8px;color:var(--tinte);font-family:inherit}
+  .miss input,.miss select,.miss .drop,.miss textarea{border-color:var(--warn-text);box-shadow:0 0 0 3px #F9C9C4}
+  /* Keine gesperrten Versal-Etiketten (MASTER.md 4): Fragen und Zaehler in normaler Schreibung */
+  label,.kf-fields label,.ab-zaehler,.ab-zeile-t,.kf-card .fuer,.nl-head,.kf-stufe .tipp{text-transform:none;letter-spacing:0}
+  label{font-size:15px;font-weight:800;color:var(--tinte)}
+  .kf-fields label{font-size:13.5px;color:var(--text2)}
+  .ab-zaehler{font-size:14px}
+  .wrap{padding-top:18px}
+  .sym{width:22px;height:22px;flex:none}
+  /* Der Kopf steht fest oben (am Handy zwei Zeilen, 110 px gemessen): beim Weiterblaettern
+     springt der neue Schritt UNTER den Kopf, nicht dahinter. */
+  #abfolge{scroll-margin-top:122px}
+  @media (min-width:860px){#abfolge{scroll-margin-top:80px}}
+  /* 5. Okt., Markus: "auch am Laptop-Bildschirm ueberpruefen, dass alle Buttons auch direkt zu sehen sind, ohne grossartig zu
+     scrollen ... das muss schnell gehen". Gemessen 1366 x 768 (werkzeug/probe-laptop.mjs): Weiter lag bei Stil, Spruch, Abi-Motto
+     und Namen 990-1320 px tief. Der Weiter-Kasten klebt jetzt unten im Fenster, und die Stile stehen am Laptop vier nebeneinander. */
+  #go{position:sticky;bottom:12px;z-index:6}
+  .ab-fuss{position:sticky;bottom:0;z-index:6;background:var(--bg);padding:10px 0 12px;margin-top:8px}
+  @media (min-width:860px){.ab-schritt .styles:not(.form){grid-template-columns:repeat(4,1fr)}.ab-schritt .sugg:not(.groessen){display:grid;grid-template-columns:repeat(3,1fr)}}
+  /* iPhone zoomt beim Antippen jedes Eingabefelds unter 16 px hinein und bleibt dort stehen - die
+     Seite wirkt dann seitlich verschoben (Markus, 1. Okt., beim Mail-Feld im Warte-Fenster: 15 px,
+     gemessen 18 Felder unter 16 px). Darum ALLE Eingaben mindestens 16 px. */
+  input:not([type=checkbox]):not([type=radio]):not([type=file]):not([type=range]),select,textarea{font-size:16px !important}
+  /* 6. Okt.: der Kassenknopf ist der Hauptknopf der Seite - gruen wie "Otto starten" */
+  .kf-knoepfe button#kf-send{background:var(--gruen);color:var(--tinte);border:var(--kontur);box-shadow:var(--stempel)}
+</style>
+</head>
+<body>
+<header class="mo-kopf"><div class="mo-in">
+  <a class="mo-marke" href="/"><img src="/logo.png" alt="" width="36" height="42">Motto Otto</a>
+  <nav class="mo-nav" aria-label="Hauptmenü">
+    <a href="/mottos">Mottos</a>
+    <a href="/so-gehts">So geht’s</a>
+    <a href="/firma">Firmen</a>
+    <a href="/partner">Partner</a>
+    <a href="/event">Event</a>
+  </nav>
+  <a class="mo-knopf hell mo-konto" href="/konto">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8.5" r="4"/><path d="M4 21c1.4-4 4.4-6 8-6s6.6 2 8 6"/></svg>
+    Konto
+  </a>
+</div></header>
+<div class="wrap" id="app">
+  <header>
+    <div class="hero">
+      <div>
+        <h2>__HEADLINE__</h2>
+        <p>__TEXT__</p>
+      </div>
+      <img src="__SAMPLE__" alt="Beispiel" id="hero-img" onerror="this.style.display='none'">
+    </div>
+    <div class="gallery hide" id="gallery"><h3>So sieht es in jedem Stil aus</h3><p>Anklicken – der Stil wird übernommen, dein Design wird trotzdem ein Unikat.</p><div class="row" id="gallery-row"></div></div>
+  </header>
+
+  <select id="motto" class="hide"><option value="">-</option></select>
+  <div class="intro hide" id="intro"></div>
+
+  <div id="fields"></div>
+
+  <div class="field hide" id="f-upload">
+    <label id="up-label">Logo oder Foto</label>
+    <div class="drop" id="drop">
+      <b>Bild auswählen</b>
+      <small>oder hierher ziehen · PNG, SVG, PDF, WEBP oder JPG</small>
+    </div>
+    <div class="thumb hide" id="thumb">
+      <img id="thumb-img" alt="">
+      <div class="n" id="thumb-name"></div>
+      <button type="button" id="thumb-del">Entfernen</button>
+    </div>
+    <input type="file" id="file" accept="image/*,.svg,.pdf,.ai,application/pdf" style="display:none">
+    <div class="preflight hide" id="preflight"></div>
+    <div class="hint" id="up-hint"></div>
+  </div>
+
+  <div class="field hide" id="f-logoart">
+    <label>Wie soll das Logo ins Design?</label>
+    <div class="styles schmal" id="logoart">
+      <button type="button" data-l="eingearbeitet" class="on"><b>Eingearbeitet</b><small>Otto zeichnet das Logo nach und baut das Design darum herum – auch klein auf den Shirts der Figuren</small></button>
+      <button type="button" data-l="exakt"><b>Original, unverändert</b><small>Ihr Logo pixelgenau auf einer eigenen freien Fläche im Motiv</small></button>
+    </div>
+    <div class="hint">„Eingearbeitet“ sieht aus wie aus einem Guss – Schrift und Form des Logos werden nach dem Zeichnen geprüft. „Original“ bleibt exakt Ihre Datei, sitzt dafür auf einer eigenen Fläche.</div>
+  </div>
+
+  <div class="field hide" id="f-upload2">
+    <label id="up2-label">Zweites Logo (Co-Branding) – optional</label>
+    <div class="drop" id="drop2">
+      <b>Zweites Logo auswählen</b>
+      <small>z. B. Partner, Innung oder Sponsor · wird neben euer Logo gesetzt</small>
+    </div>
+    <div class="thumb hide" id="thumb2">
+      <img id="thumb2-img" alt="">
+      <div class="n" id="thumb2-name"></div>
+      <button type="button" id="thumb2-del">Entfernen</button>
+    </div>
+    <input type="file" id="file2" accept="image/*,.svg,.pdf,.ai,application/pdf" style="display:none">
+  </div>
+
+  <div class="field" id="f-textile">
+    <label>Für welches Textil?</label>
+    <div class="styles" style="grid-template-columns:repeat(2,1fr)" id="textiles">
+      <button type="button" data-x="schwarz"><b>Schwarzes Textil</b><small>Reines Schwarz – helle Schrift, und wo der Stoff durchscheinen soll, wird nichts gedruckt</small></button>
+      <button type="button" data-x="weiss" class="on"><b>Weißes Textil</b><small>Reines Weiß – dunkle Schrift und satte Farben, Weiß würde auf dem Stoff verschwinden</small></button>
+      <button type="button" data-x="dunkel"><b>Dunkles Textil</b><small>Navy, Flaschengrün, Bordeaux, Anthrazit – helle Schrift, Schwarz wird hier mitgedruckt</small></button>
+      <button type="button" data-x="hell"><b>Helles Textil</b><small>Sand, Beige, Creme, Graumeliert – dunkle Schrift, Weiß wird hier mitgedruckt</small></button>
+    </div>
+    <div class="hint hide" id="textil-vorschau"></div>
+    <div class="hint hide" id="textil-hinweis">Aquarell wird auf hellem Textil gedruckt: Die hellsten Stellen eines Aquarells sind unbemaltes Papier – auf schwarzem Stoff wären genau die durchsichtig.</div>
+  </div>
+
+  <div class="field hide" id="f-style">
+    <label>Stil</label>
+    <div class="styles" id="styles"></div>
+    <div class="hint">Ohne Wahl kommt der Look, für den dieses Motto gemacht ist. Ein Stil ändert nur die Optik – Texte und Aufbau bleiben.</div>
+  </div>
+
+  <div class="field hide" id="f-mood">
+    <label>Farbstimmung</label>
+    <div class="styles schmal" id="moods"></div>
+    <div class="hint">Gilt zusätzlich zum Stil: wie laut die Farben werden sollen.</div>
+  </div>
+
+  <div class="field hide" id="f-placement">
+    <label>Wo soll der Druck sitzen?</label>
+    <div class="styles schmal" id="placements"></div>
+    <div class="hint" id="placement-hint">Jede Platzierung ist eine eigene Druckdatei im richtigen Format. Ein kleiner Brustprint bekommt ein einzelnes Motiv, kein Panorama.</div>
+  </div>
+
+  <div class="field hide" id="f-colors">
+    <label for="v_colors">Lieblingsfarben – optional</label>
+    <input type="text" id="v_colors" maxlength="40" placeholder="z. B. Schwarz, Gold und Petrol">
+    <div class="hint">Leer lassen heißt: Otto sucht die Farben aus. Helle Schrift bleibt immer, damit es auf dem schwarzen Shirt lesbar ist.</div>
+  </div>
+
+  <div class="field hide" id="f-figuren">
+    <label>Wie sollen die Leute im Motiv aussehen?</label>
+    <div class="styles schmal" id="figuren"></div>
+    <div class="hint">Gilt nur, wenn im Motiv überhaupt Menschen vorkommen. „Ohne Menschen“ baut das Design allein aus Gegenständen und Symbolen.</div>
+  </div>
+
+  <div class="field hide" id="f-nameart">
+    <label>Wie soll der Name erscheinen?</label>
+    <div class="styles schmal" id="nameart">
+      <button type="button" data-n="unten" class="on"><b>Groß unter dem Motiv</b><small>gut lesbar, klassisch</small></button>
+      <button type="button" data-n="motiv"><b>Ins Motiv eingearbeitet</b><small>z. B. auf dem Shirt, Schild oder Banner im Bild</small></button>
+    </div>
+    <div class="hint">Bei „ins Motiv“ baut Otto eine glatte Fläche ins Bild – ein Rücken, ein Schild, ein Banner – und der Name wird dort hineingedruckt. Findet sich keine passende Fläche, kommt der Name wie gewohnt darunter.</div>
+  </div>
+
+  <div class="field hide" id="f-font">
+    <label>Schriftart für die Namen</label>
+    <div class="styles" style="grid-template-columns:repeat(3,1fr)" id="fonts">
+      <button type="button" data-f="rund" class="on"><b>Rund &amp; kräftig</b><small>modern, gut lesbar</small></button>
+      <button type="button" data-f="schmal"><b>Schmal &amp; hoch</b><small>sportlich, kompakt</small></button>
+      <button type="button" data-f="serif"><b>Klassisch</b><small>mit Serifen, edel</small></button>
+    </div>
+    <div class="hint">Gilt für die Namen, die wir setzen (Namensband bzw. alle Namen auf der Rückseite). Das Motiv selbst bleibt im gewählten Stil.</div>
+  </div>
+
+  <div class="check" id="check"></div>
+  <button class="go" id="go" disabled>Bitte zuerst ein Motto wählen</button>
+  <div class="bar hide" id="bar"><i id="fill"></i></div>
+  <div class="status" id="status"></div>
+  <div class="intro hide" id="cleanup" style="margin-top:10px;font-size:14px"></div>
+  <!-- 27. Sept.: die Seite ist inzwischen neu (Deploy), hier ist aber schon etwas angefangen - dann nur der Hinweis -->
+  <div class="intro hide" id="neue-fassung" style="margin-top:10px;font-size:14px;border:1px solid var(--accent)">Es gibt eine neue Fassung dieser Seite. <button type="button" id="neue-fassung-btn" class="pk-klein" style="margin-left:6px">Seite neu laden</button> <span style="color:var(--ink3)">Was du hier eingetragen hast, musst du danach noch einmal eingeben.</span></div>
+
+  <div class="rate-overlay hide" id="rate">
+    <div class="rate-card">
+      <button type="button" class="rate-mute" id="rate-mute" aria-label="Ton an oder aus">🔊</button>
+      <div class="rate-burst" id="rate-burst"></div>
+      <div class="rate-top">
+        <div class="rate-spin"></div>
+        <div><div class="rate-top-h">Dein Design entsteht …</div><div class="rate-top-s" id="rate-progress">gleich geht's los</div></div>
+      </div>
+      <div class="rate-h" id="rate-h">Vertreib dir die Wartezeit – bewerte ein Design aus der Community:</div>
+      <div class="rate-bild">
+        <img id="rate-img" alt="">
+        <span class="rate-stil" id="rate-stil"></span>
+      </div>
+      <div class="rate-motto" id="rate-motto"></div>
+      <div class="stars" id="rate-stars"><button type="button" data-s="1">★</button><button type="button" data-s="2">★</button><button type="button" data-s="3">★</button><button type="button" data-s="4">★</button><button type="button" data-s="5">★</button></div>
+      <div class="rate-done" id="rate-done"></div>
+      <button type="button" class="rate-skip" id="rate-skip">Nächstes Design →</button>
+      <div class="warte-mail hide" id="warte-mail">
+        <button type="button" class="warte-auf" id="warte-auf">Keine Lust zu warten? Wir schicken dir dein Design →</button>
+        <div class="warte-box hide" id="warte-box">
+          <div class="warte-row"><input type="email" id="warte-adr" placeholder="du@beispiel.de" autocomplete="email" inputmode="email"><button type="button" id="warte-ok">Bescheid geben</button></div>
+          <div class="warte-msg" id="warte-msg">Dann kannst du die Seite zumachen – wir schreiben dir, sobald dein Design fertig ist.</div>
+          <button type="button" class="warte-zu hide" id="warte-zu">Fenster schließen</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="result hide" id="result">
+    <div class="tabs" id="tabs"></div>
+    <div class="colors" id="colors">
+      <button type="button" data-c="black" class="on"><i style="background:#111"></i>Schwarz</button>
+      <button type="button" data-c="white"><i style="background:#f4f4f4"></i>Weiß</button>
+    </div>
+    <div class="namesel hide" id="namesel"><label style="margin:0" for="name-pick">Name</label><select id="name-pick"></select><span id="name-count" style="font-size:13px;color:var(--ink3)"></span></div>
+    <!-- 21. Sept., Markus (Malle-Fahrt): "die Groesse war auswaehlbar, aber es war nicht zu sehen,
+         ob es uebernommen hat." Deshalb Groessen als Knoepfe mit sichtbarer Wahl und einer
+         Bestaetigung direkt daneben; das Auswahlfeld bleibt versteckt fuer den Wert. -->
+    <div class="namesel hide" id="sizesel"><label style="margin:0">Größe</label><div class="chips" id="size-chips" role="group" aria-label="Größe"></div><select id="size-pick" class="hide" aria-hidden="true" tabindex="-1"><option value="XS">XS</option><option value="S">S</option><option value="M" selected>M</option><option value="L">L</option><option value="XL">XL</option><option value="XXL">XXL</option><option value="3XL">3XL</option></select><span id="size-ok" style="font-size:13px;color:var(--ink3)">für das gewählte Produkt</span></div>
+    <div class="view" id="view"></div>
+    <img id="img" alt="Deine Vorschau">
+    <div class="bild-hinweis hide" id="bild-hinweis" aria-live="polite"></div>
+    <div class="meta" id="meta"></div>
+    <!-- Fassung 33: Korrektur ohne Neuzeichnen - Texte im Formular aendern, das fertige Motiv bleibt die Vorlage -->
+    <div class="names-tools" id="korrektur-row" style="margin-top:8px"><button type="button" id="korrektur-btn">Text korrigieren</button><span id="korrektur-msg">Ein Tippfehler im Design? Nur den Text ändern, das Motiv bleibt.</span></div>
+    <!-- 19. Okt., Markus: "ein Tool, um an einem Design, das den Kunden gefaellt, nur Teilstuecke zu aendern" - der Kunde sagt, was anders werden soll; das fertige Design bleibt die Vorlage -->
+    <div class="names-tools" id="aendern-row" style="margin-top:8px"><input type="text" id="aendern-text" maxlength="300" placeholder="z. B. den Hintergrund weglassen, den Hund größer, die Schrift in Rot" style="flex:1;min-width:220px;font:inherit;font-size:14px;padding:8px 10px;border:1px solid var(--line);border-radius:7px;background:var(--card);color:var(--ink)"><button type="button" id="aendern-btn">Nur das ändern</button><span id="aendern-msg">Gefällt dir das Design, aber ein Teil soll anders? Sag es Otto – alles andere bleibt, wie es ist.</span></div>
+    <!-- Fassung 26: Kundenfoto - "Gefällt dir dein Design?" Ja löscht das Originalfoto sofort, Nein behält es für den nächsten Versuch -->
+    <div class="intro hide" id="foto-knopf" style="margin-top:14px;border:1px solid var(--accent)">
+      <b style="color:var(--ink)" id="fk-frage"></b>
+      <p id="fk-hinweis" style="margin:4px 0 10px"></p>
+      <div class="names-tools"><button type="button" id="fk-ja"></button><button type="button" id="fk-nein"></button><span id="fk-msg"></span></div>
+    </div>
+    <!-- Fassung 31: Handwerker-/Firmenmotto ist ein Einzelstück - die Frage nach der ganzen Firma kommt erst hier -->
+    <div class="intro hide" id="firma-frage" style="margin-top:14px;border:1px solid var(--accent)">
+      <b style="color:var(--ink)">Braucht ihr das für die ganze Firma?</b>
+      <p style="margin:4px 0 10px">Im Firmenbereich legt ihr Firmendaten und Logo einmal an, wählt Produkte und Farben und bekommt Design und Logo auf Brust und Rücken für die ganze Mannschaft.</p>
+      <div class="names-tools"><a id="firma-ja" href="/firma" style="display:inline-block;padding:10px 16px;border-radius:12px;background:var(--accent);color:#111;font-weight:800;text-decoration:none">Ja, für die Firma →</a><button type="button" id="firma-nein">Nein, Einzelstück</button></div>
+    </div>
+    <div class="intro hide" id="fanclub-gate" style="margin-top:14px;border:1px solid var(--accent)">
+      <b style="color:var(--ink)">Fanclub-Freigabe nötig</b>
+      <p style="margin:4px 0 10px">Vorschau ist da! Bevor wir drucken, brauchen wir eine kurze Bestätigung der/des Fanclub-Vorsitzenden (z. B. Foto vom Fanclub-Ausweis). Zwei Wege:</p>
+      <p style="margin:4px 0 10px">📧 Per E-Mail an <b>otto@motto-otto.de</b> mit der Design-Nummer <b id="fc-nr"></b>.</p>
+      <div class="field" style="margin:8px 0 6px"><label for="fc-email">Deine E-Mail für die Rückmeldung</label><input type="email" id="fc-email" placeholder="z. B. name@beispiel.de" autocomplete="email"><div class="hint">Wir schreiben dir, sobald der Nachweis geprüft ist – freigegeben oder was noch fehlt.</div></div>
+      <div class="names-tools"><button type="button" id="fc-upload-btn">Ausweis hier hochladen</button><input type="file" id="fc-file" accept="image/*" style="display:none"><span id="fc-msg">… oder lade den Nachweis direkt hier hoch.</span></div>
+    </div>
+    <div class="teilen hide" id="teilen">
+      <label class="teilen-sw"><input type="checkbox" id="teilen-an"><span class="teilen-knopf"></span>
+        <span class="teilen-txt"><b>Mein Design darf bewertet werden</b><em id="teilen-hint">Andere sehen dein Motiv bei den Community-Designs und vergeben Sterne. Namenslisten, Größen und deine Daten bleiben immer draußen.</em></span></label>
+      <div class="teilen-msg" id="teilen-msg"></div>
+    </div>
+    <div class="alsoon hide" id="alsoon">
+      <p class="alsoon-h">Dein Design gibt's auch auf … <span>tippen zum Ansehen</span></p>
+      <div class="alsoon-row" id="alsoon-row"></div>
+    </div>
+    <!-- 6. Okt. (Markus: "ja alles machen"): der Kaufknopf stand ueber sechs Bildschirmhoehen unter dem Design.
+         Die Leiste klebt unten im Fenster, bis der Kaufkasten selbst erreicht ist. -->
+    <div class="kauf-leiste hide" id="kauf-leiste"><button type="button" class="go" id="kauf-jetzt">Bestellen</button></div>
+    <div class="kf hide" id="kaufformen">
+      <p class="kf-h">Bestellen <span>Fertig bedruckt geliefert – veredelt in Deutschland</span></p>
+      <div class="kf-row" id="kf-row"></div>
+      <div class="kf-form hide" id="kf-form">
+        <div class="kf-stufen hide" id="kf-stufen"></div>
+        <label class="kf-seite hide" id="kf-seite-box"><input type="checkbox" id="kf-seite"><span><b>Auch hinten bedrucken</b><em id="kf-seite-preis"></em></span></label>
+        <div class="kf-fields">
+          <label>Für welches Produkt?<select id="kf-garment"></select></label>
+          <label>Menge<input type="number" id="kf-menge" min="1" max="2000" value="1" inputmode="numeric"></label>
+          <label id="kf-name-box">Euer Name<input type="text" id="kf-name" maxlength="80" placeholder="z. B. Lena vom Abi-Komitee"></label>
+          <label>E-Mail für die Antwort<input type="email" id="kf-email" maxlength="120" placeholder="du@beispiel.de" autocomplete="email"></label>
+        </div>
+        <!-- 6. Okt.: Warenkorb - mehrere Teile mit demselben Design in einem Gang zur Kasse -->
+        <div class="kf-korb hide" id="kf-korb"></div>
+        <div class="kf-rechnung hide" id="kf-rechnung"></div>
+        <textarea id="kf-text" placeholder="Noch etwas, das wir wissen sollten? Termin, Größenaufteilung, eigene Textilien …"></textarea>
+        <div class="names-tools kf-knoepfe"><button type="button" id="kf-send">Anfrage senden</button><button type="button" id="kf-dazu" class="hide">+ Noch ein Teil dazu</button><span id="kf-msg"></span></div>
+      </div>
+    </div>
+    <div class="intro hide" id="names-edit" style="margin-top:14px">
+      <b style="color:var(--ink)">Namen ändern oder ergänzen</b>
+      <p style="margin:4px 0 10px">Das Design bleibt genau so – nur die Namen werden neu gesetzt. Ein Name je Zeile, optional mit Größe dahinter (z. B. „Lena, M“).</p>
+      <textarea id="names-edit-text"></textarea>
+      <div class="field hide" style="margin-top:10px"><label for="names-edit-auf">Wo sollen die Namen hin?</label><select id="names-edit-auf">
+        <option value="vorne">Vorne im Motiv – jeder Name in seinem eigenen Design</option>
+        <option value="vorne-kader">Vorne das Motiv, hinten alle Namen (Namensliste)</option>
+        <option value="brust-kader">Hinten das große Motiv mit allen Namen, vorne ein kleiner Brust-Print mit dem eigenen Namen</option></select></div>
+      <div class="names-tools"><button type="button" id="names-edit-save">Namen übernehmen</button><a id="bestellliste" href="#" download style="font-weight:700;color:var(--accent)">Bestellliste (CSV) herunterladen</a><span id="names-edit-msg"></span></div>
+    </div>
+    <div class="intro hide" id="gate" style="margin-top:14px">
+      <b id="gate-title" style="color:var(--ink)">Design sichern</b>
+      <p id="gate-text" style="margin:4px 0 10px">Melde dich mit deiner E-Mail an – ganz ohne Passwort. Dann findest du dieses und alle weiteren Designs jederzeit in deinem Konto wieder.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><input type="email" id="gate-email" placeholder="du@beispiel.de" style="flex:1;min-width:200px"><button type="button" class="go" id="gate-send" style="width:auto;padding:12px 16px">Anmelde-Link schicken</button></div>
+      <div class="hint" id="gate-msg"></div>
+    </div>
+    <button type="button" class="go" id="again" style="margin-top:14px;background:var(--card2);color:var(--ink);border:1px solid var(--line)">Noch eine Variante – jeder Entwurf ist ein Unikat</button>
+    <div class="intro hide" id="vote-create" style="margin-top:18px">
+      <b style="color:var(--ink)">Zur Abstimmung schicken</b>
+      <p style="margin:4px 0 12px">Du hast mehrere Designs für dieses Motto – lass die Gruppe abstimmen, welches gedruckt wird.</p>
+      <div class="vote-cands" id="vote-cands"></div>
+      <div style="margin:12px 0"><label>Frist: <select id="vote-days"><option value="2">2</option><option value="3" selected>3</option><option value="5">5</option><option value="7">7</option></select> Tage</label></div>
+      <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:10px">
+        <label><input type="checkbox" id="ch-gruppe" checked> Link für die WhatsApp-Gruppe</label>
+        <label><input type="checkbox" id="ch-mail" checked> E-Mail an Teilnehmer (sofern Adressen hinterlegt)</label>
+        <label style="color:var(--ink3)"><input type="checkbox" id="ch-wa" disabled> WhatsApp-Einzelnachricht <small>(bald)</small></label>
+      </div>
+      <button type="button" class="go" id="vote-start">Abstimmung starten</button>
+      <div class="hide" id="vote-status" style="margin-top:14px"></div>
+    </div>
+  </div>
+
+  <div class="top hide" id="top">
+    <h2 class="top-h">Beliebteste Designs</h2>
+    <div class="top-grid" id="top-grid"></div>
+  </div>
+  <footer class="site">Motto Otto · Jedes Produkt wird auf Bestellung gefertigt und in Deutschland veredelt. · <a href="/impressum">Impressum</a> · <a href="/datenschutz">Datenschutz</a> · <a href="/agb">AGB</a></footer>
+  <!-- Fassung 73 (Markus, 17. Sept.): Der Widerruf gehoert sichtbar auf die Seite, nicht als
+       kleiner Link zwischen anderen. Eigener, hervorgehobener Knopf unter der Fusszeile. -->
+  <div class="wruf-zeile"><a class="wruf" href="/widerruf">Vertrag widerrufen oder kündigen</a></div>
+</div>
+
+<script>window.MOTTO = __MOTTO_JSON__;</script>
+<!-- Fassung 77: Hier stand der Excel-Leser von cdnjs, knapp ein Megabyte, auf jeder Mottoseite.
+     Gebraucht wird er nur, wenn jemand eine Namensliste als Tabelle hochlaedt - er wird
+     deshalb erst dann geholt, siehe xlsxHolen() in motto-seite.js. -->
+<script src="/preise.js"></script>
+<script src="/abfolge.js?v=__ASSET_V__"></script>
+<script src="/motto-seite.js?v=__ASSET_V__"></script>
+<script src="/otto-gespraech.js?v=__ASSET_V__"></script>
+</body>
+</html>

@@ -1,0 +1,301 @@
+[
+  {
+    "firma": "Ball-z",
+    "ort": "Harmstorf",
+    "plz": [
+      "21228"
+    ],
+    "landkreis": "Harburg",
+    "bundesland": "Niedersachsen",
+    "namen": [
+      "Ball-z",
+      "Ballz",
+      "Ball Z",
+      "Ball-z Harmstorf"
+    ],
+    "datei": "ball-z.png",
+    "farben": [],
+    "freigabe": {
+      "datum": "2026-09-22",
+      "von": "Ball-z",
+      "vermerk": "Markus, 22. Sept. 2026: \"Ich habe von drei Firmen schon die Erlaubnis, das Logo zu nutzen.\" Logo wird von der Firmenseite geholt (webseite); Quelle und Datum stehen danach unter \"geholt\". Ohne Datei bleibt es beim Rand in den Firmenfarben."
+    },
+    "punkt": [
+      53.3481,
+      9.9867
+    ],
+    "radiusM": 150,
+    "adresse": "Hauptstraße 16, 21228 Harmstorf",
+    "webseite": "https://www.ball-z.de",
+    "geholt": null,
+    "punktQuelle": "Vor Ort gemessen, 23. Sept. 2026: Markus stand direkt vor dem Gebaeude (Handy-Ortung, rund 25 m genau). OpenStreetMap kennt die Hausnummer 16 in der Hauptstrasse Harmstorf NICHT - jede Abfrage liefert die ganze Strasse zurueck (highway/secondary, ueber einen Kilometer lang). Der daraus geholte Punkt lag 571 m daneben, also ausserhalb des Radius von 150 m, und die Firma wurde nicht erkannt. Eine Messung vor der Tuer ist genauer als alles, was der Geocoder hier hergibt."
+  },
+  {
+    "firma": "C.C.E. Sportswear",
+    "ort": "Marschacht",
+    "plz": [
+      "21436"
+    ],
+    "landkreis": "Harburg",
+    "bundesland": "Niedersachsen",
+    "namen": [
+      "C.C.E. Sportswear",
+      "CCE Sportswear",
+      "CC E Sportswear"
+    ],
+    "datei": "cce-sportswear.png",
+    "farben": [],
+    "freigabe": {
+      "datum": "2026-09-22",
+      "von": "C.C.E. Sportswear",
+      "vermerk": "Markus, 22. Sept. 2026: \"Ich habe von drei Firmen schon die Erlaubnis, das Logo zu nutzen.\" Logo wird von der Firmenseite geholt (webseite); Quelle und Datum stehen danach unter \"geholt\". Ohne Datei bleibt es beim Rand in den Firmenfarben."
+    },
+    "punkt": [],
+    "radiusM": 150,
+    "adresse": "",
+    "webseite": "https://www.cce-sportswear.de",
+    "geholt": null
+  },
+  {
+    "firma": "DTF Express",
+    "ort": "Erkelenz",
+    "plz": [
+      "41812"
+    ],
+    "landkreis": "Heinsberg",
+    "bundesland": "Nordrhein-Westfalen",
+    "namen": [
+      "DTF Express",
+      "DTF-Express"
+    ],
+    "datei": "dtf-express.png",
+    "farben": [],
+    "freigabe": {
+      "datum": "2026-09-22",
+      "von": "DTF Express",
+      "vermerk": "Markus, 22. Sept. 2026: \"Ich habe von drei Firmen schon die Erlaubnis, das Logo zu nutzen.\" Logo wird von der Firmenseite geholt (webseite); Quelle und Datum stehen danach unter \"geholt\". Ohne Datei bleibt es beim Rand in den Firmenfarben."
+    },
+    "punkt": [],
+    "radiusM": 150,
+    "adresse": "",
+    "webseite": "https://www.dtf-express.de",
+    "geholt": null
+  },
+  {
+    "firma": "Luigi's Pizza UG",
+    "anzeige": "Luigi",
+    "ort": "Jesteburg",
+    "plz": [
+      "21266"
+    ],
+    "landkreis": "Harburg",
+    "bundesland": "Niedersachsen",
+    "namen": [
+      "Luigi's Pizza UG",
+      "Luigis Pizza",
+      "Luigi's Pizza",
+      "Luigi Pizzawagen",
+      "Luigi"
+    ],
+    "datei": "luigis-pizza.png",
+    "farben": [],
+    "gewerk": "Pizzeria",
+    "gastro": true,
+    "freigabe": {
+      "datum": "2026-09-26",
+      "von": "Luigi's Pizza UG",
+      "vermerk": "Markus, 26. Sept. 2026: \"Fuer folgende Adresse gebe ich dir jetzt noch ein Logo mit. Ist diese Adresse ausgewaehlt, ist dieses Logo freigegeben, und dort koennen wir das testen, dass du im Auswahlfeld bis maximal fuenf Sterne geben kannst. Und da muss natuerlich irgendwo richtig cool ne Pizza zu sehen sein.\" Logo von ihm mitgegeben und freigestellt (postkarte/logos/luigis-pizza.png) - es wird NICHT von der Seite geholt."
+    },
+    "punkt": [
+      53.3121,
+      9.9647
+    ],
+    "radiusM": 150,
+    "adresse": "Harburger Straße 10, 21266 Jesteburg",
+    "webseite": "",
+    "geholt": null,
+    "punktQuelle": "26. Sept. 2026 gemessen: Nominatim und Photon liefern fuer \"Harburger Strasse 10, 21266 Jesteburg\" beide dasselbe Gebaeude (OSM way 1026520984, 53.3120812 / 9.9649087). 20 m daneben steht in OSM der Knoten \"Luigi Pizzawagen\" (amenity=fast_food, 53.31211 / 9.9646701) - genommen ist der Betrieb selbst, gerundet auf vier Stellen.",
+    "motiv": "A WHOLE PIZZA, and it is the second hero of this card, right after the people: a round Neapolitan pizza fresh from the stone oven - tomato, melting mozzarella, fresh basil, the rim puffed and lightly charred in places, the surface glossy. Show it BIG and appetising, close enough to see the bubbles in the crust, either whole from above or with one slice being lifted and the cheese pulling into long threads. It carries no lettering of any kind. Show it ONCE.",
+    "kueche": "italian",
+    "tisch": {
+      "tor": "/bei/luigispizzaug",
+      "seit": "2026-10-01",
+      "vermerk": "Markus, 1. Okt. 2026: \"Heraus damit, einmal fuer Luigi und fuer das EAST26, bitte direkt mit jeweiligem QR-Code.\" Tisch-QR -> /bei/luigispizzaug; Haus-Karte = die Pop-Art-Probekarte vom 26. Sept. mit seinem Logo."
+    }
+  },
+  {
+    "firma": "EAST26",
+    "ort": "Santanyí",
+    "plz": [
+      "07650"
+    ],
+    "land": "Spanien",
+    "region": "Illes Balears, Mallorca",
+    "namen": [
+      "EAST26",
+      "East26",
+      "East 26",
+      "EAST26 Restaurante",
+      "East 26 Restaurante",
+      "EAST26 Bar & Restaurante"
+    ],
+    "datei": "east26.png",
+    "farben": [
+      "#997209"
+    ],
+    "farbenQuelle": "Am Logo gemessen, 29. Sept. 2026: ein einziger Ton, Gold rgb(153,114,9) auf 96,6 % der sichtbaren Pixel, der Rest sind Kantenpixel desselben Tons. Weiss ist beim Original nur der Grund, keine Farbe.",
+    "gewerk": "Restaurant und Bar",
+    "gastro": true,
+    "kueche": "mediterranean",
+    "freigabe": {
+      "datum": "2026-09-29",
+      "von": "EAST26 Restaurante",
+      "vermerk": "Markus, 29. Sept. 2026: \"Das ist das erste Objekt in Spanien, was mitmachen moechte, dass das Logo freigegeben\" - und: \"wenn da vor Ort jemand eine Postkarte verschicken will, muss die Postkarte wirklich megageil sein.\" Logo als PDF mitgegeben (EAST26.pdf, Vektor, Gold auf Weiss), freigestellt nach postkarte/logos/east26.png. Es wird NICHT von der Webseite geholt: der Eintrag hat Punkt und Datei, darum ueberspringt der Start das Holen. Ein Holen von Hand (/api/admin/firmenlogo) wuerde das Original auf dem Volume durch ein Seitenbild ersetzen - nicht tun."
+    },
+    "punkt": [
+      39.354,
+      3.1269
+    ],
+    "radiusM": 150,
+    "adresse": "Carrer del Bisbe Verger 26, 07650 Santanyí",
+    "webseite": "https://www.east26-restaurante.com",
+    "geholt": null,
+    "punktQuelle": "29. Sept. 2026, Nominatim fuer \"Carrer del Bisbe Verger 26, Santanyí\": OSM-Knoten 502313544 \"East26\" (amenity=restaurant, bar=yes, cuisine international;regional;japanese, Tel. +34 871 031 838) bei 39.3540236 / 3.1269200 - der Betrieb selbst, gerundet auf vier Stellen. Die Strasse heisst in OSM genauso wie in der Anschrift, der Strassenabgleich (strasseAus) greift also.",
+    "was": "Restaurant and meeting place in the south-east of Mallorca: international and Mediterranean dishes, refreshing drinks at the bar, tables in the sheltered patio under palms and sun sails or indoors in the comedor, open all day from noon till night.",
+    "wasQuelle": "east26-restaurante.com, Startseite, 29. Sept. 2026 - Beschreibung und Seitentext (\"Restaurant und Treffpunkt in Santanyí ... mediterranes Flair im Patio oder drinnen\"). Von Hand aus der Seite gezogen; das Textmodell liest diese Firma nicht, weil der Start das Holen ueberspringt (Logo und Punkt liegen vor).",
+    "stichworte": [
+      "grilled octopus",
+      "tuna tartare",
+      "ceviche",
+      "a glass of chilled Mallorcan white wine",
+      "cocktails from the bar",
+      "palm fronds and sun sails over the patio"
+    ],
+    "produktbilder": [
+      "https://static.wixstatic.com/media/8285d8_42b1eec3d1764627ba04b6d177565015~mv2.jpg/v1/fill/w_1600,h_925,al_c,q_85/8285d8_42b1eec3d1764627ba04b6d177565015~mv2.jpg",
+      "https://static.wixstatic.com/media/8285d8_075b044edfbe406a89107e5cacd07c59~mv2.jpg/v1/fit/w_1400,h_1400,q_85/8285d8_075b044edfbe406a89107e5cacd07c59~mv2.jpg"
+    ],
+    "produktbilderQuelle": "Startseite east26-restaurante.com (Wix-Galerie), 29. Sept. 2026: das Titelbild (Patio mit Palmen und Sandsteinfassade, 1962x1134) und ein Galeriebild vom Patio unter den Sonnensegeln. produktBilder() faende auf dieser Seite nur die 147-Pixel-Vorschauen der Wix-Galerie, darum stehen die Adressen in voller Groesse hier im Eintrag.",
+    "motiv": "THE TABLE IN THE PATIO, and it is the second hero of this card, right after the people: one beautifully plated Mediterranean dish - grilled octopus with a little char on it, a wedge of lemon, a thread of olive oil - and beside it a glass of chilled white wine with beads of cold on it, on a wooden table in the dappled shade of the sun sails. Show it BIG and appetising, close enough to see the char and the beads. It carries no lettering of any kind. Show it ONCE.",
+    "lizenz": {
+      "prozent": 20,
+      "artikel": true,
+      "seit": "2026-10-01",
+      "vermerk": "Markus, 1. Okt. 2026: \"Mach das komplett fertig mit 20 % Lizenzgebuehr fuer EAST26.\" Und: \"ueber Stripe direkt ausgezahlt - die 20 % an den Gastronom, bei Gutscheinen genau andersrum.\" ARTIKEL (Shirt, Tasse, Poster, gedruckte Postkarte): 20 % des Netto-Verkaufspreises gehen per Stripe-Transfer an das Connect-Konto von EAST26 (lizenzen.js, ausgeloest vom Shopify-Webhook). GUTSCHEIN: der Betrag geht direkt an EAST26, 5 % an uns - keine Lizenz obendrauf."
+    },
+    "tisch": {
+      "tor": "/bei/east26",
+      "seit": "2026-10-01"
+    }
+  },
+  {
+    "firma": "Bestes vom Elbdeich",
+    "ort": "Hamburg-Moorburg",
+    "plz": [
+      "21079"
+    ],
+    "bundesland": "Hamburg",
+    "land": "Deutschland",
+    "namen": [
+      "Bestes vom Elbdeich",
+      "Bestes vom Elbdeich Hofladen",
+      "Hofladen Moorburg",
+      "Elbdeich Hofladen"
+    ],
+    "datei": "bestes-vom-elbdeich.png",
+    "farben": [
+      "#FF353A",
+      "#9C8977",
+      "#449A23"
+    ],
+    "farbenQuelle": "30. Sept. 2026, am Original-Logo von Markus gemessen (3126x2266, freigestellt, im Repo 1413x1024): Rot rgb(255,53,58) 58 % (Apfel und ELBDEICH), Taupe rgb(156,137,119) 38 % (Kuh und BESTES VOM), Gruen rgb(68,154,35) 4 % (Blatt). Die Homepage selbst baut mit einem dunkleren Rot (#C03A2B, achtmal im Stylesheet) - Regel vom 22. Sept.: die Farben kommen aus dem LOGO. Die ersten Probekarten und die drei Gutschein-Entwuerfe liefen noch mit #C03A2B.",
+    "gewerk": "Hofladen und SmartStore",
+    "gastro": false,
+    "freigabe": {
+      "datum": "2026-09-30",
+      "von": "Bestes vom Elbdeich",
+      "vermerk": "Markus, 30. Sept. 2026: \"https://bestes-vom-elbdeich.de - fuer diese Seite und diesen Standort haben wir die Freigabe, das Logo zu benutzen. Wenn jemand dort vor Ort eine Postkarte macht, soll die ein cooles Design von Bestes vom Elbdeich sein.\" Dazu der erste Testfall fuer Gutscheine. Das Logo auf der Seite gibt es nur als 72x72-AVIF (LogoBVE.avif; /assets/logo.png und alle ueblichen Pfade 404) - am 30. Sept. hat Markus das ORIGINAL geschickt (PNG 3126x2266 mit Alphakanal, Bildmarke plus Schriftzug BESTES VOM ELBDEICH), freigestellt und auf 1024 Hoehe in postkarte/logos/bestes-vom-elbdeich.png. Es wird NICHT von der Seite geholt (Punkt und Datei liegen vor); ein Holen von Hand wuerde das Original auf dem Volume durch die 72-Pixel-Fassung ersetzen - nicht tun."
+    },
+    "punkt": [
+      53.4987,
+      9.8893
+    ],
+    "radiusM": 150,
+    "adresse": "Moorburger Elbdeich 447, 21079 Hamburg",
+    "webseite": "https://bestes-vom-elbdeich.de",
+    "geholt": null,
+    "punktQuelle": "30. Sept. 2026, Nominatim fuer \"Moorburger Elbdeich 447, 21079 Hamburg\": OSM-Knoten 12589821801 \"Bestes vom Elbdeich\" (shop=farm, opening_hours 24/7, website bestes-vom-elbdeich.de) bei 53.4986762 / 9.8893091, daneben das Gebaeude way 303681258 (53.4988330 / 9.8891464). Genommen ist der Betrieb selbst, gerundet auf vier Stellen.",
+    "was": "Farm shop and 24-hour SmartStore on the Elbe dike in Hamburg-Moorburg: Angus beef from the farm's own pastures, free-range eggs in many colours, apples and cherries from the own orchard, apple juice, yoghurt and preserves - straight from the farm, open every day.",
+    "wasQuelle": "bestes-vom-elbdeich.de, Startseite, 30. Sept. 2026 (Beschreibung: \"Angus-Rind, Freiland-Eier und eigene Aepfel - direkt vom Hof in Hamburg-Moorburg. Rund um die Uhr im SmartStore.\"; Ueberschriften Angus-Rind, Freiland-Eier, Aepfel & Kirschen, Joghurt, Apfelsaft, Eingemachtes). Von Hand aus der Seite gezogen; der Start ueberspringt das Holen, weil Logo und Punkt vorliegen.",
+    "stichworte": [
+      "a wooden crate of red apples",
+      "free-range eggs in brown, white and green",
+      "a black Angus cow on the dike pasture",
+      "a bowl of dark cherries",
+      "a bottle of cloudy apple juice",
+      "jars of jam and preserves"
+    ],
+    "produktbilder": [
+      "https://bestes-vom-elbdeich.de/assets/Startseite/Freiland_eier_hamburg_moorburg.avif",
+      "https://bestes-vom-elbdeich.de/assets/Startseite/Angus-Rinder-Hamburg-Moorburg.avif"
+    ],
+    "produktbilderQuelle": "Startseite bestes-vom-elbdeich.de, 30. Sept. 2026: die Henne mit den bunten Eiern (2000x1500) und die Angus-Kuh auf der Weide (2000x1125). Die Seite hat NUR AVIF-Bilder - gemessen am Bilddienst: eine AVIF-Adresse als Vorlage wird abgewiesen (400 \"Invalid image data\"), darum wandelt der Server Vorlagen, die nicht PNG/JPEG/WebP sind, vor dem Aufruf um (vorlagenTauglich).",
+    "motiv": "THE HARVEST TABLE, and it is the second hero of this card, right after the people: a rough wooden crate heaped with red apples, beside it an open carton of free-range eggs in brown, white and pale green, and a bowl of dark cherries - on a plank table in front of the farm shop, in soft northern daylight. Show it BIG and appetising, close enough to see the shine on the apples and the speckles on the eggs. It carries no lettering of any kind. Show it ONCE."
+  },
+  {
+    "firma": "DTF Factory",
+    "ort": "Harmstorf",
+    "plz": [
+      "21228"
+    ],
+    "landkreis": "Harburg",
+    "bundesland": "Niedersachsen",
+    "land": "Deutschland",
+    "namen": [
+      "DTF Factory",
+      "DTF-Factory",
+      "DTF Factory GmbH",
+      "DTF-Factory GmbH",
+      "dtf-factory.com",
+      "DTF Queen",
+      "DTF-Queen"
+    ],
+    "datei": "dtf-factory.png",
+    "farben": [
+      "#6FAF33"
+    ],
+    "farbenQuelle": "Am Original-Logo von dtf-factory.com gemessen (1. Okt. 2026, dominantColors auf der Schriftzeile): das Gruen von \"DTF Factory GmbH\" #6FAF33 (3,5 % der Schriftzeile; Weiss ist Grund, die hellen Gruentoene sind Kantenpixel). Das Einhorn darueber ist ein Regenbogen aus Pink, Gelb, Tuerkis, Rot und Violett - zu bunt fuer eine Hausfarbe, deshalb traegt nur die Schrift den Rand. Markus, 1. Okt.: \"DTF-factory.com\" - nicht dtf-queen.com (das ist der Shop derselben GmbH).",
+    "gewerk": "DTF-Drucktechnik: Folien, Tinten, Pulver, Trockner, Thermodruckpressen, Beratung (B2B)",
+    "gastro": false,
+    "freigabe": {
+      "datum": "2026-10-01",
+      "von": "DTF Factory GmbH (Markus Assemacher, Geschaeftsfuehrer)",
+      "vermerk": "Markus, 1. Okt. 2026, zur Karte aus Im Dorfe: \"hiermit ist das Logo und die Internetseite freigegeben, weil es ist ja meine Firma.\" Zweite Firma von Markus neben Ball-z, Marke \"DTF Queen - Koenigstransfers\". Handelsregister Tostedt HRB 209743, Im Dorfe 9. Webseite laut Markus (1. Okt.): \"DTF-factory.com\". Original-Logo von dort (dtf-factory-original-wordmark, 420x270 PNG auf Weiss, buntes Einhorn mit gruener Schrift), freigestellt per Flutfuellung vom Rand und auf 1024 breit gebracht - postkarte/logos/dtf-factory.png."
+    },
+    "punkt": [
+      53.3487,
+      9.987
+    ],
+    "radiusM": 150,
+    "adresse": "Im Dorfe 9, 21228 Harmstorf",
+    "webseite": "https://dtf-factory.com",
+    "geholt": null,
+    "punktQuelle": "1. Okt. 2026, Nominatim fuer \"Im Dorfe 9, 21228 Harmstorf\": OpenStreetMap kennt die Hausnummer nicht, nur die Strasse \"Im Dorfe\" (residential) bei 53.3487022 / 9.9870256 - das ist die Stelle, an der Markus am 1. Okt. stand (Live-Antwort: Strasse \"Im Dorfe\", 2 m). Ball-z (Hauptstrasse 16) liegt 70 m daneben; an diesem Punkt werden beide als Absender angeboten. Die Firma selbst steht nicht in OpenStreetMap, darum taucht sie nie bei den Standort-Knoepfen auf - nur hier, als Freigabe.",
+    "was": "Supplier and advisor for professional DTF (direct-to-film) textile printing in the Lueneburg Heath: own films, inks and powders, conveyor dryers and thermal heat presses, an in-house production and a showroom where businesses see the whole chain at work - \"Produktionstechnik, die mitdenkt\", personal advice before anyone invests.",
+    "wasQuelle": "dtf-factory.com, Startseite, 1. Okt. 2026: \"Produktionstechnik, die mitdenkt\", \"Persoenlich beraten\", \"Ihre Produktion. Unsere Beratung\"; Navigation Leistung, Eigene Produktion, Materialien, Wissen, Trockner, Pressen, Showroom. Nur B2B. Von Hand aus der Seite gezogen.",
+    "stichworte": [
+      "a long white conveyor dryer with its belt running out of the tunnel",
+      "a thermal heat press with its plate lifted and a dark shirt underneath",
+      "a roll of DTF transfer film",
+      "a sheet of printed transfer film with a bright multicolour design on it",
+      "a stack of freshly pressed t-shirts",
+      "bottles of ink in cyan, magenta, yellow, black and white"
+    ],
+    "produktbilder": [
+      "https://dtf-factory.com/manus-storage/dtf-production_de3f848f_83ec75ce.webp",
+      "https://dtf-factory.com/manus-storage/dryer-630_ec0a3c3d.webp"
+    ],
+    "produktbilderQuelle": "Startseite dtf-factory.com (manus-storage), 1. Okt. 2026: die eigene Produktion (Halle mit Drucker und Trockner, 1600x1200 WebP) und der Trockner 630 (1200x800 WebP). Dazu auf der Seite: Trockner 300, Wagner-Thermodruckpresse, Showroom. WebP nimmt der Bilddienst; AVIF nicht (vorlagenTauglich wandelt ohnehin um).",
+    "motiv": "THE PRESS AT WORK, and it is the second hero of this card, right after the people: a thermal heat press just lifted open, a dark shirt on its plate, on it a freshly pressed print glowing in many colours, the carrier film peeling away at one corner - and behind it the long white conveyor dryer of the workshop with its belt running. Show it BIG, close enough to see the shine of the fresh print and the texture of the fabric. The print on the shirt is an abstract burst of colour, NOT a copy of any design, NOT a unicorn and NOT a logo. It carries no lettering of any kind. Show it ONCE."
+  }
+]

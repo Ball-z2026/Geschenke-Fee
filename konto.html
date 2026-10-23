@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mein Konto – Motto Otto</title>
+<meta name="robots" content="noindex">
+<!-- Fassung 79: Hier stand die Einbindung von fonts.googleapis.com. Das bedeutete fuer jeden
+     Besucher drei Wege hintereinander, bevor die Schrift da ist: eine zweite, fremde Adresse
+     aufloesen und verschluesseln, dort ein Stylesheet holen, darin erst die Adresse der
+     Schriftdatei lesen, dann die Schrift holen. Jetzt liegen beide Schriften bei uns, werden
+     schon beim Lesen des Kopfes geholt und sind auf Latein zugeschnitten. Archivo traegt als
+     Variable Font alle Staerken von 400 bis 900 in einer einzigen Datei. -->
+<link rel="preload" href="/fonts/archivo-v1.woff2" as="font" type="font/woff2" crossorigin>
+<!-- 1. Okt.: gemeinsames Farbblatt aller Kundenseiten (Logo-Farben, Schriften, Kopf) -->
+<link rel="preload" href="/fonts/anton-v1.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/marke.css">
+<style>
+@font-face{font-family:"Archivo";src:url("/fonts/archivo-v1.woff2") format("woff2");font-weight:400 900;font-style:normal;font-display:swap}
+</style>
+<link rel="icon" href="/favicon-64.png" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style>
+  :root{--bg:#14131a;--card:#1d1c25;--card2:#26242f;--line:#35323f;--ink:#f4f2f7;--ink2:#b6b1c2;--ink3:#8b8598;--accent:#ffc542;--accent-ink:#1b1710;--ok:#5fcf95;--warn:#ff8f6b}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Archivo",ui-sans-serif,system-ui,sans-serif;font-size:16px;line-height:1.55}
+  .wrap{max-width:860px;margin:0 auto;padding:36px 20px 90px}
+  .brand{font-weight:800;font-size:30px;letter-spacing:-.02em;margin:0 0 20px}
+  /* Einheitliche Kopfzeile + Fusszeile (alle Kundenseiten) */
+  footer.site{margin:44px 0 0;color:var(--ink3);font-size:13px;border-top:1px solid var(--line);padding-top:18px;line-height:1.6}
+  footer.site a{color:inherit}
+  .brand span{color:var(--accent)}
+  h2{font-size:18px;margin:26px 0 10px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}
+  label{display:block;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);font-weight:700;margin-bottom:6px}
+  input[type=email]{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:8px;background:var(--card2);color:var(--ink);font:inherit;font-size:16px}
+  .btn{display:inline-block;padding:12px 18px;border:0;border-radius:8px;background:var(--accent);color:var(--accent-ink);font:inherit;font-weight:800;font-size:15px;cursor:pointer;text-decoration:none}
+  .btn.ghost{background:var(--card2);color:var(--ink);border:1px solid var(--line)}
+  .btn[disabled]{opacity:.5;cursor:default}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .stat{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+  .stat div{background:var(--card2);border-radius:8px;padding:12px 14px}
+  .stat b{display:block;font-size:24px;font-weight:800}
+  .stat small{color:var(--ink3)}
+  .plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:10px}
+  .plan{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:6px}
+  .plan b{font-size:17px}
+  .plan .p{font-size:26px;font-weight:800;color:var(--accent)}
+  .plan small{color:var(--ink3);flex:1}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+  .d{background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .d img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;background:var(--card2)}
+  .d .m{padding:8px 10px;font-size:12px;color:var(--ink3);font-family:ui-monospace,monospace}
+  .d .m a{color:var(--accent);text-decoration:none}
+  /* Teil und Farbe direkt am Design wechseln - genau das verspricht die Fertig-Mail */
+  .d .w{display:flex;flex-wrap:wrap;gap:5px;padding:8px 10px 0}
+  .d .w button{border:1px solid var(--line);background:var(--card2);color:var(--ink2);border-radius:999px;padding:5px 10px;font:inherit;font-size:11.5px;font-weight:700;cursor:pointer}
+  .d .w button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+  .d .w .sp{flex-basis:100%;height:0}
+  .msg{margin-top:10px;font-size:14.5px;color:var(--ink2);min-height:20px}
+  .msg.err{color:var(--warn)} .msg.ok{color:var(--ok)}
+  .hide{display:none}
+  .wruf-zeile{margin:14px 0 6px;text-align:center}
+  .wruf{display:inline-block;background:#ffc542;color:#1a1712;border:2px solid #ffc542;border-radius:999px;font-weight:800;font-size:15px;line-height:1.2;padding:12px 26px;text-decoration:none;box-shadow:0 2px 10px rgba(255,197,66,.25)}
+  .wruf:hover,.wruf:focus{background:#ffd775;border-color:#ffd775;text-decoration:none;outline:none}
+
+  /* ===== 1. Okt.: Konto in den Logo-Farben (marke.css, MASTER.md) ===== */
+  .brand{font-family:var(--display);font-weight:400;font-size:44px;letter-spacing:.005em;line-height:1}
+  .brand span,.plan .p,.d .m a{color:var(--beere)}
+  h2{font-size:28px;margin:30px 0 12px}
+  .card,.plan,.d,.stat div{background:#fff;border:2px solid var(--tinte);border-radius:14px}
+  .d img{background:var(--hemd)}
+  label{text-transform:none;letter-spacing:0;font-size:15px;font-weight:800;color:var(--tinte)}
+  .btn{background:var(--gruen);color:var(--tinte);border:var(--kontur);box-shadow:var(--stempel);border-radius:999px;min-height:44px;transition:transform .12s,box-shadow .12s}
+  .btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--tinte)}
+  .btn.ghost{background:#fff;color:var(--tinte);border:var(--kontur)}
+  .d .w button{background:#fff;color:var(--tinte);border:2px solid var(--tinte)}
+  .d .w button.on{background:var(--tinte);color:#fff;border-color:var(--tinte)}
+  footer.site{border-top:var(--kontur);color:var(--text2)}
+</style>
+</head>
+<body class="mo-seite">
+<header class="mo-kopf"><div class="mo-in">
+  <a class="mo-marke" href="/"><img src="/logo.png" alt="" width="36" height="42">Motto Otto</a>
+  <nav class="mo-nav" aria-label="Hauptmenü">
+    <a href="/mottos">Mottos</a>
+    <a href="/so-gehts">So geht’s</a>
+    <a href="/firma">Firmen</a>
+    <a href="/partner">Partner</a>
+    <a href="/event">Event</a>
+  </nav>
+  <a class="mo-knopf hell mo-konto" href="/konto" aria-current="page">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8.5" r="4"/><path d="M4 21c1.4-4 4.4-6 8-6s6.6 2 8 6"/></svg>
+    Konto
+  </a>
+</div></header>
+<div class="wrap">
+  <h1 class="brand">Mein <span>Konto</span></h1>
+
+  <div class="card hide" id="login">
+    <p style="margin:0 0 14px;color:var(--ink2)">Gib deine E-Mail-Adresse ein – du bekommst einen Anmelde-Link, ganz ohne Passwort. Deine bisherigen Entwürfe aus diesem Browser werden dabei in dein Konto übernommen.</p>
+    <label for="email">E-Mail</label>
+    <div class="row">
+      <input type="email" id="email" placeholder="du@beispiel.de" style="flex:1;min-width:220px">
+      <button class="btn" id="send">Anmelde-Link schicken</button>
+    </div>
+    <div class="msg" id="login-msg"></div>
+  </div>
+
+  <div id="account" class="hide">
+    <div class="card">
+      <div class="row" style="justify-content:space-between">
+        <div>Angemeldet als <b id="who"></b></div>
+        <button class="btn ghost" id="logout">Abmelden</button>
+      </div>
+      <div class="stat" style="margin-top:14px">
+        <div><b id="s-free">0</b><small>kostenfreie Designs übrig</small></div>
+        <div><b id="s-plan">–</b><small id="s-plan-l">Mitgliedschaft</small></div>
+        <div><b id="s-credits">0</b><small>gekaufte Einzeldesigns</small></div>
+        <div><b id="s-count">0</b><small>Designs insgesamt</small></div>
+      </div>
+      <div class="msg" id="pay-msg"></div>
+    </div>
+
+    <h2>Mehr Designs</h2>
+    <div class="card" id="shop">
+      <div class="plans">
+        <div class="plan"><b>Einzeldesign</b><span class="p" id="p-single">1 €</span><small>Jedes weitere Design einzeln – ohne Abo.</small>
+          <div class="row"><input type="number" id="qty" min="1" max="50" value="1" style="width:70px;padding:9px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font:inherit"><button class="btn" data-kind="single">Kaufen</button></div></div>
+        <div class="plan"><b>Member 100</b><span class="p" id="p-m100">29 € / Monat</span><small><span id="p-m100-d">100</span> Designs im Monat, monatlich kündbar.</small><button class="btn" data-kind="m100">Member werden</button></div>
+        <div class="plan"><b>Member 400</b><span class="p" id="p-m400">49 € / Monat</span><small><span id="p-m400-d">400</span> Designs im Monat, monatlich kündbar.</small><button class="btn" data-kind="m400">Member werden</button></div>
+      </div>
+      <div class="row" style="margin-top:12px"><button class="btn ghost hide" id="portal">Abo verwalten / Rechnungen</button></div>
+    </div>
+
+    <h2>Meine Abstimmungen</h2>
+    <div id="polls"></div>
+    <p id="polls-none" class="hide" style="color:var(--ink3)">Noch keine Abstimmungen. Erstelle mehrere Designs eines Gruppen-Mottos und schick sie zur Abstimmung.</p>
+
+    <h2>Meine Designs</h2>
+    <div class="grid" id="designs"></div>
+    <p id="none" class="hide" style="color:var(--ink3)">Noch keine Designs. <a href="/" style="color:var(--accent)">Zu den Mottos</a></p>
+  </div>
+  <footer class="site">Motto Otto · Jedes Produkt wird auf Bestellung gefertigt und in Deutschland veredelt. · <a href="/impressum">Impressum</a> · <a href="/datenschutz">Datenschutz</a> · <a href="/agb">AGB</a></footer>
+  <!-- Fassung 73 (Markus, 17. Sept.): Der Widerruf gehoert sichtbar auf die Seite, nicht als
+       kleiner Link zwischen anderen. Eigener, hervorgehobener Knopf unter der Fusszeile. -->
+  <div class="wruf-zeile"><a class="wruf" href="/widerruf">Vertrag widerrufen oder kündigen</a></div>
+</div>
+<script>
+(function () {
+  function $(id) { return document.getElementById(id); }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function eur(c) { return (c / 100).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' }); }
+  var q = new URLSearchParams(location.search);
+
+  // Teil und Farbe je Design. Die Mockup-Adresse ist .../mockup/<designId>/<teil>/<farbe>.jpg?exp&sig -
+  // die Unterschrift gilt fuer das Design, nicht fuer Teil und Farbe. Darum koennen wir hier
+  // umschalten, ohne fuer jede Kombination eine eigene Adresse vom Server zu holen.
+  var TEILE = [{ key: 'tee', label: 'T-Shirt' }, { key: 'hoodie', label: 'Hoodie' }, { key: 'zip', label: 'Zip-Jacke' }];
+  var FARBEN = [{ key: 'black', label: 'Schwarz' }, { key: 'white', label: 'Weiß' }];
+  function mockupAdresse(basis, teil, farbe) {
+    return String(basis || '').replace(/\/mockup\/([^/]+)\/[^/]+\/[^/.]+\.jpg/, '/mockup/$1/' + teil + '/' + farbe + '.jpg');
+  }
+  function designWechsel(items) {
+    [].forEach.call(document.querySelectorAll('#designs .d'), function (karte) {
+      var d = items[+karte.dataset.i]; if (!d) return;
+      var stand = { teil: d.teil || 'tee', farbe: d.farbe || 'black' };   // 6. Okt.: so, wie der Kunde es gestaltet hat
+      var bild = karte.querySelector('img'), gross = karte.querySelector('[data-gross]');
+      function zeichnen() {
+        var url = mockupAdresse(d.mockup, stand.teil, stand.farbe);
+        bild.src = url;
+        if (gross) gross.href = url;
+      }
+      [].forEach.call(karte.querySelectorAll('[data-teil]'), function (b) {
+        b.addEventListener('click', function () {
+          stand.teil = b.dataset.teil;
+          [].forEach.call(karte.querySelectorAll('[data-teil]'), function (x) { x.classList.toggle('on', x === b); });
+          zeichnen();
+        });
+      });
+      [].forEach.call(karte.querySelectorAll('[data-farbe]'), function (b) {
+        b.addEventListener('click', function () {
+          stand.farbe = b.dataset.farbe;
+          [].forEach.call(karte.querySelectorAll('[data-farbe]'), function (x) { x.classList.toggle('on', x === b); });
+          zeichnen();
+        });
+      });
+    });
+  }
+
+  function load() {
+    fetch('/api/mo/me', { credentials: 'same-origin' }).then(function (r) { return r.json(); }).then(function (j) {
+      if (!j.user) { $('login').classList.remove('hide'); $('account').classList.add('hide'); return; }
+      var u = j.user;
+      $('login').classList.add('hide'); $('account').classList.remove('hide');
+      $('who').textContent = u.email;
+      $('s-free').textContent = u.freeLeft;
+      $('s-plan').textContent = u.plan ? u.planLeft : '–';
+      $('s-plan-l').textContent = u.plan ? (u.planLabel + ' · übrig bis ' + new Date(u.planPeriodEnd).toLocaleDateString('de-DE')) : 'keine Mitgliedschaft';
+      $('s-credits').textContent = u.credits;
+      $('s-count').textContent = u.designs.length;
+      $('p-single').textContent = eur(u.prices.single);
+      $('p-m100').textContent = eur(u.prices.m100) + ' / Monat'; $('p-m100-d').textContent = u.prices.m100Designs;
+      $('p-m400').textContent = eur(u.prices.m400) + ' / Monat'; $('p-m400-d').textContent = u.prices.m400Designs;
+      $('shop').classList.toggle('hide', !j.stripe);
+      $('portal').classList.toggle('hide', !u.plan);
+      if (q.get('bezahlt')) { $('pay-msg').className = 'msg ok'; $('pay-msg').textContent = 'Danke! Deine Zahlung ist eingegangen – falls der Stand hier noch nicht stimmt, lade die Seite in ein paar Sekunden neu.'; }
+      if (q.get('abgebrochen')) { $('pay-msg').className = 'msg'; $('pay-msg').textContent = 'Bezahlung abgebrochen – nichts passiert.'; }
+      $('designs').innerHTML = (u.items || []).map(function (d, i) {
+        return '<div class="d" data-i="' + i + '"><a href="' + esc(d.preview) + '" target="_blank" data-gross><img src="' + esc(d.mockup) + '" loading="lazy" alt=""></a>' +
+          '<div class="w">' +
+            TEILE.concat(d.teil === 'polo' ? [{ key: 'polo', label: 'Polo' }] : []).map(function (t) { return '<button type="button" data-teil="' + t.key + '"' + (t.key === (d.teil || 'tee') ? ' class="on"' : '') + '>' + t.label + '</button>'; }).join('') +
+            '<span class="sp"></span>' +
+            FARBEN.map(function (f) { return '<button type="button" data-farbe="' + f.key + '"' + (f.key === (d.farbe || 'black') ? ' class="on"' : '') + '>' + f.label + '</button>'; }).join('') +
+          '</div>' +
+          '<div class="m">' + esc(d.designId) + '<br><a href="' + esc(d.preview) + '" target="_blank">Nur das Motiv</a></div></div>';
+      }).join('');
+      designWechsel(u.items || []);
+      $('none').classList.toggle('hide', !!(u.items && u.items.length));
+      loadPolls();
+    });
+  }
+
+  function loadPolls() {
+    fetch('/api/mo/meine-abstimmungen', { credentials: 'same-origin' }).then(function (r) { return r.json(); }).then(function (j) {
+      var ps = (j && j.polls) || [];
+      $('polls-none').classList.toggle('hide', ps.length > 0);
+      $('polls').innerHTML = ps.map(function (p) {
+        var frist = new Date(p.closes).toLocaleDateString('de-DE');
+        var stand = p.closed ? 'beendet' : (p.abgestimmt + ' / ' + p.teilnehmer + ' abgestimmt · bis ' + frist);
+        return '<div style="border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:10px">' +
+          '<b>' + esc(p.mottoName) + '</b><br><small style="color:var(--ink3)">' + esc(stand) + '</small><br>' +
+          '<a href="' + esc(p.orgaLink) + '" target="_blank" style="color:var(--accent)">Übersicht (erinnern / beenden)</a> · ' +
+          '<a href="' + esc(p.gruppenLink) + '" target="_blank" style="color:var(--accent)">Gruppen-Link</a></div>';
+      }).join('');
+    }).catch(function () { });
+  }
+
+  $('send').addEventListener('click', function () {
+    var email = $('email').value.trim();
+    $('send').disabled = true;
+    fetch('/api/mo/login', { method: 'POST', headers: { 'content-type': 'application/json' }, credentials: 'same-origin', body: JSON.stringify({ email: email, next: '/konto' }) })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (r) {
+        $('send').disabled = false;
+        var m = $('login-msg');
+        if (!r.ok) { m.className = 'msg err'; m.textContent = r.j.error === 'email ungueltig' ? 'Das sieht nicht nach einer E-Mail-Adresse aus.' : 'Die Mail konnte gerade nicht verschickt werden. Bitte gleich noch einmal.'; return; }
+        // sent:false = es ging KEINE Mail raus - dann nicht "unterwegs" behaupten
+        if (r.j && r.j.sent === false) { m.className = 'msg err'; m.textContent = 'Wir konnten gerade keine Mail verschicken. Bitte in ein paar Minuten noch einmal.'; return; }
+        m.className = 'msg ok'; m.textContent = 'Link ist unterwegs – schau in dein Postfach (auch im Spam-Ordner).';
+      }).catch(function () { $('send').disabled = false; });
+  });
+  $('email').addEventListener('keydown', function (e) { if (e.key === 'Enter') $('send').click(); });
+
+  $('logout').addEventListener('click', function () {
+    fetch('/api/mo/logout', { method: 'POST', credentials: 'same-origin' }).then(function () { location.reload(); });
+  });
+
+  document.querySelectorAll('[data-kind]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      b.disabled = true;
+      fetch('/api/mo/checkout', { method: 'POST', headers: { 'content-type': 'application/json' }, credentials: 'same-origin', body: JSON.stringify({ kind: b.getAttribute('data-kind'), quantity: +$('qty').value || 1 }) })
+        .then(function (r) { return r.json(); }).then(function (j) { if (j.url) location.href = j.url; else { b.disabled = false; $('pay-msg').className = 'msg err'; $('pay-msg').textContent = 'Bezahlung ist gerade nicht möglich.'; } })
+        .catch(function () { b.disabled = false; });
+    });
+  });
+  $('portal').addEventListener('click', function () {
+    fetch('/api/mo/portal', { method: 'POST', credentials: 'same-origin' }).then(function (r) { return r.json(); }).then(function (j) { if (j.url) location.href = j.url; });
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>

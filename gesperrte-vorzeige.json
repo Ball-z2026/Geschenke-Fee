@@ -1,0 +1,7 @@
+{
+  "_hinweis": "Vorzeige-Bilder, die nirgends mehr gezeigt werden sollen - weder im Kopf der Startseite noch auf der Anlass-Kachel oder in der Stil-Galerie. Zwei Stufen: 'plaetze' sperrt einzelne Plaetze ('kachel', 'standard' oder einen Stilnamen), 'komplett': true sperrt das Motto als Bildgeber ganz - dann greift auch der Rueckfall auf das im Backend gesetzte Beispiel (m.sample) nicht mehr. Die Designs selbst bleiben erhalten. Eintrag loeschen, sobald ein geprueftes Bild da ist.",
+  "firmenausflug": {
+    "komplett": true,
+    "grund": "Zweimal ein Design im Kopf gehabt, das dort nicht hingehoert - zuletzt eines mit einem echten Kundenlogo. Bis ein bewusst ausgesuchtes Bild dafuer da ist, zeigt dieses Motto gar keins."
+  }
+}

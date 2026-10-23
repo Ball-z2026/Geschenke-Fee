@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Ottos Stimme · Motto Otto</title>
+<style>
+/* 6. Okt., Markus: "Bau mir doch hier einen Aufnahmeknopf" - "so eine kleine Seite, wo wir immer Zugriff haben, wo du die
+   Saetze hinschreibst und ich sie im Nachgang anspreche". Ein Satz gross, ein Knopf, Probehoeren, Speichern, naechster Satz. */
+:root{--bg:#f5efe2;--karte:#fff;--ink:#1b1710;--leise:#6d665a;--linie:#d9d0bf;--ja:#2f8a3c;--rot:#c62828;--akzent:#7ED321}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.kopf{position:sticky;top:0;z-index:2;background:var(--bg);border-bottom:2px solid var(--ink);padding:12px 16px 10px;padding-top:calc(12px + env(safe-area-inset-top,0px))}
+.kopf h1{margin:0;font-size:20px}
+.kopf small{color:var(--leise)}
+main{max-width:640px;margin:0 auto;padding:16px;display:grid;gap:18px}
+.karte{background:var(--karte);border:2px solid var(--ink);border-radius:16px;padding:18px;display:grid;gap:14px}
+.nr{font-size:14px;color:var(--leise);font-weight:700}
+.satz{font-size:24px;line-height:1.35;font-weight:800}
+.wo{font-size:14px;color:var(--leise)}
+.aendern{justify-self:start;background:none;border:0;padding:0;font:inherit;font-size:15px;text-decoration:underline;color:var(--ink);cursor:pointer}
+textarea{width:100%;font:inherit;font-size:18px;padding:10px;border:2px solid var(--ink);border-radius:10px;resize:vertical}
+.aufnahme{display:grid;justify-items:center;gap:10px;padding:6px 0}
+.mik{width:120px;height:120px;border-radius:50%;border:4px solid var(--ink);background:var(--rot);color:#fff;font:inherit;font-weight:800;font-size:16px;cursor:pointer;box-shadow:4px 4px 0 var(--ink)}
+.mik.laeuft{animation:puls 1s ease-in-out infinite;background:#e53935}
+@keyframes puls{50%{transform:scale(.94)}}
+.zeit{font-variant-numeric:tabular-nums;font-weight:700;min-height:22px}
+audio{width:100%}
+.reihe{display:flex;flex-wrap:wrap;gap:10px}
+.reihe button{flex:1 1 140px;min-height:52px;border:2px solid var(--ink);border-radius:999px;font:inherit;font-weight:800;font-size:17px;cursor:pointer;background:var(--karte)}
+.reihe .haupt{background:var(--akzent)}
+.reihe button:disabled{opacity:.55;cursor:wait}
+.meldung{font-weight:700;min-height:22px}
+.meldung.ok{color:var(--ja)}.meldung.err{color:var(--rot)}
+.liste{display:grid;gap:8px}
+.liste h2{font-size:17px;margin:4px 0}
+.zeile{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;background:var(--karte);border:2px solid var(--linie);border-radius:12px;padding:10px 12px;cursor:pointer;text-align:left;font:inherit;color:inherit}
+.zeile.aktiv{border-color:var(--ink)}
+.zeile .st{font-size:20px;line-height:1}
+.zeile small{display:block;color:var(--leise)}
+.leer,.fehler{padding:24px 16px;text-align:center;color:var(--leise)}
+button:focus-visible{outline:3px solid #ffc542;outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="kopf"><h1>Ottos Stimme</h1><small id="fortschritt">Lade …</small></div>
+<main id="app"><div class="leer">Lade …</div></main>
+<script>
+(function () {
+  var app = document.getElementById('app'), fort = document.getElementById('fortschritt');
+  var token = ''; try { token = localStorage.getItem('mo_admin') || ''; } catch (e) { token = ''; }
+  var daten = null, reihenfolge = [], aktiv = null;
+  var rec = null, teile = [], blob = null, uhr = null, start = 0, stream = null;
+  // Wo Otto den Satz sagt - damit man weiss, in welcher Lage er klingen soll
+  var WO = {
+    start: 'Wenn das Gespräch startet', artikel: 'Frage nach dem Artikel', wunsch: 'Frage nach dem Wunsch', foto: 'Frage nach einem Foto',
+    foto_waehlen: 'Kunde will ein Foto hochladen', foto_ok: 'Foto ist hochgeladen', stil: 'Stil selbst aussuchen', textil: 'Textilfarbe',
+    groesse: 'Druckgröße', feld: 'Ein Feld zum Ausfüllen', namen: 'Namensliste', optional: 'Freiwillige Angaben',
+    zusammenfassung: 'Alles klar? – vor dem Start', warten: 'Design wird gezeichnet', fertig: 'Design ist fertig',
+    kaufen: 'Größe und Menge', kasse: 'Weiter zur Kasse', nicht_verstanden: 'Otto hat nichts verstanden', ok: 'Kurze Bestätigung',
+    pause: 'Kunde sagt „Stopp“', marke: 'Geschützter Name im Wunsch',
+    fuer_wen: 'Für wen? (Gruppe, Geschenk, für mich)', anlass_gruppe: 'Gruppe: welcher Anlass', anlass_geschenk: 'Geschenk: welcher Anlass',
+    idee_oder_motto: 'Für mich: eigene Idee oder Motto', stil_frage: 'Vor dem Stil: Otto aussuchen lassen?', abstimmen: 'Nur Gruppe: zur Abstimmung schicken?',
+    menge: 'Kaufen ohne Textil: nur die Menge'
+  };
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function api(url, opts) {
+    opts = opts || {}; opts.headers = Object.assign({ 'x-admin-token': token }, opts.headers || {});
+    return fetch(url, opts).then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { ok: r.ok, status: r.status, j: j }; }); });
+  }
+  function laden(behalte) {
+    if (!token) { app.innerHTML = '<div class="fehler">Bitte zuerst im <a href="/admin">Backend</a> anmelden, dann diese Seite neu laden.</div>'; fort.textContent = ''; return; }
+    api('/api/admin/stimme').then(function (r) {
+      if (!r.ok) { app.innerHTML = '<div class="fehler">' + (r.status === 403 ? 'Kein Zugang – bitte im <a href="/admin">Backend</a> neu anmelden.' : 'Konnte die Sätze nicht laden.') + '</div>'; return; }
+      daten = r.j; reihenfolge = Object.keys(daten.saetze);
+      if (!behalte || !aktiv || reihenfolge.indexOf(aktiv) < 0) aktiv = naechsterFehlender(null) || reihenfolge[0];
+      zeichnen();
+    }).catch(function () { app.innerHTML = '<div class="fehler">Keine Verbindung.</div>'; });
+  }
+  function fertigAnzahl() { return reihenfolge.filter(function (k) { return daten.stand[k]; }).length; }
+  function naechsterFehlender(nach) {
+    var i0 = nach ? reihenfolge.indexOf(nach) + 1 : 0;
+    for (var n = 0; n < reihenfolge.length; n++) { var k = reihenfolge[(i0 + n) % reihenfolge.length]; if (!daten.stand[k]) return k; }
+    return null;
+  }
+  function zeichnen() {
+    var anz = fertigAnzahl();
+    fort.textContent = anz + ' von ' + reihenfolge.length + ' Sätzen aufgenommen' + (daten.ffmpeg === false ? ' · Aufbereiten am Server fehlt noch' : '');
+    var k = aktiv, i = reihenfolge.indexOf(k);
+    var hat = !!daten.stand[k];
+    app.innerHTML =
+      '<section class="karte" aria-live="polite">' +
+        '<div class="nr">Satz ' + (i + 1) + ' von ' + reihenfolge.length + (hat ? ' · schon aufgenommen ✓' : '') + '</div>' +
+        '<div class="satz" id="satz">' + esc(daten.saetze[k]) + '</div>' +
+        '<div class="wo">' + esc(WO[k] || '') + '</div>' +
+        '<button type="button" class="aendern" id="aendern">Text ändern</button>' +
+        '<div id="textbox" hidden><textarea id="text" rows="3">' + esc(daten.saetze[k]) + '</textarea><div class="reihe" style="margin-top:8px"><button type="button" id="text-ok" class="haupt">Text speichern</button><button type="button" id="text-vorschlag">Ottos Vorschlag</button></div></div>' +
+        (hat ? '<div><div class="wo">So klingt es jetzt:</div><audio controls preload="none" src="/otto-stimme/' + k + '.mp3?v=' + daten.stand[k] + '"></audio></div>' : '') +
+        '<div class="aufnahme"><button type="button" class="mik" id="mik" aria-label="Aufnahme starten">Aufnehmen</button><div class="zeit" id="zeit">Tippen, Satz sprechen, nochmal tippen.</div></div>' +
+        '<div id="probe" hidden><div class="wo">Probehören:</div><audio controls id="probe-audio"></audio><div class="reihe" style="margin-top:10px"><button type="button" class="haupt" id="speichern">Speichern</button><button type="button" id="nochmal">Nochmal</button></div></div>' +
+        '<div class="meldung" id="meldung"></div>' +
+        '<div class="reihe"><button type="button" id="zurueck">← Vorheriger</button><button type="button" id="vor">Nächster →</button></div>' +
+      '</section>' +
+      '<section class="liste"><h2>Alle Sätze</h2>' + reihenfolge.map(function (s, n) {
+        return '<button type="button" class="zeile' + (s === k ? ' aktiv' : '') + '" data-k="' + s + '"><span class="st">' + (daten.stand[s] ? '✅' : '⚪') + '</span><span>' + esc(daten.saetze[s]) + '<small>' + (n + 1) + ' · ' + esc(WO[s] || s) + ((daten.geaendert || []).indexOf(s) >= 0 ? ' · Text von dir' : '') + '</small></span></button>';
+      }).join('') + '</section>';
+    document.getElementById('mik').addEventListener('click', umschalten);
+    document.getElementById('nochmal').addEventListener('click', function () { blob = null; document.getElementById('probe').hidden = true; meldung('', ''); umschalten(); });
+    document.getElementById('speichern').addEventListener('click', speichern);
+    document.getElementById('aendern').addEventListener('click', function () { var b = document.getElementById('textbox'); b.hidden = !b.hidden; if (!b.hidden) document.getElementById('text').focus(); });
+    document.getElementById('text-ok').addEventListener('click', function () { textSpeichern(document.getElementById('text').value); });
+    document.getElementById('text-vorschlag').addEventListener('click', function () { document.getElementById('text').value = daten.vorschlag[k] || ''; });
+    document.getElementById('zurueck').addEventListener('click', function () { wechseln(reihenfolge[(i - 1 + reihenfolge.length) % reihenfolge.length]); });
+    document.getElementById('vor').addEventListener('click', function () { wechseln(reihenfolge[(i + 1) % reihenfolge.length]); });
+    [].forEach.call(app.querySelectorAll('.zeile'), function (z) { z.addEventListener('click', function () { wechseln(z.getAttribute('data-k')); window.scrollTo(0, 0); }); });
+  }
+  function wechseln(k) { if (rec && rec.state === 'recording') return; blob = null; aktiv = k; zeichnen(); }
+  function meldung(t, art) { var m = document.getElementById('meldung'); if (!m) return; m.textContent = t; m.className = 'meldung' + (art ? ' ' + art : ''); }
+  function typWaehlen() {
+    var liste = ['audio/webm;codecs=opus', 'audio/mp4', 'audio/webm', 'audio/ogg;codecs=opus'];
+    if (!window.MediaRecorder || !MediaRecorder.isTypeSupported) return '';
+    for (var n = 0; n < liste.length; n++) if (MediaRecorder.isTypeSupported(liste[n])) return liste[n];
+    return '';
+  }
+  function umschalten() {
+    var mik = document.getElementById('mik');
+    if (rec && rec.state === 'recording') { rec.stop(); return; }
+    if (!navigator.mediaDevices || !window.MediaRecorder) { meldung('Dieser Browser kann nicht aufnehmen – bitte Safari oder Chrome nehmen.', 'err'); return; }
+    navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: true } }).then(function (s) {
+      stream = s; teile = []; blob = null;
+      var typ = typWaehlen();
+      rec = typ ? new MediaRecorder(s, { mimeType: typ }) : new MediaRecorder(s);
+      rec.ondataavailable = function (e) { if (e.data && e.data.size) teile.push(e.data); };
+      rec.onstop = function () {
+        clearInterval(uhr); mik.classList.remove('laeuft'); mik.textContent = 'Aufnehmen'; mik.setAttribute('aria-label', 'Aufnahme starten');
+        try { stream.getTracks().forEach(function (t) { t.stop(); }); } catch (e) { /* egal */ }
+        blob = new Blob(teile, { type: rec.mimeType || typ || 'audio/webm' });
+        document.getElementById('zeit').textContent = ((Date.now() - start) / 1000).toFixed(1) + ' s aufgenommen';
+        var pa = document.getElementById('probe-audio'); pa.src = URL.createObjectURL(blob);
+        document.getElementById('probe').hidden = false;
+        meldung('Hör einmal rein – passt es? Dann „Speichern“.', '');
+      };
+      rec.start(); start = Date.now();
+      mik.classList.add('laeuft'); mik.textContent = 'Stopp'; mik.setAttribute('aria-label', 'Aufnahme beenden');
+      document.getElementById('probe').hidden = true; meldung('', '');
+      uhr = setInterval(function () { document.getElementById('zeit').textContent = '● ' + ((Date.now() - start) / 1000).toFixed(1) + ' s'; }, 100);
+    }).catch(function () { meldung('Kein Zugriff aufs Mikrofon – bitte im Browser erlauben (Schloss-Symbol neben der Adresse).', 'err'); });
+  }
+  function speichern() {
+    if (!blob) return;
+    var b = document.getElementById('speichern'); b.disabled = true; meldung('Otto hübscht die Aufnahme auf …', '');
+    api('/api/admin/stimme/' + aktiv + '/aufnahme', { method: 'POST', headers: { 'content-type': blob.type || 'audio/webm' }, body: blob }).then(function (r) {
+      b.disabled = false;
+      if (!r.ok) { meldung((r.j && r.j.hinweis) || 'Speichern hat nicht geklappt – bitte nochmal.', 'err'); return; }
+      daten.stand[aktiv] = r.j.stand;
+      if (r.j.leise) { zeichnen(); meldung(r.j.hinweis || 'Sehr leise – bitte nochmal, etwas näher ans Handy.', 'err'); return; }
+      var nach = naechsterFehlender(aktiv);
+      if (nach) { aktiv = nach; zeichnen(); meldung('Gespeichert ✓ – weiter mit dem nächsten Satz.', 'ok'); }
+      else { zeichnen(); meldung('Gespeichert ✓ – alle Sätze sind aufgenommen. Danke!', 'ok'); }
+    }).catch(function () { b.disabled = false; meldung('Keine Verbindung – bitte nochmal.', 'err'); });
+  }
+  function textSpeichern(t) {
+    api('/api/admin/stimme/' + aktiv + '/text', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ text: t }) }).then(function (r) {
+      if (!r.ok) { meldung('Text speichern hat nicht geklappt.', 'err'); return; }
+      daten.saetze[aktiv] = r.j.text;
+      if (r.j.text !== daten.vorschlag[aktiv]) { if ((daten.geaendert || []).indexOf(aktiv) < 0) (daten.geaendert = daten.geaendert || []).push(aktiv); }
+      else daten.geaendert = (daten.geaendert || []).filter(function (x) { return x !== aktiv; });
+      zeichnen(); meldung('Text gespeichert ✓' + (daten.stand[aktiv] ? ' – bitte neu aufnehmen, damit Stimme und Blase gleich sind.' : ''), 'ok');
+    });
+  }
+  laden(false);
+})();
+</script>
+</body>
+</html>

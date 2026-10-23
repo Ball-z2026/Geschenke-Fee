@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Für Firmen – Motto Otto</title>
+<meta name="description" content="Arbeitskleidung mit eigenem Logo: Logo einmal hinterlegen, Mitarbeiterliste speichern, jederzeit nachbestellen.">
+<!-- Fassung 79: Hier stand die Einbindung von fonts.googleapis.com. Das bedeutete fuer jeden
+     Besucher drei Wege hintereinander, bevor die Schrift da ist: eine zweite, fremde Adresse
+     aufloesen und verschluesseln, dort ein Stylesheet holen, darin erst die Adresse der
+     Schriftdatei lesen, dann die Schrift holen. Jetzt liegen beide Schriften bei uns, werden
+     schon beim Lesen des Kopfes geholt und sind auf Latein zugeschnitten. Archivo traegt als
+     Variable Font alle Staerken von 400 bis 900 in einer einzigen Datei. -->
+<link rel="preload" href="/fonts/archivo-v1.woff2" as="font" type="font/woff2" crossorigin>
+<!-- 1. Okt.: gemeinsames Farbblatt aller Kundenseiten (Logo-Farben, Schriften, Kopf) -->
+<link rel="preload" href="/fonts/anton-v1.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/marke.css">
+<style>
+@font-face{font-family:"Archivo";src:url("/fonts/archivo-v1.woff2") format("woff2");font-weight:400 900;font-style:normal;font-display:swap}
+</style>
+<link rel="icon" href="/favicon-64.png" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style>
+  :root{--bg:#14131a;--card:#1d1c25;--card2:#26242f;--line:#35323f;--ink:#f4f2f7;--ink2:#b6b1c2;--ink3:#8b8598;--accent:#ffc542;--accent-ink:#1b1710;--ok:#5fcf95;--bad:#ff8a8a}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Archivo",ui-sans-serif,system-ui,sans-serif;font-size:16px;line-height:1.55}
+  .wrap{max-width:900px;margin:0 auto;padding:32px 20px 90px}
+  h1{font-weight:900;font-size:31px;letter-spacing:-.02em;margin:0 0 8px}
+  h1 span{color:var(--accent)}
+  h2{font-size:18px;margin:28px 0 10px}
+  .sub{color:var(--ink2);margin:0 0 22px;font-size:16.5px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:14px}
+  label{display:block;font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3);font-weight:700;margin-bottom:6px}
+  input,textarea,select{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:8px;background:var(--card2);color:var(--ink);font:inherit;font-size:16px}
+  textarea{font-size:15px;line-height:1.5}
+  .btn{display:inline-block;padding:12px 18px;border:0;border-radius:8px;background:var(--accent);color:var(--accent-ink);font:inherit;font-weight:800;font-size:15px;cursor:pointer;text-decoration:none}
+  .btn.ghost{background:var(--card2);color:var(--ink);border:1px solid var(--line)}
+  .btn.klein{padding:7px 12px;font-size:13.5px}
+  .btn[disabled]{opacity:.5;cursor:default}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .zwei{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .drei{display:grid;grid-template-columns:90px 1fr 1fr;gap:12px}
+  @media (max-width:560px){.zwei,.drei{grid-template-columns:1fr}}
+  .hint{color:var(--ink3);font-size:13.5px;margin-top:6px}
+  .msg{font-size:14px;margin-left:10px}
+  .msg.ok{color:var(--ok)} .msg.bad{color:var(--bad)}
+  .logo-box{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+  .logo-box img{width:104px;height:104px;object-fit:contain;background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:8px}
+  .liste{border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:10px;background:var(--card2)}
+  .liste b{font-size:15px}
+  .liste .leute{color:var(--ink2);font-size:14px;margin-top:4px}
+  .kacheln{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}
+  .kachel{display:block;background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:14px;text-decoration:none;color:var(--ink)}
+  .kachel:hover{border-color:var(--accent)}
+  .kachel b{display:block;font-size:16px}
+  .kachel small{color:var(--ink3);font-size:13px}
+  .designs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+  .designs a{display:block;background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:8px;text-decoration:none;color:var(--ink2);font-size:11.5px;font-family:ui-monospace,monospace;word-break:break-all}
+  .designs img{width:100%;border-radius:7px;background:#eee;display:block;margin-bottom:6px}
+  .platz-btn.an{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:800}
+  .produkte{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+  .teil{background:var(--card2);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .teil .bild{width:100%;aspect-ratio:1/1;display:block;background:#e9e7ee;object-fit:cover}
+  .teil .txt{padding:11px 12px 13px}
+  .teil b{display:block;font-size:15px;line-height:1.3}
+  .teil small{display:block;color:var(--ink3);font-size:12.5px;margin-top:2px}
+  .teil .preis{color:var(--accent);font-weight:800;font-size:14px;margin-top:6px}
+  /* 24. Sept., Markus: "wenn Firmen, dann die Preise netto angezeigt exklusive Mehrwertsteuer."
+     Der Nettopreis ist die Hauptzahl, der Zusatz steht klein daneben - damit niemand raten muss,
+     welche der beiden Zahlen gilt. */
+  .teil .preis .mwst{display:inline;color:var(--ink3);font-weight:600;font-size:12px;margin-left:5px}
+  .teil .brutto{color:var(--ink3);font-size:12px;margin-top:1px}
+  .teil .staffel{margin-top:7px;font-size:12px;color:var(--ink3);line-height:1.5}
+  .teil .staffel b{display:inline;color:var(--ink2);font-size:12px;font-weight:700}
+  /* Die Unternehmer-Erklaerung. Sie ist kein Kleingedrucktes - ohne sie gibt es keine Preise,
+     also sieht sie auch nicht aus wie eine Fussnote. */
+  .erklaerung{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border:1px solid var(--line);border-radius:12px;cursor:pointer;font-size:14px;line-height:1.45}
+  .erklaerung input{margin-top:2px;width:18px;height:18px;flex:0 0 auto;cursor:pointer}
+  .erklaerung small{display:block;color:var(--ink3);font-size:12.5px;margin-top:3px}
+  .erklaerung.an{border-color:var(--accent);background:rgba(255,197,66,.07)}
+  .farbwahl{display:flex;gap:7px;margin-top:9px;flex-wrap:wrap}
+  .farbe{width:22px;height:22px;border-radius:999px;border:2px solid var(--line);cursor:pointer;padding:0}
+  .farbe.an{border-color:var(--accent);box-shadow:0 0 0 2px rgba(255,197,66,.25)}
+  .teil.fehlt{opacity:.5}
+  .teil.fehlt .bild{display:flex;align-items:center;justify-content:center;background:var(--card);color:var(--ink3);font-size:13px;aspect-ratio:1/1}
+  .vorteil{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:22px 0 26px}
+  .vorteil div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+  .vorteil b{display:block;margin-bottom:4px}
+  .vorteil p{margin:0;color:var(--ink2);font-size:14.5px}
+  .hide{display:none}
+  footer.site{margin:44px 0 0;color:var(--ink3);font-size:13px;border-top:1px solid var(--line);padding-top:18px;line-height:1.6}
+  footer.site a{color:inherit}
+
+  /* ===== 1. Okt.: Firmenseite in den Logo-Farben (marke.css, MASTER.md) ===== */
+  h1{font-family:var(--display);font-weight:400;font-size:44px;letter-spacing:.005em;line-height:1}
+  h1 span,.teil .preis{color:var(--beere)}
+  h2{font-size:28px;margin:32px 0 12px}
+  .sub,.hint,.vorteil p{color:var(--text2)}
+  .card,.vorteil div,.teil,.liste,.kachel,.designs a,.erklaerung{background:#fff;border:2px solid var(--tinte);border-radius:14px}
+  .kachel:hover{border-color:var(--tinte);box-shadow:var(--stempel)}
+  .teil .bild,.designs img{background:var(--hemd)}
+  .logo-box img{background:#fff;border:2px solid var(--tinte)}
+  label{text-transform:none;letter-spacing:0;font-size:15px;font-weight:800;color:var(--tinte)}
+  .erklaerung label,.erklaerung{font-weight:400}
+  .btn{background:var(--gruen);color:var(--tinte);border:var(--kontur);box-shadow:var(--stempel);border-radius:999px;min-height:44px;transition:transform .12s,box-shadow .12s}
+  .btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--tinte)}
+  .btn.ghost{background:#fff;color:var(--tinte);border:var(--kontur)}
+  .btn.klein{min-height:40px;box-shadow:2px 2px 0 var(--tinte)}
+  .platz-btn.an{background:var(--tinte);color:#fff;border-color:var(--tinte)}
+  .erklaerung.an{border-color:var(--tinte);background:var(--haut)}
+  .farbe{border-color:var(--tinte)}
+  .farbe.an{border-color:var(--tinte);box-shadow:0 0 0 3px var(--magenta)}
+  footer.site{border-top:var(--kontur);color:var(--text2)}
+</style>
+</head>
+<body class="mo-seite">
+<header class="mo-kopf"><div class="mo-in">
+  <a class="mo-marke" href="/"><img src="/logo.png" alt="" width="36" height="42">Motto Otto</a>
+  <nav class="mo-nav" aria-label="Hauptmenü">
+    <a href="/mottos">Mottos</a>
+    <a href="/so-gehts">So geht’s</a>
+    <a href="/firma" aria-current="page">Firmen</a>
+    <a href="/partner">Partner</a>
+    <a href="/event">Event</a>
+  </nav>
+  <a class="mo-knopf hell mo-konto" href="/konto">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8.5" r="4"/><path d="M4 21c1.4-4 4.4-6 8-6s6.6 2 8 6"/></svg>
+    Konto
+  </a>
+</div></header>
+
+<div class="wrap">
+
+  <!-- ========== NICHT ANGEMELDET: Eingang ========== -->
+  <div id="tor" class="hide">
+    <h1>Für <span>Firmen</span></h1>
+    <p class="sub">Arbeitskleidung mit dem eigenen Logo – ohne jedes Mal von vorn anzufangen.</p>
+
+    <div class="vorteil">
+      <div><b>Logo einmal hinterlegen</b><p>Danach steckt es bei jedem Design schon drin. Kein Suchen im Dateiordner.</p></div>
+      <div><b>Mitarbeiterlisten speichern</b><p>Namen und Größen einmal eintragen, beim nächsten Auftrag auswählen.</p></div>
+      <div><b>Bleibt unter euch</b><p>Designs eines Firmenkontos erscheinen nie in der öffentlichen Bewertung.</p></div>
+    </div>
+
+    <div class="card">
+      <h2 style="margin-top:0">Anmelden</h2>
+      <p class="hint" style="margin-top:0;margin-bottom:12px">Kein Passwort. Wir schicken einen Anmelde-Link an die Firmenadresse – ein Klick, fertig.</p>
+      <label for="email">E-Mail-Adresse der Firma</label>
+      <input type="email" id="email" placeholder="info@dachdeckerei-petersen.de" autocomplete="email">
+      <div class="row" style="margin-top:12px"><button class="btn" id="senden">Anmelde-Link schicken</button><span class="msg" id="tor-msg"></span></div>
+    </div>
+    <p class="hint">Noch kein Konto? Dann wird beim ersten Anmelden eines angelegt – es genügt die E-Mail-Adresse.</p>
+  </div>
+
+  <!-- ========== ANGEMELDET: Arbeitsplatz ========== -->
+  <div id="platz" class="hide">
+    <h1 id="firmenname">Firmen<span>bereich</span></h1>
+    <p class="sub" id="platz-sub"></p>
+
+    <!-- Logo -->
+    <h2>Firmenlogo</h2>
+    <div class="card">
+      <div class="logo-box">
+        <img id="logo-bild" alt="" style="display:none">
+        <div style="flex:1;min-width:220px">
+          <p class="hint" style="margin:0 0 10px" id="logo-text">Noch kein Logo hinterlegt.</p>
+          <div class="row">
+            <input type="file" id="logo-datei" accept="image/*,.pdf,.ai,.svg,.tif,.tiff,.heic,.heif,.avif" style="max-width:260px">
+            <button class="btn ghost klein" id="logo-weg" style="display:none">Entfernen</button>
+            <span class="msg" id="logo-msg"></span>
+          </div>
+          <!-- Fassung 56: das hinterlegte Logo von Otto sauber nachzeichnen lassen, nachbessern, hinterlegen -->
+          <div id="logo-nz" style="display:none;margin-top:12px">
+            <button class="btn ghost klein" id="logo-nz-go">Otto soll das Logo sauber nachzeichnen</button>
+            <p class="hint" style="margin:6px 0 0">Gleiche Formen, gleiche Schrift, gleiche Farben – nur scharf und ohne Reste. Du siehst das Ergebnis, kannst Fehler benennen und übernimmst erst, wenn es passt.</p>
+            <div id="logo-nz-box" style="display:none;margin-top:10px">
+              <img id="logo-nz-bild" alt="" style="max-width:220px;max-height:220px;display:block;background:repeating-conic-gradient(#ddd 0 25%,#f4f4f4 0 50%) 0 0/16px 16px;border-radius:8px;margin-bottom:8px">
+              <p class="hint" id="logo-nz-text" style="margin:0 0 8px"></p>
+              <textarea id="logo-nz-korr" rows="2" placeholder="Stimmt etwas nicht? z. B. „Der Ring muss überall gleich dick sein, das n ist zu fett“" style="width:100%;max-width:520px;box-sizing:border-box;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card2);color:var(--ink);font:inherit"></textarea>
+              <div class="row" style="margin-top:8px">
+                <button class="btn klein" id="logo-nz-ok">Übernehmen und hinterlegen</button>
+                <button class="btn ghost klein" id="logo-nz-korr-go">Otto soll das nachbessern</button>
+                <button class="btn ghost klein" id="logo-nz-weg">Verwerfen</button>
+              </div>
+            </div>
+          
+          <p class="hint">PDF, PNG, JPG, SVG, TIFF, WebP, HEIC – nehmt einfach, was ihr habt. Am schönsten wird es mit dem PDF oder SVG von eurer Agentur oder einem freigestellten PNG. Euer Logo ist eure Marke – hier wird nichts gesperrt, nur auf verbotene Zeichen geprüft.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Arbeitskleidung: der eigentliche Weg fuer einen Betrieb -->
+    <h2>Eure Arbeitskleidung</h2>
+    <div class="card">
+      <p class="hint" id="prod-hinweis" style="margin-top:0">Sobald euer Logo hinterlegt ist, seht ihr hier sofort, wie es auf den Produkten aussieht.</p>
+      <!-- 24. Sept., Markus: "wenn Firmen, dann die Preise netto angezeigt exklusive
+           Mehrwertsteuer." Einmal gross ueber der Liste, damit es niemand uebersieht, und
+           zusaetzlich an jedem Preis - eine Firma darf nie raten, welche Zahl sie bucht. -->
+      <p class="hint" id="prod-netto" style="display:none"></p>
+      <div class="produkte" id="produkte"></div>
+      <p class="hint" id="prod-fehlt" style="display:none"></p>
+      <p class="hint" id="prod-pflege" style="display:none"></p>
+    </div>
+
+    <!-- Mitarbeiterlisten -->
+    <h2>Mitarbeiterlisten</h2>
+    <div class="card">
+      <div id="listen"></div>
+      <div style="border-top:1px solid var(--line);padding-top:14px;margin-top:6px">
+        <div class="zwei">
+          <div><label for="l-name">Name der Liste</label><input type="text" id="l-name" placeholder="z. B. Montage-Team"></div>
+          <div style="align-self:end"><span class="hint">Eine Person je Zeile: <b>Name; Größe; Artikel</b></span></div>
+        </div>
+        <div style="margin-top:10px"><textarea id="l-leute" rows="5" placeholder="Petersen; XL; Hoodie&#10;Yilmaz; L; T-Shirt&#10;Schmidt; M; Zip-Jacke"></textarea></div>
+        <div class="row" style="margin-top:10px"><button class="btn" id="l-speichern">Liste speichern</button><button class="btn ghost" id="l-abbrechen" style="display:none">Abbrechen</button><span class="msg" id="l-msg"></span></div>
+      </div>
+    </div>
+
+    <!-- Firmendaten -->
+    <h2 id="firmendaten">Firmendaten</h2>
+    <div class="card">
+      <div class="zwei">
+        <div><label for="f-name">Firma</label><input type="text" id="f-name" placeholder="Dachdeckerei Petersen GmbH"></div>
+        <div><label for="f-ansprech">Ansprechpartner</label><input type="text" id="f-ansprech" placeholder="Jens Petersen"></div>
+      </div>
+      <div class="zwei" style="margin-top:12px">
+        <div><label for="f-gewerk">Gewerk / Branche</label><input type="text" id="f-gewerk" placeholder="z. B. Dachdecker" list="gewerke">
+          <datalist id="gewerke"><option>Dachdecker</option><option>Zimmerer</option><option>Maurer</option><option>Betonbauer</option><option>Elektriker</option><option>Maler &amp; Lackierer</option><option>Tischler / Schreiner</option><option>Anlagenmechaniker SHK (Heizung, Sanitär, Klima)</option><option>Fliesenleger</option><option>Metallbauer / Schlosser</option><option>Schweißer</option><option>KFZ-Mechatroniker</option><option>Landmaschinenmechaniker</option><option>Gerüstbauer</option><option>Garten- und Landschaftsbau</option><option>Straßenbauer</option><option>Tiefbauer</option><option>Bodenleger / Parkettleger</option><option>Trockenbauer</option><option>Stuckateur</option><option>Glaser</option><option>Schornsteinfeger</option><option>Steinmetz</option><option>Bäcker</option><option>Konditor</option><option>Fleischer</option><option>Friseur</option><option>Kosmetik</option><option>Optiker</option><option>Zahntechniker</option><option>Raumausstatter</option><option>Polsterer</option><option>Sattler</option><option>Schuhmacher</option><option>Goldschmied</option><option>Uhrmacher</option><option>Bootsbauer</option><option>Kälteanlagenbauer</option><option>Rollladen- und Sonnenschutztechniker</option><option>Hausmeisterservice</option><option>Umzug &amp; Logistik</option></datalist>
+        </div>
+        <div style="align-self:end"><span class="hint">Damit geht die Design-Seite schon ausgefüllt auf: Firma, Ort, Gewerk und Logo.</span></div>
+      </div>
+      <div class="zwei" style="margin-top:12px">
+        <div><label for="f-strasse">Straße und Hausnummer</label><input type="text" id="f-strasse" placeholder="Lange Straße 14"></div>
+        <div><label for="f-telefon">Telefon</label><input type="text" id="f-telefon" placeholder="04181 123456"></div>
+      </div>
+      <!-- 24. Sept., Markus: "Bei der Anmeldung machst du ein Haeckchen zum Auswaehlen, dass das
+           Firmenkunden sein muessen, so dass es rechtlich sauber ist."
+           Nettopreise duerfen nur Unternehmern gezeigt werden, und ein blosser Hinweis reicht
+           dafuer nicht - es braucht diese Erklaerung. Sie steht bei den Firmendaten, weil sie
+           dorthin gehoert: wer hier seinen Betrieb eintraegt, erklaert genau das. -->
+      <label class="erklaerung" for="f-unternehmer" style="margin-top:14px">
+        <input type="checkbox" id="f-unternehmer">
+        <span>Ich bestelle als <b>Unternehmer</b> für mein Gewerbe, meinen Betrieb, meinen Verein oder meine Einrichtung – nicht als Privatperson.
+        <small>Nur dann dürfen wir die Preise netto zeigen. Ohne diese Angabe bleiben die Preise verdeckt.</small></span>
+      </label>
+      <div class="drei" style="margin-top:12px">
+        <div><label for="f-plz">PLZ</label><input type="text" id="f-plz" placeholder="21244"></div>
+        <div><label for="f-ort">Ort</label><input type="text" id="f-ort" placeholder="Buchholz"></div>
+        <div><label for="f-ustid">USt-IdNr. (freiwillig)</label><input type="text" id="f-ustid" placeholder="DE123456789"></div>
+      </div>
+      <div class="row" style="margin-top:14px"><button class="btn" id="f-speichern">Firmendaten speichern</button><span class="msg" id="f-msg"></span></div>
+      <p class="hint">Die Daten stehen auf der Rechnung und am Druckauftrag. Sie werden nicht öffentlich gezeigt.</p>
+    </div>
+
+    <!-- Der kreative Weg: bewusst hinten. Wer nur Logo-Kleidung braucht, kommt hier nie hin. -->
+    <h2>Design mit Motiv <span style="font-weight:400;opacity:.6;font-size:.7em">optional</span></h2>
+    <div class="card">
+      <p class="hint" style="margin-top:0">Für Firmenausflug, Jubiläum oder Messe – da entsteht ein echtes Motiv statt nur dem Logo.</p>
+      <div class="kacheln" id="mottos"></div>
+      <p class="hint" id="kein-logo-hinweis"></p>
+    </div>
+
+    <!-- Designs -->
+    <h2>Unsere Designs</h2>
+    <div class="card"><div class="designs" id="designs"></div><p class="hint" id="designs-leer" style="display:none">Noch kein Design. Oben ein Motto auswählen.</p></div>
+
+    <div class="row" style="margin-top:22px"><button class="btn ghost klein" id="abmelden">Abmelden</button></div>
+  </div>
+
+  <footer class="site">
+    <a href="/rechtliches/impressum">Impressum</a> · <a href="/rechtliches/datenschutz">Datenschutz</a> · <a href="/rechtliches/agb">AGB</a>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var daten = null;
+  var bearbeite = null;   // id der Liste, die gerade bearbeitet wird
+
+  function esc(s) { return String(s == null ? '' : s).replace(/[<>&"]/g, function (c) { return ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' })[c]; }); }
+  function sag(el, text, gut) { var m = $(el); m.textContent = text || ''; m.className = 'msg' + (text ? (gut ? ' ok' : ' bad') : ''); }
+
+  // Geld schreibt man auf einer Firmenseite so, wie es auf einer Rechnung steht: zwei
+  // Nachkommastellen, Komma, Eurozeichen. "39 €" und "32,77 €" nebeneinander sieht nach
+  // zwei verschiedenen Sorten Zahl aus - es ist aber dieselbe Zahl, einmal mit und einmal
+  // ohne Steuer.
+  function euro(v) {
+    if (v == null) return '';
+    try { return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(v); }
+    catch (e) { return (Math.round(v * 100) / 100).toFixed(2).replace('.', ',') + ' €'; }
+  }
+  // Der Steuersatz kommt vom Server (preise.cjs) - hier wird er nur geschrieben, nie gesetzt.
+  function mwstText() {
+    var s = produkte && produkte.mwstSatz;
+    return (s == null ? 19 : Math.round(s * 100)) + ' %';
+  }
+
+  function j(url, opts) {
+    var o = opts || {};
+    if (o.body && typeof o.body !== 'string') { o.body = JSON.stringify(o.body); o.headers = { 'content-type': 'application/json' }; }
+    return fetch(url, o).then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok, d: d }; }); });
+  }
+
+  // ---------- Eingang ----------
+  $('senden').addEventListener('click', function () {
+    var mail = $('email').value.trim();
+    if (!mail || mail.indexOf('@') < 0) { sag('tor-msg', 'Bitte eine gültige E-Mail-Adresse.', false); return; }
+    $('senden').disabled = true; sag('tor-msg', 'wird verschickt …', true);
+    j('/api/mo/login', { method: 'POST', body: { email: mail, next: '/firma' } }).then(function (r) {
+      $('senden').disabled = false;
+      if (r.ok && r.d && r.d.sent === false) sag('tor-msg', 'Wir konnten gerade keine Mail verschicken. Bitte in ein paar Minuten noch einmal.', false);
+      else if (r.ok) sag('tor-msg', 'Link ist unterwegs – bitte in den Posteingang schauen.', true);
+      else sag('tor-msg', 'Hat nicht geklappt. Bitte noch einmal versuchen.', false);
+    }).catch(function () { $('senden').disabled = false; sag('tor-msg', 'Nicht erreichbar.', false); });
+  });
+  $('email').addEventListener('keydown', function (e) { if (e.key === 'Enter') $('senden').click(); });
+
+  $('abmelden').addEventListener('click', function () {
+    j('/api/mo/logout', { method: 'POST' }).then(function () { location.reload(); });
+  });
+
+  // ---------- Arbeitskleidung ----------
+  // Der ganze Bereich kennt genau zwei Entscheidungen: Brust oder Rücken, und welche Farbe.
+  // Alles andere ergibt sich - das Logo liegt am Konto, die Teile stehen im Katalog.
+  var produkte = null;      // Antwort von /api/mo/firma/produkte
+  var farbWahl = {};        // Textil-Schlüssel -> Farb-Schlüssel
+  var PLATZ_TEXT = { brust: 'Brust (Herzseite)', ruecken: 'Rücken' };
+  // Fassung 31: kommt die Seite mit ?design=MO-..., liegt dieses Design auf den Teilen statt nur das Logo
+  var designWunsch = (function () { try { return new URLSearchParams(location.search).get('design') || ''; } catch (e) { return ''; } })();
+  var design = null;        // { designId, motto } wenn das Design dem Konto gehört
+
+  // Jedes Foto zeigt EINE Seite - und genau der Druckplatz dieser Seite wird gezeigt. Ein
+  // Brustlogo auf dem Rückenfoto (Zip-Jacke) sah aus wie ein zu kleiner, schiefer Rückendruck.
+  function bildUrl(teil, farbe, platz) {
+    if (design) {
+      return '/api/mo/firma/design-mockup/' + encodeURIComponent(design.designId) + '/' + encodeURIComponent(teil) + '/' +
+        encodeURIComponent(farbe) + '/' + encodeURIComponent(platz || 'brust') + '.jpg';
+    }
+    // Die Logo-ID hängt mit in der Adresse, damit der Browser nach einem Logowechsel neu lädt.
+    return '/api/mo/firma/mockup/' + encodeURIComponent(teil) + '/' + encodeURIComponent(farbe) +
+      '/' + encodeURIComponent(platz || 'brust') + '.jpg?v=' + encodeURIComponent(daten.firmaLogo || '');
+  }
+
+  function produkteZeichnen() {
+    var hatLogo = !!daten.firmaLogo || !!design;
+    if (!produkte) { $('produkte').innerHTML = ''; return; }
+
+    if (design) {
+      $('prod-hinweis').innerHTML = 'Euer Design <b>' + esc(design.designId) + '</b>' + (design.motto ? ' (' + esc(design.motto) + ')' : '') +
+        ' auf den Produkten – vorne als Motiv, auf der Zip-Jacke hinten. Farbe anklicken. <a href="/firma">Nur das Logo zeigen</a>';
+    } else {
+      $('prod-hinweis').textContent = hatLogo
+        ? 'So sitzt euer Logo auf den Produkten – Brust auf der Herzseite, Rücken groß. Farbe anklicken.'
+        : 'Ladet oben euer Logo hoch – danach steht hier sofort die komplette Übersicht.';
+    }
+
+    var bereit = (produkte.teile || []).filter(function (t) { return t.bereit; });
+    var fehlt = (produkte.teile || []).filter(function (t) { return !t.bereit; });
+
+    $('produkte').innerHTML = bereit.map(function (t) {
+      if (!farbWahl[t.key]) farbWahl[t.key] = t.farben[0].key;
+      var farbe = farbWahl[t.key];
+      var platz = t.platz || 'brust';
+      var hinweis = t.druck && t.druck[platz] ? t.druck[platz].hinweis : '';
+      var zeile2 = [t.modell, t.gramm].filter(Boolean).join(' · ');
+      return '<div class="teil" data-teil="' + esc(t.key) + '">' +
+        (hatLogo
+          ? '<img class="bild" loading="lazy" alt="' + esc(t.label) + '" src="' + esc(bildUrl(t.key, farbe, platz)) + '">'
+          : '<div class="bild" style="display:flex;align-items:center;justify-content:center;color:#6B5F4F;font-size:13px">Logo fehlt</div>') +
+        '<div class="txt"><b>' + esc(t.label) + '</b>' +
+        (zeile2 ? '<small>' + esc(zeile2) + '</small>' : '') +
+        '<small>' + esc(design ? (platz === 'ruecken' ? 'Rücken, Design groß' : 'Vorne, Design') : (PLATZ_TEXT[platz] || platz)) + (t.ansicht === 'hinten' ? ' · Foto zeigt die Rückseite' : '') + '</small>' +
+        // 24. Sept., Markus: "wenn Firmen, dann die Preise netto angezeigt exklusive
+        // Mehrwertsteuer." Hier stand bis dahin nur die Bruttozahl mit einem Eurozeichen -
+        // ohne ein Wort darueber, was sie ist. Jetzt fuehrt der Nettopreis, der Satz steht
+        // daneben, und der Bruttopreis bleibt als zweite Zeile lesbar.
+        (t.preisNetto != null
+          ? '<div class="preis">' + esc(euro(t.preisNetto)) + '<span class="mwst">netto</span></div>'
+            + '<div class="brutto">' + esc(euro(t.preis)) + ' inkl. ' + esc(mwstText()) + ' MwSt.</div>'
+          // Zwei verschiedene Gruende, warum hier keine Zahl steht - und der Kunde muss sie
+          // auseinanderhalten koennen. Verdeckt heisst: es gibt einen Preis, ihr seht ihn gleich.
+          : '<div class="brutto">' + (t.preisDa ? 'Preis nach der Bestätigung' : 'Preis steht noch nicht fest') + '</div>') +
+        // Firmen bestellen in Stueckzahl - die Staffel ist fuer sie der Grund, hier zu bestellen.
+        (t.staffel && t.staffel.length
+          ? '<div class="staffel">' + t.staffel.map(function (s) {
+              return '<b>ab ' + s.ab + '</b> ' + esc(euro(s.stueckNetto));
+            }).join(' · ') + ' <small style="display:inline">je Stück netto</small></div>'
+          : '') +
+        '<div class="farbwahl">' + t.farben.map(function (f) {
+          return '<button class="farbe' + (f.key === farbe ? ' an' : '') + '" data-teil="' + esc(t.key) + '" data-farbe="' +
+            esc(f.key) + '" title="' + esc(f.name) + '" style="background:' + esc(f.hex) + '"></button>';
+        }).join('') + '</div>' +
+        (hinweis ? '<small style="margin-top:8px">' + esc(hinweis) + '</small>' : '') +
+        (t.groessen && t.groessen.length ? '<small>Größen ' + esc(t.groessen.join(' · ')) + '</small>' : '') +
+        '</div></div>';
+    }).join('');
+
+    // Was fehlt, wird benannt - und zwar WAS fehlt. "Noch ohne Produktbild" war nur die halbe
+    // Wahrheit: bei der Softshell-Jacke fehlt auch der Preis, und ein Textil ohne Preis kann
+    // niemand bestellen, auch wenn morgen das Bild da ist.
+    // 24. Sept., Markus: "Nimm die Preise runter und sag, dass sie erst nach der Anmeldung
+    // sichtbar werden." Ohne die Unternehmer-Erklaerung schickt der Server gar keine Zahlen -
+    // hier steht dann, woran es liegt und was zu tun ist. Ein Kunde soll nie vor einer leeren
+    // Stelle stehen und raten.
+    if (!produkte.preiseSichtbar) {
+      $('prod-netto').style.display = '';
+      $('prod-netto').innerHTML = '<b>Die Preise sind noch verdeckt.</b> Wir zeigen sie netto, '
+        + 'und das dürfen wir nur gegenüber Unternehmern. Setzt bei den <a href="#firmendaten">Firmendaten</a> '
+        + 'das Häkchen „Ich bestelle als Unternehmer“ – danach stehen hier sofort alle Preise mit Mengenstaffel.';
+      $('prod-fehlt').style.display = 'none';
+      $('prod-pflege').style.display = bereit.length ? '' : 'none';
+      $('prod-pflege').textContent = bereit.length ? (produkte.zertifikate || []).join(' · ') + ' — ' + (produkte.pflege || '') : '';
+      return;
+    }
+    var mitPreis = (produkte.teile || []).filter(function (t) { return t.preisNetto != null; });
+    $('prod-netto').style.display = mitPreis.length ? '' : 'none';
+    $('prod-netto').textContent = mitPreis.length
+      // 24. Sept., Markus: "Schreib dahin allgemein: Preise sind Nettopreise zuzueglich
+      // Mehrwertsteuer. Das ist im B2B-Bereich vollkommen normal. Aber kannst du auch gerne noch
+      // mal recherchieren, was da die beste Beschreibung ist."
+      // Nachgeschlagen (IT-Recht Kanzlei, Haendlerbund, e-recht24): Die Preisangabenverordnung
+      // gilt nur gegenueber Verbrauchern - im reinen B2B sind Nettopreise zulaessig und ueblich.
+      // Die empfohlene Formel heisst "zzgl. gesetzlicher Umsatzsteuer", nicht "zzgl. 19 % MwSt.":
+      // "Umsatzsteuer" ist der Begriff des Gesetzes, und "gesetzlicher" nennt keinen Satz, der
+      // sich aendern kann (7 statt 19 bei ermaessigten Waren, oder eine kuenftige Aenderung).
+      // "zzgl. Versandkosten" gehoert nach derselben Quelle dazu.
+      ? 'Alle Preise sind Nettopreise zzgl. gesetzlicher Umsatzsteuer und zzgl. Versandkosten'
+        + (produkte.versand ? ' (versandfrei ab ' + euro(produkte.versand.freiAbWert) + ' oder ' + produkte.versand.freiAbArtikel + ' Artikeln)' : '')
+        + '. Ab 5 Stück wird es günstiger – die Staffel steht an jedem Textil.'
+      : '';
+    var ohnePreis = (produkte.teile || []).filter(function (t) { return t.preisNetto == null; });
+    var saetze = [];
+    if (fehlt.length) saetze.push('Noch ohne Produktbild: ' + fehlt.map(function (t) { return t.label; }).join(', ') + '.');
+    if (ohnePreis.length) saetze.push('Noch ohne Preis: ' + ohnePreis.map(function (t) { return t.label; }).join(', ') + '.');
+    if (saetze.length) saetze.push('Sobald beides da ist, erscheinen sie hier automatisch.');
+    $('prod-fehlt').style.display = saetze.length ? '' : 'none';
+    $('prod-fehlt').textContent = saetze.join(' ');
+    $('prod-pflege').style.display = bereit.length ? '' : 'none';
+    $('prod-pflege').textContent = bereit.length ? (produkte.zertifikate || []).join(' · ') + ' — ' + (produkte.pflege || '') : '';
+  }
+
+  document.addEventListener('click', function (ev) {
+    var f = ev.target.closest ? ev.target.closest('.farbe') : null;
+    if (f) { farbWahl[f.getAttribute('data-teil')] = f.getAttribute('data-farbe'); produkteZeichnen(); }
+  });
+
+  // Das Haeckchen faerbt sich sofort, damit man sieht, dass es sitzt - gespeichert wird es
+  // erst mit den Firmendaten, und genau das sagt der Hinweis daneben.
+  $('f-unternehmer').addEventListener('change', function () {
+    this.closest('.erklaerung').classList.toggle('an', this.checked);
+    sag('f-msg', this.checked ? 'Noch auf „Firmendaten speichern“ tippen – danach sind die Preise da.' : '', true);
+  });
+
+  function produkteLaden() {
+    // Erst das gewünschte Design prüfen (gehört es diesem Konto?), dann die Teile zeichnen
+    var vorab = designWunsch
+      ? j('/api/mo/firma/design/' + encodeURIComponent(designWunsch)).then(function (r) { if (r.ok && r.d && r.d.ok) design = r.d; }).catch(function () { design = null; })
+      : Promise.resolve();
+    return vorab.then(function () { return j('/api/mo/firma/produkte'); }).then(function (r) {
+      if (r.ok) {
+        produkte = r.d; produkteZeichnen();
+        if (design) { var k = document.querySelector('#produkte'); if (k && k.scrollIntoView) k.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+        else if (designWunsch) { $('prod-hinweis').textContent = 'Das Design ' + designWunsch + ' gehört nicht zu diesem Konto oder ist nicht mehr da. Hier seht ihr euer Logo auf den Produkten.'; }
+      }
+    }).catch(function () { /* Übersicht ist Kür, der Rest der Seite steht trotzdem */ });
+  }
+
+  // ---------- Arbeitsplatz ----------
+  function zeichnen() {
+    var f = daten.firma || {};
+    $('firmenname').innerHTML = f.name ? esc(f.name) : 'Firmen<span>bereich</span>';
+    $('platz-sub').textContent = f.name
+      ? 'Angemeldet als ' + daten.email + '.'
+      : 'Angemeldet als ' + daten.email + '. Trage unten einmal die Firmendaten ein, dann stehen sie auf jedem Auftrag.';
+
+    // Firmendaten ins Formular
+    ['name', 'ansprech', 'strasse', 'telefon', 'plz', 'ort', 'gewerk'].forEach(function (k) { $('f-' + k).value = f[k] || ''; });
+    $('f-unternehmer').checked = !!f.unternehmer;
+    $('f-unternehmer').closest('.erklaerung').classList.toggle('an', !!f.unternehmer);
+    $('f-ustid').value = f.ustId || '';
+
+    // Logo
+    if (daten.firmaLogo) {
+      $('logo-bild').src = '/api/mo/firma/logo.png?v=' + encodeURIComponent(daten.firmaLogo);
+      $('logo-bild').style.display = '';
+      $('logo-text').textContent = 'Logo ist hinterlegt und wird bei jedem Design vorgeschlagen.';
+      $('logo-weg').style.display = '';
+      $('logo-nz').style.display = '';
+    } else {
+      $('logo-bild').style.display = 'none';
+      $('logo-text').textContent = 'Noch kein Logo hinterlegt.';
+      $('logo-weg').style.display = 'none'; $('logo-nz').style.display = 'none';
+    }
+    $('kein-logo-hinweis').textContent = daten.firmaLogo ? '' : 'Tipp: Erst das Logo hinterlegen – dann muss es beim Design nicht mehr hochgeladen werden.';
+
+    produkteZeichnen();
+
+    // Mottos
+    $('mottos').innerHTML = (daten.mottos || []).map(function (m) {
+      return '<a class="kachel" href="/m/' + esc(m.slug) + '"><b>' + esc(m.name) + '</b>' +
+        (m.logo ? '<small>mit eurem Logo</small>' : '<small>ohne Logo</small>') + '</a>';
+    }).join('') || '<span class="hint">Im Backend ist noch kein gewerbliches Motto freigeschaltet.</span>';
+
+    // Listen
+    var L = daten.listen || [];
+    $('listen').innerHTML = L.length ? L.map(function (l) {
+      var namen = (l.leute || []).map(function (p) { return p.name + (p.size ? ' (' + p.size + (p.garment ? ' ' + p.garment : '') + ')' : ''); });
+      return '<div class="liste"><b>' + esc(l.name) + '</b> <span class="hint">' + namen.length + ' Personen</span>' +
+        '<div class="leute">' + esc(namen.join(' · ')) + '</div>' +
+        '<div class="row" style="margin-top:9px">' +
+        '<button class="btn ghost klein l-edit" data-id="' + esc(l.id) + '">Bearbeiten</button>' +
+        '<button class="btn ghost klein l-weg" data-id="' + esc(l.id) + '">Löschen</button></div></div>';
+    }).join('') : '<p class="hint" style="margin-top:0">Noch keine Liste gespeichert.</p>';
+
+    // Designs
+    var d = daten.designs || [];
+    $('designs-leer').style.display = d.length ? 'none' : '';
+    $('designs').innerHTML = d.map(function (x) {
+      return '<a href="/konto" title="' + esc(x.designId) + '">' +
+        '<img src="' + esc(x.bild) + '" loading="lazy" alt="" onerror="this.style.display=\'none\'">' + esc(x.designId) + '</a>';
+    }).join('');
+  }
+
+  // Firmendaten speichern
+  $('f-speichern').addEventListener('click', function () {
+    var body = {
+      name: $('f-name').value, ansprech: $('f-ansprech').value, strasse: $('f-strasse').value,
+      telefon: $('f-telefon').value, plz: $('f-plz').value, ort: $('f-ort').value, ustId: $('f-ustid').value,
+      gewerk: $('f-gewerk').value,
+      // Die Unternehmer-Erklaerung geht mit - an ihr haengt, ob es Preise zu sehen gibt.
+      unternehmer: $('f-unternehmer').checked
+    };
+    if (!body.name.trim()) { sag('f-msg', 'Der Firmenname fehlt.', false); return; }
+    sag('f-msg', 'wird gespeichert …', true);
+    j('/api/mo/firma', { method: 'PUT', body: body }).then(function (r) {
+      if (r.ok) {
+        daten.firma = r.d.firma; zeichnen();
+        // Mit der Erklaerung aendert sich, was der Server ueberhaupt herausgibt - also die
+        // Produktliste neu holen, statt eine alte Antwort ohne Preise weiterzuzeigen.
+        produkteLaden();
+        sag('f-msg', body.unternehmer ? 'Gespeichert. Die Preise sind jetzt sichtbar.' : 'Gespeichert.', true);
+      }
+      else if (r.d && r.d.error === 'verboten') sag('f-msg', 'Das geht nicht: „' + r.d.wort + '“.', false);
+      else sag('f-msg', (r.d && r.d.error) || 'Speichern fehlgeschlagen.', false);
+    });
+  });
+
+  // Logo hochladen - über den normalen Upload-Weg, damit alle Prüfungen greifen
+  $('logo-datei').addEventListener('change', function () {
+    var f = $('logo-datei').files[0];
+    if (!f) return;
+    if (f.size > 8 * 1024 * 1024) { sag('logo-msg', 'Die Datei ist zu groß (über 8 MB).', false); return; }
+    sag('logo-msg', 'wird geprüft …', true);
+    var leser = new FileReader();
+    leser.onload = function () {
+      // zweck 'firmenlogo': das eigene Logo wird nicht gegen die Markenliste geprüft - es IST die eigene Marke.
+      j('/api/mo/upload', { method: 'POST', body: { dataUrl: leser.result, name: f.name, zweck: 'firmenlogo' } }).then(function (r) {
+        if (!r.ok) {
+          var e = r.d || {};
+          sag('logo-msg', e.error === 'marke' ? 'Darauf ist ein geschütztes Zeichen („' + e.wort + '“).'
+            : e.error === 'verboten' ? 'Darauf ist ein verbotenes Zeichen.'
+            : e.hinweis || 'Das Bild wurde nicht angenommen.', false);
+          return;
+        }
+        // Fassung 35: Preflight - ein unbrauchbares Logo (zu klein, weisser Kasten) wird nicht hinterlegt
+        var pf = r.d && r.d.preflight;
+        if (pf && pf.stufe === 'unbrauchbar') { sag('logo-msg', 'Dieses Logo ist so nicht druckbar: ' + (pf.gruende || []).join(' ') + ' Bitte die Originaldatei hochladen (PNG, SVG oder PDF, mindestens 700 Pixel breit).', false); return; }
+        return j('/api/mo/firma/logo', { method: 'POST', body: { uploadFile: r.d.uploadId } }).then(function (s) {
+          if (s.ok && pf && pf.stufe === 'maessig') { daten.firmaLogo = s.d.firmaLogo; zeichnen(); sag('logo-msg', 'Logo hinterlegt – aber Achtung: ' + (pf.gruende || []).join(' '), false); return; }
+          if (!s.ok) { sag('logo-msg', 'Konnte nicht hinterlegt werden.', false); return; }
+          daten.firmaLogo = s.d.firmaLogo; zeichnen(); sag('logo-msg', 'Logo hinterlegt.', true);
+        });
+      });
+    };
+    leser.readAsDataURL(f);
+  });
+
+  $('logo-weg').addEventListener('click', function () {
+    if (!confirm('Firmenlogo entfernen? Bestehende Designs bleiben unverändert.')) return;
+    j('/api/mo/firma/logo', { method: 'POST', body: { uploadFile: '' } }).then(function (r) {
+      if (r.ok) { daten.firmaLogo = null; zeichnen(); sag('logo-msg', 'Entfernt.', true); }
+    });
+  });
+
+  // ---- Fassung 56: hinterlegtes Logo nachzeichnen, nachbessern, uebernehmen ----
+  var nzErgebnis = null;
+  function nzWarten(auftrag, knopf, t0) {
+    return new Promise(function (resolve, reject) {
+      (function frag() {
+        j('/api/mo/upload/nachzeichnen/' + encodeURIComponent(auftrag)).then(function (r) {
+          var s = r.d || {};
+          if (s.status === 'laeuft') { knopf.textContent = 'Otto arbeitet … ' + Math.round((Date.now() - t0) / 1000) + ' s'; if (Date.now() - t0 > 6 * 60000) { reject(new Error('zeit')); return; } setTimeout(frag, 3000); return; }
+          resolve({ ok: s.status === 'fertig' && !!s.uploadId, d: s });
+        }).catch(function () { setTimeout(frag, 4000); });
+      })();
+    });
+  }
+  function nzLauf(quelle, korrektur, knopf) {
+    var t0 = Date.now(), alt = knopf.textContent;
+    knopf.disabled = true; $('logo-nz-ok').disabled = true; knopf.textContent = 'Otto arbeitet … (etwa eine Minute)';
+    sag('logo-msg', '', true);
+    j('/api/mo/upload/nachzeichnen', { method: 'POST', body: { uploadId: quelle, korrektur: korrektur || '' } })
+      .then(function (r) { if (!r.ok || !r.d.auftrag) throw new Error((r.d && r.d.hinweis) || 'Das Nachzeichnen ließ sich nicht starten.'); return nzWarten(r.d.auftrag, knopf, t0); })
+      .then(function (r) {
+        knopf.disabled = false; knopf.textContent = alt; $('logo-nz-ok').disabled = false;
+        if (!r.ok) { sag('logo-msg', (r.d && r.d.hinweis) || 'Das Nachzeichnen hat nicht geklappt.', false); return; }
+        nzErgebnis = r.d;
+        $('logo-nz-bild').src = r.d.vorschau;
+        var pf = r.d.preflight || {};
+        $('logo-nz-text').textContent = (korrektur ? 'Nach der Korrektur: ' : 'So sieht es nachgezeichnet aus. ') + ((pf.gruende || []).join(' ') || (pf.hinweise || []).join(' ')) + (r.d.erwartet && r.d.erwartet.length ? ' Schrift erwartet: „' + r.d.erwartet.join(' ') + '“, gelesen: „' + (r.d.gelesen || []).join(' ') + '“.' : '');
+        $('logo-nz-box').style.display = '';
+        $('logo-nz-korr').value = '';
+      })
+      .catch(function (e) { knopf.disabled = false; knopf.textContent = alt; $('logo-nz-ok').disabled = false; sag('logo-msg', e && e.message === 'zeit' ? 'Das dauert heute zu lange – bitte später noch einmal.' : (e && e.message) || 'Keine Verbindung.', false); });
+  }
+  $('logo-nz-go').addEventListener('click', function () { if (daten.firmaLogo) nzLauf(daten.firmaLogo, '', $('logo-nz-go')); });
+  $('logo-nz-korr-go').addEventListener('click', function () {
+    var t = $('logo-nz-korr').value.trim();
+    if (!nzErgebnis) return;
+    if (t.length < 3) { $('logo-nz-korr').focus(); sag('logo-msg', 'Schreib kurz, was Otto ändern soll.', false); return; }
+    nzLauf(nzErgebnis.uploadId, t, $('logo-nz-korr-go'));
+  });
+  $('logo-nz-ok').addEventListener('click', function () {
+    if (!nzErgebnis) return;
+    j('/api/mo/firma/logo', { method: 'POST', body: { uploadFile: nzErgebnis.uploadId } }).then(function (s) {
+      if (!s.ok) { sag('logo-msg', 'Konnte nicht hinterlegt werden.', false); return; }
+      daten.firmaLogo = s.d.firmaLogo; nzErgebnis = null; $('logo-nz-box').style.display = 'none'; zeichnen();
+      sag('logo-msg', 'Nachgezeichnetes Logo hinterlegt – es wird ab jetzt bei jedem Design vorgeschlagen.', true);
+    });
+  });
+  $('logo-nz-weg').addEventListener('click', function () { nzErgebnis = null; $('logo-nz-box').style.display = 'none'; sag('logo-msg', 'Verworfen – das bisherige Logo bleibt.', true); });
+
+  // Listen
+  function listeAlsText(l) {
+    return (l.leute || []).map(function (p) { return [p.name, p.size || '', p.garment || ''].filter(Boolean).join('; '); }).join('\n');
+  }
+  $('listen').addEventListener('click', function (ev) {
+    var b = ev.target;
+    var id = b.getAttribute && b.getAttribute('data-id');
+    if (!id) return;
+    var l = (daten.listen || []).filter(function (x) { return x.id === id; })[0];
+    if (!l) return;
+    if (b.className.indexOf('l-edit') >= 0) {
+      bearbeite = id; $('l-name').value = l.name; $('l-leute').value = listeAlsText(l);
+      $('l-abbrechen').style.display = ''; $('l-speichern').textContent = 'Änderung speichern';
+      sag('l-msg', 'Liste „' + l.name + '" wird bearbeitet.', true);
+      $('l-name').scrollIntoView({ block: 'center', behavior: 'smooth' });
+    } else if (b.className.indexOf('l-weg') >= 0) {
+      if (!confirm('Liste „' + l.name + '" löschen?')) return;
+      j('/api/mo/firma/liste/' + encodeURIComponent(id), { method: 'DELETE' }).then(function (r) {
+        if (r.ok) { daten.listen = (daten.listen || []).filter(function (x) { return x.id !== id; }); zeichnen(); sag('l-msg', 'Gelöscht.', true); }
+      });
+    }
+  });
+  function listeZuruecksetzen() {
+    bearbeite = null; $('l-name').value = ''; $('l-leute').value = '';
+    $('l-abbrechen').style.display = 'none'; $('l-speichern').textContent = 'Liste speichern';
+  }
+  $('l-abbrechen').addEventListener('click', function () { listeZuruecksetzen(); sag('l-msg', '', true); });
+  $('l-speichern').addEventListener('click', function () {
+    var leute = $('l-leute').value.trim();
+    if (!leute) { sag('l-msg', 'Bitte mindestens eine Person eintragen.', false); return; }
+    sag('l-msg', 'wird gespeichert …', true);
+    j('/api/mo/firma/liste', { method: 'POST', body: { id: bearbeite, name: $('l-name').value, leute: leute } }).then(function (r) {
+      if (!r.ok) {
+        sag('l-msg', r.d && r.d.error === 'verboten' ? 'Das geht nicht: „' + r.d.wort + '“.' : 'Speichern fehlgeschlagen.', false);
+        return;
+      }
+      daten.listen = daten.listen || [];
+      var i = daten.listen.findIndex(function (x) { return x.id === r.d.liste.id; });
+      if (i >= 0) daten.listen[i] = r.d.liste; else daten.listen.push(r.d.liste);
+      listeZuruecksetzen(); zeichnen();
+      var b = (r.d.bereinigt || []).length;
+      sag('l-msg', 'Gespeichert.' + (b ? ' ' + b + ' Eintrag' + (b > 1 ? 'e wurden' : ' wurde') + ' bereinigt.' : ''), true);
+    });
+  });
+
+  // ---------- Start ----------
+  j('/api/mo/firma').then(function (r) {
+    if (r.ok && r.d.angemeldet) { daten = r.d; $('platz').classList.remove('hide'); zeichnen(); produkteLaden(); }
+    else { $('tor').classList.remove('hide'); $('email').focus(); }
+  }).catch(function () { $('tor').classList.remove('hide'); });
+})();
+</script>
+</body>
+</html>

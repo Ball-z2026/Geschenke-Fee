@@ -1,0 +1,33 @@
+{
+  "_hinweis": "6. Okt., Markus: 'Otto soll sprechen ... wenn das Konstrukt steht und wir genau die Abfolge haben, sagst du mir die Saetze und ich sprech hier ein, und du huebschst sie ein bisschen auf.' Je Schluessel eine Aufnahme <schluessel>.mp3 in diesem Ordner. Fehlt sie, steht der Satz nur in Ottos Sprechblase. 6. Okt., Markus: 'Das sollten wir schon ein wenig moderner setzen, und vor allen Dingen ist es hier im Norden. Also es faengt an mit Moin.' Aufgenommen wird auf /admin/stimme (Text dort aenderbar, die Aenderung liegt im Speicher unter otto-stimme/texte.json und gilt vor diesem Text). Danach (6. Okt.): \"Alle Saetze in einer coolen Sprache - nicht 'Worauf soll's', das hoert sich so Scheisse an, das muss sich einfach geil anhoeren.\" Danach (6. Okt., abgesegnet: 'Wir testen den Ablauf so'): der Otto-Weg /otto mit fuer_wen, anlass_gruppe, anlass_geschenk, idee_oder_motto; stil_frage vor stil; abstimmen nur bei Gruppen; menge statt kaufen bei allem ausser Textil.",
+  "saetze": {
+    "start": "Moin, ich bin Otto. Erzähl mal, was soll ich dir zaubern?",
+    "artikel": "Shirt, Hoodie oder lieber 'n Kissen? Du sagst an – ich zeichne.",
+    "fuer_wen": "Für 'ne ganze Truppe, als Geschenk – oder für dich selbst?",
+    "anlass_gruppe": "Was steht an? JGA, Abi, Malle, Verein – such dir was aus oder sag's mir.",
+    "anlass_geschenk": "Schön! Zu welchem Anlass? Geburtstag, Hochzeit, Baby …?",
+    "idee_oder_motto": "Hast du schon 'ne eigene Idee – oder soll ich dir meine Mottos zeigen?",
+    "wunsch": "Hau raus: Was soll drauf? Spruch, Motiv, Farben – je verrückter, desto besser.",
+    "feld": "Was kommt hier rein? Sag's mir einfach.",
+    "namen": "Jetzt die Namen – einfach nacheinander. Größen gern gleich mit.",
+    "foto": "Hast du 'n Foto, das mit rein soll? Ja oder nein?",
+    "foto_waehlen": "Dann schnapp dir „Foto wählen“ – ich warte hier.",
+    "foto_ok": "Starkes Foto! Nehmen wir das?",
+    "stil_frage": "Soll ich den Style aussuchen – oder willst du selbst ran?",
+    "stil": "Dann such dir einen aus – sag einfach den Namen.",
+    "textil": "Helles Shirt oder dunkles? Du entscheidest.",
+    "groesse": "Klein auf die Brust oder groß drauf – wie hättest du's gern?",
+    "optional": "Noch was obendrauf? Sonst sag einfach „weiter“.",
+    "zusammenfassung": "Check mal kurz – passt alles? Dann sag „los“, und ich leg los.",
+    "warten": "Ich bin am Zeichnen! Dauert 'n paar Minuten – lehn dich zurück, ich sag Bescheid.",
+    "fertig": "Tadaa – fertig! Und, wie findest du's? Sag „gefällt mir“, „nochmal“ – oder was ich ändern soll.",
+    "abstimmen": "Willst du's erst deiner Truppe zum Abstimmen schicken?",
+    "kaufen": "Welche Größe brauchst du – und wie viele?",
+    "menge": "Wie viele darf ich dir machen?",
+    "kasse": "Mega! Ab zur Kasse – den letzten Klick machst du selbst.",
+    "nicht_verstanden": "Oha, das hab ich nicht geschnallt. Sag's nochmal anders?",
+    "ok": "Läuft!",
+    "pause": "Alles klar, ich bin still. Tipp aufs Mikro, wenn du mich brauchst.",
+    "marke": "Oh, das ist geschützt – das dürfen wir leider nicht drucken. Aber ich mach dir was im ähnlichen Style. Bock drauf?"
+  }
+}

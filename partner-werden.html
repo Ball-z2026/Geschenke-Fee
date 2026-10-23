@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Partner werden – Motto Otto</title>
+<meta name="description" content="Dein eigener kleiner Shop bei Motto Otto: Shirt, Hoodie, Poster und mehr mit deinem Logo. Für Gastronomen, Betriebe und Vereine.">
+<link rel="icon" href="/favicon-64.png" type="image/png">
+<link rel="preload" href="/fonts/archivo-v1.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/marke.css">
+<link rel="stylesheet" href="/partner.css">
+</head>
+<body class="p-seite">
+<header class="mo-kopf"><div class="mo-in">
+  <a class="mo-marke" href="/"><img src="/logo.png" alt="" width="36" height="42">Motto Otto</a>
+  <nav class="mo-nav" aria-label="Hauptmenü">
+    <a href="/mottos">Mottos</a>
+    <a href="/so-gehts">So geht’s</a>
+    <a href="/firma">Firmen</a>
+    <a href="/partner" aria-current="page">Partner</a>
+    <a href="/event">Event</a>
+  </nav>
+  <a class="mo-knopf hell mo-konto" href="/partner/bereich">Partner-Login</a>
+</div></header>
+
+<main class="p-wrap">
+  <section class="p-held">
+    <h1>Partner <em>werden</em></h1>
+    <p>Dein eigener kleiner Shop: Gäste und Mitglieder machen ein Selfie oder schreiben, was drauf soll. Otto gestaltet es mit deinem Logo auf Shirt, Hoodie und Poster.</p>
+  </section>
+
+  <!-- 2. Okt., Markus: "Da sollten wir natuerlich herausheben, das ist sogar personalisiertes Merch, was die meisten gar nicht anbieten koennen." -->
+  <section class="p-merch" aria-labelledby="merch-titel">
+    <span class="p-merch-marke">Das absolute Highlight</span>
+    <h2 id="merch-titel">Personalisiertes Merch</h2>
+    <p>Normale Merch-Shops verkaufen ein Design für alle. Bei dir gestaltet jeder Gast sein eigenes Stück: mit seinem Selfie, seinem Namen oder seinem Spruch – und immer mit deinem Logo.</p>
+    <ul>
+      <li><b>Jedes Stück ein Einzelstück</b> – Shirt, Hoodie, Poster, Strandtuch</li>
+      <li><b>Dein Logo ist immer drauf</b> – genau so, wie du es hochlädst</li>
+      <li><b>Kein Lager, kein Risiko</b> – gedruckt wird erst, wenn jemand bestellt</li>
+    </ul>
+  </section>
+
+  <form id="form" class="p-karte" novalidate>
+    <h2>Wer seid ihr?</h2>
+    <p class="unter">So steht ihr in eurem Shop und in der Partnerliste.</p>
+    <div class="p-feld"><label class="p-label">Was seid ihr?</label>
+      <div class="p-wahl">
+        <label><input type="radio" name="art" value="gastro" checked> Gastronomie</label>
+        <label><input type="radio" name="art" value="betrieb"> Betrieb</label>
+        <label><input type="radio" name="art" value="verein"> Verein</label>
+      </div>
+    </div>
+    <div class="p-feld"><label for="name">Name, so wie euch die Leute kennen</label>
+      <input id="name" type="text" maxlength="60" placeholder="z. B. Luigi" required>
+      <span class="hinweis">Dieser Name steht auf den Artikeln und im Shop. Die volle Firmenbezeichnung kommt darunter.</span></div>
+    <div class="p-feld"><label for="firma">Firmenbezeichnung oder Vereinsname (für die Abrechnung)</label>
+      <input id="firma" type="text" maxlength="100" placeholder="z. B. Luigi's Pizza UG"></div>
+    <div class="p-zwei">
+      <div class="p-feld"><label for="strasse">Straße und Hausnummer</label><input id="strasse" type="text" maxlength="100" required></div>
+      <div class="p-feld"><label for="plz">PLZ</label><input id="plz" type="text" maxlength="12" inputmode="numeric"></div>
+      <div class="p-feld"><label for="ort">Ort</label><input id="ort" type="text" maxlength="60" required></div>
+      <div class="p-feld"><label for="land">Land</label><input id="land" type="text" maxlength="40" value="Deutschland"></div>
+    </div>
+    <p class="p-klein" style="margin-top:-6px">An der Anschrift erkennt die Seite, dass ein Gast gerade bei euch ist.</p>
+    <div class="p-zwei">
+      <div class="p-feld"><label for="webseite">Webseite (freiwillig)</label><input id="webseite" type="url" maxlength="120" placeholder="www.beispiel.de"></div>
+      <div class="p-feld" id="f-kueche"><label for="kueche">Küche (für die Flagge auf dem Tuch)</label>
+        <select id="kueche">
+          <option value="">keine bestimmte</option><option value="italian">Italienisch</option><option value="greek">Griechisch</option>
+          <option value="spanish">Spanisch</option><option value="turkish">Türkisch</option><option value="french">Französisch</option>
+          <option value="german">Deutsch</option><option value="croatian">Kroatisch</option><option value="portuguese">Portugiesisch</option>
+          <option value="mexican">Mexikanisch</option><option value="chinese">Chinesisch</option><option value="japanese">Japanisch</option>
+          <option value="thai">Thailändisch</option><option value="vietnamese">Vietnamesisch</option><option value="indian">Indisch</option>
+        </select></div>
+    </div>
+
+    <h2 style="margin-top:12px">Euer Logo</h2>
+    <p class="unter">Am besten als PNG mit durchsichtigem Hintergrund. Ein weißer Hintergrund wird automatisch entfernt.</p>
+    <div class="p-feld">
+      <div class="p-logo-vorschau" id="logo-vorschau"><span class="p-klein">noch kein Logo</span></div>
+      <input id="logo" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" style="margin-top:10px">
+    </div>
+
+    <h2 style="margin-top:12px">Anmeldung</h2>
+    <div class="p-feld"><label for="email">E-Mail</label>
+      <input id="email" type="email" maxlength="120" autocomplete="email" required>
+      <span class="hinweis">Dorthin schicken wir den Link in euren Partnerbereich. Erst nach dem Klick geht der Shop online.</span></div>
+    <label class="p-haken"><input id="erklaerung" type="checkbox"> <span id="erklaerung-text">Ich handle für diesen Betrieb bzw. Verein und darf ihn vertreten. Ich gebe Motto Otto frei, Namen und Logo auf Artikeln zu verwenden, die Gäste und Mitglieder über unsere Seite gestalten und kaufen. Die Freigabe kann ich jederzeit im Partnerbereich beenden.</span></label>
+    <label class="p-haken"><input id="vereinbarung" type="checkbox"> <span>Ich habe die <a href="/partner/vereinbarung" target="_blank" rel="noopener">Partner- und Lizenzvereinbarung</a> gelesen und stimme ihr zu. Ihr bekommt 20 % vom Nettopreis jedes Artikels mit eurem Logo, automatisch ausgezahlt.</span></label>
+    <div id="meldung" class="p-meldung hide" role="status"></div>
+    <button class="mo-knopf" id="senden" type="submit">Partner werden</button>
+  </form>
+
+  <section id="fertig" class="p-karte hide">
+    <h2>Fast geschafft</h2>
+    <p id="fertig-text">Wir haben euch einen Link geschickt. Klickt ihn an, dann geht euer Shop online und ihr landet im Partnerbereich.</p>
+    <p class="p-klein">Keine Zeit, alles selbst einzurichten? Im Partnerbereich könnt ihr uns für 99 € zzgl. MwSt. beauftragen, eure Wunsch-Designs fertig zu machen.</p>
+  </section>
+</main>
+
+<script>
+(function () {
+  var logoDaten = '';
+  var $ = function (id) { return document.getElementById(id); };
+  function melde(t, gut) { var m = $('meldung'); m.textContent = t; m.className = 'p-meldung ' + (gut ? 'gut' : 'schlecht'); }
+  function artGeaendert() { var a = (document.querySelector('input[name=art]:checked') || {}).value; $('f-kueche').classList.toggle('hide', a !== 'gastro'); }
+  Array.prototype.forEach.call(document.querySelectorAll('input[name=art]'), function (r) { r.addEventListener('change', artGeaendert); });
+  artGeaendert();
+  $('logo').addEventListener('change', function () {
+    var f = this.files && this.files[0]; if (!f) return;
+    if (f.size > 6 * 1024 * 1024) { melde('Das Logo ist größer als 6 MB. Bitte eine kleinere Datei.'); this.value = ''; return; }
+    var rd = new FileReader();
+    rd.onload = function () { logoDaten = rd.result; $('logo-vorschau').innerHTML = '<img alt="Euer Logo" src="' + rd.result + '">'; };
+    rd.readAsDataURL(f);
+  });
+  $('form').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var art = (document.querySelector('input[name=art]:checked') || {}).value || 'betrieb';
+    var body = {
+      art: art, name: $('name').value, firma: $('firma').value, strasse: $('strasse').value, plz: $('plz').value, ort: $('ort').value,
+      land: $('land').value, webseite: $('webseite').value, email: $('email').value, gastro: art === 'gastro',
+      kueche: art === 'gastro' ? $('kueche').value : '', logo: logoDaten, erklaerung: $('erklaerung').checked,
+      vereinbarung: $('vereinbarung').checked
+    };
+    if (!body.erklaerung) { melde('Bitte die Freigabe für Namen und Logo bestätigen.'); return; }
+    if (!body.vereinbarung) { melde('Bitte die Partner- und Lizenzvereinbarung bestätigen.'); return; }
+    if (!body.logo) { melde('Bitte euer Logo hochladen.'); return; }
+    $('senden').disabled = true; $('senden').textContent = 'Wird angelegt …';
+    fetch('/api/partner/anmelden', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (r) {
+        $('senden').disabled = false; $('senden').textContent = 'Partner werden';
+        if (!r.ok) { melde(r.j.error || 'Das hat nicht geklappt.'); return; }
+        $('form').classList.add('hide'); $('fertig').classList.remove('hide');
+        if (!r.j.gesendet) $('fertig-text').textContent = 'Euer Shop ist angelegt. Der Link konnte gerade nicht verschickt werden. Meldet euch unter Partner-Login mit eurer E-Mail an, dann kommt er noch einmal.';
+        window.scrollTo(0, 0);
+      })
+      .catch(function () { $('senden').disabled = false; $('senden').textContent = 'Partner werden'; melde('Keine Verbindung. Bitte noch einmal.'); });
+  });
+})();
+</script>
+</body>
+</html>

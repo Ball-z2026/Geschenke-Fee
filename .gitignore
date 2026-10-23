@@ -1,0 +1,53 @@
+node_modules/
+storage/polls/
+storage/jobs/
+# Laufende Zahlen gehoeren aufs Volume, nicht ins Repo - sonst ueberschreibt ein lokaler
+# Testlauf den echten Stand (Fassung 74).
+storage/zaehler.json
+storage/laufnummer.json
+# Produktfotos gehoeren NIE ins Repo. Am 17. September sind meine grauen Ersatzbilder aus
+# einem lokalen Testlauf hier hineingerutscht - ensureTemplates laedt nur, was FEHLT, also
+# blieben die grauen Kacheln liegen und jedes Mockup war eine graue Flaeche. "Die Fotos sind
+# alle weg." Der Ordner wird ausschliesslich zur Laufzeit gefuellt.
+storage/templates/
+# Fertige Bilder gehoeren aus demselben Grund nicht ins Repo: Mockups, Beispielbilder und
+# jetzt auch deren AVIF- und WebP-Fassungen entstehen zur Laufzeit auf dem Volume.
+storage/mockups/
+# Logo und Reitersymbole erzeugt ensureLogo() bei JEDEM Start neu aus logo-source.png. Die
+# Kopien im Repo waren also nur Altlast - und eine gefaehrliche: nach der Verkleinerung in
+# Fassung 77 lag hier weiter das alte 154-kB-Favicon und sah aus wie der gueltige Stand.
+storage/logo.png
+storage/logo-full.png
+storage/favicon.png
+storage/favicon-64.png
+storage/favicon-32.png
+storage/apple-touch-icon.png
+*.log
+
+# Laufzeitdateien: sie entstehen im Betrieb auf dem Volume und sagen nichts ueber den
+# Code aus. Zweimal am 18. September sind sie aus einem lokalen Testlauf ins Repo
+# gerutscht - mit dem Eintrag "Bildserver nicht erreichbar", weil die Testumgebung ihn
+# nicht erreicht. So eine Falschmeldung liest spaeter jemand und haelt sie fuer echt.
+storage/maillog.json
+storage/bildserver-wache.json
+storage/platzwarnung.json
+
+# 24. Sept.: Laufzeitdateien des Volumes gehoeren nie ins Repo (Regel 4). Sie sind an diesem Tag
+# einmal mitgerutscht - rund 150 Druckdateien und Vorschauen aus der Abnahme. Angerichtet haben
+# sie nichts (das Railway-Volume liegt auf /app/storage und ueberdeckt alles aus dem Image),
+# aber ins Repo gehoeren sie trotzdem nicht.
+storage/masters/
+storage/previews/
+storage/vergleich/
+storage/firmenlogos/
+storage/vorzeige/
+.fccache/
+
+# 7. Okt.: Vorschaubilder fuer Markus im Chat - nicht ins Repo
+vorschau-markus/
+
+# Geheimes - nie ins Repository (Werte liegen bei Railway)
+.env
+.env.*
+!.env.example
+storage/druckzugang.json

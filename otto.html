@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Otto fragt – Motto Otto</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#F6EDDD">
+<link rel="icon" href="/favicon-64.png" type="image/png">
+<link rel="preload" href="/fonts/anton-v1.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/archivo-v1.woff2" as="font" type="font/woff2" crossorigin>
+<!-- 6. Okt., Markus: "wenn ich sage mit dem Zaubern und der sagt, ich moechte ein Hoodie, dann muesste die Frage kommen: Magst du das
+     fuer 'ne Gruppe, als Geschenk oder fuer dich selber - und danach muss es sich logisch aufbauen." Und: "Es muss sich ja auch der
+     Bildschirm [aendern] ... wenn ich sage, welcher Stil, muessen die Stile da sein." Abgesegnet: "Wir testen den Ablauf so."
+     Der Weg: Artikel -> fuer wen -> Anlass (Gruppe/Geschenk) oder eigene Idee/Motto (fuer mich) -> Wunsch -> Mottoseite.
+     Otto fragt nie, was schon gesagt wurde (/api/mo/otto-lesen liest die Weichen aus dem Gesagten). -->
+<style>
+@font-face{font-family:"Anton";src:url("/fonts/anton-v1.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Archivo";src:url("/fonts/archivo-v1.woff2") format("woff2");font-weight:400 900;font-display:swap}
+:root{
+  --papier:#F6EDDD; --tinte:#000; --gruen:#77C500; --magenta:#E9166A; --beere:#AF0D6D;
+  --hemd:#E1E2E3; --text2:#4A4136;
+  --kontur:2.5px solid var(--tinte); --stempel:4px 4px 0 var(--tinte);
+  --display:"Anton", "Arial Narrow", sans-serif; --text:"Archivo", system-ui, sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--papier);color:var(--tinte);font:400 16.5px/1.5 var(--text);overflow-x:hidden;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit}
+:focus{outline:none}
+:focus-visible{outline:3px solid var(--tinte);outline-offset:3px;box-shadow:0 0 0 7px var(--magenta);border-radius:6px}
+.wrap{width:100%;max-width:1120px;margin:0 auto;padding:0 16px}
+.kopf{padding:10px 0;border-bottom:var(--kontur);background:var(--papier);position:sticky;top:0;z-index:20}
+.kopf .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.marke{display:flex;align-items:center;gap:8px;font:400 22px/1 var(--display);color:var(--tinte);text-decoration:none}
+.marke img{width:28px;height:auto}
+.zurueck{border:var(--kontur);border-radius:999px;background:#fff;padding:7px 14px;font-weight:800;cursor:pointer;box-shadow:3px 3px 0 var(--tinte)}
+main{flex:1;padding:18px 0 150px}
+/* Otto und seine Frage */
+.frage-reihe{display:grid;grid-template-columns:72px minmax(0,1fr);gap:14px;align-items:start}
+.otto-knopf{position:relative;padding:0;border:0;background:none;cursor:pointer;border-radius:50%;line-height:0}
+.otto-knopf img{width:72px;height:72px;border-radius:50%;border:var(--kontur);background:var(--hemd);object-fit:cover;box-shadow:var(--stempel)}
+.otto-ton{position:absolute;right:-4px;bottom:-2px;width:26px;height:26px;border-radius:50%;background:var(--gruen);border:2px solid var(--tinte);display:grid;place-items:center}
+.otto-knopf.spricht img{animation:ottoSpricht .32s ease-in-out infinite alternate}
+.otto-knopf.spricht .otto-ton{animation:ottoTon .5s ease-in-out infinite alternate}
+@keyframes ottoSpricht{from{transform:rotate(-3deg) scale(1)}to{transform:rotate(3deg) scale(1.05)}}
+@keyframes ottoTon{from{transform:scale(1)}to{transform:scale(1.15)}}
+.blase{position:relative;background:#fff;border:var(--kontur);border-radius:18px;box-shadow:var(--stempel);padding:12px 16px;transform-origin:0 50%}
+.blase::before{content:'';position:absolute;left:-14px;top:22px;border:12px solid transparent;border-right-color:var(--tinte)}
+.blase::after{content:'';position:absolute;left:-9px;top:24px;border:10px solid transparent;border-right-color:#fff}
+.blase h1{margin:0;font:800 19px/1.3 var(--text)}
+.blase.rein{animation:blaseRein .38s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes blaseRein{from{opacity:0;transform:scale(.5) rotate(-4deg)}to{opacity:1;transform:none}}
+.bisher{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0;padding:0;list-style:none}
+.bisher button{border:2px solid var(--tinte);border-radius:999px;background:var(--papier);padding:3px 10px;font-size:14px;font-weight:700;cursor:pointer}
+.bisher button::after{content:' ✕';font-weight:400;color:var(--text2)}
+@media (prefers-reduced-motion:reduce){.blase.rein,.otto-knopf.spricht img,.otto-knopf.spricht .otto-ton{animation:none}}
+/* Die Kacheln zur Frage */
+.kacheln{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin:20px 0 0;padding:0;list-style:none}
+.kacheln.gross{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.kachel{display:flex;flex-direction:column;width:100%;height:100%;border:var(--kontur);border-radius:14px;background:#fff;box-shadow:var(--stempel);padding:0;overflow:hidden;cursor:pointer;text-align:left;transition:transform .12s,box-shadow .12s}
+.kachel:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--tinte)}
+.kachel:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--tinte)}
+.kachel .bild{aspect-ratio:4/3;background:var(--hemd);display:grid;place-items:center;font-size:44px;line-height:1;border-bottom:2px solid var(--tinte);overflow:hidden}
+.kachel .bild img{width:100%;height:100%;object-fit:cover}
+.kachel .bild.hoch img{object-fit:contain;background:#fff}
+.kachel b{display:block;padding:8px 10px 10px;font-size:15.5px;line-height:1.2;hyphens:auto;-webkit-hyphens:auto;overflow-wrap:break-word}
+.kachel small{display:block;padding:0 10px 10px;margin-top:-6px;color:var(--text2);font-size:13px;line-height:1.25}
+.kacheln.gross .kachel .bild{font-size:64px}
+.kacheln.gross .kachel b{font-size:18px}
+.kachel.idee .bild{background:var(--gruen)}
+/* Wunsch-Schritt */
+.wunsch-feld{margin:20px 0 0;display:grid;gap:12px}
+.wunsch-feld textarea{width:100%;min-height:120px;resize:vertical;border:var(--kontur);border-radius:14px;padding:12px 14px;font:500 17px/1.45 var(--text);background:#fff;box-shadow:var(--stempel)}
+.knopf{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:9px 22px;border:var(--kontur);border-radius:999px;background:var(--gruen);color:var(--tinte);font:800 16.5px/1.2 var(--text);box-shadow:var(--stempel);cursor:pointer;justify-self:start}
+.knopf:disabled{opacity:.6;cursor:wait}
+.knopf.leise{background:#fff}
+.meldung{margin:14px 0 0;font-weight:700;min-height:1.4em}
+.frage-box{margin:14px 0 0;padding:14px 16px;border:var(--kontur);border-radius:14px;background:#fff;box-shadow:var(--stempel);display:grid;gap:12px}
+.frage-box div{display:flex;flex-wrap:wrap;gap:10px}
+/* Unten: tippen oder sprechen */
+.leiste{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--papier);border-top:var(--kontur);padding:10px 0 calc(10px + env(safe-area-inset-bottom))}
+.leiste form{display:flex;gap:10px;align-items:center}
+.leiste input{flex:1;min-width:0;height:50px;border:var(--kontur);border-radius:999px;padding:0 18px;font:500 16.5px var(--text);background:#fff}
+.mik{flex:0 0 50px;height:50px;border:var(--kontur);border-radius:50%;background:#fff;cursor:pointer;display:grid;place-items:center}
+.mik.an{background:var(--magenta);color:#fff;animation:mikPuls 1.2s ease-in-out infinite}
+@keyframes mikPuls{0%,100%{box-shadow:0 0 0 0 rgba(233,22,106,.5)}50%{box-shadow:0 0 0 8px rgba(233,22,106,0)}}
+.senden{flex:0 0 auto;height:50px;border:var(--kontur);border-radius:999px;background:var(--gruen);font-weight:800;padding:0 18px;cursor:pointer}
+.hoert{font-size:14px;color:var(--text2);min-height:1.3em;margin:0 0 6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+[hidden]{display:none!important}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (min-width:860px){
+  .frage-reihe{grid-template-columns:104px minmax(0,1fr);gap:22px}
+  .otto-knopf img{width:104px;height:104px}
+  .blase{padding:16px 22px}.blase h1{font-size:23px}.blase::before{top:36px}.blase::after{top:38px}
+  /* Laptop: alle Kacheln ohne Scrollen (CLAUDE.md: alle Knoepfe ohne Scrollen sichtbar) */
+  .kacheln{grid-template-columns:repeat(auto-fill,minmax(122px,1fr));gap:10px;margin-top:16px}
+  .kachel .bild{aspect-ratio:16/10;font-size:36px}
+  .kachel b{padding:6px 9px 8px;font-size:14.5px}
+  .kachel small{font-size:12.5px;padding:0 9px 8px}
+  main{padding-top:14px}
+}
+@media (max-width:420px){
+  .frage-reihe{grid-template-columns:58px minmax(0,1fr);gap:12px}
+  .otto-knopf img{width:58px;height:58px}
+  .kacheln{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .kacheln.gross{grid-template-columns:1fr}
+  .kacheln.gross .kachel{flex-direction:row;align-items:center}
+  .kacheln.gross .kachel .bild{aspect-ratio:1;width:78px;flex:0 0 78px;font-size:38px;border-bottom:0;border-right:2px solid var(--tinte)}
+  .senden{padding:0 14px}
+}
+</style>
+</head>
+<body>
+<header class="kopf">
+  <div class="wrap">
+    <a class="marke" href="/"><img src="/logo.png" alt="" width="28" height="33">Motto Otto</a>
+    <button type="button" class="zurueck" id="zurueck">← Zurück</button>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+    <div class="frage-reihe">
+      <button type="button" class="otto-knopf" id="otto" aria-label="Otto die Frage noch mal sagen lassen"><img src="/api/mo/otto/nimmt-auf.png" width="104" height="104" alt=""><span class="otto-ton" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg></span></button>
+      <div class="blase" id="blase">
+        <h1 id="frage" aria-live="polite">Otto liest deinen Wunsch …</h1>
+        <ul class="bisher" id="bisher" aria-label="Das hast du schon gesagt"></ul>
+      </div>
+    </div>
+    <ul class="kacheln" id="kacheln"></ul>
+    <div class="wunsch-feld" id="wunsch-feld" hidden>
+      <label class="vh" for="wunsch">Was soll drauf?</label>
+      <textarea id="wunsch" placeholder="z. B. Otto als Surfer vor dem Leuchtturm, Spruch „Moin Meer“, Blau und Gelb"></textarea>
+      <button type="button" class="knopf" id="bauen">Design bauen</button>
+    </div>
+    <div class="meldung" id="meldung" role="status" aria-live="polite"></div>
+  </div>
+</main>
+<div class="leiste">
+  <div class="wrap">
+    <p class="hoert" id="hoert"></p>
+    <form id="eingabe" autocomplete="off">
+      <label class="vh" for="antwort">Deine Antwort</label>
+      <input id="antwort" type="text" placeholder="Antippen oder einfach sagen …" enterkeyhint="send">
+      <button type="button" class="mik" id="mik" aria-label="Mikrofon an" hidden><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button>
+      <button type="submit" class="senden">OK</button>
+    </form>
+  </div>
+</div>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var q = new URLSearchParams(location.search);
+  // Der Zustand des Gespraechs: was der Kunde schon gesagt oder angetippt hat
+  var z = { text: (q.get('w') || '').slice(0, 2000), artikel: null, fuer: null, motto: null, idee: false, weg: null };
+  var mitMikro = q.get('m') === '1';
+  var verlauf = [], schritt = null, artikelListe = [], mottoListe = [], artikelName = {}, mottoName = {};
+  var STIMME = fetch('/otto-stimme/saetze.json').then(function (r) { return r.json(); }).catch(function () { return { saetze: {}, stand: {} }; });
+  // Artikel als echtes Produktfoto mit einem unserer Designs (startseite/artikel/<id>.webp,
+  // werkzeug/otto-artikelbilder.mjs). Nie ein Emoji - Markus, 8. Okt.: Trenchcoat fuer Hoodie, Tuer fuer Fussmatte.
+  var ARTIKEL_BILD = function (id) { return '/startseite/artikel/' + encodeURIComponent(id) + '.webp'; };
+  var FUER = { gruppe: 'Für die Gruppe', geschenk: 'Als Geschenk', selbst: 'Für mich' };
+  var GESCHENK_AUCH = ['hochzeit'];   // Gruppen-Motto, das man auch verschenkt
+
+  // ---------- Otto spricht (Markus' Aufnahmen von /admin/stimme) ----------
+  var audio = null, spricht = false, ottoEl = $('otto'), letzterSatz = null;
+  function sag(schluessel, text) {
+    letzterSatz = { s: schluessel, t: text };
+    STIMME.then(function (j) {
+      var satz = text || (j.saetze && j.saetze[schluessel]) || '';
+      var b = $('blase'); $('frage').textContent = satz;
+      b.classList.remove('rein'); void b.offsetWidth; b.classList.add('rein');
+      try { if (audio) audio.pause(); } catch (e) { /* egal */ }
+      var v = schluessel && j.stand && j.stand[schluessel];
+      if (!v) { spricht = false; ottoEl.classList.remove('spricht'); return; }
+      audio = new Audio('/otto-stimme/' + schluessel + '.mp3?v=' + v);
+      spricht = true; ottoEl.classList.add('spricht');
+      var ende = function () { spricht = false; ottoEl.classList.remove('spricht'); };
+      audio.onended = ende; audio.onerror = ende;
+      var p = audio.play(); if (p && p.catch) p.catch(ende);   // Browser ohne Tipp: nur die Blase
+    });
+  }
+  ottoEl.addEventListener('click', function () { if (letzterSatz) sag(letzterSatz.s, letzterSatz.t); });
+
+  // ---------- Kacheln ----------
+  function kachel(k) {
+    var li = document.createElement('li'), b = document.createElement('button');
+    b.type = 'button'; b.className = 'kachel' + (k.klasse ? ' ' + k.klasse : ''); b.setAttribute('data-wert', k.wert);
+    var bild = document.createElement('span'); bild.className = 'bild' + (k.hoch ? ' hoch' : '');
+    if (k.bild) { var img = new Image(); img.alt = ''; img.loading = 'lazy'; img.decoding = 'async'; img.src = k.bild; img.onerror = function () { img.remove(); if (k.zeichen) bild.textContent = k.zeichen; }; bild.appendChild(img); }
+    else if (k.zeichen) bild.textContent = k.zeichen;
+    var name = document.createElement('b'); name.textContent = k.name;
+    b.appendChild(bild); b.appendChild(name);
+    if (k.unter) { var s = document.createElement('small'); s.textContent = k.unter; b.appendChild(s); }
+    b.addEventListener('click', function () { k.wahl(); });
+    li.appendChild(b); return li;
+  }
+  function kachelnZeigen(liste, gross) {
+    var ul = $('kacheln'); ul.innerHTML = ''; ul.className = 'kacheln' + (gross ? ' gross' : '');
+    liste.forEach(function (k) { ul.appendChild(kachel(k)); });
+    ul.hidden = !liste.length;
+  }
+  var EIGENE_IDEE = { wert: 'freestyle', name: 'Eigene Idee', unter: 'Du sagst, was drauf soll', bild: '/api/mo/motto-kachel/freestyle.jpg', klasse: 'idee' };
+  function mottoKacheln(slugs) {
+    var l = slugs.map(function (s) { return { wert: s, name: mottoName[s] || s, bild: '/api/mo/motto-kachel/' + s + '.jpg', wahl: function () { setzen({ motto: s }); } }; });
+    l.push(Object.assign({}, EIGENE_IDEE, { wahl: function () { setzen({ motto: 'freestyle' }); } }));
+    return l;
+  }
+  var gruppenMottos = function () { return mottoListe.filter(function (m) { return m.gruppe && m.slug !== 'freestyle'; }).map(function (m) { return m.slug; }); };
+  var einzelMottos = function () { return mottoListe.filter(function (m) { return !m.gruppe; }).map(function (m) { return m.slug; }); };
+
+  // ---------- Die Fragen ----------
+  var FRAGEN = {
+    artikel: function () {
+      sag('artikel');
+      kachelnZeigen(artikelListe.map(function (a) { return { wert: a.id, name: a.name, bild: ARTIKEL_BILD(a.id), wahl: function () { setzen({ artikel: a.id }); } }; }));
+    },
+    fuer_wen: function () {
+      sag('fuer_wen');
+      kachelnZeigen([
+        { wert: 'gruppe', name: 'Für ’ne Gruppe', unter: 'JGA, Abi, Malle, Verein, Firma …', bild: '/api/mo/motto-kachel/junggesellenabschied.jpg', wahl: function () { setzen({ fuer: 'gruppe' }); } },
+        { wert: 'geschenk', name: 'Als Geschenk', unter: 'Geburtstag, Hochzeit, Baby …', bild: '/api/mo/motto-kachel/geburtstag.jpg', wahl: function () { setzen({ fuer: 'geschenk' }); } },
+        { wert: 'selbst', name: 'Für mich', unter: 'Nur für dich – ohne Gruppenkram', bild: '/api/mo/motto-kachel/sprueche-shirt.jpg', wahl: function () { setzen({ fuer: 'selbst' }); } }
+      ], true);
+    },
+    anlass_gruppe: function () { sag('anlass_gruppe'); kachelnZeigen(mottoKacheln(gruppenMottos())); },
+    anlass_geschenk: function () { sag('anlass_geschenk'); kachelnZeigen(mottoKacheln(einzelMottos().concat(GESCHENK_AUCH))); },
+    idee_oder_motto: function () {
+      sag('idee_oder_motto');
+      kachelnZeigen([
+        Object.assign({}, EIGENE_IDEE, { wahl: function () { setzen({ motto: 'freestyle' }); } }),
+        { wert: 'motto', name: 'Ottos Mottos', unter: 'Geburtstag, Angler, Haustier, Sprüche …', bild: '/api/mo/motto-kachel/angler-shirt.jpg', wahl: function () { setzen({ weg: 'motto' }); } }
+      ], true);
+    },
+    motto_wahl: function () { sag(null, 'Dann such dir eins aus – antippen oder einfach sagen.'); kachelnZeigen(mottoKacheln(einzelMottos())); },
+    wunsch: function () {
+      sag('wunsch'); kachelnZeigen([]);
+      $('wunsch-feld').hidden = false;
+      var w = $('wunsch'); if (!w.value && z.text && z.idee) w.value = z.text;
+      if (!mitMikro && matchMedia('(min-width:860px)').matches) w.focus();
+    }
+  };
+  function naechster() {
+    if (!z.artikel) return 'artikel';
+    if (!z.motto && !z.fuer) return 'fuer_wen';
+    if (!z.motto) {
+      if (z.fuer === 'gruppe') return 'anlass_gruppe';
+      if (z.fuer === 'geschenk') return 'anlass_geschenk';
+      if (z.weg === 'motto') return 'motto_wahl';
+      if (z.idee) { z.motto = 'freestyle'; return naechster(); }   // fuer mich, und die Idee steht schon: das ist Dein Freestyle
+      return 'idee_oder_motto';
+    }
+    if (z.motto === 'freestyle' && !z.idee) return 'wunsch';
+    return 'los';
+  }
+  function zeigen() {
+    $('wunsch-feld').hidden = true; $('meldung').textContent = ''; $('antwort').value = '';
+    bisherZeigen();
+    schritt = naechster();
+    if (schritt === 'los') return los();
+    FRAGEN[schritt]();
+    window.scrollTo(0, 0);
+  }
+  function setzen(neu) {
+    verlauf.push(JSON.stringify(z));
+    Object.keys(neu).forEach(function (k) { z[k] = neu[k]; });
+    // Ein Motto aus der Gruppe heisst: es ist fuer die Gruppe (keine Frage mehr danach)
+    if (neu.motto && !z.fuer) z.fuer = (mottoListe.filter(function (m) { return m.slug === neu.motto; })[0] || {}).gruppe && neu.motto !== 'freestyle' ? 'gruppe' : z.fuer;
+    zeigen();
+  }
+  function bisherZeigen() {
+    var ul = $('bisher'); ul.innerHTML = '';
+    var teile = [];
+    if (z.artikel) teile.push(['artikel', artikelName[z.artikel] || z.artikel]);
+    if (z.fuer) teile.push(['fuer', FUER[z.fuer]]);
+    if (z.motto) teile.push(['motto', z.motto === 'freestyle' ? 'Eigene Idee' : (mottoName[z.motto] || z.motto)]);
+    teile.forEach(function (t) {
+      var li = document.createElement('li'), b = document.createElement('button');
+      b.type = 'button'; b.textContent = t[1]; b.setAttribute('aria-label', t[1] + ' ändern');
+      b.addEventListener('click', function () { var n = {}; n[t[0]] = null; if (t[0] !== 'artikel') { n.motto = null; n.weg = null; } setzen(n); });
+      li.appendChild(b); ul.appendChild(li);
+    });
+  }
+  $('zurueck').addEventListener('click', function () {
+    if (!verlauf.length) { location.href = '/'; return; }
+    z = JSON.parse(verlauf.pop()); zeigen();
+  });
+
+  // ---------- Ab zur Mottoseite ----------
+  function weiterleiten(ziel) {
+    if (mitMikro) { try { sessionStorage.setItem('mo_gespraech', '1'); } catch (e) { /* egal */ } }
+    location.href = ziel;
+  }
+  function los(extra) {
+    kachelnZeigen([]);
+    // Motto ohne eigene Idee: die Mottoseite fragt ihre Angaben selbst ab (mit dem Artikel - bei Kissen & Co. ohne Textilfragen)
+    if (z.motto !== 'freestyle' && !z.idee) return weiterleiten('/m/' + encodeURIComponent(z.motto) + '?artikel=' + encodeURIComponent(z.artikel));
+    sag(null, extra && extra.ausweg ? 'Ich mach’s im ähnlichen Style …' : 'Ich bau dir das zusammen …');
+    var body = { text: z.text, slug: z.motto, artikelId: z.artikel };
+    if (extra && extra.ausweg) body.ausweg = true;
+    $('bauen').disabled = true;
+    fetch('/api/mo/wunsch', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j || {} }; }); })
+      .then(function (r) {
+        $('bauen').disabled = false;
+        if (r.ok && r.j.ziel) return weiterleiten(r.j.ziel);
+        if (r.j.frage === 'marke') return markeFrage(r.j);
+        // Verbotenes oder kein Ausweg: zurueck zum Wunsch, mit dem Hinweis
+        z.idee = false; z.motto = z.motto === 'freestyle' ? 'freestyle' : z.motto; schritt = 'wunsch'; FRAGEN.wunsch();
+        $('meldung').textContent = r.j.hinweis || 'Das hat nicht geklappt. Bitte noch einmal.';
+      })
+      .catch(function () { $('bauen').disabled = false; $('meldung').textContent = 'Keine Verbindung. Bitte noch einmal.'; });
+  }
+  // Geschuetzter Name: lieb fragen, ob Otto es im aehnlichen Stil macht (wie auf der Startseite)
+  function markeFrage(j) {
+    schritt = 'marke';
+    sag('marke', j.hinweis);
+    var m = $('meldung'); m.innerHTML = '';
+    var box = document.createElement('div'); box.className = 'frage-box';
+    var reihe = document.createElement('div');
+    var ja = document.createElement('button'); ja.type = 'button'; ja.className = 'knopf'; ja.id = 'otto-ja'; ja.textContent = 'Ja, gerne';
+    var nein = document.createElement('button'); nein.type = 'button'; nein.className = 'knopf leise'; nein.id = 'otto-nein'; nein.textContent = 'Nein, ich sag es anders';
+    reihe.appendChild(ja); reihe.appendChild(nein); box.appendChild(reihe); m.appendChild(box);
+    ja.addEventListener('click', function () { m.textContent = ''; los({ ausweg: true }); });
+    nein.addEventListener('click', function () { z.idee = false; z.text = ''; $('wunsch').value = ''; z.motto = z.motto || 'freestyle'; schritt = 'wunsch'; FRAGEN.wunsch(); $('meldung').textContent = 'Alles klar – sag mir deinen Wunsch einfach ohne „' + (j.wort || 'den Namen') + '“.'; });
+    window.MoOttoFrage = { ja: function () { ja.click(); }, nein: function () { nein.click(); } };
+  }
+  $('bauen').addEventListener('click', function () {
+    var t = $('wunsch').value.trim();
+    if (t.length < 3) { $('meldung').textContent = 'Sag Otto kurz, was drauf soll.'; $('wunsch').focus(); return; }
+    z.text = t; z.idee = true; los();
+  });
+
+  // ---------- Antworten (getippt oder gesprochen) ----------
+  function flach(s) { return String(s || '').toLowerCase().normalize('NFKD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9 ]+/g, ' ').replace(/\s+/g, ' ').trim(); }
+  var JA = /^(ja|ja gerne|ja bitte|gerne|okay|ok|mach das|machen wir|ja mach|klar)$/, NEIN = /^(nein|nee|no|nein danke|lieber nicht|ne)$/;
+  function antwort(text) {
+    var t = flach(text);
+    if (!t) return;
+    $('hoert').textContent = '„' + text + '“';
+    if (/^(zuruck|einen schritt zuruck|geh zuruck)$/.test(t)) { $('zurueck').click(); return; }
+    if (schritt === 'marke' && window.MoOttoFrage) { if (JA.test(t)) return window.MoOttoFrage.ja(); if (NEIN.test(t)) return window.MoOttoFrage.nein(); }
+    if (schritt === 'wunsch') {
+      if (/^(los|leg los|bauen|fertig|das wars|mach)$/.test(t) && $('wunsch').value.trim().length > 2) { $('bauen').click(); return; }
+      var w = $('wunsch'); w.value = (w.value ? w.value.replace(/\s*$/, ' ') : '') + text; return;
+    }
+    // Feste Worte je Frage
+    if (schritt === 'fuer_wen') {
+      if (/\b(gruppe|truppe|crew|team|verein|klasse|uns|wir|alle|mannschaft|jungs|madels)\b/.test(t)) return setzen({ fuer: 'gruppe' });
+      if (/\b(geschenk|schenken|verschenken)\b/.test(t)) return setzen({ fuer: 'geschenk' });
+      if (/\b(mich|selbst|selber|ich|mir)\b/.test(t)) return setzen({ fuer: 'selbst' });
+    }
+    if (schritt === 'idee_oder_motto') {
+      if (/\b(idee|eigene|eigenes|freestyle|frei|selbst|selber)\b/.test(t)) return setzen({ motto: 'freestyle' });
+      if (/\b(motto|mottos|zeig|deine)\b/.test(t)) return setzen({ weg: 'motto' });
+    }
+    if (/\b(eigene idee|freestyle)\b/.test(t) && /^anlass|motto_wahl/.test(schritt)) return setzen({ motto: 'freestyle' });
+    // Eine Kachel beim Namen genannt?
+    var treffer = null;
+    [].forEach.call(document.querySelectorAll('#kacheln .kachel'), function (b) {
+      var n = flach(b.querySelector('b').textContent);
+      if (!treffer && n && (t === n || t.indexOf(n) >= 0 || (n.split(' ')[0].length > 3 && t.indexOf(n.split(' ')[0]) >= 0))) treffer = b;
+    });
+    if (treffer) { treffer.click(); return; }
+    // Sonst liest der Server, was drinsteckt (Artikel, fuer wen, Anlass, Idee) - Otto fragt nur, was dann noch fehlt
+    $('hoert').textContent = '„' + text + '“ – Otto überlegt …';
+    lesen(text).then(function (l) {
+      var neu = {}, vorher = JSON.stringify(z);
+      if (l.artikel && !z.artikel) neu.artikel = l.artikel;
+      if (l.fuer && !z.fuer && !z.motto) neu.fuer = l.fuer;
+      if (l.motto && !z.motto) neu.motto = l.motto;
+      if (l.idee) { neu.text = (z.text ? z.text + ' ' : '') + text; neu.idee = true; }
+      if (!Object.keys(neu).length) { sag('nicht_verstanden'); return; }
+      $('hoert').textContent = '„' + text + '“';
+      verlauf.push(vorher); Object.keys(neu).forEach(function (k) { z[k] = neu[k]; }); zeigen();
+    });
+  }
+  function lesen(text) {
+    return fetch('/api/mo/otto-lesen', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ text: text }) })
+      .then(function (r) { return r.json(); }).catch(function () { return {}; });
+  }
+  $('eingabe').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var v = $('antwort').value.trim(); $('antwort').value = '';
+    if (schritt === 'wunsch' && !v) { $('bauen').click(); return; }
+    antwort(v);
+  });
+
+  // ---------- Mikrofon: bleibt an, bis man es antippt ----------
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition, rec = null, hoeren = false, puffer = '', stille = null;
+  function mikZeigen() { $('mik').classList.toggle('an', hoeren); $('mik').setAttribute('aria-label', hoeren ? 'Mikrofon aus' : 'Mikrofon an'); }
+  function hoerenStarten() {
+    if (!SR || !hoeren || rec) return;
+    var r = new SR(); r.lang = 'de-DE'; r.interimResults = true; r.continuous = true;
+    r.onresult = function (ev) {
+      if (spricht) return;   // was das Mikro hoert, solange Otto spricht, ist Otto selbst
+      var zw = '';
+      for (var i = ev.resultIndex; i < ev.results.length; i++) { var s = ev.results[i][0].transcript; if (ev.results[i].isFinal) puffer += s + ' '; else zw += s; }
+      $('hoert').textContent = (puffer + zw).trim();
+      clearTimeout(stille);
+      stille = setTimeout(function () { var s = puffer.trim(); puffer = ''; if (s) antwort(s); }, 1300);
+    };
+    r.onerror = function (ev) { if (ev.error === 'not-allowed' || ev.error === 'service-not-allowed') { hoeren = false; mikZeigen(); $('hoert').textContent = 'Bitte das Mikrofon erlauben – oder einfach antippen.'; } };
+    r.onend = function () { rec = null; if (hoeren) setTimeout(hoerenStarten, 150); };
+    rec = r;
+    try { r.start(); } catch (e) { rec = null; }
+  }
+  if (SR) {
+    $('mik').hidden = false;
+    $('mik').addEventListener('click', function () {
+      hoeren = !hoeren; mitMikro = mitMikro || hoeren; mikZeigen();
+      if (hoeren) { $('hoert').textContent = 'Otto hört zu …'; hoerenStarten(); } else { $('hoert').textContent = ''; if (rec) try { rec.stop(); } catch (e) { /* egal */ } }
+    });
+  }
+
+  // ---------- Start: Kataloge laden, dann das Gesagte lesen ----------
+  var kataloge = Promise.all([
+    fetch('/api/mo/freestyle/artikel').then(function (r) { return r.json(); }).catch(function () { return {}; }),
+    fetch('/api/mo/mottos').then(function (r) { return r.json(); }).catch(function () { return {}; })
+  ]).then(function (a) {
+    var g = (a[0] && a[0].gruppen) || {};
+    Object.keys(g).forEach(function (k) { g[k].forEach(function (x) { artikelListe.push(x); artikelName[x.id] = x.name; }); });
+    // Der Katalog sortiert nach dem Alphabet - im Otto-Weg stehen T-Shirt und Hoodie vorn (9. Okt.: sonst kam die Grillschuerze zuerst)
+    var VORN = ['tshirt', 'hoodie'];
+    artikelListe.sort(function (x, y) { var a = VORN.indexOf(x.id), b = VORN.indexOf(y.id); return (a < 0 ? 99 : a) - (b < 0 ? 99 : b); });
+    mottoListe = ((a[1] && a[1].mottos) || []).filter(function (m) { return !m.artikelFest && !m.hausTextil; });
+    mottoListe.forEach(function (m) { mottoName[m.slug] = m.name; });
+  });
+  var vorab = q.get('artikel'), vorMotto = q.get('motto');
+  Promise.all([kataloge, z.text ? lesen(z.text) : Promise.resolve({})]).then(function (a) {
+    var l = a[1] || {};
+    z.artikel = (vorab && artikelName[vorab] ? vorab : null) || (l.artikel && artikelName[l.artikel] ? l.artikel : null);
+    z.motto = (vorMotto && mottoName[vorMotto] ? vorMotto : null) || (l.motto && mottoName[l.motto] ? l.motto : null);
+    z.fuer = l.fuer || null;
+    if (z.motto && !z.fuer && (mottoListe.filter(function (m) { return m.slug === z.motto; })[0] || {}).gruppe) z.fuer = 'gruppe';
+    z.idee = !!l.idee && !!z.text;
+    zeigen();
+    if (mitMikro && SR) $('mik').click();   // vom Mikro der Startseite: weiter zuhoeren (der Browser fragt ggf. noch mal)
+  });
+  window.MoOtto = { zustand: function () { return JSON.parse(JSON.stringify(z)); }, schritt: function () { return schritt; }, antwort: antwort };
+})();
+</script>
+</body>
+</html>

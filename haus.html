@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>__NAME__ · Motto Otto</title>
+<meta name="description" content="Dein Besuch bei __NAME__, zum Mitnehmen: dein Motiv mit dem Logo von __NAME__ auf Shirt, Hoodie und mehr.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="/favicon-64.png" type="image/png">
+<link rel="preload" href="/fonts/archivo-v1.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:"Archivo";src:url("/fonts/archivo-v1.woff2") format("woff2");font-weight:400 900;font-style:normal;font-display:swap}
+:root{
+  --akzent:__AKZENT__; --akzent-ink:__AKZENT_INK__;
+  --papier:#F7F1E4; --papier2:#EFE7D6; --karte:#FFFDF8; --linie:#DCD2BE;
+  --ink:#1B1710; --ink2:#5A5247; --ink3:#8A8073;
+  --sans:"Archivo",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --federn:cubic-bezier(.16,.84,.34,1);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--papier);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.5}
+a{color:inherit}
+.kopf{background:var(--karte);border-bottom:1px solid var(--linie)}
+.kopf-innen{max-width:880px;margin:0 auto;padding:22px 18px 18px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+.logo{max-width:min(260px,60vw);max-height:110px;object-fit:contain}
+.logo-wort{font-size:34px;font-weight:900;letter-spacing:.02em;color:var(--akzent)}
+.kopf .ort{color:var(--ink3);font-size:14px;letter-spacing:.14em;text-transform:uppercase;margin:0}
+.held{max-width:880px;margin:0 auto;padding:30px 18px 8px;text-align:center}
+.held h1{font-size:clamp(28px,6vw,44px);line-height:1.08;margin:0 0 10px;font-weight:900;letter-spacing:-.01em}
+.held h1 em{font-style:normal;color:var(--akzent)}
+.held p{margin:0 auto;max-width:560px;color:var(--ink2);font-size:17px}
+.tueren{max-width:880px;margin:22px auto 0;padding:0 18px;display:grid;gap:14px}
+.tuer{position:relative;display:flex;flex-direction:column;background:var(--karte);border:1px solid var(--linie);border-radius:16px;overflow:hidden;text-decoration:none;transition:transform .35s var(--federn),box-shadow .35s var(--federn)}
+.tuer:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(27,23,16,.12)}
+.tuer .bild{aspect-ratio:4/3;background:var(--papier2);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.tuer .bild img{width:100%;height:100%;object-fit:cover;display:block}
+.tuer .bild .zeichen{font-size:64px;line-height:1;color:var(--akzent)}
+.tuer .text{padding:14px 16px 16px;display:flex;flex-direction:column;gap:4px;flex:1}
+.tuer .nr{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--akzent);font-weight:800}
+.tuer h2{margin:0;font-size:21px;line-height:1.15;font-weight:900}
+.tuer p{margin:0;color:var(--ink2);font-size:15px;flex:1}
+.tuer .knopf{margin-top:12px;align-self:flex-start;background:var(--akzent);color:var(--akzent-ink);font-weight:800;padding:10px 16px;border-radius:10px;font-size:15px}
+.teile-block{max-width:880px;margin:34px auto 0;padding:0 18px}
+.teile-block h3{margin:0 0 4px;font-size:22px;font-weight:900}
+.teile-block .unter{margin:0 0 14px;color:var(--ink2);font-size:15px}
+.teile{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(min-width:560px){.teile{grid-template-columns:repeat(4,1fr)}}
+.teil{display:flex;flex-direction:column;text-decoration:none;background:var(--karte);border:1px solid var(--linie);border-radius:14px;overflow:hidden;transition:transform .35s var(--federn)}
+.teil:hover{transform:translateY(-2px)}
+.teil img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;background:var(--papier2)}
+.teil-name{padding:9px 11px 0;font-weight:800;font-size:15px}
+.teil-preis{padding:0 11px 10px;color:var(--ink3);font-size:13px}
+.teil{position:relative}
+.teil-marke{padding:2px 11px 0;color:var(--akzent);font-size:13px;font-weight:800}
+.persoenlich{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px;padding:0;list-style:none}
+.persoenlich li{background:var(--karte);border:1px solid var(--linie);border-radius:999px;padding:6px 12px;font-size:14px;font-weight:700}
+.leiste{max-width:880px;margin:0 auto;padding:10px 18px;display:flex;align-items:center;gap:16px;font-size:15px}
+.leiste a{text-decoration:none;color:var(--ink2);font-weight:700;min-height:44px;display:inline-flex;align-items:center}
+.leiste .rechts{margin-left:auto;display:flex;gap:16px}
+.hide{display:none}
+.fuss{max-width:880px;margin:36px auto 0;padding:18px 18px 34px;border-top:1px solid var(--linie);color:var(--ink3);font-size:13px;text-align:center;line-height:1.6}
+.fuss b{color:var(--ink2)}
+.fuss a{color:var(--ink2);text-decoration:none}
+</style>
+</head>
+<body>
+<header class="kopf">
+  <nav class="leiste" aria-label="Navigation">
+    <a href="/partner" id="zurueck">‹ Zurück</a>
+    <span class="rechts"><a href="/partner">Alle Partner</a><a href="/">Motto Otto</a></span>
+  </nav>
+  <div class="kopf-innen">
+    __LOGO__
+    <p class="ort">__ORT__</p>
+  </div>
+</header>
+
+<section class="held">
+  <h1>__HELD__</h1>
+  <p>Ein paar Worte, auf Wunsch ein Selfie, und Otto malt daraus dein Motiv mit dem Logo von __NAME__. Zum Tragen, Verschenken, Aufhängen.</p>
+</section>
+
+<section class="tueren">
+  <a class="tuer __TEILE_KLASSE__" href="/bei/__SLUG__/machen?was=teil">
+    <div class="bild">__TEE__</div>
+    <div class="text">
+      <span class="nr">Shirt, Hoodie &amp; Co.</span>
+      <h2>Dein Motiv zum Anziehen</h2>
+      <p>Sag Otto, was drauf soll, wähl Artikel und Stil. Wie immer bei Otto, nur mit dem Logo von __NAME__ drauf. Mit dir, wenn du magst.</p>
+      <span class="knopf">Textil machen</span>
+    </div>
+  </a>
+</section>
+
+<section class="teile-block __TEILE_KLASSE__">
+  <h3>__NAME__ auf unseren Artikeln</h3>
+  <p class="unter">So sieht es bei uns aus. Bei dir steht dein Name drauf, dein Datum, auf Wunsch dein Selfie – und jeder Artikel bekommt sein eigenes Design in seiner Größe.</p>
+  <ul class="persoenlich"><li>Dein Name</li><li>Dein Datum</li><li>Dein Selfie</li><li>★★★★★ für __NAME__</li></ul>
+  <div class="teile">__TEILE__</div>
+</section>
+
+<footer class="fuss">
+  <b>__NAME__</b> · __ORT__ · <a href="https://__WEBSEITE__" rel="noopener">__WEBSEITE__</a><br>
+  Gestaltet mit <a href="/">Motto Otto</a>. Dein Foto bleibt eine Stunde bei uns, nur im Arbeitsspeicher.
+</footer>
+<script>
+// Zurueck: kam der Gast von unserer eigenen Seite, geht es genau dorthin; sonst (QR am Tisch) zur Partnerliste.
+(function () {
+  var z = document.getElementById('zurueck');
+  try { if (document.referrer && new URL(document.referrer).origin === location.origin && history.length > 1) z.addEventListener('click', function (e) { e.preventDefault(); history.back(); }); } catch (e) { console.warn('Zurueck:', e); }
+})();
+</script>
+</body>
+</html>

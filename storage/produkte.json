@@ -1,0 +1,167 @@
+{
+  "abi": [
+    "tee",
+    "hoodie",
+    "zip",
+    "tasse",
+    "beutel",
+    "poster",
+    "sticker"
+  ],
+  "junggesellenabschied": [
+    "tee",
+    "tasse",
+    "beutel",
+    "sticker"
+  ],
+  "malle-fahrt": [
+    "tee",
+    "tasse",
+    "beutel",
+    "strandtuch",
+    "sticker"
+  ],
+  "fanclub": [
+    "tee",
+    "hoodie",
+    "zip",
+    "tasse",
+    "beutel",
+    "poster",
+    "sticker"
+  ],
+  "tier-shirt": [
+    "tee",
+    "tasse",
+    "beutel",
+    "kissen"
+  ],
+  "abschlussfahrt": [
+    "tee",
+    "hoodie",
+    "tasse",
+    "beutel",
+    "poster",
+    "sticker"
+  ],
+  "kinder-tiershirt": [
+    "tee",
+    "hoodie",
+    "tasse",
+    "beutel",
+    "kissen",
+    "sticker"
+  ],
+  "angler-shirt": [
+    "tee",
+    "hoodie",
+    "tasse",
+    "beutel"
+  ],
+  "jaeger-shirt": [
+    "tee",
+    "hoodie",
+    "tasse"
+  ],
+  "landwirt-shirt": [
+    "tee",
+    "hoodie",
+    "zip",
+    "tasse",
+    "beutel",
+    "poster",
+    "sticker"
+  ],
+  "motorrad-shirt": [
+    "tee",
+    "hoodie",
+    "tasse",
+    "beutel",
+    "poster",
+    "sticker"
+  ],
+  "sprueche-shirt": [
+    "tee",
+    "hoodie",
+    "tasse",
+    "beutel",
+    "kissen",
+    "poster",
+    "sticker"
+  ],
+  "familie": [
+    "tee",
+    "hoodie",
+    "tasse",
+    "beutel",
+    "kissen",
+    "poster"
+  ],
+  "karneval": [
+    "tee",
+    "hoodie",
+    "tasse",
+    "beutel",
+    "sticker"
+  ],
+  "geburtstag": [
+    "tee",
+    "hoodie",
+    "tasse",
+    "beutel",
+    "kissen",
+    "poster",
+    "sticker"
+  ],
+  "kegeltour": [
+    "tee",
+    "hoodie",
+    "tasse",
+    "beutel",
+    "sticker"
+  ],
+  "vereinsjubilaeum": [
+    "tee",
+    "hoodie",
+    "zip",
+    "tasse",
+    "beutel",
+    "poster",
+    "sticker"
+  ],
+  "firmenausflug": [
+    "tee",
+    "zip",
+    "tasse",
+    "beutel",
+    "poster"
+  ],
+  "schulmotto": [
+    "tee",
+    "hoodie",
+    "tasse",
+    "beutel",
+    "poster",
+    "sticker"
+  ],
+  "geburt-baby": [
+    "kissen",
+    "poster",
+    "tee",
+    "hoodie",
+    "tasse",
+    "beutel",
+    "strandtuch",
+    "sticker"
+  ],
+  "fan-shirt": [
+    "tee",
+    "hoodie",
+    "zip",
+    "tasse",
+    "beutel",
+    "strandtuch",
+    "poster",
+    "sticker"
+  ]
+}

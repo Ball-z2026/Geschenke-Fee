@@ -1,0 +1,71 @@
+{
+ "_hinweis": "Herstellerfotos der Textil-Linie (textilien.js LINIE), Vorderansicht, je Farbe eine Datei <id>_<white|black>.jpg. Unveraendert vom Hersteller geholt (21. Sept. 2026). Regeln je Marke stehen in textilien.js MARKEN: Stanley/Stella und B&C duerfen fuer Mockups dekoriert werden (nur Packshots, nur die Textilflaeche), Roly NICHT (nur unveraendert zeigen). Nie ein KI-Bild an die Stelle eines Herstellerfotos setzen.",
+ "geholt": "2026-09-21",
+ "stanleystella": {
+  "muster": "https://res.cloudinary.com/www-stanleystella-com/image/upload/c_lpad,f_auto,q_auto,w_1600/v1/TechnicalNames/PFM0_<Nummer>_<Farbcode>.jpg (PFM0 = Packshot vorn ohne Modell)",
+  "ss-tee_white": "https://res.cloudinary.com/www-stanleystella-com/image/upload/c_lpad,f_auto,q_auto,w_1600/v1/TechnicalNames/PFM0_STTU169_C001.jpg",
+  "ss-tee_black": "https://res.cloudinary.com/www-stanleystella-com/image/upload/c_lpad,f_auto,q_auto,w_1600/v1/TechnicalNames/PFM0_STTU169_C002.jpg",
+  "ss-oversize_white": "https://res.cloudinary.com/www-stanleystella-com/image/upload/c_lpad,f_auto,q_auto,w_1600/v1/TechnicalNames/PFM0_STTU788_C001.jpg",
+  "ss-oversize_black": "https://res.cloudinary.com/www-stanleystella-com/image/upload/c_lpad,f_auto,q_auto,w_1600/v1/TechnicalNames/PFM0_STTU788_C002.jpg",
+  "ss-polo_white": "https://res.cloudinary.com/www-stanleystella-com/image/upload/c_lpad,f_auto,q_auto,w_1600/v1/TechnicalNames/PFM0_STPU222_C001.jpg",
+  "ss-polo_black": "https://res.cloudinary.com/www-stanleystella-com/image/upload/c_lpad,f_auto,q_auto,w_1600/v1/TechnicalNames/PFM0_STPU222_C002.jpg",
+  "ss-sweater_white": "https://res.cloudinary.com/www-stanleystella-com/image/upload/c_lpad,f_auto,q_auto,w_1600/v1/TechnicalNames/PFM0_STSU178_C001.jpg",
+  "ss-sweater_black": "https://res.cloudinary.com/www-stanleystella-com/image/upload/c_lpad,f_auto,q_auto,w_1600/v1/TechnicalNames/PFM0_STSU178_C002.jpg",
+  "ss-hoodie_white": "https://res.cloudinary.com/www-stanleystella-com/image/upload/c_lpad,f_auto,q_auto,w_1600/v1/TechnicalNames/PFM0_STSU177_C001.jpg",
+  "ss-hoodie_black": "https://res.cloudinary.com/www-stanleystella-com/image/upload/c_lpad,f_auto,q_auto,w_1600/v1/TechnicalNames/PFM0_STSU177_C002.jpg",
+  "ss-zip_black": "https://res.cloudinary.com/www-stanleystella-com/image/upload/c_lpad,f_auto,q_auto,w_1600/v1/TechnicalNames/PBM0_STJU251_C002.jpg (PBM0 = Packshot HINTEN: die Zip-Jacke wird auf dem Ruecken bedruckt)",
+  "ss-zip_white": "gibt es nicht - der Bomber 2.0 wird nicht in Weiss angeboten"
+ },
+ "bc": {
+  "bc-tee_white": "https://www.bc-collection.eu/storage/v1/4680/TU03T_P_BC_001_01.jpg",
+  "bc-tee_black": "https://www.bc-collection.eu/storage/v1/4720/TU03T_P_BC_002_01.jpg",
+  "bc-oversize_white": "https://www.bc-collection.eu/storage/01JJP7991Q7WGP6WRJCKCKR59S.jpg",
+  "bc-oversize_black": "https://www.bc-collection.eu/storage/01JJP78ASEX7YBR740FEKJYC6N.jpg",
+  "bc-polo_white": "https://www.bc-collection.eu/storage/v1/21263/F_PU424_My-Polo-180_off_white.jpg (Off White 101)",
+  "bc-polo_black": "https://www.bc-collection.eu/storage/v1/21273/F_PU424_My-Polo-180_black.jpg",
+  "bc-sweater_white": "https://www.bc-collection.eu/storage/v1/6690/WU01W_P_BC_001_01.jpg",
+  "bc-sweater_black": "https://www.bc-collection.eu/storage/v1/6692/WU01W_P_BC_005_01.jpg",
+  "bc-hoodie_white": "https://www.bc-collection.eu/storage/v1/4847/WU03W_P_BC_001_01.jpg",
+  "bc-hoodie_black": "https://www.bc-collection.eu/storage/v1/4849/WU03W_P_BC_005_01.jpg",
+  "bc-zip_black": "https://www.bc-collection.eu/storage/01JJPBH7YSD18689TXP9TMSTN8.jpg (Vorderansicht mit Reissverschluss - nur zum Zeigen, nicht als Mockup-Vorlage)",
+  "bc-zip_white": "nicht gefunden - #ID224 Zip Hood wird in Weiss nicht gezeigt (Navy waere 01JJPBJ8E0AM5H44B3ZCZFC9YB)"
+ },
+ "roly": {
+  "muster": "https://static.gorfactory.es/images/models/<Modell>/views/large/p_<Modell>_<Farbe>_1_1.jpg (01 Weiss, 02 Schwarz, _1_ = vorn); nur unveraendert zeigen, Rechte enden jeden 31. Dezember",
+  "roly-tee": "6681 STAFFORD",
+  "roly-oversize": "6560 BULL",
+  "roly-polo": "6638 STAR",
+  "roly-sweater": "1070 CLASICA",
+  "roly-hoodie": "1087 CAPUCHA"
+ },
+ "rueckansichten": {
+  "_hinweis": "Rueckansichten, geholt am 25.09.2026 (Markus: \"Warum haben wir keine Rueckansicht? Besorge die noch!\"). Die Adressen sind NICHT geraten: bei Stanley/Stella stand PBM0 = Packshot hinten schon in dieser Datei (fuer die Zip-Jacke benutzt), bei Roly nennt das Muster _1_ als vorn. Beide Kandidaten wurden abgerufen, und jedes einzelne Bild wurde angesehen - alle 21 zeigen wirklich den Ruecken. B&C gibt ueber diesen Weg keine Rueckansicht her; dort wurde nichts geraten und nichts abgelegt.",
+  "geholt": "2026-09-25",
+  "stanleystella": {
+   "ss-tee_white_back": "https://res.cloudinary.com/www-stanleystella-com/image/upload/c_lpad,f_auto,q_auto,w_1600/v1/TechnicalNames/PBM0_STTU169_C001.jpg",
+   "ss-tee_black_back": "https://res.cloudinary.com/www-stanleystella-com/image/upload/c_lpad,f_auto,q_auto,w_1600/v1/TechnicalNames/PBM0_STTU169_C002.jpg",
+   "ss-oversize_white_back": "https://res.cloudinary.com/www-stanleystella-com/image/upload/c_lpad,f_auto,q_auto,w_1600/v1/TechnicalNames/PBM0_STTU788_C001.jpg",
+   "ss-oversize_black_back": "https://res.cloudinary.com/www-stanleystella-com/image/upload/c_lpad,f_auto,q_auto,w_1600/v1/TechnicalNames/PBM0_STTU788_C002.jpg",
+   "ss-polo_white_back": "https://res.cloudinary.com/www-stanleystella-com/image/upload/c_lpad,f_auto,q_auto,w_1600/v1/TechnicalNames/PBM0_STPU222_C001.jpg",
+   "ss-polo_black_back": "https://res.cloudinary.com/www-stanleystella-com/image/upload/c_lpad,f_auto,q_auto,w_1600/v1/TechnicalNames/PBM0_STPU222_C002.jpg",
+   "ss-sweater_white_back": "https://res.cloudinary.com/www-stanleystella-com/image/upload/c_lpad,f_auto,q_auto,w_1600/v1/TechnicalNames/PBM0_STSU178_C001.jpg",
+   "ss-sweater_black_back": "https://res.cloudinary.com/www-stanleystella-com/image/upload/c_lpad,f_auto,q_auto,w_1600/v1/TechnicalNames/PBM0_STSU178_C002.jpg",
+   "ss-hoodie_white_back": "https://res.cloudinary.com/www-stanleystella-com/image/upload/c_lpad,f_auto,q_auto,w_1600/v1/TechnicalNames/PBM0_STSU177_C001.jpg",
+   "ss-hoodie_black_back": "https://res.cloudinary.com/www-stanleystella-com/image/upload/c_lpad,f_auto,q_auto,w_1600/v1/TechnicalNames/PBM0_STSU177_C002.jpg",
+   "ss-zip_black_back": "https://res.cloudinary.com/www-stanleystella-com/image/upload/c_lpad,f_auto,q_auto,w_1600/v1/TechnicalNames/PBM0_STJU251_C002.jpg"
+  },
+  "roly": {
+   "roly-tee_white_back": "https://static.gorfactory.es/images/models/6681/views/large/p_6681_01_2_1.jpg",
+   "roly-tee_black_back": "https://static.gorfactory.es/images/models/6681/views/large/p_6681_02_2_1.jpg",
+   "roly-oversize_white_back": "https://static.gorfactory.es/images/models/6560/views/large/p_6560_01_2_1.jpg",
+   "roly-oversize_black_back": "https://static.gorfactory.es/images/models/6560/views/large/p_6560_02_2_1.jpg",
+   "roly-polo_white_back": "https://static.gorfactory.es/images/models/6638/views/large/p_6638_01_2_1.jpg",
+   "roly-polo_black_back": "https://static.gorfactory.es/images/models/6638/views/large/p_6638_02_2_1.jpg",
+   "roly-sweater_white_back": "https://static.gorfactory.es/images/models/1070/views/large/p_1070_01_2_1.jpg",
+   "roly-sweater_black_back": "https://static.gorfactory.es/images/models/1070/views/large/p_1070_02_2_1.jpg",
+   "roly-hoodie_white_back": "https://static.gorfactory.es/images/models/1087/views/large/p_1087_01_2_1.jpg",
+   "roly-hoodie_black_back": "https://static.gorfactory.es/images/models/1087/views/large/p_1087_02_2_1.jpg"
+  },
+  "bc": "nicht verfuegbar - die Bildadressen von B&C tragen keine Ansichtsnummer, die sich ableiten laesst. Muss aus ihrem Kundenbereich kommen."
+ }
+}

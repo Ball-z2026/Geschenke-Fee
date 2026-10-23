@@ -1,0 +1,79 @@
+AUFTRAG FÜR CLAUDE IM BROWSER — SPF-Eintrag bei Alfahosting ändern
+
+Ich bin im Kundenbereich von Alfahosting angemeldet. Ändere dort für die Domain
+motto-otto.de einen einzigen DNS-Eintrag. Arbeite die Schritte der Reihe nach ab
+und halte dich genau an die Stoppregeln am Ende.
+
+ZIEL
+Im TXT-Eintrag der Domain motto-otto.de muss "include:spf.brevo.com" ergänzt
+werden. Ohne das fällt jede Mail, die wir über Brevo verschicken, bei der
+SPF-Prüfung durch und landet bei Outlook, Hotmail und Firmenpostfächern im Spam.
+
+SCHRITT 1 — Die DNS-Einträge finden
+Suche im Kundenbereich den Bereich für die Domain motto-otto.de und darin die
+DNS-Verwaltung. Die Menüpunkte heißen je nach Oberfläche unterschiedlich, zum
+Beispiel "Domains", "Meine Domains", "DNS", "DNS-Einstellungen", "DNS-Verwaltung",
+"Nameserver-Einträge" oder "Zonenverwaltung". Du suchst die Liste, in der
+Einträge mit den Typen A, MX, CNAME und TXT stehen.
+
+SCHRITT 2 — Den richtigen Eintrag erkennen
+In der Liste stehen für motto-otto.de zwei TXT-Einträge. Du brauchst genau den,
+dessen Wert mit "v=spf1" beginnt. Sein Wert ist aktuell WÖRTLICH:
+
+    v=spf1 a mx include:secure-mailgate.com ~all
+
+Der zweite TXT-Eintrag lautet:
+
+    brevo-code:c4089adcdd6c8209175fc53d886fcc41
+
+DIESEN ZWEITEN FASST DU NICHT AN. Er ist die Domain-Bestätigung bei Brevo; wird
+er gelöscht, ist der Mailversand sofort tot.
+
+SCHRITT 3 — Vergleichen und mir berichten, BEVOR du etwas änderst
+Lies den gefundenen v=spf1-Wert genau ab und vergleiche ihn Zeichen für Zeichen
+mit der Zeile aus Schritt 2. Sag mir, was dort steht.
+- Stimmt er überein: weiter mit Schritt 4.
+- Weicht er ab (anderer Inhalt, mehrere v=spf1-Einträge, steht "spf.brevo.com"
+  schon drin): NICHT ändern, sondern mir den gefundenen Wert zeigen und fragen.
+
+SCHRITT 4 — Ändern
+Bearbeite NUR diesen einen Eintrag und ersetze seinen Wert vollständig durch:
+
+    v=spf1 a mx include:secure-mailgate.com include:spf.brevo.com ~all
+
+Dabei gilt:
+- Der Eintrag wird BEARBEITET, nicht gelöscht und neu angelegt.
+- Lege KEINEN zweiten TXT-Eintrag mit "v=spf1" an. Eine Domain darf nur einen
+  haben; ein zweiter macht beide ungültig und alle Mails fallen durch.
+- Host/Name des Eintrags bleibt wie er ist (meist "@" oder die Domain selbst).
+  Ändere ihn nicht.
+- TTL bleibt wie sie ist.
+- "include:secure-mailgate.com" bleibt stehen. Das ist Alfahostings eigenes
+  Mailgateway - fällt es raus, funktioniert der normale Postfachversand nicht mehr.
+- Es steht genau ein Leerzeichen zwischen den Teilen, kein Komma, keine
+  Anführungszeichen. Falls das Feld Anführungszeichen erwartet, übernimm die
+  Schreibweise, die bei den anderen Einträgen schon verwendet wird.
+
+Zeige mir den neuen Wert im Eingabefeld, BEVOR du speicherst. Erst wenn ich
+zustimme, speicherst du.
+
+SCHRITT 5 — Nachsehen
+Lade die Übersicht neu und lies den TXT-Eintrag erneut ab. Er muss jetzt
+"include:spf.brevo.com" enthalten, und der brevo-code-Eintrag muss weiterhin da
+sein. Sag mir beides.
+
+WAS DANACH PASSIERT (nur zur Info, nichts zu tun)
+Die Änderung wirkt erst nach Ablauf der TTL, bei uns 3 Stunden. Danach prüfe ich
+mit einer Testmail an eine Outlook- oder GMX-Adresse, ob im Mailkopf spf=pass
+steht. An Gmail zu testen bringt nichts, das ist zu gnädig.
+
+STOPPREGELN
+- Ändere, lösche oder ergänze NICHTS außer diesem einen TXT-Eintrag. Keine
+  MX-Einträge, keine A-Einträge, keine Nameserver, keine CNAMEs (besonders nicht
+  brevo1._domainkey und brevo2._domainkey - das ist unsere funktionierende
+  DKIM-Signatur).
+- Wenn du den richtigen Eintrag nicht eindeutig findest, oder die Oberfläche
+  etwas anderes zeigt als hier beschrieben, oder eine Warnung erscheint: halt an
+  und frag mich. Rate nicht.
+- Klicke nichts, was Domains kündigt, Tarife ändert, Einstellungen zurücksetzt
+  oder etwas kostenpflichtig bestellt.

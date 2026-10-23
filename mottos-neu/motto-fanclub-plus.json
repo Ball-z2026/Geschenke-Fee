@@ -1,0 +1,115 @@
+{
+  "slug": "fanclub",
+  "name": "Fanclub",
+  "order": 30,
+  "active": true,
+  "intro": "Print für den Fanclub. Entweder ein gestaltetes Design um eure Logos herum, oder ganz schlicht: nur euer Fanclub-Logo und das Wappen des Vereins, den ihr supportet. Beide werden scharf und unverändert eingesetzt.",
+  "headline": "Euer Fanclub, euer Print",
+  "text": "Beide Logos werden unverändert übernommen, nicht nachgezeichnet. Form und Größe der freien Flächen richten sich nach euren Logos, und das Motiv umarmt sie. Für jede gewählte Platzierung entsteht eine eigene Druckdatei im richtigen Format. Eure Sprüche und Abkürzungen kommen genau so aufs Produkt, wie ihr sie einträgt.",
+  "size": "1024x1536",
+  "accent": "#d63d3d",
+  "styleChoice": true,
+  "moodChoice": true,
+  "placementChoice": true,
+  "colorChoice": true,
+  "kader": true,
+  "vary": true,
+  "nameZone": "unten",
+  "fields": [
+    {
+      "key": "fanclub",
+      "label": "Name des Fanclubs",
+      "type": "text",
+      "required": true,
+      "max": 26,
+      "placeholder": "z. B. Nordkurve Harmstorf"
+    },
+    {
+      "key": "verein",
+      "label": "Verein",
+      "type": "text",
+      "required": false,
+      "max": 26,
+      "placeholder": "z. B. TSV Harmstorf"
+    },
+    {
+      "key": "kuerzel",
+      "label": "Kürzel oder Abkürzung",
+      "type": "text",
+      "required": false,
+      "max": 12,
+      "placeholder": "z. B. NKH oder 1998",
+      "hint": "Kommt groß und plakativ ins Design – oft das stärkste Element."
+    },
+    {
+      "key": "ort",
+      "label": "Ort",
+      "type": "text",
+      "required": false,
+      "max": 22,
+      "placeholder": "z. B. Harmstorf"
+    },
+    {
+      "key": "jahr",
+      "label": "Gegründet",
+      "type": "text",
+      "required": false,
+      "max": 8,
+      "placeholder": "z. B. 1998"
+    },
+    {
+      "key": "spruch",
+      "label": "Euer Spruch",
+      "type": "text",
+      "required": false,
+      "max": 48,
+      "placeholder": "z. B. Immer weiter, nie zurück",
+      "hint": "Steht wörtlich so auf dem Produkt. Ein zweiter Spruch passt ins Feld darunter."
+    },
+    {
+      "key": "spruch2",
+      "label": "Zweiter Spruch oder Schlachtruf",
+      "type": "text",
+      "required": false,
+      "max": 36,
+      "placeholder": "z. B. Auswärts wie zuhause"
+    },
+    {
+      "key": "erlaubnis",
+      "label": "Wir dürfen das Vereinswappen verwenden",
+      "type": "select",
+      "required": true,
+      "printed": false,
+      "options": [
+        "ja, wir haben die Erlaubnis des Vereins",
+        "nein – bitte ohne Vereinswappen"
+      ],
+      "hint": "Das Vereinswappen ist eine geschützte Marke. Wir drucken es nur, wenn ihr die Erlaubnis habt."
+    },
+    {
+      "key": "namen",
+      "label": "Namen der Mitglieder",
+      "type": "text",
+      "required": false,
+      "personal": true,
+      "max": 24,
+      "placeholder": "Kalle\nBiene\nMeise",
+      "hint": "Jedes Mitglied bekommt sein Shirt mit eigenem Namen – Logos und Motiv bleiben gleich."
+    }
+  ],
+  "upload": {
+    "mode": "exact",
+    "label": "Logo des Fanclubs",
+    "hint": "PNG mit freigestelltem Hintergrund wird am schönsten. Wird unverändert eingesetzt.",
+    "required": false,
+    "place": "mitte",
+    "widthPct": 34,
+    "coBrand": true,
+    "label2": "Vereinswappen (nur mit Erlaubnis des Vereins)"
+  },
+  "prompt": "Supporters-club print, isolated on a plain empty background.\n\nLeave clearly bounded empty areas for the club's own emblems, which are added afterwards as real files. Draw nothing inside them.\n\nLettering - every text exactly as given, nothing else:\n- The fanclub name reads exactly \"{fanclub}\" as the dominant lettering.\n[[- The abbreviation \"{kuerzel}\" appears LARGE and bold as its own element.]]\n[[- A line reads exactly \"{verein}\".]]\n[[- A small line reads exactly \"{ort}\".]]\n[[- A small stamp reads exactly \"SEIT {jahr}\".]]\n[[- A banner carries exactly: \"{spruch}\".]]\n[[- A second smaller line reads exactly \"{spruch2}\".]]\nNo other words, no invented chants, no player names.\n\nMotif from generic supporter imagery only: scarves, flags, drums, raised arms, striped bars. Never a real crest, never a recognisable face.",
+  "variations": "scarves held up stretch across behind the reserved area and frame it from both sides, name arching over them\nthe abbreviation is drawn huge and the reserved area sits inside its counter, the letters wrapping it\ntwo flagpoles lean in from left and right, their flags meeting above the reserved area\na ring of raised arms closes around the reserved area, name curving along the outside of the ring\ndrums stacked left and right build a niche that the reserved area sits in, banner with the saying across their fronts\na ribbon banner passes behind the reserved area with its ends fluttering out, the saying riding on the ribbon\nstriped bars radiate outward from behind the reserved area, name set across the stripes\na wreath of scarves and pennants surrounds the reserved area, abbreviation large beneath it\nthe stand rises as a wall of arms behind the reserved area, the name cut into that wall",
+  "suggestions": "Nordkurve\nSüdtribüne\nBlock H\nAuswärtsfahrer\nHeimspiel\nKurvenkinder\nUltras\nSupporters\nFanclub seit\nImmer dabei",
+  "nurLogo": true,
+  "requiresApproval": true
+}

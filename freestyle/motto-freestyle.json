@@ -1,0 +1,130 @@
+{
+  "slug": "freestyle",
+  "name": "Dein Freestyle",
+  "active": true,
+  "order": 1,
+  "accent": "#e0673a",
+  "intro": "Du sagst, was drauf soll. Wir sagen dir, worauf es passt.",
+  "headline": "Dein Freestyle",
+  "text": "Kein vorgegebenes Motto, kein Raster. Du beschreibst dein Motiv mit eigenen Worten, wählst den Artikel aus - vom T-Shirt über die Tasse bis zum Frühstücksbrettchen - und wir bauen die Druckdatei genau auf dessen Maß. Das Druckverfahren und die Fläche kommen vom Artikel, den Rest bestimmst du.",
+  "freestyle": true,
+  "vary": false,
+  "styleChoice": true,
+  "colorChoice": true,
+  "research": false,
+  "kader": false,
+  "artikelPflicht": true,
+  "fields": [
+    {
+      "key": "wofuer",
+      "label": "Wofür ist es?",
+      "type": "select",
+      "required": false,
+      "options": [
+        "Geschenk",
+        "Für mich selbst",
+        "Familie",
+        "Paar",
+        "Haustier",
+        "Verein oder Team",
+        "Firma",
+        "Anlass oder Feier"
+      ],
+      "hint": "Damit wir den Ton treffen",
+      "versteckt": true
+    },
+    {
+      "key": "foto",
+      "label": "Hast du ein Foto oder eine Datei dazu?",
+      "type": "upload",
+      "required": false,
+      "ohneGeht": true,
+      "knopf": "Foto oder Datei wählen",
+      "hint": "Mit dem Hochladen bestätigst du, dass du es verwenden darfst und alle Abgebildeten einverstanden sind. Im nächsten Schritt sagst du, was Otto daran ändern soll. JPG, PNG, HEIC oder SVG."
+    },
+    {
+      "key": "motiv",
+      "label": "Was soll drauf?",
+      "type": "textarea",
+      "required": true,
+      "max": 5000,
+      "hint": "Sag oder schreib einfach, was drauf soll – auch Text, Namen und Farben. Beispiel: ein schlafender Dackel auf dem Sofa, darunter „Bruno“, warme Farben.",
+      "mitFoto": {
+        "label": "Was soll Otto an deinem Foto ändern?",
+        "hint": "Sag oder schreib einfach, was anders werden soll – auch Text, Namen und Farben. Beispiel: mach meinen Hund zum Astronauten, Sterne im Hintergrund, darunter „Bruno“."
+      }
+    },
+    {
+      "key": "text_gross",
+      "label": "Grosser Text",
+      "type": "text",
+      "required": false,
+      "max": 40,
+      "hint": "Name, Spruch, Datum - was am grössten stehen soll",
+      "versteckt": true
+    },
+    {
+      "key": "text_klein",
+      "label": "Kleiner Text",
+      "type": "text",
+      "required": false,
+      "max": 60,
+      "hint": "Zweite Zeile, optional",
+      "versteckt": true
+    },
+    {
+      "key": "foto_modus",
+      "label": "Eigenes Foto?",
+      "type": "select",
+      "required": false,
+      "options": [
+        "Kein Foto",
+        "Mein Foto nach meinem Wunsch verändern",
+        "Mein Foto so einsetzen",
+        "Mein Foto im gewählten Stil nachzeichnen"
+      ],
+      "default": "Kein Foto",
+      "hint": "Verändern heißt: Otto ändert dein Foto so, wie du es im Wunsch beschrieben hast, und setzt es dann aufs Teil. So einsetzen heißt: dein Foto kommt genau so auf den Artikel. Nachzeichnen heißt: wir zeichnen es im gewählten Stil nach — es sieht deinem Foto ähnlich, ist aber eine Zeichnung.",
+      "versteckt": true
+    },
+    {
+      "key": "foto_form",
+      "label": "Form des Fotos",
+      "type": "select",
+      "required": false,
+      "options": [
+        "Rechteck",
+        "Abgerundet",
+        "Kreis"
+      ],
+      "default": "Abgerundet",
+      "zeigeWenn": {
+        "foto_modus": [
+          "Mein Foto so einsetzen",
+          "Mein Foto nach meinem Wunsch verändern"
+        ]
+      },
+      "versteckt": true
+    },
+    {
+      "key": "vermeiden",
+      "label": "Was auf keinen Fall?",
+      "type": "text",
+      "required": false,
+      "max": 200,
+      "hint": "Optional. Farben, Motive oder Stile, die nicht vorkommen sollen.",
+      "versteckt": true
+    }
+  ],
+  "prompt": "A print design made to order for a customer.\n\nWHAT THE CUSTOMER ASKED FOR, in their own words - this decides the subject and nothing overrides it:\n{motiv}\n\nThe piece is {wofuer}.\n\nText, spelled exactly as given and nothing else added:\n- large: \"{text_gross}\"\n- small: \"{text_klein}\"\n\nMUST NOT APPEAR: {vermeiden}\n\nDraw exactly what the customer described. If they named something concrete - an animal, a person's role, an object, a place - show that thing clearly and as the main subject. Do not substitute a generic symbol for it. Do not add extra words, no signature, no watermark, no logo.",
+  "hinweise": [
+    "Der Artikel-Block (Verfahren, Fläche, Mindeststrich, vollflächig oder freistehend) wird von artikel.js erzeugt und IMMER angehängt - er ist nicht Teil dieses Master-Prompts, damit er beim Kürzen nie wegfällt.",
+    "vary ist false: bei Freestyle gibt es keine Zufallsvariation, der Kunde hat selbst beschrieben.",
+    "Leere Textfelder werden vor dem Bau aus dem Prompt entfernt (fillPrompt kennt das bereits).",
+    "Foto: bei 'so einsetzen' geht das Foto NIE durch das Bildmodell - das Modell laesst die Flaeche frei (fotoZonePrompt), fotoEinsetzen komponiert danach. Bei 'nachzeichnen' geht es als Vorlage in edit_ballz_image mit nachbauPrompt.",
+    "19. Okt. (Markus: 'noch dazu ein Foto hochzuladen oder eine Datei, so dass diese geaendert werden kann'): das Foto ist ein eigener, freiwilliger Schritt (ohneGeht), die Rechte-Zusage steht im Hinweis am Knopf. foto_modus bleibt versteckt - freestyleBruecke setzt ihn aus dem Wunsch (Vorgabe 'verändern'). Bei 'verändern' aendert der Bilddienst zuerst das Foto nach dem Wunsch (fotoAendernPrompt, nur Arbeitsspeicher), dann laeuft es wie 'so einsetzen' weiter.",
+    "Bei jedem Foto muss extra.foto=true an buildPrompt, sonst verbietet RULES_COMMON_2 dem Kunden sein eigenes Motiv ('no recognizable people')."
+  ],
+  "fotoUpload": true,
+  "einfach": true
+}

@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>__NAME__ · Motto Otto</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/favicon-64.png" type="image/png">
+<link rel="preload" href="/fonts/archivo-v1.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* 2. Okt., Markus: "Da muessen wir nicht die ganze Abfolge wie normal bei Motto Otto haben, das
+   muss simpel sein: Foto hochladen, ein kleines Textfeld, was drauf soll, automatisiert das Logo
+   vom Partner, dann vielleicht auch nur zwei oder drei Stile zur Auswahl." Ein Bildschirm, in den
+   Farben des Partners (wie das Tor, haus.html). */
+@font-face{font-family:"Archivo";src:url("/fonts/archivo-v1.woff2") format("woff2");font-weight:400 900;font-style:normal;font-display:swap}
+:root{--akzent:#C03A2B;--akzent-ink:#fff;--papier:#F7F1E4;--papier2:#EFE7D6;--karte:#FFFDF8;--linie:#DCD2BE;--ink:#1B1710;--ink2:#5A5247;--ink3:#8A8073;--sans:"Archivo",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--papier);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.5}
+a{color:inherit}
+.kopf{background:var(--karte);border-bottom:1px solid var(--linie)}
+.kopf-innen{max-width:640px;margin:0 auto;padding:16px 18px 12px;display:flex;align-items:center;gap:14px}
+.kopf img{max-width:150px;max-height:64px;object-fit:contain}
+.kopf .zurueck{margin-left:auto;font-size:14px;color:var(--ink3);text-decoration:none}
+.wrap{max-width:640px;margin:0 auto;padding:18px 18px 60px}
+h1{font-size:clamp(26px,6vw,36px);line-height:1.1;margin:6px 0 4px;font-weight:900}
+.unter{color:var(--ink2);margin:0 0 16px}
+.block{background:var(--karte);border:1px solid var(--linie);border-radius:16px;padding:16px;margin:0 0 14px}
+.block h2{font-size:18px;margin:0 0 10px;font-weight:900;display:flex;gap:10px;align-items:center}
+.block h2 .nr{width:28px;height:28px;border-radius:50%;background:var(--akzent);color:var(--akzent-ink);display:inline-flex;align-items:center;justify-content:center;font-size:15px;flex:none}
+.block h2 .frei{font-weight:600;font-size:14px;color:var(--ink3)}
+.foto-knopf{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:64px;border:2px dashed var(--akzent);border-radius:14px;background:var(--papier);font:800 16px var(--sans);color:var(--ink);cursor:pointer}
+.foto-vorschau{display:flex;gap:12px;align-items:center}
+.foto-vorschau img{width:96px;height:96px;object-fit:cover;border-radius:12px}
+.foto-vorschau button{font:700 14px var(--sans);background:none;border:0;color:var(--ink2);text-decoration:underline;cursor:pointer}
+input[type=text],textarea{width:100%;font:400 17px/1.4 var(--sans);padding:12px 13px;border:1.5px solid var(--linie);border-radius:12px;background:#fff;color:var(--ink);min-height:48px}
+textarea{min-height:90px;resize:vertical}
+input:focus,textarea:focus{outline:2px solid var(--akzent);outline-offset:1px}
+.feldname{font-weight:800;font-size:14px;margin:10px 0 6px;display:block}
+.raster{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.raster.zwei{grid-template-columns:repeat(2,1fr)}
+@media(min-width:520px){.raster.teile{grid-template-columns:repeat(4,1fr)}}
+.kachel{position:relative;display:flex;flex-direction:column;border:2px solid var(--linie);border-radius:12px;overflow:hidden;background:#fff;cursor:pointer;text-align:left;padding:0;font:inherit;color:inherit}
+.kachel img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;background:var(--papier2)}
+.kachel span{padding:6px 8px 8px;font-weight:800;font-size:14px;line-height:1.2}
+.kachel small{display:block;font-weight:500;color:var(--ink3)}
+.kachel[aria-pressed="true"]{border-color:var(--akzent);box-shadow:0 0 0 3px var(--akzent)}
+.sterne{display:flex;gap:6px}
+.sterne button{font-size:34px;line-height:1;background:none;border:0;color:var(--linie);cursor:pointer;padding:2px;min-width:44px;min-height:44px}
+.sterne button.an{color:#F2B705}
+.stoff{display:flex;gap:8px;margin-top:12px}
+.stoff button{flex:1;font:700 15px var(--sans);padding:10px;border:2px solid var(--linie);border-radius:10px;background:#fff;cursor:pointer;min-height:44px}
+.stoff button[aria-pressed="true"]{border-color:var(--akzent);box-shadow:0 0 0 2px var(--akzent)}
+.haken{display:flex;gap:10px;align-items:flex-start;font-size:15px;margin:12px 0 0}
+.haken input{width:22px;height:22px;flex:none;margin-top:1px;accent-color:var(--akzent)}
+.logo-zeile{display:flex;gap:10px;align-items:center;font-size:14px;color:var(--ink2);margin:4px 0 16px}
+.logo-zeile img{height:28px;max-width:90px;object-fit:contain}
+/* 5. Okt., Markus: Knoepfe am Laptop ohne grosses Scrollen (gemessen: "Otto starten" bei 1539-1931 px von 768). Der Startknopf
+   klebt unten im Fenster; am breiten Bildschirm stehen die Bloecke in zwei Spalten. */
+.startleiste{position:sticky;bottom:0;z-index:6;background:var(--papier);padding:10px 0 12px}
+@media (min-width:900px){main.wrap,.kopf-innen{max-width:1040px}#formular{display:grid;grid-template-columns:1fr 1fr;column-gap:18px;align-items:start}#formular>h1,#formular>.unter,#formular>.reiter,#formular>.letztes,#formular>.logo-zeile,#formular>.startleiste,#formular>#login{grid-column:1/-1}#stile.raster{grid-template-columns:repeat(4,1fr)}#teile.raster{grid-template-columns:repeat(4,1fr)}}
+.linie-wahl{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.linie-felder{display:grid;gap:10px;margin-top:12px}
+.start{width:100%;min-height:58px;border:0;border-radius:14px;background:var(--akzent);color:var(--akzent-ink);font:900 19px var(--sans);cursor:pointer}
+.start:disabled{opacity:.55;cursor:default}
+.meldung{margin:12px 0 0;padding:12px 14px;border-radius:12px;background:#FDE7E4;color:#9B1C12;font-weight:700}
+.meldung.gut{background:#E8F6D4;color:#2F6E00}
+.hide{display:none!important}
+.fuss{margin-top:26px;color:var(--ink3);font-size:13px;text-align:center}
+.warten{background:var(--karte);border:1px solid var(--linie);border-radius:16px;padding:26px 18px;text-align:center}
+.warten .kreis{width:64px;height:64px;margin:0 auto 14px;border-radius:50%;border:6px solid var(--papier2);border-top-color:var(--akzent);animation:dreh 1s linear infinite}
+@keyframes dreh{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion: reduce){.warten .kreis{animation:none}}
+.warten h2{margin:0 0 6px;font-size:22px;font-weight:900}
+.warten .uhr{font-size:30px;font-weight:900;color:var(--akzent);margin:6px 0}
+.warten p{margin:0;color:var(--ink2)}
+.nichtwarten{margin-top:22px;padding-top:18px;border-top:1px solid var(--linie);text-align:left}
+.nichtwarten p{margin:0 0 12px}
+.nichtwarten input{width:100%;box-sizing:border-box;min-height:50px;border:1px solid var(--linie);border-radius:12px;padding:0 14px;font:600 17px var(--sans);margin:8px 0 10px}
+.wa-knopf{width:100%;min-height:52px;border:0;border-radius:14px;background:#25D366;color:#0B2E17;font:900 17px var(--sans);cursor:pointer}
+.wa-knopf:disabled{opacity:.55;cursor:default}
+.nichtwarten small{display:block;margin-top:8px;color:var(--ink3);font-size:13px}
+.letztes{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 16px;padding:14px 16px;border-radius:14px;background:var(--karte);border:2px solid var(--akzent);font-weight:700}
+.letztes a{color:inherit;font-weight:900;white-space:nowrap}
+</style>
+</head>
+<body>
+<header class="kopf"><div class="kopf-innen">
+  <img id="logo" alt="__NAME__" src="/api/mo/firmenlogo/__SLUG__.png">
+  <a class="zurueck" href="/bei/__SLUG__">‹ Zur Übersicht</a>
+</div></header>
+
+<main class="wrap">
+  <section class="warten hide" id="warten" aria-live="polite">
+    <div class="kreis" aria-hidden="true"></div>
+    <h2 id="warten-titel">Otto malt dein Motiv</h2>
+    <div class="uhr" id="uhr">0:00</div>
+    <p id="warten-text">Das dauert ein paar Minuten. Lass die Seite einfach offen, wir zeigen es dir hier.</p>
+    <div class="nichtwarten" id="nichtwarten">
+      <p><b>Keine Lust zu warten?</b> Mach die Seite ruhig zu. Öffnest du sie wieder oder scannst den QR-Code noch einmal, ist dein Motiv hier.</p>
+      <div class="hide" id="wa-block">
+        <label class="feldname" for="wa-nummer">Oder wir sagen dir per WhatsApp Bescheid:</label>
+        <input id="wa-nummer" type="tel" inputmode="tel" autocomplete="tel" placeholder="Handynummer, z. B. 0171 2345678">
+        <button class="wa-knopf" id="wa-senden" type="button">Per WhatsApp Bescheid geben</button>
+        <small>Die Nummer nutzen wir nur für diese eine Nachricht und löschen sie danach.</small>
+      </div>
+      <div class="meldung hide" id="wa-meldung" role="status"></div>
+    </div>
+  </section>
+  <div id="formular">
+  <div class="letztes hide" id="letztes"><span>Dein letztes Motiv ist fertig.</span><a href="#" id="letztes-link">Ansehen →</a></div>
+  <h1 id="titel">Dein Motiv mit __NAME__</h1>
+  <p class="unter" id="untertitel">Sag Otto, was drauf soll. Foto geht auch.</p>
+
+  <section class="block hide" id="f-linie">
+    <h2><span class="nr">✓</span> Wie soll es aussehen?</h2>
+    <div class="raster linie-wahl" id="linie-wahl">
+      <button type="button" class="kachel" data-linie="ja" aria-pressed="true"><img alt="" id="linie-bild" src=""><span>Wie im Shop<small>mit deinem Namen</small></span></button>
+      <button type="button" class="kachel" data-linie="nein" aria-pressed="false"><img alt="" src="/api/mo/stil-kachel/aquarell.jpg"><span>Eigenes Motiv<small>Otto malt es neu</small></span></button>
+    </div>
+    <div class="linie-felder" id="linie-felder">
+      <label class="feldname" for="l-spruch">Spruch oben</label><input id="l-spruch" type="text" maxlength="40">
+      <label class="feldname" for="l-name">Dein Name</label><input id="l-name" type="text" maxlength="30" placeholder="z. B. Lena und Tom">
+      <label class="feldname" for="l-datum">Datum</label><input id="l-datum" type="text" maxlength="20">
+      <div id="l-sterne-feld" class="hide"><span class="feldname">Sterne <span style="font-weight:500;color:var(--ink3)">freiwillig</span></span><div class="sterne" id="l-sterne"></div></div>
+    </div>
+  </section>
+
+  <section class="block" id="f-foto">
+    <h2><span class="nr">1</span> Dein Foto <span class="frei" id="foto-frei">freiwillig</span></h2>
+    <input id="foto" type="file" accept="image/*" class="hide">
+    <button class="foto-knopf" id="foto-knopf" type="button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg> Foto machen oder auswählen</button>
+    <div class="foto-vorschau hide" id="foto-vorschau"><img id="foto-bild" alt="Dein Foto"><div><b>Foto ist drin.</b><br><button type="button" id="foto-weg">anderes Foto</button></div></div>
+    <label class="haken hide" id="rechte-zeile"><input id="rechte" type="checkbox"> Ich darf dieses Foto verwenden, und alle darauf sind einverstanden.</label>
+  </section>
+
+  <section class="block" id="f-text">
+    <h2><span class="nr">2</span> <span id="text-titel">Was soll drauf?</span></h2>
+    <div id="f-motiv">
+      <textarea id="motiv" maxlength="300" placeholder="z. B. Unser Abend bei __NAME__"></textarea>
+    </div>
+  </section>
+
+  <section class="block" id="f-teile">
+    <h2><span class="nr">3</span> Worauf?</h2>
+    <div class="raster teile" id="teile"></div>
+    <div class="stoff hide" id="stoff">
+      <button type="button" data-stoff="weiss" aria-pressed="false">Helles Shirt</button>
+      <button type="button" data-stoff="schwarz" aria-pressed="true">Dunkles Shirt</button>
+    </div>
+  </section>
+
+  <section class="block" id="f-stil">
+    <h2><span class="nr" id="stil-nr">4</span> Welcher Stil?</h2>
+    <div class="raster" id="stile"></div>
+  </section>
+
+  <div class="logo-zeile"><img alt="" src="/api/mo/firmenlogo/__SLUG__.png"> Das Logo von __NAME__ kommt automatisch drauf.</div>
+  <div class="startleiste"><button class="start" id="start" type="button">Otto starten</button>
+  <div class="meldung hide" id="meldung" role="status"></div></div>
+  <div class="hide" id="login" style="margin-top:12px">
+    <span class="feldname">Kurz anmelden, dann geht es weiter</span>
+    <input id="login-email" type="text" inputmode="email" autocomplete="email" placeholder="deine@email.de">
+    <button class="start" id="login-senden" type="button" style="margin-top:10px">Link schicken</button>
+  </div>
+  </div>
+  <p class="fuss">Gestaltet mit <a href="/">Motto Otto</a>. Dein Foto bleibt eine Stunde bei uns, nur im Arbeitsspeicher.</p>
+</main>
+
+<script>
+(function () {
+  var SLUG = '__SLUG__';
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var q = new URLSearchParams(location.search);
+  var plan = null, teil = q.get('teil') || '', stil = '', stoff = 'schwarz', fotoDaten = '';
+  // 5. Okt., Markus: "wenn ich das Design auswaehle ... dann muss das auch so hinten rauskommen" - die schlichte Linie wie im Shop.
+  var linie = true, lSterne = 0;
+  function linieMoeglich() { return !!(plan && plan.linie && plan.linie.teile.indexOf(teil) >= 0); }
+
+  function melde(t, gut) { var m = $('meldung'); m.textContent = t; m.className = 'meldung' + (gut ? ' gut' : ''); }
+  function hell(hex) { var m = /^#?([0-9a-f]{6})$/i.exec(hex || ''); if (!m) return 0.5; var n = parseInt(m[1], 16); return (0.2126 * (n >> 16) + 0.7152 * ((n >> 8) & 255) + 0.0722 * (n & 255)) / 255; }
+
+  function aufbauen() {
+    if (!plan.teile.length) { melde('Hier gibt es gerade nichts zu gestalten.'); $('start').disabled = true; return; }
+    $('titel').textContent = 'Dein Motiv mit ' + plan.name;
+    $('untertitel').textContent = 'Sag Otto, was drauf soll. Foto geht auch.';
+    if (!plan.teile.some(function (t) { return t.id === teil; })) teil = plan.teile[0].id;
+    $('teile').innerHTML = plan.teile.map(function (t) {
+      return '<button type="button" class="kachel" data-teil="' + esc(t.id) + '" aria-pressed="' + (t.id === teil) + '">' + (t.bild ? '<img alt="" loading="lazy" src="' + esc(t.bild) + '">' : '') + '<span>' + esc(t.name) + '<small>ab ' + esc(t.preis) + '</small></span></button>';
+    }).join('');
+    var tt = plan.teile.filter(function (t) { return t.id === teil; })[0];
+    $('stoff').classList.toggle('hide', !(tt && tt.textil));
+    var lm = linieMoeglich(), mitLinie = lm && linie;
+    $('f-linie').classList.toggle('hide', !lm);
+    if (lm) { var tb = plan.teile.filter(function (t) { return t.id === teil; })[0]; $('linie-bild').src = tb && tb.bild ? tb.bild : ''; }
+    $('linie-felder').classList.toggle('hide', !mitLinie);
+    Array.prototype.forEach.call(document.querySelectorAll('[data-linie]'), function (x) { x.setAttribute('aria-pressed', (x.getAttribute('data-linie') === 'ja') === linie ? 'true' : 'false'); });
+    ['f-foto', 'f-text', 'f-stil'].forEach(function (id) { $(id).classList.toggle('hide', mitLinie); });
+    if (mitLinie) $('stoff').classList.add('hide');
+    $('l-sterne-feld').classList.toggle('hide', !plan.gastro);
+    $('untertitel').textContent = mitLinie ? 'Dein Name und Datum, fertig. Sofort, ohne Warten.' : $('untertitel').textContent;
+    rechte();
+  }
+  function rechte() { $('rechte-zeile').classList.toggle('hide', !fotoDaten); }
+
+  fetch('/api/partner/' + SLUG + '/plan', { cache: 'no-store' }).then(function (r) { if (!r.ok) throw new Error('plan'); return r.json(); }).then(function (p) {
+    plan = p;
+    document.documentElement.style.setProperty('--akzent', p.akzent);
+    document.documentElement.style.setProperty('--akzent-ink', hell(p.akzent) > 0.6 ? '#1B1710' : '#FFFFFF');
+    if (p.motivBeispiel) $('motiv').placeholder = p.motivBeispiel;
+    if (p.linie) { $('l-spruch').value = p.linie.spruch || ''; var d = new Date(); $('l-datum').value = ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2) + '.' + d.getFullYear(); }
+    $('l-sterne').innerHTML = [1, 2, 3, 4, 5].map(function (n) { return '<button type="button" data-lstern="' + n + '" aria-label="' + n + ' Sterne">★</button>'; }).join('');
+    stil = p.stile[0] ? p.stile[0].id : 'aquarell';
+    $('stile').innerHTML = p.stile.map(function (s) {
+      return '<button type="button" class="kachel" data-stil="' + esc(s.id) + '" aria-pressed="' + (s.id === stil) + '"><img alt="" loading="lazy" src="' + esc(s.kachel) + '"><span>' + esc(s.label) + '</span></button>';
+    }).join('');
+    $('stile').className = 'raster' + (p.stile.length === 2 || p.stile.length === 4 ? ' zwei' : '');
+    aufbauen();
+  }).catch(function () { melde('Diese Seite gibt es gerade nicht.'); $('start').disabled = true; });
+
+  document.addEventListener('click', function (ev) {
+    var b = ev.target.closest ? ev.target.closest('button') : null; if (!b) return;
+    if (b.hasAttribute('data-teil')) { teil = b.getAttribute('data-teil'); aufbauen(); }
+    if (b.hasAttribute('data-stil')) { stil = b.getAttribute('data-stil'); Array.prototype.forEach.call(document.querySelectorAll('[data-stil]'), function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); }
+    if (b.hasAttribute('data-stoff')) { stoff = b.getAttribute('data-stoff'); Array.prototype.forEach.call(document.querySelectorAll('[data-stoff]'), function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); }
+    if (b.hasAttribute('data-linie')) { linie = b.getAttribute('data-linie') === 'ja'; aufbauen(); }
+    if (b.hasAttribute('data-lstern')) { var ln = +b.getAttribute('data-lstern'); lSterne = lSterne === ln ? 0 : ln; Array.prototype.forEach.call(document.querySelectorAll('[data-lstern]'), function (x) { x.classList.toggle('an', +x.getAttribute('data-lstern') <= lSterne); }); }
+  });
+  $('foto-knopf').addEventListener('click', function () { $('foto').click(); });
+  $('foto-weg').addEventListener('click', function () { fotoDaten = ''; $('foto').value = ''; $('foto-vorschau').classList.add('hide'); $('foto-knopf').classList.remove('hide'); rechte(); });
+  // Das Foto wird im Browser auf hoechstens 3000 Pixel verkleinert - Otto malt danach, dafuer
+  // reicht das, und der Upload vom Handy dauert Sekunden statt Minuten.
+  $('foto').addEventListener('change', function () {
+    var f = this.files && this.files[0]; if (!f) return;
+    var url = URL.createObjectURL(f), img = new Image();
+    img.onload = function () {
+      var s = Math.min(1, 3000 / Math.max(img.naturalWidth, img.naturalHeight)), c = document.createElement('canvas');
+      c.width = Math.round(img.naturalWidth * s); c.height = Math.round(img.naturalHeight * s);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      fotoDaten = c.toDataURL('image/jpeg', 0.92); URL.revokeObjectURL(url);
+      $('foto-bild').src = fotoDaten; $('foto-vorschau').classList.remove('hide'); $('foto-knopf').classList.add('hide'); rechte();
+    };
+    img.onerror = function () { melde('Das Foto konnte nicht gelesen werden. Bitte ein anderes.'); };
+    img.src = url;
+  });
+
+  function post(url, body) {
+    return fetch(url, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { ok: r.ok, status: r.status, j: j }; }); });
+  }
+  var FEHLER = { 'feld fehlt': 'Bitte noch ausfüllen: ', marke: 'Dieses Wort ist eine geschützte Marke: ', verboten: 'Das geht leider nicht: ', tageslimit: 'Otto hat für heute genug gemalt. Bitte morgen noch einmal.' };
+  $('start').addEventListener('click', function () {
+    if (!plan) return;
+    var t = plan.teile.filter(function (x) { return x.id === teil; })[0];
+    if (!t) return;
+    var mitLinie = linieMoeglich() && linie;
+    if (!mitLinie && !$('motiv').value.trim()) { melde('Bitte schreib kurz, was drauf soll.'); $('motiv').focus(); return; }
+    if (mitLinie) fotoDaten = '';
+    if (fotoDaten && !$('rechte').checked) { melde('Bitte bestätigen, dass du das Foto verwenden darfst.'); return; }
+    var motto = 'haus';
+    $('start').disabled = true; $('start').textContent = fotoDaten ? 'Foto wird hochgeladen …' : 'Otto legt los …'; $('meldung').classList.add('hide');
+    var weiter = function (sitzung) {
+      $('start').textContent = 'Otto legt los …';
+      var body;
+      {
+        if (mitLinie) body = { motto: motto, style: 'minimal', textile: 'weiss', artikelId: t.artikel, flaeche: t.flaeche, uploadId: plan.logoUpload, logoArt: 'exakt',
+          vorlage: 'linie', linie: { spruch: $('l-spruch').value.trim(), name: $('l-name').value.trim(), datum: $('l-datum').value.trim(), sterne: lSterne },
+          values: { firma: plan.firma, foto_modus: 'Kein Foto' } };
+        else body = { motto: motto, style: stil, textile: t && t.textil ? stoff : 'weiss', fotoSitzung: sitzung || '', artikelId: t.artikel, flaeche: t.flaeche,
+          uploadId: plan.logoUpload, logoArt: 'exakt', values: {
+            firma: plan.firma, motiv: $('motiv').value.trim(),
+            foto_modus: sitzung ? 'Mein Foto im gewählten Stil nachzeichnen' : 'Kein Foto', foto_rechte: sitzung ? 'ja' : '' } };
+      }
+      return post('/api/mo/generate', body).then(function (r) {
+        if (r.ok && r.j.jobId) {
+          var ziel = '/m/' + motto + '?firma=' + encodeURIComponent(SLUG) + '&artikel=' + encodeURIComponent(t.artikel);
+          var neu = { jobId: r.j.jobId, started: Date.now(), motto: motto, ziel: ziel };
+          laufMerken(neu);
+          warten(neu, true);
+          return;
+        }
+        $('start').disabled = false; $('start').textContent = 'Otto starten';
+        if (r.status === 401) { melde('Für das nächste Design melde dich bitte kurz an.'); $('login').classList.remove('hide'); return; }
+        var j = r.j || {};
+        melde(j.hinweis || ((FEHLER[j.error] || '') + (j.feld || j.wort || '')) || 'Das hat nicht geklappt. Bitte noch einmal.');
+      });
+    };
+    var start = fotoDaten
+      ? post('/api/mo/foto', { dataUrl: fotoDaten, slug: motto, artikelId: t.artikel, flaeche: t.flaeche, fotoModus: 'nachgebaut' }).then(function (r) {
+          if (!r.ok || !r.j.fotoSitzung) { $('start').disabled = false; $('start').textContent = 'Otto starten'; melde((r.j && r.j.hinweis) || 'Das Foto hat nicht geklappt. Bitte ein anderes.'); return; }
+          return weiter(r.j.fotoSitzung);
+        })
+      : weiter('');
+    start.catch(function () { $('start').disabled = false; $('start').textContent = 'Otto starten'; melde('Keine Verbindung. Bitte noch einmal.'); });
+  });
+  // Warten HIER, auf der einfachen Seite. Erst wenn das Motiv fertig ist, geht es zur Mottoseite:
+  // sie findet den Auftrag (mo_lauf) und zeigt Ergebnis, Artikel und Kauf wie bei jedem Motto -
+  // es gibt nur EINEN Kaufweg. Scheitert der Lauf, bleibt der Gast hier und kann neu starten,
+  // statt in der langen Abfolge zu landen (im Test am 2. Okt. genau so passiert).
+  // 2. Okt., Markus ("WhatsApp und 4"): Wer nicht warten mag, macht die Seite zu. Der Auftrag liegt
+  // darum im Speicher des Handys (localStorage, je Partner, 7 Tage) und nicht nur im offenen Tab:
+  // Seite wieder auf oder QR-Code noch einmal gescannt - das fertige Motiv ist da. Dazu auf Wunsch
+  // eine WhatsApp; ihr Link traegt die Auftragsnummer (?lauf=), denn der Browser in WhatsApp kennt
+  // den Speicher des Handy-Browsers nicht.
+  var LAUF_KEY = 'mo_partner_lauf_' + SLUG, LAUF_TAGE = 7;
+  function laufMerken(l) { try { localStorage.setItem(LAUF_KEY, JSON.stringify(l)); } catch (e) { /* privates Fenster */ } }
+  function laufLesen() { try { return JSON.parse(localStorage.getItem(LAUF_KEY) || 'null'); } catch (e) { return null; } }
+  function laufVergessen() { try { localStorage.removeItem(LAUF_KEY); sessionStorage.removeItem('mo_partner_lauf'); } catch (e) { /* egal */ } }
+  // Zur Mottoseite: sie nimmt den Auftrag aus mo_lauf (und verwirft alles, was aelter als 45 Minuten
+  // gestartet ist - darum gilt fuer die Uebergabe "jetzt").
+  function zeigen(l) {
+    try { localStorage.setItem('mo_lauf', JSON.stringify({ jobId: l.jobId, started: Date.now(), slug: l.motto })); } catch (e) { /* privates Fenster */ }
+    l.gesehen = true; laufMerken(l);
+    location.href = l.ziel;
+  }
+  var waLauf = null;
+  function waAnbieten(l) {
+    waLauf = l;
+    $('wa-meldung').classList.add('hide');
+    fetch('/api/mo/benachrichtigen/wege', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (w) {
+      $('wa-block').classList.toggle('hide', !w.whatsapp);
+    }).catch(function () { /* dann eben ohne */ });
+  }
+  $('wa-senden').addEventListener('click', function () {
+    if (!waLauf) return;
+    var nr = $('wa-nummer').value.trim(), m = $('wa-meldung');
+    function sag(t, gut) { m.textContent = t; m.className = 'meldung' + (gut ? ' gut' : ''); }
+    if (!nr) { sag('Bitte deine Handynummer eingeben.'); return; }
+    $('wa-senden').disabled = true;
+    post('/api/mo/benachrichtigen', { jobId: waLauf.jobId, whatsapp: nr, partner: SLUG }).then(function (r) {
+      $('wa-senden').disabled = false;
+      if (r.ok) { $('wa-block').classList.add('hide'); sag('Alles klar. Du bekommst eine WhatsApp an ' + r.j.whatsapp + ', sobald dein Motiv fertig ist. Du kannst die Seite jetzt zumachen.', true); return; }
+      sag((r.j && r.j.hinweis) || 'Das hat nicht geklappt. Bitte noch einmal.');
+    }).catch(function () { $('wa-senden').disabled = false; sag('Keine Verbindung. Bitte noch einmal.'); });
+  });
+
+  var uhrTakt = null;
+  function warten(l, eigen) {
+    $('formular').classList.add('hide'); $('warten').classList.remove('hide'); window.scrollTo(0, 0);
+    $('nichtwarten').classList.toggle('hide', !eigen);
+    if (eigen) waAnbieten(l);
+    clearInterval(uhrTakt);
+    uhrTakt = setInterval(function () { var s = Math.max(0, Math.round((Date.now() - l.started) / 1000)); $('uhr').textContent = Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2); }, 500);
+    var fragen = function () {
+      fetch('/api/mo/job/' + encodeURIComponent(l.jobId), { cache: 'no-store' }).then(function (r) { return r.json().then(function (j) { return { status: r.status, j: j }; }); }).then(function (r) {
+        var st = r.j.status || '';
+        if (st === 'done') {
+          clearInterval(uhrTakt);
+          $('nichtwarten').classList.add('hide');
+          $('warten-titel').textContent = 'Fertig!'; $('warten-text').textContent = 'Einen Moment, wir zeigen es dir.';
+          zeigen(l); return;
+        }
+        if (r.status === 404 || (st && st !== 'queued' && st !== 'running')) {
+          clearInterval(uhrTakt);
+          laufVergessen();
+          $('warten').classList.add('hide'); $('formular').classList.remove('hide');
+          $('start').disabled = false; $('start').textContent = 'Noch einmal starten';
+          melde((r.j.hint || r.j.error || 'Das Motiv ist leider nicht fertig geworden.') + ' Bitte noch einmal starten.');
+          return;
+        }
+        setTimeout(fragen, 3000);
+      }).catch(function () { setTimeout(fragen, 5000); });
+    };
+    fragen();
+  }
+  // Seite wieder auf? 1. Link aus der WhatsApp (?lauf=), 2. ein Auftrag von vorhin auf diesem Handy.
+  (function () {
+    var id = q.get('lauf') || '', m = q.get('m') || '', a = q.get('a') || '';
+    if (/^mo_[a-f0-9]{16}$/.test(id) && /^[a-z0-9-]{1,60}$/.test(m) && (!a || /^[a-z0-9-]{1,60}$/.test(a))) {
+      var l = { jobId: id, started: Date.now(), motto: m, ziel: '/m/' + m + '?firma=' + encodeURIComponent(SLUG) + (a ? '&artikel=' + encodeURIComponent(a) : '') };
+      laufMerken(l); warten(l, false); return;
+    }
+    var offen = laufLesen();
+    if (!offen || !offen.jobId || !offen.ziel || Date.now() - offen.started > LAUF_TAGE * 86400000) { if (offen) laufVergessen(); return; }
+    if (!offen.gesehen) { warten(offen, true); return; }
+    $('letztes').classList.remove('hide');
+    $('letztes-link').addEventListener('click', function (ev) { ev.preventDefault(); zeigen(offen); });
+  })();
+
+  $('login-senden').addEventListener('click', function () {
+    post('/api/mo/login', { email: $('login-email').value, next: location.pathname + location.search }).then(function (r) {
+      melde(r.ok ? 'Link ist unterwegs. Nach dem Klick bist du wieder hier.' : 'Bitte eine gültige E-Mail eingeben.', r.ok);
+    });
+  });
+})();
+</script>
+</body>
+</html>

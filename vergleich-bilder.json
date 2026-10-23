@@ -1,0 +1,16 @@
+{
+  "_hinweis": "Vergleich auf der Startseite: Standard-KI gegen Motto Otto, derselbe Auftrag. Der Server holt die Rohbilder beim Start (wie bei otto-bilder.json), legt sie unter storage/vergleich/ ab und leitet daraus je Seite A (wie es aus dem Generator kommt), B (freigestellt) und die Lupe (Kante vierfach) ab. standard.url = ein Bild, wie es ein normaler Bildgenerator ohne Druckregeln liefert - erzeugt mit einem Laien-Prompt (kein Wort ueber Transparenz oder Druckregeln), OHNE Alphakanal, auf gefuelltem Grund. Ein Rohbild, das schon freigestellt ankommt, taugt hier NICHT: der Vergleich zeigt dann keinen Unterschied, weil die naive Freistellung nichts mehr zu tun hat (Markus, 17. Sept. 2026).; otto.url = dasselbe Motiv aus der Motto-Otto-Pipeline (direkt transparent erzeugt, Druckregeln im Prompt). Aendert sich eine URL, wird das Beispiel beim naechsten Start neu gebaut. Ohne fertige Dateien zeigt die Startseite den Abschnitt nicht.",
+  "beispiele": [
+    {
+      "id": "dachdecker",
+      "titel": "Dachdeckerei Meyer, Harmstorf",
+      "auftrag": "Handwerker-Shirt: Firma, Gewerk, Ort und der Spruch „Weil wir das können“ – für ein schwarzes Shirt.",
+      "standard": {
+        "url": "https://ballz-image-mcp-production.up.railway.app/generated/672477cb-ac16-4c68-9d8c-65502c271d61.png"
+      },
+      "otto": {
+        "url": "https://ballz-image-mcp-production.up.railway.app/generated/256cb4be-42d0-4c8d-af29-63f0561f0029.png"
+      }
+    }
+  ]
+}

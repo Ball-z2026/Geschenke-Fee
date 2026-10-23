@@ -1,0 +1,46 @@
+{
+  "_zweck": "4. Okt., Markus: 'Warum wurde das Logo vom East hier verfremdet? Das Logo ist doch ganz klar.' Die Bild-KI hatte das EAST26-Logo auf sieben Shop-Bildern selbst nachgezeichnet. Ersetzt mit werkzeug/logo-einsetzen.mjs durch das Original; hier steht, wo es sitzt (Mitte, Breite, Hoehe in px auf dem 900er Bild, verzerren = Neigung der Flaeche). Die Abnahme vergleicht an diesen Stellen mit postkarte/logos/<logo>.",
+  "east26": {
+    "logo": "east26.png",
+    "plaetze": {
+      "tee": {
+        "cx": 450,
+        "cy": 371,
+        "w": 202,
+        "h": 202
+      },
+      "strandtuch": {
+        "cx": 450,
+        "cy": 145,
+        "w": 64,
+        "h": 64
+      },
+      "fussmatte": {
+        "cx": 726,
+        "cy": 481,
+        "w": 150,
+        "h": 150
+      },
+      "kissen": {
+        "cx": 457,
+        "cy": 683,
+        "w": 96,
+        "h": 96
+      },
+      "poster": {
+        "cx": 452,
+        "cy": 139,
+        "w": 72,
+        "h": 72
+      },
+      "acrylbild": {
+        "cx": 448,
+        "cy": 682,
+        "w": 138,
+        "h": 86,
+        "verzerren": true
+      }
+    },
+    "_hoodie": "4. Okt. abends: Hoodie in der schlichten Linie auf Creme, vorne nur das Brustemblem - das Logo ist dort 42 px gross, zu klein fuer den Pixelvergleich (JPEG verwischt die feinen Linien). Gesetzt vom Code aus dem Original (minimal-design.js), nicht von der Bild-KI."
+  }
+}

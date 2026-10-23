@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="de">
+<head><meta charset="utf-8"><title>Entwurfs-Werkstatt</title>
+<!-- Nur zum Ansehen der gezeichneten Entwuerfe beim Bauen. Geht nicht ins Video. -->
+<style>
+  body{background:#08070c;margin:0;padding:36px;display:flex;gap:24px;flex-wrap:wrap;font-family:Archivo,Arial,sans-serif}
+  .p{width:300px}
+  .p b{color:#8d87a0;font-size:12px;display:block;margin-bottom:7px;font-family:monospace;letter-spacing:.08em}
+  .p div{border-radius:14px;overflow:hidden}
+</style>
+</head>
+<body>
+<div class="p"><b>COLLEGE · erster Entwurf</b><div id="a"></div></div>
+<div class="p"><b>MINIMALISTISCH</b><div id="b"></div></div>
+<div class="p"><b>NEON</b><div id="c"></div></div>
+<div class="p"><b>VINTAGE</b><div id="d"></div></div>
+<div class="p"><b>COLLEGE · nach den Kommentaren</b><div id="e"></div></div>
+<script src="entwurf-svg.js"></script>
+<script>
+  a.innerHTML = entwurfSVG('college');
+  b.innerHTML = entwurfSVG('minimal');
+  c.innerHTML = entwurfSVG('neon');
+  d.innerHTML = entwurfSVG('vintage');
+  e.innerHTML = entwurfSVG('college', true);
+</script>
+</body>
+</html>

@@ -1,0 +1,1288 @@
+{
+ "tshirt": {
+  "nr": 1,
+  "name": "T-Shirt",
+  "beschreibung": "Personalisiertes Shirt mit Foto Name Spruch Haustier Familie oder Motiv",
+  "material": "100% Baumwolle oder Baumwollmix",
+  "gruppe": "Textil",
+  "varianten": "XS-5XL / Damen Herren Unisex Kids",
+  "verfahren": "dtf",
+  "verfahrenAlternativ": [],
+  "verfahrenRoh": "DTF",
+  "motivart": "freistehend",
+  "personalisierung": [
+   "Foto",
+   "Name",
+   "Text",
+   "Grafik"
+  ],
+  "zielgruppe": [
+   "Damen",
+   "Herren",
+   "Kinder",
+   "Familie",
+   "Paare",
+   "Haustier",
+   "Fans"
+  ],
+  "flaechen": {},
+  "druckflaecheOffen": false,
+  "produzent": null,
+  "mindestmenge": null,
+  "hinweis": "Druckflaechen kommen aus GARMENTS in mottos.js",
+  "garment": "shirt"
+ },
+ "tasse": {
+  "nr": 2,
+  "name": "Tasse",
+  "beschreibung": "Fototasse mit Foto Name Spruch Familienmotiv oder Haustiermotiv",
+  "material": "Keramik mit Sublimationsbeschichtung",
+  "gruppe": "Kueche",
+  "varianten": "330 ml / 440 ml / optional farbige Varianten",
+  "verfahren": "sublimation",
+  "verfahrenAlternativ": [],
+  "verfahrenRoh": "Sublimation",
+  "motivart": "vollflaechig",
+  "personalisierung": [
+   "Foto",
+   "Name",
+   "Text",
+   "Grafik"
+  ],
+  "zielgruppe": [
+   "Familie",
+   "Paare",
+   "Mama",
+   "Papa",
+   "Oma",
+   "Opa",
+   "Kollegen"
+  ],
+  "flaechen": {},
+  "druckflaecheOffen": true,
+  "produzent": null,
+  "mindestmenge": null,
+  "hinweis": "22. Sept., Markus: Rundumdruck ueber die ganze Flaeche (20 x 8,9 cm), nicht nur ein Motiv vorn."
+ },
+ "hoodie": {
+  "nr": 3,
+  "name": "Hoodie",
+  "beschreibung": "Personalisiertes Kapuzen-Sweatshirt mit großem Motiv Foto Name oder Statement",
+  "material": "Baumwolle Baumwollmix",
+  "gruppe": "Textil",
+  "varianten": "XS-5XL / Unisex",
+  "verfahren": "dtf",
+  "verfahrenAlternativ": [],
+  "verfahrenRoh": "DTF",
+  "motivart": "freistehend",
+  "personalisierung": [
+   "Foto",
+   "Name",
+   "Text",
+   "Grafik",
+   "Haustier"
+  ],
+  "zielgruppe": [
+   "Damen",
+   "Herren",
+   "Paare",
+   "Familie",
+   "Jugendliche"
+  ],
+  "flaechen": {},
+  "druckflaecheOffen": false,
+  "produzent": null,
+  "mindestmenge": null,
+  "hinweis": "Druckflaechen kommen aus GARMENTS in mottos.js",
+  "garment": "hoodie"
+ },
+ "thermobecher": {
+  "nr": 4,
+  "name": "Thermobecher / Tumbler",
+  "beschreibung": "Personalisierter Edelstahl-Thermobecher mit Foto Name Motiv oder Spruch",
+  "material": "Edelstahl",
+  "gruppe": "Kueche",
+  "varianten": "ca. 300-1200 ml / verschiedene Formen",
+  "verfahren": "sublimation",
+  "verfahrenAlternativ": [
+   "uv"
+  ],
+  "verfahrenRoh": "Sublimation oder UV",
+  "motivart": "freistehend",
+  "personalisierung": [
+   "Foto",
+   "Name",
+   "Text",
+   "Grafik"
+  ],
+  "zielgruppe": [
+   "Damen",
+   "Herren",
+   "Büro",
+   "Sport",
+   "Pendler"
+  ],
+  "flaechen": {},
+  "druckflaecheOffen": true,
+  "produzent": null,
+  "mindestmenge": null,
+  "hinweis": ""
+ },
+ "trinkflasche": {
+  "nr": 5,
+  "name": "Trinkflasche",
+  "beschreibung": "Personalisierte Trinkflasche für Schule Sport Arbeit oder Freizeit",
+  "material": "Aluminium Edelstahl oder beschichteter Kunststoff",
+  "gruppe": "Kueche",
+  "varianten": "500 / 600 / 750 / 1000 ml",
+  "verfahren": "sublimation",
+  "verfahrenAlternativ": [
+   "uv"
+  ],
+  "verfahrenRoh": "Sublimation oder UV",
+  "motivart": "freistehend",
+  "personalisierung": [
+   "Name",
+   "Foto",
+   "Text",
+   "Grafik"
+  ],
+  "zielgruppe": [
+   "Kinder",
+   "Jugendliche",
+   "Erwachsene",
+   "Sport"
+  ],
+  "flaechen": {},
+  "druckflaecheOffen": true,
+  "produzent": null,
+  "mindestmenge": null,
+  "hinweis": ""
+ },
+ "kissen": {
+  "nr": 6,
+  "name": "Kissen",
+  "beschreibung": "Fotokissen mit Foto Namen Datum Spruch oder Haustiermotiv",
+  "material": "Polyesterbezug mit Füllung",
+  "gruppe": "Wohnen",
+  "varianten": "40x40 / 45x45 / 50x50 cm / verschiedene Formen",
+  "verfahren": "sublimation",
+  "verfahrenAlternativ": [
+   "dtf"
+  ],
+  "verfahrenRoh": "Sublimation oder DTF",
+  "motivart": "vollflaechig",
+  "personalisierung": [
+   "Foto",
+   "Name",
+   "Text",
+   "Grafik"
+  ],
+  "zielgruppe": [
+   "Familie",
+   "Paare",
+   "Kinder",
+   "Haustier"
+  ],
+  "flaechen": {
+   "40x40": {
+    "label": "40 x 40 cm",
+    "cm": [
+     40,
+     40
+    ]
+   },
+   "45x45": {
+    "label": "45 x 45 cm",
+    "cm": [
+     45,
+     45
+    ]
+   },
+   "50x50": {
+    "label": "50 x 50 cm",
+    "cm": [
+     50,
+     50
+    ]
+   }
+  },
+  "druckflaecheOffen": false,
+  "produzent": null,
+  "mindestmenge": null,
+  "hinweis": ""
+ },
+ "schluesselanhaenger": {
+  "nr": 7,
+  "name": "Schlüsselanhänger",
+  "beschreibung": "Kleiner personalisierter Anhänger mit Foto Name Haustier Initialen oder Motiv",
+  "material": "Acryl / Metall / Holz / PU-Leder",
+  "gruppe": "Geschenk",
+  "varianten": "ca. 4-8 cm",
+  "verfahren": "uv",
+  "verfahrenAlternativ": [],
+  "verfahrenRoh": "UV",
+  "motivart": "vollflaechig",
+  "personalisierung": [
+   "Foto",
+   "Name",
+   "Text",
+   "Grafik"
+  ],
+  "zielgruppe": [
+   "Alle",
+   "Zielgruppen",
+   "Geschenkartikel"
+  ],
+  "flaechen": {},
+  "druckflaecheOffen": true,
+  "produzent": null,
+  "mindestmenge": null,
+  "hinweis": ""
+ },
+ "handyhuelle": {
+  "nr": 8,
+  "name": "Handyhülle",
+  "beschreibung": "Individuelle Smartphone-Hülle mit Foto Name Haustier oder Grafik",
+  "material": "TPU / Kunststoff / Hartcase",
+  "gruppe": "Buero und Gaming",
+  "varianten": "passend für iPhone Samsung und weitere Modelle",
+  "verfahren": "uv",
+  "verfahrenAlternativ": [],
+  "verfahrenRoh": "UV",
+  "motivart": "vollflaechig",
+  "personalisierung": [
+   "Foto",
+   "Name",
+   "Text",
+   "Grafik"
+  ],
+  "zielgruppe": [
+   "Jugendliche",
+   "Erwachsene",
+   "Paare",
+   "Haustier"
+  ],
+  "flaechen": {},
+  "druckflaecheOffen": true,
+  "produzent": null,
+  "mindestmenge": null,
+  "hinweis": ""
+ },
+ "socken": {
+  "nr": 9,
+  "name": "Socken",
+  "beschreibung": "Personalisierte Socken mit Gesicht Foto Haustier Name oder Spruch",
+  "material": "Polyester / Elasthan",
+  "gruppe": "Textil",
+  "varianten": "35-38 / 39-42 / 43-46",
+  "verfahren": "sublimation",
+  "verfahrenAlternativ": [],
+  "verfahrenRoh": "Sublimation",
+  "motivart": "vollflaechig",
+  "personalisierung": [
+   "Foto",
+   "Gesicht",
+   "Name",
+   "Text"
+  ],
+  "zielgruppe": [
+   "Paare",
+   "Familie",
+   "Freunde",
+   "Haustier"
+  ],
+  "flaechen": {},
+  "druckflaecheOffen": true,
+  "produzent": null,
+  "mindestmenge": null,
+  "hinweis": ""
+ },
+ "cap": {
+  "nr": 10,
+  "name": "Cap",
+  "beschreibung": "Personalisierte Baseballcap mit Name Initialen Foto oder Motiv",
+  "material": "Baumwolle / Polyester",
+  "gruppe": "Textil",
+  "varianten": "verstellbar ca. 55-60 cm / verschiedene Größen",
+  "verfahren": "dtf",
+  "verfahrenAlternativ": [],
+  "verfahrenRoh": "DTF",
+  "motivart": "freistehend",
+  "personalisierung": [
+   "Name",
+   "Initialen",
+   "Text",
+   "Grafik"
+  ],
+  "zielgruppe": [
+   "Damen",
+   "Herren",
+   "Jugendliche",
+   "Sport",
+   "Vereine"
+  ],
+  "flaechen": {},
+  "druckflaecheOffen": true,
+  "produzent": null,
+  "mindestmenge": null,
+  "hinweis": ""
+ },
+ "shopper": {
+  "nr": 11,
+  "name": "Shopper",
+  "beschreibung": "Personalisierte Stofftasche mit Name Foto Haustier oder Statement",
+  "material": "Baumwolle / Polyester / Canvas",
+  "gruppe": "Textil",
+  "varianten": "ca. 38x42 cm / verschiedene Henkellängen",
+  "verfahren": "dtf",
+  "verfahrenAlternativ": [
+   "sublimation"
+  ],
+  "verfahrenRoh": "DTF oder Sublimation",
+  "motivart": "freistehend",
+  "personalisierung": [
+   "Foto",
+   "Name",
+   "Text",
+   "Grafik"
+  ],
+  "zielgruppe": [
+   "Damen",
+   "Familie",
+   "Schule",
+   "Beruf",
+   "Haustier"
+  ],
+  "flaechen": {
+   "30x30": {
+    "label": "30 x 30 cm (Druckfläche)",
+    "cm": [
+     30,
+     30
+    ]
+   }
+  },
+  "druckflaecheOffen": false,
+  "produzent": null,
+  "mindestmenge": null,
+  "hinweis": "23. Sept.: Druckflaeche auf 30 x 30 cm gesetzt - das ist bei Baumwollbeuteln (Beutel 38 x 42 cm) die uebliche bedruckbare Flaeche je Seite, Verfahren DTF (Sublimation nur auf weissem Polyester). Vorher stand die ganze Beutelflaeche drin, und ein Hochformat-Motiv sass klein und hoch darin."
+ },
+ "mousepad": {
+  "nr": 12,
+  "name": "XXL-Mousepad",
+  "beschreibung": "Großes personalisiertes Mousepad mit Foto Gamingmotiv Name oder Grafik",
+  "material": "Polyester-Oberfläche / Gummiunterseite",
+  "gruppe": "Buero und Gaming",
+  "varianten": "70x30 / 80x30 / 90x40 cm",
+  "verfahren": "sublimation",
+  "verfahrenAlternativ": [],
+  "verfahrenRoh": "Sublimation",
+  "motivart": "vollflaechig",
+  "personalisierung": [
+   "Foto",
+   "Grafik",
+   "Name",
+   "Text"
+  ],
+  "zielgruppe": [
+   "Gaming",
+   "Büro",
+   "Jugendliche"
+  ],
+  "flaechen": {
+   "70x30": {
+    "label": "70 x 30 cm",
+    "cm": [
+     70,
+     30
+    ]
+   },
+   "80x30": {
+    "label": "80 x 30 cm",
+    "cm": [
+     80,
+     30
+    ]
+   },
+   "90x40": {
+    "label": "90 x 40 cm",
+    "cm": [
+     90,
+     40
+    ]
+   }
+  },
+  "druckflaecheOffen": false,
+  "produzent": null,
+  "mindestmenge": null,
+  "hinweis": ""
+ },
+ "hundedecke": {
+  "nr": 13,
+  "name": "Hundedecke",
+  "beschreibung": "Personalisierte Decke mit Hundebild Name Pfotenmotiv oder Familienmotiv",
+  "material": "Polyester / Fleece",
+  "gruppe": "Haustier",
+  "varianten": "70x50 / 100x70 / 150x100 cm",
+  "verfahren": "sublimation",
+  "verfahrenAlternativ": [],
+  "verfahrenRoh": "Sublimation",
+  "motivart": "vollflaechig",
+  "personalisierung": [
+   "Foto",
+   "Hund",
+   "Name",
+   "Text",
+   "Grafik"
+  ],
+  "zielgruppe": [
+   "Hundebesitzer",
+   "Haustierliebhaber"
+  ],
+  "flaechen": {
+   "70x50": {
+    "label": "70 x 50 cm",
+    "cm": [
+     70,
+     50
+    ]
+   },
+   "100x70": {
+    "label": "100 x 70 cm",
+    "cm": [
+     100,
+     70
+    ]
+   },
+   "150x100": {
+    "label": "150 x 100 cm",
+    "cm": [
+     150,
+     100
+    ]
+   }
+  },
+  "druckflaecheOffen": false,
+  "produzent": null,
+  "mindestmenge": null,
+  "hinweis": ""
+ },
+ "acrylbild": {
+  "nr": 14,
+  "name": "Acrylbild",
+  "beschreibung": "Hochwertiger Fotoaufsteller oder Acrylbild mit Foto Haustier Paar Familie oder Motiv",
+  "material": "Acrylglas",
+  "gruppe": "Wohnen",
+  "varianten": "A4 / A3 / 20x20 / 30x40 cm",
+  "verfahren": "uv",
+  "verfahrenAlternativ": [],
+  "verfahrenRoh": "UV",
+  "motivart": "vollflaechig",
+  "personalisierung": [
+   "Foto",
+   "Grafik",
+   "Text",
+   "Name"
+  ],
+  "zielgruppe": [
+   "Familie",
+   "Paare",
+   "Haustier",
+   "Hochzeit",
+   "Erinnerung"
+  ],
+  "flaechen": {
+   "a4": {
+    "label": "A4 (21 x 29,7 cm)",
+    "cm": [
+     21,
+     29.7
+    ]
+   },
+   "a3": {
+    "label": "A3 (29,7 x 42 cm)",
+    "cm": [
+     29.7,
+     42
+    ]
+   },
+   "20x20": {
+    "label": "20 x 20 cm",
+    "cm": [
+     20,
+     20
+    ]
+   },
+   "30x40": {
+    "label": "30 x 40 cm",
+    "cm": [
+     30,
+     40
+    ]
+   }
+  },
+  "druckflaecheOffen": false,
+  "produzent": null,
+  "mindestmenge": null,
+  "hinweis": ""
+ },
+ "tuerschild": {
+  "nr": 15,
+  "name": "Türschild",
+  "beschreibung": "Personalisiertes Haus- oder Wohnungsschild mit Familienname Hausnummer Hund oder Spruch",
+  "material": "Acryl / Aluminium / Holz",
+  "gruppe": "Wohnen",
+  "varianten": "ca. 20x30 / 30x40 / 30x50 cm",
+  "verfahren": "uv",
+  "verfahrenAlternativ": [],
+  "verfahrenRoh": "UV",
+  "motivart": "vollflaechig",
+  "personalisierung": [
+   "Name",
+   "Hausnummer",
+   "Text",
+   "Grafik"
+  ],
+  "zielgruppe": [
+   "Familien",
+   "Hauseigentümer",
+   "Mieter",
+   "Hundebesitzer"
+  ],
+  "flaechen": {
+   "20x30": {
+    "label": "20 x 30 cm",
+    "cm": [
+     20,
+     30
+    ]
+   },
+   "30x40": {
+    "label": "30 x 40 cm",
+    "cm": [
+     30,
+     40
+    ]
+   },
+   "30x50": {
+    "label": "30 x 50 cm",
+    "cm": [
+     30,
+     50
+    ]
+   }
+  },
+  "druckflaecheOffen": false,
+  "produzent": null,
+  "mindestmenge": null,
+  "hinweis": ""
+ },
+ "schuerze": {
+  "nr": 16,
+  "name": "Schürze",
+  "beschreibung": "Personalisierte Koch- oder Grillschürze mit Name Foto Spruch oder Motiv",
+  "material": "Polyester / Baumwolle / Baumwollmix",
+  "gruppe": "Textil",
+  "varianten": "Einheitsgröße / Damen / Herren / Kinder",
+  "verfahren": "dtf",
+  "verfahrenAlternativ": [
+   "sublimation"
+  ],
+  "verfahrenRoh": "DTF oder Sublimation",
+  "motivart": "freistehend",
+  "personalisierung": [
+   "Name",
+   "Text",
+   "Grafik",
+   "Foto"
+  ],
+  "zielgruppe": [
+   "Köche",
+   "Grillfans",
+   "Familie",
+   "Papa",
+   "Mama"
+  ],
+  "flaechen": {},
+  "druckflaecheOffen": true,
+  "produzent": null,
+  "mindestmenge": null,
+  "hinweis": ""
+ },
+ "handtuch": {
+  "nr": 17,
+  "name": "Handtuch",
+  "beschreibung": "Personalisiertes Hand- oder Duschtuch mit Name Foto Sportmotiv oder Verein",
+  "material": "Polyester / Baumwolle oder sublimationsfähiges Material",
+  "gruppe": "Bad und Strand",
+  "varianten": "50x100 / 70x140 cm / Sport 80x40 cm",
+  "verfahren": "sublimation",
+  "verfahrenAlternativ": [
+   "dtf"
+  ],
+  "verfahrenRoh": "Sublimation oder DTF",
+  "motivart": "vollflaechig",
+  "personalisierung": [
+   "Name",
+   "Foto",
+   "Text",
+   "Logo",
+   "Motiv"
+  ],
+  "zielgruppe": [
+   "Sport",
+   "Familie",
+   "Wellness",
+   "Vereine"
+  ],
+  "flaechen": {
+   "50x100": {
+    "label": "50 x 100 cm",
+    "cm": [
+     50,
+     100
+    ]
+   },
+   "70x140": {
+    "label": "70 x 140 cm",
+    "cm": [
+     70,
+     140
+    ]
+   },
+   "80x40": {
+    "label": "80 x 40 cm",
+    "cm": [
+     80,
+     40
+    ]
+   }
+  },
+  "druckflaecheOffen": false,
+  "produzent": null,
+  "mindestmenge": null,
+  "hinweis": ""
+ },
+ "strandtuch": {
+  "nr": 18,
+  "name": "Strandtuch",
+  "beschreibung": "Großes personalisiertes Strandtuch mit Foto Name Urlaubsmotiv oder Familienmotiv",
+  "material": "Polyester / Mikrofaser",
+  "gruppe": "Bad und Strand",
+  "varianten": "70x140 / 100x180 cm",
+  "verfahren": "sublimation",
+  "verfahrenAlternativ": [],
+  "verfahrenRoh": "Sublimation",
+  "motivart": "vollflaechig",
+  "personalisierung": [
+   "Foto",
+   "Name",
+   "Text",
+   "Grafik"
+  ],
+  "zielgruppe": [
+   "Urlaub",
+   "Familie",
+   "Strand",
+   "Sport"
+  ],
+  "flaechen": {
+   "70x140": {
+    "label": "70 x 140 cm",
+    "cm": [
+     70,
+     140
+    ]
+   },
+   "100x180": {
+    "label": "100 x 180 cm",
+    "cm": [
+     100,
+     180
+    ]
+   }
+  },
+  "druckflaecheOffen": false,
+  "produzent": null,
+  "mindestmenge": null,
+  "hinweis": ""
+ },
+ "fussmatte": {
+  "nr": 19,
+  "name": "Fußmatte",
+  "beschreibung": "Personalisierte Fußmatte mit Familienname Spruch Hund oder Willkommen-Motiv",
+  "material": "Polyester-Oberfläche / Gummiunterseite",
+  "gruppe": "Wohnen",
+  "varianten": "60x40 / 80x50 / 90x60 cm",
+  "verfahren": "sublimation",
+  "verfahrenAlternativ": [],
+  "verfahrenRoh": "Sublimation",
+  "motivart": "vollflaechig",
+  "personalisierung": [
+   "Name",
+   "Text",
+   "Foto",
+   "Grafik"
+  ],
+  "zielgruppe": [
+   "Familien",
+   "Haustier",
+   "Haus",
+   "Einzug"
+  ],
+  "flaechen": {
+   "60x40": {
+    "label": "60 x 40 cm",
+    "cm": [
+     60,
+     40
+    ]
+   },
+   "80x50": {
+    "label": "80 x 50 cm",
+    "cm": [
+     80,
+     50
+    ]
+   },
+   "90x60": {
+    "label": "90 x 60 cm",
+    "cm": [
+     90,
+     60
+    ]
+   }
+  },
+  "druckflaecheOffen": false,
+  "produzent": null,
+  "mindestmenge": null,
+  "hinweis": "22. Sept.: quer (Breite x Tiefe), so wie die Matte vor der Tür liegt."
+ },
+ "brett": {
+  "nr": 20,
+  "name": "Schneide- / Servierbrett",
+  "beschreibung": "Personalisiertes Küchenbrett mit Familienname Datum Spruch oder Grafik",
+  "material": "Bambus / Holz / Kunststoff / beschichtetes Material",
+  "gruppe": "Kueche",
+  "varianten": "ca. 40x30 / 30x20 cm",
+  "verfahren": "uv",
+  "verfahrenAlternativ": [],
+  "verfahrenRoh": "UV",
+  "motivart": "vollflaechig",
+  "personalisierung": [
+   "Name",
+   "Text",
+   "Datum",
+   "Grafik"
+  ],
+  "zielgruppe": [
+   "Familie",
+   "Hochzeit",
+   "Küche",
+   "Einzug"
+  ],
+  "flaechen": {
+   "40x30": {
+    "label": "40 x 30 cm",
+    "cm": [
+     40,
+     30
+    ]
+   },
+   "30x20": {
+    "label": "30 x 20 cm",
+    "cm": [
+     30,
+     20
+    ]
+   }
+  },
+  "druckflaecheOffen": false,
+  "produzent": null,
+  "mindestmenge": null,
+  "hinweis": "22. Sept.: 40x30 zuerst - das ist das Vorlagenmass.",
+  "ausserHandel": true,
+  "ausserHandelVermerk": "Markus, 1. Okt. 2026: \"das Schneidebrett nehmen wir komplett raus, ueberall.\" Eintrag bleibt fuer alte Designs lesbar."
+ },
+ "hundemarke": {
+  "nr": 21,
+  "name": "Hundemarke",
+  "beschreibung": "Personalisierte Hundemarke mit Name und Telefonnummer",
+  "material": "Aluminium / Edelstahl / Acryl",
+  "gruppe": "Haustier",
+  "varianten": "ca. 25-40 mm / rund Herz Knochen",
+  "verfahren": "uv",
+  "verfahrenAlternativ": [],
+  "verfahrenRoh": "UV",
+  "motivart": "vollflaechig",
+  "personalisierung": [
+   "Hundename",
+   "Telefonnummer",
+   "Motiv"
+  ],
+  "zielgruppe": [
+   "Hundebesitzer"
+  ],
+  "flaechen": {},
+  "druckflaecheOffen": true,
+  "produzent": null,
+  "mindestmenge": null,
+  "hinweis": ""
+ },
+ "futternapf": {
+  "nr": 22,
+  "name": "Futternapf",
+  "beschreibung": "Personalisierter Hundenapf mit Hundename Foto oder Motiv",
+  "material": "Edelstahl / Kunststoff / Keramik",
+  "gruppe": "Haustier",
+  "varianten": "ca. 500 / 750 / 1000 / 1500 ml",
+  "verfahren": "uv",
+  "verfahrenAlternativ": [],
+  "verfahrenRoh": "UV",
+  "motivart": "freistehend",
+  "personalisierung": [
+   "Hundename",
+   "Grafik",
+   "Foto"
+  ],
+  "zielgruppe": [
+   "Hundebesitzer",
+   "Haustier"
+  ],
+  "flaechen": {},
+  "druckflaecheOffen": true,
+  "produzent": null,
+  "mindestmenge": null,
+  "hinweis": ""
+ },
+ "napfunterlage": {
+  "nr": 23,
+  "name": "Napfunterlage",
+  "beschreibung": "Personalisierte Unterlage für Futter- und Wassernapf",
+  "material": "PVC / Silikon / beschichtetes Polyester",
+  "gruppe": "Haustier",
+  "varianten": "ca. 40x30 / 50x35 / 60x40 cm",
+  "verfahren": "uv",
+  "verfahrenAlternativ": [
+   "dtf"
+  ],
+  "verfahrenRoh": "UV oder DTF je nach Material",
+  "motivart": "vollflaechig",
+  "personalisierung": [
+   "Hundename",
+   "Foto",
+   "Pfotenmotiv",
+   "Grafik"
+  ],
+  "zielgruppe": [
+   "Hundebesitzer"
+  ],
+  "flaechen": {
+   "40x30": {
+    "label": "40 x 30 cm",
+    "cm": [
+     40,
+     30
+    ]
+   },
+   "50x35": {
+    "label": "50 x 35 cm",
+    "cm": [
+     50,
+     35
+    ]
+   },
+   "60x40": {
+    "label": "60 x 40 cm",
+    "cm": [
+     60,
+     40
+    ]
+   }
+  },
+  "druckflaecheOffen": false,
+  "produzent": null,
+  "mindestmenge": null,
+  "hinweis": ""
+ },
+ "puzzle": {
+  "nr": 24,
+  "name": "Puzzle",
+  "beschreibung": "Fotopuzzle mit Familienfoto Paarfoto Haustier oder persönlichem Motiv",
+  "material": "Beschichtete Puzzlepappe",
+  "gruppe": "Geschenk",
+  "varianten": "120 / 300 / 500 / 1000 Teile",
+  "verfahren": "sublimation",
+  "verfahrenAlternativ": [],
+  "verfahrenRoh": "Sublimation",
+  "motivart": "vollflaechig",
+  "personalisierung": [
+   "Foto",
+   "Grafik",
+   "Text"
+  ],
+  "zielgruppe": [
+   "Familie",
+   "Paare",
+   "Kinder",
+   "Freunde"
+  ],
+  "flaechen": {},
+  "druckflaecheOffen": true,
+  "produzent": null,
+  "mindestmenge": null,
+  "hinweis": ""
+ },
+ "untersetzer": {
+  "nr": 25,
+  "name": "Untersetzer-Set",
+  "beschreibung": "Personalisierte Untersetzer mit Foto Name Familienmotiv oder Spruch",
+  "material": "MDF / Hartfaser / Aluminium / Kork mit Druckfläche",
+  "gruppe": "Kueche",
+  "varianten": "4er / 6er / 8er Set",
+  "verfahren": "sublimation",
+  "verfahrenAlternativ": [
+   "uv"
+  ],
+  "verfahrenRoh": "Sublimation oder UV",
+  "motivart": "vollflaechig",
+  "personalisierung": [
+   "Foto",
+   "Name",
+   "Text",
+   "Grafik"
+  ],
+  "zielgruppe": [
+   "Familie",
+   "Paare",
+   "Gastronomie",
+   "Büro"
+  ],
+  "flaechen": {},
+  "druckflaecheOffen": true,
+  "produzent": null,
+  "mindestmenge": null,
+  "hinweis": ""
+ },
+ "magnet": {
+  "nr": 26,
+  "name": "Acryl-Magnet",
+  "beschreibung": "Personalisierter Kühlschrankmagnet mit Foto Name Haustier oder Motiv",
+  "material": "Acryl",
+  "gruppe": "Wohnen",
+  "varianten": "ca. 5-10 cm / verschiedene Formen",
+  "verfahren": "uv",
+  "verfahrenAlternativ": [],
+  "verfahrenRoh": "UV",
+  "motivart": "vollflaechig",
+  "personalisierung": [
+   "Foto",
+   "Name",
+   "Text",
+   "Grafik"
+  ],
+  "zielgruppe": [
+   "Familie",
+   "Haustier",
+   "Paare",
+   "Souvenir"
+  ],
+  "flaechen": {},
+  "druckflaecheOffen": true,
+  "produzent": null,
+  "mindestmenge": null,
+  "hinweis": ""
+ },
+ "gepaeckanhaenger": {
+  "nr": 27,
+  "name": "Gepäckanhänger",
+  "beschreibung": "Personalisierter Koffer- und Gepäckanhänger mit Name Foto oder Motiv",
+  "material": "Acryl / Kunststoff / PU-Leder",
+  "gruppe": "Geschenk",
+  "varianten": "ca. 7x10 cm",
+  "verfahren": "uv",
+  "verfahrenAlternativ": [
+   "dtf"
+  ],
+  "verfahrenRoh": "UV oder DTF",
+  "motivart": "vollflaechig",
+  "personalisierung": [
+   "Name",
+   "Foto",
+   "Telefonnummer",
+   "Motiv"
+  ],
+  "zielgruppe": [
+   "Reisende",
+   "Familien",
+   "Paare"
+  ],
+  "flaechen": {
+   "7x10": {
+    "label": "7 x 10 cm",
+    "cm": [
+     7,
+     10
+    ]
+   }
+  },
+  "druckflaecheOffen": false,
+  "produzent": null,
+  "mindestmenge": null,
+  "hinweis": ""
+ },
+ "weihnachtsanhaenger": {
+  "nr": 28,
+  "name": "Weihnachtsanhänger",
+  "beschreibung": "Personalisierter Weihnachtsbaumanhänger mit Name Foto Datum oder Familienmotiv",
+  "material": "Acryl / Holz / MDF / Aluminium",
+  "gruppe": "Geschenk",
+  "varianten": "ca. 7-10 cm / verschiedene Formen",
+  "verfahren": "uv",
+  "verfahrenAlternativ": [
+   "sublimation"
+  ],
+  "verfahrenRoh": "UV oder Sublimation",
+  "motivart": "vollflaechig",
+  "personalisierung": [
+   "Name",
+   "Foto",
+   "Jahr",
+   "Text",
+   "Grafik"
+  ],
+  "zielgruppe": [
+   "Familie",
+   "Weihnachten",
+   "Paare",
+   "Kinder"
+  ],
+  "flaechen": {},
+  "druckflaecheOffen": true,
+  "produzent": null,
+  "mindestmenge": null,
+  "hinweis": ""
+ },
+ "bandana": {
+  "nr": 29,
+  "name": "Hundebandana",
+  "beschreibung": "Personalisierbares Hundehalstuch mit Name Foto oder Pfotenmotiv",
+  "material": "Polyester / Baumwolle",
+  "gruppe": "Haustier",
+  "varianten": "S / M / L / XL",
+  "verfahren": "dtf",
+  "verfahrenAlternativ": [
+   "sublimation"
+  ],
+  "verfahrenRoh": "DTF oder Sublimation",
+  "motivart": "vollflaechig",
+  "personalisierung": [
+   "Hundename",
+   "Foto",
+   "Text",
+   "Grafik"
+  ],
+  "zielgruppe": [
+   "Hundebesitzer"
+  ],
+  "flaechen": {},
+  "druckflaecheOffen": true,
+  "produzent": null,
+  "mindestmenge": null,
+  "hinweis": ""
+ },
+ "geschenkschild": {
+  "nr": 30,
+  "name": "Acryl- / Holz-Geschenkschild",
+  "beschreibung": "Kleines personalisiertes Schild für Geschenkboxen Blumen Hochzeit Geburt Geburtstag oder Weihnachten",
+  "material": "Acryl / MDF / Holz",
+  "gruppe": "Geschenk",
+  "varianten": "ca. 10-30 cm / verschiedene Formen",
+  "verfahren": "uv",
+  "verfahrenAlternativ": [],
+  "verfahrenRoh": "UV",
+  "motivart": "vollflaechig",
+  "personalisierung": [
+   "Name",
+   "Datum",
+   "Text",
+   "Grafik",
+   "Foto"
+  ],
+  "zielgruppe": [
+   "Hochzeit",
+   "Geburt",
+   "Geburtstag",
+   "Weihnachten",
+   "Familie"
+  ],
+  "flaechen": {},
+  "druckflaecheOffen": true,
+  "produzent": null,
+  "mindestmenge": null,
+  "hinweis": ""
+ },
+ "poster": {
+  "nr": 32,
+  "name": "Poster",
+  "beschreibung": "Personalisiertes Poster mit Namen, Datum, Spruch oder Motiv - zur Geburt, Hochzeit, fuer Fans und Familie",
+  "material": "Posterpapier 200 g, matt",
+  "gruppe": "Wohnen",
+  "varianten": "A3 / A2",
+  "verfahren": "digitaldruck",
+  "verfahrenAlternativ": [],
+  "verfahrenRoh": "Digitaldruck",
+  "motivart": "vollflaechig",
+  "personalisierung": [
+   "Name",
+   "Text",
+   "Foto",
+   "Grafik"
+  ],
+  "zielgruppe": [
+   "Familie",
+   "Paare",
+   "Kinder",
+   "Fans"
+  ],
+  "flaechen": {
+   "a3": {
+    "label": "A3 (29,7 x 42 cm)",
+    "cm": [
+     29.7,
+     42
+    ]
+   },
+   "a2": {
+    "label": "A2 (42 x 59,4 cm)",
+    "cm": [
+     42,
+     59.4
+    ]
+   }
+  },
+  "druckflaecheOffen": false,
+  "produzent": null,
+  "mindestmenge": null,
+  "hinweis": "22. Sept.: Katalogeintrag nachgezogen - Poster wird seit Fassung 85 gezeigt und verkauft (mockups.js GARMENTS)."
+ },
+ "sticker": {
+  "nr": 33,
+  "name": "Sticker",
+  "beschreibung": "Wasserfester, konturgeschnittener Aufkleber mit Name oder Motiv - fuer Brotdose, Flasche, Laptop",
+  "material": "Vinyl, wasserfest",
+  "gruppe": "Geschenk",
+  "varianten": "ca. 8x8 / 10x10 cm",
+  "verfahren": "digitaldruck",
+  "verfahrenAlternativ": [],
+  "verfahrenRoh": "Digitaldruck, konturgeschnitten",
+  "motivart": "freistehend",
+  "personalisierung": [
+   "Name",
+   "Text",
+   "Grafik"
+  ],
+  "zielgruppe": [
+   "Kinder",
+   "Jugendliche",
+   "Familie"
+  ],
+  "flaechen": {
+   "10x10": {
+    "label": "10 x 10 cm",
+    "cm": [
+     10,
+     10
+    ]
+   },
+   "8x8": {
+    "label": "8 x 8 cm",
+    "cm": [
+     8,
+     8
+    ]
+   }
+  },
+  "druckflaecheOffen": false,
+  "produzent": null,
+  "mindestmenge": null,
+  "hinweis": "22. Sept.: Katalogeintrag nachgezogen - Sticker wird seit Fassung 85 gezeigt und verkauft (mockups.js GARMENTS)."
+ },
+ "brotdose": {
+  "nr": 34,
+  "name": "Brotdose",
+  "beschreibung": "Brotdose mit vollflaechig bedrucktem Deckel - Name, Tier oder Motiv fuer Kita, Schule und unterwegs",
+  "material": "Kunststoff, BPA-frei, spuelmaschinenfest",
+  "gruppe": "Kueche",
+  "varianten": "Deckel 18,5 x 12 cm (Bento, ca. 900 ml)",
+  "verfahren": "uv",
+  "verfahrenAlternativ": [
+   "sublimation"
+  ],
+  "verfahrenRoh": "UV oder Sublimation je nach Rohling",
+  "motivart": "vollflaechig",
+  "personalisierung": [
+   "Name",
+   "Text",
+   "Foto",
+   "Grafik"
+  ],
+  "zielgruppe": [
+   "Kinder",
+   "Schule",
+   "Kita",
+   "Familie"
+  ],
+  "flaechen": {
+   "18.5x12": {
+    "label": "18,5 x 12 cm",
+    "cm": [
+     18.5,
+     12
+    ]
+   }
+  },
+  "druckflaecheOffen": false,
+  "produzent": null,
+  "mindestmenge": null,
+  "hinweis": "22. Sept., Markus: der ganze Deckel wird bedruckt - das koennen die anderen nicht."
+ },
+ "grillschuerze": {
+  "nr": 35,
+  "name": "Grillschürze",
+  "beschreibung": "Personalisierte Grillschürze mit Name, Spruch oder Grillmeister-Motiv",
+  "material": "Baumwoll-Canvas",
+  "gruppe": "Textil",
+  "varianten": "ca. 70 x 85 cm, schwarz oder Natur",
+  "verfahren": "dtf",
+  "verfahrenAlternativ": [],
+  "verfahrenRoh": "DTF",
+  "motivart": "freistehend",
+  "personalisierung": [
+   "Name",
+   "Text",
+   "Grafik",
+   "Foto"
+  ],
+  "zielgruppe": [
+   "Grillfans",
+   "Vatertag",
+   "Geburtstag",
+   "Familie"
+  ],
+  "flaechen": {
+   "25x25": {
+    "label": "25 x 25 cm (Druckfläche)",
+    "cm": [
+     25,
+     25
+    ]
+   }
+  },
+  "druckflaecheOffen": false,
+  "produzent": null,
+  "mindestmenge": null,
+  "hinweis": "8. Okt.: neu auf Markus' Wort. Druckflaeche 25 x 25 cm wie bei Drucksaal (Grillschuerze), DTF auf Baumwoll-Canvas, Brust mittig."
+ }
+}

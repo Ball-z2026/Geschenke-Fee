@@ -1,0 +1,67 @@
+/* partner.css - Partner finden, Partner werden, Partnerbereich (2. Okt. 2026).
+   Baut auf marke.css auf (Logo-Farben, Schriften, Kopf, Knopf). Hier steht nur, was diese
+   drei Seiten zusaetzlich brauchen: Karten, Formular, Kachelraster. */
+*{box-sizing:border-box}
+body.p-seite{margin:0;background:var(--papier);color:var(--tinte);font:400 17px/1.5 var(--text)}
+.p-wrap{max-width:980px;margin:0 auto;padding:22px 16px 60px}
+.p-held{padding:26px 0 8px}
+.p-held h1{font:400 clamp(36px,8vw,64px)/1 var(--display);margin:0 0 10px;letter-spacing:.005em}
+.p-held h1 em{font-style:normal;color:var(--magenta)}
+.p-held p{margin:0;max-width:640px;color:var(--text2);font-size:18px}
+.p-aktionen{display:flex;flex-wrap:wrap;gap:12px;margin:18px 0 0}
+.p-karte{background:#fff;border:var(--kontur);border-radius:18px;box-shadow:var(--stempel);padding:18px}
+.p-karte + .p-karte{margin-top:18px}
+.p-karte h2{font:400 28px/1.05 var(--display);margin:0 0 6px}
+.p-karte .unter{margin:0 0 14px;color:var(--text3);font-size:15px}
+.p-feld{display:flex;flex-direction:column;gap:6px;margin:0 0 14px}
+.p-feld label,.p-label{font-weight:800;font-size:15px}
+.p-feld .hinweis{font-size:13px;color:var(--text3)}
+.p-feld input[type=text],.p-feld input[type=email],.p-feld input[type=url],.p-feld textarea,.p-feld select{
+  font:400 16px/1.4 var(--text);padding:12px 13px;border:2px solid var(--tinte);border-radius:12px;background:#fff;color:var(--tinte);width:100%;min-height:48px}
+.p-feld textarea{min-height:88px;resize:vertical}
+.p-zwei{display:grid;gap:0 12px}
+@media(min-width:620px){.p-zwei{grid-template-columns:1fr 1fr}}
+.p-haken{display:flex;gap:10px;align-items:flex-start;font-size:15px;margin:6px 0 14px}
+.p-haken input{width:22px;height:22px;flex:none;margin-top:2px;accent-color:var(--gruen)}
+.p-wahl{display:flex;flex-wrap:wrap;gap:8px}
+.p-wahl label{display:inline-flex;align-items:center;gap:8px;border:2px solid var(--tinte);border-radius:999px;padding:8px 14px;background:#fff;font-weight:700;font-size:15px;cursor:pointer;min-height:44px}
+.p-wahl input{accent-color:var(--gruen);width:18px;height:18px}
+.p-wahl label:has(input:checked){background:var(--gruen)}
+.p-raster{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(min-width:620px){.p-raster{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:900px){.p-raster.vier{grid-template-columns:repeat(4,1fr)}}
+.p-kachel{display:flex;flex-direction:column;background:#fff;border:2px solid var(--tinte);border-radius:14px;overflow:hidden;text-decoration:none;color:var(--tinte);cursor:pointer;position:relative}
+.p-kachel img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:var(--hemd)}
+.p-kachel .name{padding:9px 11px 2px;font-weight:800}
+.p-kachel .zeile{padding:0 11px 10px;color:var(--text3);font-size:14px}
+.p-kachel input{position:absolute;top:10px;left:10px;width:24px;height:24px;accent-color:var(--gruen)}
+.p-kachel:has(input:checked){box-shadow:0 0 0 4px var(--gruen)}
+.p-partner{display:flex;gap:14px;align-items:center;background:#fff;border:2px solid var(--tinte);border-radius:16px;padding:12px;text-decoration:none;color:var(--tinte)}
+.p-partner:hover{box-shadow:var(--stempel)}
+.p-partner .lg{width:84px;height:64px;flex:none;border-radius:10px;display:flex;align-items:center;justify-content:center;background:var(--papier)}
+.p-partner .lg img{max-width:76px;max-height:56px;object-fit:contain}
+.p-partner b{display:block;font-size:18px}
+.p-partner span{color:var(--text3);font-size:14px}
+.p-liste{display:grid;gap:10px}
+@media(min-width:720px){.p-liste{grid-template-columns:1fr 1fr}}
+.p-suche{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0 14px}
+.p-suche input{flex:1;min-width:220px;font:400 17px/1.4 var(--text);padding:12px 14px;border:var(--kontur);border-radius:999px;min-height:48px}
+.p-meldung{padding:12px 14px;border-radius:12px;font-weight:700;margin:12px 0}
+.p-meldung.gut{background:#E8F6D4;color:var(--ok-text)}
+.p-meldung.schlecht{background:#FDE7E4;color:var(--warn-text)}
+.p-logo-vorschau{width:100%;max-width:280px;height:140px;border:2px dashed var(--tinte);border-radius:14px;display:flex;align-items:center;justify-content:center;background:repeating-conic-gradient(#eee 0 25%,#fff 0 50%) 0/18px 18px}
+.p-logo-vorschau img{max-width:90%;max-height:120px;object-fit:contain}
+.p-schritte{counter-reset:s;list-style:none;padding:0;margin:14px 0 0;display:grid;gap:10px}
+.p-schritte li{counter-increment:s;display:flex;gap:12px;align-items:flex-start}
+.p-schritte li::before{content:counter(s);flex:none;width:32px;height:32px;border-radius:50%;background:var(--gruen);border:2px solid var(--tinte);font-weight:900;display:flex;align-items:center;justify-content:center}
+.hide{display:none!important}
+.p-klein{font-size:14px;color:var(--text3)}
+
+/* 2. Okt.: "personalisiertes Merch" herausgehoben - Tinte als Grund, Papier als Schrift, Gruen als Marke (Tinte darauf) */
+.p-merch{margin:18px 0;padding:20px 20px 16px;background:var(--tinte);color:var(--papier);border-radius:18px}
+.p-merch-marke{display:inline-block;background:var(--gruen);color:var(--tinte);font-weight:800;font-size:14px;padding:4px 10px;border-radius:999px}
+.p-merch h2{font:400 clamp(30px,7vw,46px)/1.05 var(--display);margin:10px 0 8px;color:var(--papier)}
+.p-merch p{margin:0 0 10px;font-size:17px;line-height:1.45}
+.p-merch ul{margin:0;padding:0;list-style:none;display:grid;gap:6px}
+.p-merch li{font-size:16px;line-height:1.4;padding-left:22px;position:relative}
+.p-merch li::before{content:"";position:absolute;left:2px;top:.5em;width:10px;height:10px;border-radius:50%;background:var(--gruen)}

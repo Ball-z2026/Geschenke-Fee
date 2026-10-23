@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deine Bestellung – Motto Otto</title>
+<meta name="robots" content="noindex">
+<!-- 6. Okt. (Markus: "ja alles machen"): nach der Shopify-Kasse fehlte der Weg zurueck. Hier sieht der
+     Kunde, ob seine Bestellung angekommen ist - die Nummer (kas_...) steht nur in seinem Browser und in
+     der Adresse. Noch nicht bezahlt: derselbe Kassen-Link wie vorher. -->
+<link rel="preload" href="/fonts/archivo-v1.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/anton-v1.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/marke.css">
+<link rel="icon" href="/favicon-64.png" type="image/png">
+<style>
+@font-face{font-family:"Archivo";src:url("/fonts/archivo-v1.woff2") format("woff2");font-weight:400 900;font-style:normal;font-display:swap}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Archivo",ui-sans-serif,system-ui,sans-serif;font-size:16px;line-height:1.55}
+.wrap{max-width:640px;margin:0 auto;padding:28px 16px 80px}
+h1{font-size:40px;margin:0 0 6px}
+.lead{margin:0 0 18px;color:var(--text2)}
+.card{background:#fff;border:2px solid var(--tinte);border-radius:14px;padding:16px}
+.z{display:flex;justify-content:space-between;gap:12px;padding:5px 0;border-bottom:1px solid #eee5d6}
+.z:last-child{border-bottom:0}
+.z b{font-variant-numeric:tabular-nums;white-space:nowrap}
+.z.gesamt{font-size:18px;font-weight:800;border-top:2px solid var(--tinte);margin-top:6px;padding-top:9px}
+.z.gesamt b{color:var(--beere);font-size:22px}
+.marke{display:inline-block;font-weight:800;border:2px solid var(--tinte);border-radius:999px;padding:4px 12px;margin-bottom:12px}
+.marke.ok{background:var(--gruen)}
+.marke.offen{background:var(--haut)}
+.knoepfe{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.hide{display:none}
+footer.site{margin:40px 0 0;font-size:13px;border-top:var(--kontur);padding-top:16px;color:var(--text2)}
+footer.site a{color:inherit}
+</style>
+</head>
+<body class="mo-seite">
+<header class="mo-kopf"><div class="mo-in">
+  <a class="mo-marke" href="/"><img src="/logo.png" alt="" width="36" height="42">Motto Otto</a>
+  <nav class="mo-nav" aria-label="Hauptmenü">
+    <a href="/mottos">Mottos</a>
+    <a href="/so-gehts">So geht’s</a>
+    <a href="/firma">Firmen</a>
+    <a href="/partner">Partner</a>
+    <a href="/event">Event</a>
+  </nav>
+  <a class="mo-knopf hell mo-konto" href="/konto">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8.5" r="4"/><path d="M4 21c1.4-4 4.4-6 8-6s6.6 2 8 6"/></svg>
+    Konto
+  </a>
+</div></header>
+<div class="wrap">
+  <h1 id="titel">Deine Bestellung</h1>
+  <p class="lead" id="lead">Einen Moment …</p>
+  <div class="card hide" id="karte">
+    <span class="marke" id="marke"></span>
+    <div id="zeilen"></div>
+    <div class="knoepfe">
+      <a class="mo-knopf hide" id="zahlen" href="#">Jetzt bezahlen</a>
+      <a class="mo-knopf hell" id="mehr" href="/mottos">Noch ein Design machen</a>
+    </div>
+  </div>
+  <footer class="site">Motto Otto · Jedes Produkt wird auf Bestellung gefertigt und in Deutschland veredelt. · <a href="/impressum">Impressum</a> · <a href="/datenschutz">Datenschutz</a> · <a href="/agb">AGB</a> · <a href="/widerruf">Widerruf</a></footer>
+</div>
+<script>
+(function () {
+  var id = (location.pathname.split('/').pop() || '').replace(/[^a-z0-9_]/g, '');
+  var $ = function (x) { return document.getElementById(x); };
+  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var euro = function (v) { try { return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(v); } catch (e) { return (+v).toFixed(2).replace('.', ',') + ' €'; } };
+  var versuche = 0;
+  function laden() {
+    fetch('/api/mo/kasse/' + id, { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (k) {
+      if (!k) { $('lead').textContent = 'Diese Bestellung kennen wir nicht. Schau in die Bestätigung von der Kasse – oder schreib uns an otto@motto-otto.de.'; return; }
+      var bezahlt = k.status === 'bezahlt';
+      $('titel').textContent = bezahlt ? 'Danke – Otto legt los!' : 'Deine Bestellung';
+      $('lead').textContent = bezahlt
+        ? 'Deine Bestellung ' + (k.bestellung || '') + ' ist bei uns. Die Bestätigung mit Rechnung kommt per E-Mail. Wir drucken dein Design ' + k.designId + ' und schicken es dir.'
+        : 'Hier ist noch keine Zahlung angekommen. Wenn du gerade bezahlt hast, dauert es oft ein paar Sekunden, bis sie hier steht.';
+      $('marke').textContent = bezahlt ? '✓ Bezahlt' : 'Noch offen';
+      $('marke').className = 'marke ' + (bezahlt ? 'ok' : 'offen');
+      $('zeilen').innerHTML = (k.zeilen || []).map(function (z) {
+        var t = [z.label, z.groesse ? 'Größe ' + z.groesse : '', z.farbeName || '', z.name || ''].filter(Boolean).join(' · ');
+        return '<div class="z"><span>' + esc(z.menge + ' × ' + t) + '</span><b>' + esc(euro(z.summe)) + '</b></div>';
+      }).join('') +
+        '<div class="z"><span>Versand</span><b>' + (k.versand ? esc(euro(k.versand)) : 'frei') + '</b></div>' +
+        (k.verrechnet ? '<div class="z"><span>Bezahlte Entwürfe, verrechnet</span><b>− ' + esc(euro(k.verrechnet)) + '</b></div>' : '') +
+        '<div class="z gesamt"><span>Gesamt</span><b>' + esc(euro(k.gesamt)) + '</b></div>';
+      $('zahlen').classList.toggle('hide', bezahlt || !k.url);
+      if (k.url) $('zahlen').href = k.url;
+      $('karte').classList.remove('hide');
+      // Kommt der Kunde direkt von der Kasse, ist die Zahlung oft wenige Sekunden spaeter da.
+      if (!bezahlt && versuche++ < 6) setTimeout(laden, 5000);
+    }).catch(function () { $('lead').textContent = 'Gerade nicht erreichbar – bitte gleich noch einmal laden.'; });
+  }
+  laden();
+})();
+</script>
+</body>
+</html>

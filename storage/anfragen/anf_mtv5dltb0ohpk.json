@@ -1,0 +1,16 @@
+{
+  "id": "anf_mtv5dltb0ohpk",
+  "designId": "MO-TEST-001",
+  "motto": "abi",
+  "form": "textil",
+  "garment": "hoodie",
+  "menge": 3,
+  "email": "lena@example.de",
+  "name": "Lena",
+  "text": "Bis zum 20.06. bitte.",
+  "preisCent": 3490,
+  "personen": 3,
+  "aufteilung": "vorne",
+  "textile": "dunkel",
+  "created": "2026-09-10T06:29:42.191Z"
+}

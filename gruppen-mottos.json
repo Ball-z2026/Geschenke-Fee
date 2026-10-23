@@ -1,0 +1,8 @@
+{
+  "_hinweis": "Welche Mottos eine Abstimmung bekommen. Markus, 1. Okt.: 'Wenn jemand das T-Shirt fuer Opa macht, ist es nicht so sinnvoll, aber bei Firmenausflug, Malle-Fahrt, Kegel, Bowling, alles wo mehrere Menschen infrage kommen, macht das natuerlich Sinn.' Und: 'Geburtstag ist auch eher ein Einzelding.' Nur Mottos in 'gruppe' zeigen 'Zur Abstimmung schicken', und nur fuer sie legt der Server eine Abstimmung an. Neues Gruppen-Motto = Slug hier eintragen. Sprueche (allein) und Freestyle (Gruppe) sind gesetzt, ohne dass Markus sie ausdruecklich entschieden hat.",
+  "gruppe": [
+    "abi", "schulmotto", "abschlussfahrt", "junggesellenabschied", "malle-fahrt",
+    "firmenausflug", "weihnachtsfeier", "hochzeit", "kegeltour", "bowling", "darts",
+    "meister-shirt", "vereinsjubilaeum", "fanclub", "karneval", "handwerker-shirt", "freestyle"
+  ]
+}

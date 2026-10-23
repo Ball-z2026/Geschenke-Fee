@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Partnerbereich – Motto Otto</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/favicon-64.png" type="image/png">
+<link rel="preload" href="/fonts/archivo-v1.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/marke.css">
+<link rel="stylesheet" href="/partner.css">
+</head>
+<body class="p-seite">
+<header class="mo-kopf"><div class="mo-in">
+  <a class="mo-marke" href="/"><img src="/logo.png" alt="" width="36" height="42">Motto Otto</a>
+  <nav class="mo-nav" aria-label="Hauptmenü">
+    <a href="/mottos">Mottos</a>
+    <a href="/so-gehts">So geht’s</a>
+    <a href="/firma">Firmen</a>
+    <a href="/partner">Partner</a>
+    <a href="/event">Event</a>
+  </nav>
+  <a class="mo-knopf hell mo-konto" href="/partner/bereich" aria-current="page">Partnerbereich</a>
+</div></header>
+
+<main class="p-wrap">
+  <section class="p-held">
+    <h1>Dein <em>Shop</em></h1>
+    <p id="kopf-text">Hier stellst du ein, was es bei dir gibt und wie es aussieht.</p>
+  </section>
+
+  <!-- Nicht angemeldet -->
+  <section id="login" class="p-karte hide">
+    <h2>Anmelden</h2>
+    <p class="unter">Gib die E-Mail ein, mit der ihr Partner seid. Wir schicken dir einen Link.</p>
+    <div class="p-feld"><label for="login-email">E-Mail</label><input id="login-email" type="email" autocomplete="email"></div>
+    <button class="mo-knopf" id="login-senden" type="button">Link schicken</button>
+    <div id="login-meldung" class="p-meldung hide" role="status"></div>
+    <p class="p-klein" style="margin-top:14px">Noch kein Partner? <a href="/partner/werden">Jetzt Partner werden</a>.</p>
+  </section>
+
+  <!-- Angemeldet, aber kein Partner -->
+  <section id="keiner" class="p-karte hide">
+    <h2>Kein Shop gefunden</h2>
+    <p>Mit <b id="keiner-email"></b> ist noch kein Partner verbunden. <a href="/partner/werden">Jetzt Partner werden</a> oder bei uns melden, wenn euer Shop schon existiert.</p>
+  </section>
+
+  <div id="bereich" class="hide">
+    <div id="wahl-partner" class="p-feld hide"><label for="partner-wahl">Welcher Shop?</label><select id="partner-wahl"></select></div>
+    <div id="status-meldung" class="p-meldung hide" role="status"></div>
+
+    <section class="p-karte hide" id="vereinbarung-karte">
+      <h2>Partner- und Lizenzvereinbarung</h2>
+      <p class="unter">Einmal bestätigen, dann bekommst du für jeden verkauften Artikel mit deinem Logo deinen Anteil automatisch ausgezahlt.</p>
+      <label class="p-haken"><input id="vereinbarung" type="checkbox"> <span>Ich habe die <a href="/partner/vereinbarung" target="_blank" rel="noopener">Partner- und Lizenzvereinbarung</a> gelesen und stimme ihr zu.</span></label>
+      <button class="mo-knopf" id="vereinbarung-senden" type="button">Bestätigen</button>
+    </section>
+    <p class="p-klein" id="lizenz-zeile"></p>
+
+    <section class="p-karte">
+      <h2>Deine Seite</h2>
+      <p class="unter">Diese Seite öffnet der QR-Code. Sie öffnet sich auch, wenn jemand vor Ort deinen Standort antippt.</p>
+      <div class="p-aktionen" style="margin-top:0">
+        <a class="mo-knopf" id="tor-link" href="#" target="_blank" rel="noopener">Shop ansehen</a>
+        <a class="mo-knopf hell" id="qr-link" href="#" download>QR-Code laden</a>
+        <a class="mo-knopf hell" id="aufsteller-link" href="#" target="_blank" rel="noopener">Tischaufsteller drucken</a>
+      </div>
+    </section>
+
+    <section class="p-karte">
+      <h2>Name und Logo</h2>
+      <div class="p-zwei">
+        <div>
+          <div class="p-feld"><label for="anzeige">Name im Shop und auf den Artikeln</label><input id="anzeige" type="text" maxlength="60"></div>
+          <div class="p-feld"><label for="farbe">Hausfarbe</label><input id="farbe" type="color" style="width:90px;height:48px;border:2px solid var(--tinte);border-radius:12px;padding:3px">
+            <span class="hinweis">Rahmen und Knöpfe in deinem Shop. Nach einem neuen Logo wird sie neu gemessen.</span></div>
+          <div class="p-feld"><label for="webseite">Webseite</label><input id="webseite" type="url" maxlength="120"></div>
+        </div>
+        <div class="p-feld"><label class="p-label">Logo</label>
+          <div class="p-logo-vorschau" id="logo-vorschau"></div>
+          <input id="logo" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" style="margin-top:10px">
+          <span class="hinweis">Ein weißer Hintergrund wird automatisch entfernt. Das Logo kommt unverändert auf jedes Motiv.</span>
+        </div>
+      </div>
+      <div class="p-feld"><label class="p-label">Gastronomie?</label>
+        <div class="p-wahl"><label><input id="gastro" type="checkbox"> Ja, Gäste dürfen Sterne vergeben</label></div></div>
+      <div class="p-feld" id="f-kueche"><label for="kueche">Küche (Flagge auf dem Strandtuch)</label><select id="kueche"></select></div>
+    </section>
+
+    <section class="p-karte">
+      <h2>Was es bei dir gibt</h2>
+      <p class="unter">Abhaken, was deine Gäste oder Mitglieder kaufen können.</p>
+      <div id="teile" class="p-raster vier" style="margin-top:12px"></div>
+      <p class="p-klein hide" id="kein-shop">Für Artikel mit deinem Logo brauchen wir noch deine Zustimmung. Melde dich bei uns.</p>
+    </section>
+
+    <section class="p-karte">
+      <h2>Stile</h2>
+      <p class="unter">Wähle bis zu <span id="max-stile">3</span> Stile. Nur die sehen deine Gäste.</p>
+      <div id="stile" class="p-raster vier"></div>
+    </section>
+
+    <section class="p-karte" id="ds-karte">
+      <h2>Lieber machen lassen?</h2>
+      <p class="unter">Keine Zeit, oder es wird nicht so, wie du es dir vorstellst? Für 99 € zzgl. MwSt. machen wir dir alle Wunsch-Designs für deinen Shop fertig.</p>
+      <div id="ds-form">
+        <div class="p-feld"><label for="ds-wunsch">Was wünschst du dir?</label>
+          <textarea id="ds-wunsch" maxlength="2000" placeholder="z. B. Shirts mit unserem Pizzaofen und dem Spruch 'Seit 1985 in Jesteburg', dazu ein Poster im Stil unserer Speisekarte"></textarea></div>
+        <button class="mo-knopf" id="ds-senden" type="button">Für 99 € zzgl. MwSt. beauftragen</button>
+      </div>
+      <div id="ds-status" class="p-meldung hide" role="status"></div>
+    </section>
+
+    <div class="p-aktionen"><button class="mo-knopf" id="speichern" type="button">Speichern</button>
+      <button class="mo-knopf hell" id="abmelden" type="button">Abmelden</button></div>
+    <div id="speicher-meldung" class="p-meldung hide" role="status"></div>
+  </div>
+</main>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var daten = null, aktuell = null;
+  var KUECHE = { '': 'keine bestimmte', italian: 'Italienisch', greek: 'Griechisch', spanish: 'Spanisch', turkish: 'Türkisch', french: 'Französisch', german: 'Deutsch', croatian: 'Kroatisch', portuguese: 'Portugiesisch', mexican: 'Mexikanisch', chinese: 'Chinesisch', japanese: 'Japanisch', thai: 'Thailändisch', vietnamese: 'Vietnamesisch', indian: 'Indisch' };
+  function melde(el, t, gut) { var m = $(el); m.textContent = t; m.className = 'p-meldung ' + (gut ? 'gut' : 'schlecht'); }
+  function laden() {
+    fetch('/api/partner/ich', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (j) {
+      daten = j;
+      if (!j.angemeldet) { $('login').classList.remove('hide'); return; }
+      if (!j.partner.length) { $('keiner').classList.remove('hide'); $('keiner-email').textContent = j.email; return; }
+      $('bereich').classList.remove('hide');
+      $('partner-wahl').innerHTML = j.partner.map(function (p, i) { return '<option value="' + i + '">' + esc(p.name) + '</option>'; }).join('');
+      $('wahl-partner').classList.toggle('hide', j.partner.length < 2);
+      $('kueche').innerHTML = j.optionen.kuechen.map(function (k) { return '<option value="' + esc(k) + '">' + esc(KUECHE[k] || k) + '</option>'; }).join('');
+      $('max-stile').textContent = j.optionen.maxStile;
+      zeigen(j.partner[0]);
+    }).catch(function () { melde('status-meldung', 'Der Partnerbereich konnte nicht geladen werden.'); $('status-meldung').classList.remove('hide'); });
+  }
+  function zeigen(p) {
+    aktuell = p;
+    $('kopf-text').textContent = 'Hier stellst du ein, was es bei ' + p.name + ' gibt und wie es aussieht.';
+    var st = $('status-meldung');
+    if (p.status === 'aktiv') { st.className = 'p-meldung gut'; st.textContent = 'Dein Shop ist online: ' + location.origin + p.tor + (p.verortet ? '' : ' · Deine Anschrift konnten wir nicht genau finden. Der QR-Code funktioniert, der Standort noch nicht.'); }
+    else if (p.status === 'pruefen') { st.className = 'p-meldung schlecht'; st.textContent = 'Euer Name ähnelt einer geschützten Marke. Wir sehen uns das kurz an, dann geht euer Shop online.'; }
+    else if (p.status === 'aus') { st.className = 'p-meldung schlecht'; st.textContent = 'Dein Shop ist gerade ausgeschaltet.'; }
+    else { st.className = 'p-meldung schlecht'; st.textContent = 'Noch nicht bestätigt.'; }
+    $('vereinbarung-karte').classList.toggle('hide', !!p.vereinbarung);
+    var ds = p.designService, dsT = { offen: 'Die Zahlung ist noch nicht abgeschlossen.', bezahlt: 'Bezahlt, danke! Wir melden uns und machen deine Designs fertig.', angefragt: 'Angefragt, danke! Wir melden uns mit der Rechnung und machen deine Designs fertig.', erledigt: 'Deine Wunsch-Designs sind fertig.' };
+    $('ds-form').classList.toggle('hide', !!(ds && ds.status !== 'offen'));
+    if (ds && dsT[ds.status]) { $('ds-status').className = 'p-meldung ' + (ds.status === 'offen' ? 'schlecht' : 'gut'); $('ds-status').textContent = dsT[ds.status]; if (ds.wunsch && !$('ds-wunsch').value) $('ds-wunsch').value = ds.wunsch; }
+    else $('ds-status').className = 'p-meldung hide';
+    $('lizenz-zeile').innerHTML = p.lizenzProzent ? 'Deine Lizenz: ' + p.lizenzProzent + ' % vom Nettopreis jedes Artikels mit deinem Logo. <a href="/partner/vereinbarung" target="_blank" rel="noopener">Vereinbarung ansehen</a>' : '';
+    $('tor-link').href = p.tor; $('qr-link').href = p.qr; $('aufsteller-link').href = p.aufsteller;
+    $('anzeige').value = p.name; $('webseite').value = (p.webseite || '').replace(/^https?:\/\//, '');
+    $('farbe').value = /^#[0-9a-f]{6}$/i.test(p.farbe) ? p.farbe : '#C03A2B';
+    $('gastro').checked = !!p.gastro; $('kueche').value = p.kueche || ''; $('f-kueche').classList.toggle('hide', !p.gastro);
+    $('logo-vorschau').innerHTML = '<img alt="Dein Logo" src="' + esc(p.logo) + '">';
+    $('teile').innerHTML = daten.optionen.teile.map(function (t) {
+      return '<label class="p-kachel"><input type="checkbox" data-teil="' + esc(t.id) + '"' + (p.angebot.teile.indexOf(t.id) >= 0 ? ' checked' : '') + (p.shop ? '' : ' disabled') + '>'
+        + '<img alt="" loading="lazy" src="/api/mo/bei/' + esc(p.slug) + '/' + esc(t.id) + '.jpg" onerror="this.style.visibility=\'hidden\'">'
+        + '<span class="name">' + esc(t.name) + '</span><span class="zeile">ab ' + esc(t.preis) + '</span></label>';
+    }).join('');
+    $('kein-shop').classList.toggle('hide', !!p.shop);
+    $('stile').innerHTML = daten.optionen.stile.map(function (s) {
+      return '<label class="p-kachel"><input type="checkbox" data-stil="' + esc(s.id) + '"' + (p.stile.indexOf(s.id) >= 0 ? ' checked' : '') + '>'
+        + '<img alt="" loading="lazy" src="' + esc(s.kachel) + '"><span class="name">' + esc(s.label) + '</span></label>';
+    }).join('');
+  }
+  document.addEventListener('change', function (ev) {
+    var t = ev.target;
+    if (t.getAttribute && t.getAttribute('data-stil') !== null) {
+      var an = document.querySelectorAll('[data-stil]:checked');
+      if (an.length > daten.optionen.maxStile) { t.checked = false; melde('speicher-meldung', 'Höchstens ' + daten.optionen.maxStile + ' Stile.'); $('speicher-meldung').classList.remove('hide'); }
+    }
+    if (t.id === 'gastro') $('f-kueche').classList.toggle('hide', !t.checked);
+    if (t.id === 'partner-wahl') zeigen(daten.partner[+t.value]);
+  });
+  $('speichern').addEventListener('click', function () {
+    if (!aktuell) return;
+    var body = {
+      anzeige: $('anzeige').value, farbe: $('farbe').value, webseite: $('webseite').value, gastro: $('gastro').checked, kueche: $('kueche').value,
+      angebot: {
+        teile: Array.prototype.map.call(document.querySelectorAll('[data-teil]:checked'), function (x) { return x.getAttribute('data-teil'); }) },
+      stile: Array.prototype.map.call(document.querySelectorAll('[data-stil]:checked'), function (x) { return x.getAttribute('data-stil'); })
+    };
+    if (!body.stile.length) { melde('speicher-meldung', 'Bitte mindestens einen Stil wählen.'); $('speicher-meldung').classList.remove('hide'); return; }
+    $('speichern').disabled = true;
+    fetch('/api/partner/' + encodeURIComponent(aktuell.slug) + '/einstellungen', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (r) {
+        $('speichern').disabled = false;
+        if (!r.ok) { melde('speicher-meldung', r.j.error || 'Speichern hat nicht geklappt.'); $('speicher-meldung').classList.remove('hide'); return; }
+        var i = daten.partner.indexOf(aktuell); daten.partner[i] = r.j.partner; zeigen(r.j.partner);
+        melde('speicher-meldung', 'Gespeichert. Dein Shop zeigt es ab sofort.', true); $('speicher-meldung').classList.remove('hide');
+      }).catch(function () { $('speichern').disabled = false; melde('speicher-meldung', 'Keine Verbindung.'); $('speicher-meldung').classList.remove('hide'); });
+  });
+  $('logo').addEventListener('change', function () {
+    var f = this.files && this.files[0]; if (!f || !aktuell) return;
+    if (f.size > 6 * 1024 * 1024) { melde('speicher-meldung', 'Das Logo ist größer als 6 MB.'); $('speicher-meldung').classList.remove('hide'); return; }
+    var rd = new FileReader();
+    rd.onload = function () {
+      melde('speicher-meldung', 'Logo wird hochgeladen …', true); $('speicher-meldung').classList.remove('hide');
+      fetch('/api/partner/' + encodeURIComponent(aktuell.slug) + '/logo', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ logo: rd.result }) })
+        .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+        .then(function (r) {
+          if (!r.ok) { melde('speicher-meldung', r.j.error || 'Das Logo hat nicht geklappt.'); return; }
+          var i = daten.partner.indexOf(aktuell); daten.partner[i] = r.j.partner; zeigen(r.j.partner);
+          melde('speicher-meldung', 'Neues Logo ist drin.' + (r.j.freigestellt ? ' Den weißen Hintergrund haben wir entfernt.' : '') + ' Die Artikelbilder werden gerade neu gebaut.', true);
+        });
+    };
+    rd.readAsDataURL(f);
+  });
+  $('login-senden').addEventListener('click', function () {
+    var email = $('login-email').value;
+    fetch('/api/mo/login', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ email: email, next: '/partner/bereich' }) })
+      .then(function (r) { melde('login-meldung', r.ok ? 'Link ist unterwegs. Schau in dein Postfach.' : 'Bitte eine gültige E-Mail eingeben.', r.ok); $('login-meldung').classList.remove('hide'); });
+  });
+  $('vereinbarung-senden').addEventListener('click', function () {
+    if (!aktuell) return;
+    if (!$('vereinbarung').checked) { melde('speicher-meldung', 'Bitte erst den Haken setzen.'); $('speicher-meldung').classList.remove('hide'); return; }
+    fetch('/api/partner/' + encodeURIComponent(aktuell.slug) + '/vereinbarung', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ bestaetigt: true }) })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (r) {
+        if (!r.ok) { melde('speicher-meldung', r.j.error || 'Das hat nicht geklappt.'); $('speicher-meldung').classList.remove('hide'); return; }
+        var i = daten.partner.indexOf(aktuell); daten.partner[i] = r.j.partner; zeigen(r.j.partner);
+        melde('speicher-meldung', 'Danke, die Vereinbarung ist bestätigt.', true); $('speicher-meldung').classList.remove('hide');
+      });
+  });
+  $('ds-senden').addEventListener('click', function () {
+    if (!aktuell) return;
+    $('ds-senden').disabled = true;
+    fetch('/api/partner/' + encodeURIComponent(aktuell.slug) + '/designservice', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ wunsch: $('ds-wunsch').value }) })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (r) {
+        $('ds-senden').disabled = false;
+        if (!r.ok) { $('ds-status').className = 'p-meldung schlecht'; $('ds-status').textContent = r.j.error || 'Das hat nicht geklappt.'; return; }
+        if (r.j.url) { location.href = r.j.url; return; }
+        var i = daten.partner.indexOf(aktuell); daten.partner[i] = r.j.partner; zeigen(r.j.partner);
+      }).catch(function () { $('ds-senden').disabled = false; });
+  });
+  // Zurueck von der Zahlung: nachschlagen, ob bezahlt ist.
+  (function () {
+    var sid = new URLSearchParams(location.search).get('designservice');
+    if (!sid || sid === 'abgebrochen') return;
+    var warten = setInterval(function () {
+      if (!aktuell) return; clearInterval(warten);
+      fetch('/api/partner/' + encodeURIComponent(aktuell.slug) + '/designservice/pruefen', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ session: sid }) })
+        .then(function (r) { return r.json(); }).then(function (j) { if (j.partner) { var i = daten.partner.indexOf(aktuell); daten.partner[i] = j.partner; zeigen(j.partner); } });
+    }, 300);
+  })();
+  $('abmelden').addEventListener('click', function () { fetch('/api/mo/logout', { method: 'POST' }).then(function () { location.reload(); }); });
+  laden();
+})();
+</script>
+</body>
+</html>

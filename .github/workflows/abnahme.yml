@@ -1,0 +1,31 @@
+# Die Abnahme laeuft bei jedem Push und jedem Pull Request auf GitHub - unabhaengig davon, ob
+# jemand daran gedacht hat, sie vorher auszufuehren. Rot heisst: nicht ausliefern.
+#
+# Sie ersetzt nicht den Lauf vor dem Push (siehe CLAUDE.md, Regel 4), sie ist das Netz darunter.
+# Railway deployt trotzdem bei jedem Push auf main; diese Pruefung ist die Rueckmeldung, die
+# danach im Repo steht - sichtbar als Haken oder Kreuz am Commit.
+name: Abnahme
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  abnahme:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      # Ein echter Browser fuer Abschnitt 7 (Laptop, iPhone, Android). Playwright wird nur hier
+      # installiert (--no-save: es gehoert nicht in die package.json des Servers), damit
+      # abnahme-browser.mjs es per import('playwright') findet. Ohne das Paket wuerde die
+      # Abnahme den Abschnitt ueberspringen und trotzdem gruen melden - das waere hier falsch.
+      - run: npm install --no-save playwright@1
+      - run: npx playwright install --with-deps chromium
+      - run: node abnahme.mjs
