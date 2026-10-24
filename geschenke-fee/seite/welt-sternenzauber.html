@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sternenzauber | Geschenke-Fee</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Sternenzauber: Geschenke für Weihnachten und Advent, gestaltet aus deinem Wunsch von der Geschenke-Fee.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&family=Quicksand:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="fee.css">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}[hidden]{display:none!important}</style>
+</head>
+<body class="welt welt-sternenzauber">
+<a class="sprung" href="#inhalt">Zum Inhalt</a>
+<header class="kopf"><div class="rahmen kopf-innen">
+  <a class="marke" href="./" aria-label="Geschenke-Fee, zur Startseite"><img src="bilder/logo-zeile.png" alt="Geschenke-Fee" width="831" height="200"></a>
+  <nav class="navi" aria-label="Hauptmenü">
+    <a class="link" href="./#welten" aria-current="page">Feenwelten</a>
+    <a class="link" href="./#zauber">So geht's</a>
+    <a class="link" href="./#geschenke">Geschenke</a>
+    <a class="knopf klein" href="#wunsch">Wunsch erzählen</a>
+    <button class="menue-knopf" type="button" aria-expanded="false" aria-controls="menue" aria-label="Menü"><svg aria-hidden="true" focusable="false" class="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"/></svg></button>
+  </nav>
+</div>
+<nav class="menue" id="menue" hidden aria-label="Menü">
+  <a href="./#welten">Feenwelten</a><a href="./#zauber">So geht's</a><a href="./#geschenke">Geschenke</a>
+</nav></header>
+<canvas id="sternenstaub" aria-hidden="true"></canvas>
+<main id="inhalt">
+<section class="welt-hero" aria-labelledby="welt-titel"><div class="rahmen welt-innen">
+  <div class="welt-text">
+    <a class="zurueck" href="./#welten"><svg aria-hidden="true" focusable="false" class="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"/></svg>Alle Feenwelten</a>
+    <h1 class="welt-name" id="welt-titel" style="--n:13">Sternenzauber</h1>
+    <p class="welt-anlass">Weihnachten und Advent</p>
+    <p class="welt-satz">Wenn es draußen still wird und drinnen die Lichter brennen. Hier entstehen Geschenke, die man auspackt und behält.</p>
+    <div class="knoepfe"><a class="knopf" href="#wunsch">Wunsch erzählen</a><a class="knopf zweit" href="#geschenke">Geschenke ansehen</a></div>
+  </div>
+  <div class="welt-bild"><div class="diorama" data-zauber="schnee"><img src="bilder/welten/sternenzauber.webp" alt="Papierwelt Sternenzauber" width="1024" height="1536" fetchpriority="high"></div></div>
+</div></section>
+
+<section class="abschnitt" id="geschenke" aria-labelledby="geschenke-titel"><div class="rahmen">
+  <div class="titel"><h2 id="geschenke-titel">Was die Fee hier zaubert</h2><p>Decke, Kissen, Kalender, Kugel, Tasse. Jedes Stück bekommt sein eigenes Motiv aus deinem Wunsch.</p></div>
+  <div class="regal" data-anzahl="5">
+<article class="artikel"><div class="bild"><img src="bilder/artikel/ste-decke.webp" alt="Kuscheldecke: Familie Müller, Weihnachten 2026 mit Fuchs im Winterwald" width="800" height="800" loading="lazy"></div><h3>Kuscheldecke</h3><p>Beispiel: <q>Familie Müller, Weihnachten 2026</q> mit Fuchs im Winterwald</p></article>
+<article class="artikel"><div class="bild"><img src="bilder/artikel/ste-kissen.webp" alt="Kissen: Emmas erstes Weihnachten mit Elefant auf dem Mond" width="800" height="800" loading="lazy"></div><h3>Kissen</h3><p>Beispiel: <q>Emmas erstes Weihnachten</q> mit Elefant auf dem Mond</p></article>
+<article class="artikel"><div class="bild"><img src="bilder/artikel/ste-kalender.webp" alt="Wandkalender: Familie Müller 2027, gemalt beim Schneemannbauen" width="800" height="800" loading="lazy"></div><h3>Wandkalender</h3><p>Beispiel: <q>Familie Müller 2027</q>, gemalt beim Schneemannbauen</p></article>
+<article class="artikel"><div class="bild"><img src="bilder/artikel/ste-kugel.webp" alt="Weihnachtskugel: Emma 2026 für den ersten eigenen Baum" width="800" height="800" loading="lazy"></div><h3>Weihnachtskugel</h3><p>Beispiel: <q>Emma 2026</q> für den ersten eigenen Baum</p></article>
+<article class="artikel"><div class="bild"><img src="bilder/artikel/ste-tasse.webp" alt="Tasse: Für Opa Klaus mit seinem Fuchs" width="800" height="800" loading="lazy"></div><h3>Tasse</h3><p>Beispiel: <q>Für Opa Klaus</q> mit seinem Fuchs</p></article>
+  </div>
+</div></section>
+
+<section class="abschnitt hauch" aria-labelledby="stimme-titel"><div class="rahmen stimme">
+  <div><h2 class="unsichtbar" id="stimme-titel">Ein Wunsch aus dieser Welt</h2><blockquote>Unsere Emma feiert ihr erstes Weihnachten. Ein kleiner Elefant auf dem Mond, mit Mütze und Schnee.</blockquote><p class="hinweis">Aus diesem Satz wurde das Geschenk daneben.</p></div>
+  <figure><img src="bilder/artikel/ste-kissen.webp" alt="Kissen mit Elefant auf dem Mond und der Schrift Emmas erstes Weihnachten" width="800" height="800" loading="lazy"></figure>
+</div></section>
+
+<section class="abschnitt hauch" id="wunsch" aria-labelledby="wunsch-titel"><div class="rahmen wunschkasten">
+  <div class="titel"><h2 id="wunsch-titel">Dein Wunsch für Weihnachten und Advent</h2><p>Erzähl der Fee, für wen es ist und was diesen Menschen ausmacht. Du kannst tippen oder einsprechen.</p></div>
+  <form class="formular" data-wunsch novalidate>
+    <label for="wunsch-feld">Dein Wunsch</label>
+    <textarea id="wunsch-feld" name="wunsch" placeholder="Zum Beispiel: Für Opa Klaus, der jeden Morgen den Fuchs im Garten beobachtet. Am liebsten auf einer Tasse."></textarea>
+    <p class="hilfe">Name, Anlass, was diesen Menschen ausmacht und worauf es soll. Je mehr du erzählst, desto persönlicher wird es.</p>
+    <div class="zeile">
+      <button class="knopf zweit" type="button" data-mikro><svg aria-hidden="true" focusable="false" class="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M128,176a48.05,48.05,0,0,0,48-48V64a48,48,0,0,0-96,0v64A48.05,48.05,0,0,0,128,176ZM96,64a32,32,0,0,1,64,0v64a32,32,0,0,1-64,0Zm40,143.6V240a8,8,0,0,1-16,0V207.6A80.11,80.11,0,0,1,48,128a8,8,0,0,1,16,0,64,64,0,0,0,128,0,8,8,0,0,1,16,0A80.11,80.11,0,0,1,136,207.6Z"/></svg><span>Einsprechen</span></button>
+      <button class="knopf" type="submit">Wunsch abschicken</button>
+    </div>
+    <p class="antwort" aria-live="polite"></p>
+  </form>
+</div></section>
+
+<section class="abschnitt" aria-labelledby="weiter-titel"><div class="rahmen weiter">
+  <a class="tor" href="welt-wiegenwald.html">
+  <span class="tor-bild"><img src="bilder/welten/wiegenwald-klein.webp" alt="" width="640" height="960" loading="lazy"></span>
+  <span class="tor-name">Wiegenwald</span><span class="tor-anlass">Geburt und Taufe</span>
+</a>
+  <div class="titel"><h2 id="weiter-titel">Weiter zur nächsten Welt</h2><p>Wiegenwald: Geschenke für Geburt und Taufe.</p>
+    <ul class="welten-liste" aria-label="Alle Feenwelten"><li><a href="welt-sternenzauber.html" aria-current="page">Sternenzauber</a></li><li><a href="welt-wiegenwald.html">Wiegenwald</a></li><li><a href="welt-rosenhain.html">Rosenhain</a></li><li><a href="welt-bluetenlichtung.html">Blütenlichtung</a></li><li><a href="welt-schultuetenwiese.html">Schultütenwiese</a></li><li><a href="welt-pfotenreich.html">Pfotenreich</a></li><li><a href="welt-kerzenfest.html">Kerzenfest</a></li><li><a href="welt-dankesgarten.html">Dankesgarten</a></li></ul>
+  </div>
+</div></section>
+</main>
+<footer class="fuss"><div class="rahmen">
+  <div class="fuss-innen">
+    <div><img src="bilder/logo-zeile.png" alt="Geschenke-Fee" width="831" height="200"><p>Personalisierte Geschenke aus deinem Wunsch, gestaltet für jeden Artikel neu.</p></div>
+    <ul class="fuss-welten" aria-label="Feenwelten"><li><a href="welt-sternenzauber.html">Sternenzauber</a></li><li><a href="welt-wiegenwald.html">Wiegenwald</a></li><li><a href="welt-rosenhain.html">Rosenhain</a></li><li><a href="welt-bluetenlichtung.html">Blütenlichtung</a></li><li><a href="welt-schultuetenwiese.html">Schultütenwiese</a></li><li><a href="welt-pfotenreich.html">Pfotenreich</a></li><li><a href="welt-kerzenfest.html">Kerzenfest</a></li><li><a href="welt-dankesgarten.html">Dankesgarten</a></li></ul>
+  </div>
+  <p class="fuss-recht" id="impressum">Impressum und Datenschutz folgen, sobald der Shop online geht.</p>
+</div></footer>
+<script src="fee.js" defer></script>
+</body>
+</html>
