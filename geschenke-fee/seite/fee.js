@@ -395,7 +395,14 @@
   }
   function bildZaubern(r, a) {
     return new Promise(function (ok, nein) {
-      if (!window.claude || typeof window.claude.use !== 'function') { nein('Das Bild kann die Fee nur in der Claude-Ansicht malen. Hier siehst du erst die Motiv-Idee.'); return; }
+      if (!window.claude || typeof window.claude.use !== 'function') {
+        /* eigene Adresse: der Server der Seite malt das Bild */
+        fetch('api/bild', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ artikel: a.name, anlass: r.anlass, motiv: r.motiv, schrift: r.schrift, farben: r.farben, stimmung: r.stimmung }) })
+          .then(function (x) { return x.json().then(function (d) { return { s: x.status, d: d }; }); })
+          .then(function (e) { if (e.d && e.d.url) ok(e.d.url); else nein((e.d && e.d.fehler) || 'Das Bild hat gerade nicht geklappt. Bitte nochmal versuchen.'); })
+          .catch(function () { nein('Die Fee ist gerade nicht erreichbar. Bitte nochmal versuchen.'); });
+        return;
+      }
       window.claude.use('mcp').then(function (mcp) {
         if (!mcp) { nein('Das Bild kann die Fee gerade nicht malen: Die Bild-Verbindung ist in dieser Ansicht nicht freigegeben.'); return; }
         return mcp.callTool(BILD_SERVER, 'nano_banana', { prompt: bildPrompt(r, a), aspect_ratio: '1:1', image_size: '1K' }, { cache: false, signal: AbortSignal.timeout(170000) }).then(function (res) {
