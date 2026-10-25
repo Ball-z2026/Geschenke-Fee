@@ -194,12 +194,14 @@
         var er = null, an = false, grund = '';
         mikro.addEventListener('click', function () {
           if (an) { er.stop(); return; }
-          er = new Erkennung(); er.lang = 'de-DE'; er.interimResults = true; er.continuous = true;
+          er = new Erkennung(); er.lang = 'de-DE'; er.interimResults = true;
+          /* Chrome auf Android wiederholt im Dauerbetrieb Textteile: dort ein Satz pro Tipp */
+          er.continuous = !/Android/i.test(navigator.userAgent);
           grund = feld.value ? feld.value.replace(/\s+$/, '') + ' ' : '';
           er.onresult = function (ev) {
             var t = '';
             for (var i = 0; i < ev.results.length; i++) t += ev.results[i][0].transcript;
-            feld.value = grund + t;
+            feld.value = grund + (/Android/i.test(navigator.userAgent) ? entdoppeln(t) : t);
           };
           er.onend = function () { an = false; mikro.classList.remove('hoert'); mikro.querySelector('span').textContent = 'Einsprechen'; };
           er.onerror = function () { antwort.textContent = 'Das Mikrofon ist gerade nicht erreichbar. Tipp deinen Wunsch einfach ein.'; };
@@ -215,6 +217,19 @@
         zaubern(form, text);
       });
     });
+  }
+
+  /* Chrome auf Android sendet manchmal denselben Satzteil zweimal ("zur Tasse zur Tasse") */
+  function entdoppeln(t) {
+    var w = t.split(/\s+/).filter(Boolean), weiter = true;
+    while (weiter) {
+      weiter = false;
+      for (var n = Math.floor(w.length / 2); n >= 2; n--) {
+        var a = w.slice(w.length - 2 * n, w.length - n).join(' ').toLowerCase(), b = w.slice(w.length - n).join(' ').toLowerCase();
+        if (a === b) { w = w.slice(0, w.length - n); weiter = true; break; }
+      }
+    }
+    return w.join(' ');
   }
 
   /* Der Wunsch wird gelesen: Claude (falls erreichbar), sonst die eigene Auswertung der Seite */
@@ -312,6 +327,41 @@
     funkenFlug(ebene, { x: r.left + r.width / 2, y: r.top + r.height / 2 }, { x: r.left + r.width / 2, y: r.top - 120 }, 1000);
   }
 
+  var BILD_SERVER = 'ballz-image-mcp_generate_ballz_image';
+  function bildPrompt(r, a) {
+    var s = r.schrift ? ' Der gedruckte Text lautet genau "' + r.schrift + '", keine weiteren Wörter oder Buchstaben.' : ' Auf dem Artikel steht kein Text.';
+    return 'Hochwertiges Produktfoto: ' + a.name + ' für den Anlass ' + (r.anlass || 'Geschenk') + ', weiches Tageslicht, ruhiger heller Hintergrund, der Artikel steht im Mittelpunkt. ' +
+      'Auf dem Artikel ist ein liebevoll gemaltes, gedrucktes Motiv zu sehen: ' + r.motiv + ' Farben: ' + r.farben.join(', ') + (r.stimmung ? ', Stimmung ' + r.stimmung : '') + '.' + s +
+      ' Das Motiv ist sauber und passend auf den Artikel gedruckt.';
+  }
+  function bildZaubern(r, a) {
+    return new Promise(function (ok, nein) {
+      if (!window.claude || typeof window.claude.use !== 'function') { nein('Das Bild kann die Fee nur in der Claude-Ansicht malen. Hier siehst du erst die Motiv-Idee.'); return; }
+      window.claude.use('mcp').then(function (mcp) {
+        if (!mcp) { nein('Das Bild kann die Fee gerade nicht malen: Die Bild-Verbindung ist in dieser Ansicht nicht freigegeben.'); return; }
+        return mcp.callTool(BILD_SERVER, 'nano_banana', { prompt: bildPrompt(r, a), aspect_ratio: '1:1', image_size: '1K' }, { cache: false, signal: AbortSignal.timeout(170000) }).then(function (res) {
+          var bild = (res.content || []).filter(function (b) { return b && b.type === 'image' && typeof b.data === 'string'; })[0];
+          if (bild && /^image\/(png|jpeg|webp)$/.test(bild.mimeType)) { ok('data:' + bild.mimeType + ';base64,' + bild.data); return; }
+          var text = (res.content || []).map(function (b) { return b && b.text || ''; }).join(' ');
+          var u = text.match(/https:\/\/[^\s"')]+\.(?:jpg|jpeg|png|webp)/i);
+          if (u) ok(u[0]); else nein('Die Fee hat das Bild gemalt, es kam aber nicht an. Bitte nochmal versuchen.');
+        });
+      }).catch(function (f) {
+        var c = f && f.code;
+        if (c === 'approval_required' || c === 'not_in_manifest' || c === 'consent_required') nein('Die Fee braucht deine Erlaubnis, das Bild zu malen. Bitte erlaube es, wenn claude.ai fragt, und versuch es nochmal.');
+        else if (c === 'server_not_connected' || c === 'server_not_found' || c === 'selection_required') nein('Die Bild-Verbindung der Fee ist in deinem Konto nicht verbunden. Die Motiv-Idee oben bleibt gültig.');
+        else if (c === 'needs_reauth') nein('Die Bild-Verbindung muss in claude.ai unter Einstellungen, Konnektoren, neu verbunden werden.');
+        else if (c === 'cancelled' || c === 'server_unavailable' || c === 'upstream_error') nein('Das Malen hat zu lange gedauert. Bitte nochmal versuchen.');
+        else nein('Das Bild hat gerade nicht geklappt. Bitte nochmal versuchen.');
+      });
+    });
+  }
+  function bildZeigen(rahmen, status, url, a) {
+    rahmen.classList.remove('malt');
+    var i = document.createElement('img'); i.src = url; i.alt = 'Entwurf: ' + a.name + ' mit deinem Motiv'; i.className = 'erg-foto';
+    status.textContent = ''; rahmen.insertBefore(i, rahmen.firstChild);
+  }
+
   function el(tag, klasse, text) { var e = document.createElement(tag); if (klasse) e.className = klasse; if (text != null) e.textContent = text; return e; }
 
   function zeigen(box, r, katalog, text) {
@@ -342,18 +392,43 @@
     spalten.appendChild(seite);
     box.appendChild(spalten);
 
-    box.appendChild(el('h3', 'erg-titel', 'Darauf kann die Fee dein Motiv zaubern'));
-    var regal = el('div', 'erg-regal');
-    r.artikel.forEach(function (id) {
+    box.appendChild(el('h3', 'erg-titel', 'Dein Geschenk'));
+    var geschenk = el('div', 'erg-geschenk');
+    var rahmen = el('figure', 'erg-bild'), bildstatus = el('p', 'erg-bildstatus'), bildknopf = el('button', 'knopf zweit klein'); bildknopf.type = 'button'; bildknopf.hidden = true;
+    rahmen.appendChild(bildstatus);
+    var spalte = el('div', 'erg-bildseite');
+    spalte.appendChild(el('p', 'erg-bildtext', 'Tipp einen Artikel an, dann malt die Fee dein Motiv genau darauf.'));
+    var regal = el('div', 'erg-regal'), fertigeBilder = {}, gewaehlt = null;
+    function waehle(a, kachel) {
+      gewaehlt = a.id;
+      [].forEach.call(regal.children, function (k) { k.setAttribute('aria-pressed', k === kachel ? 'true' : 'false'); });
+      rahmen.className = 'erg-bild'; rahmen.querySelectorAll('img').forEach(function (i) { i.remove(); });
+      bildknopf.hidden = true;
+      if (fertigeBilder[a.id]) { bildZeigen(rahmen, bildstatus, fertigeBilder[a.id], a); return; }
+      bildstatus.textContent = 'Die Fee malt dein Motiv auf ' + a.name + ' …'; rahmen.classList.add('malt');
+      bildZaubern(r, a).then(function (url) {
+        fertigeBilder[a.id] = url;
+        if (gewaehlt === a.id) bildZeigen(rahmen, bildstatus, url, a);
+      }, function (fehler) {
+        if (gewaehlt !== a.id) return;
+        rahmen.classList.remove('malt'); bildstatus.textContent = fehler; bildknopf.textContent = 'Nochmal versuchen'; bildknopf.hidden = false;
+        bildknopf.onclick = function () { waehle(a, kachel); };
+      });
+    }
+    r.artikel.forEach(function (id, i) {
       var a = katalog.artikel.filter(function (x) { return x.id === id; })[0]; if (!a) return;
-      var k = el('figure', 'erg-artikel'), img = document.createElement('img');
-      img.src = 'bilder/artikel/' + a.id + '.webp'; img.alt = a.name + ' als Beispiel'; img.width = a.w; img.height = a.h; img.loading = 'lazy';
-      k.appendChild(img); k.appendChild(el('figcaption', null, a.name)); regal.appendChild(k);
+      var k = el('button', 'erg-artikel'), img = document.createElement('img');
+      k.type = 'button'; k.setAttribute('aria-pressed', 'false');
+      img.src = 'bilder/artikel/' + a.id + '.webp'; img.alt = ''; img.width = a.w; img.height = a.h; img.loading = 'lazy';
+      k.appendChild(img); k.appendChild(el('span', null, a.name));
+      k.addEventListener('click', function () { waehle(a, k); });
+      regal.appendChild(k);
+      if (i === 0) setTimeout(function () { waehle(a, k); }, 0);
     });
-    box.appendChild(regal);
-    box.appendChild(el('p', 'erg-hinweis', r.lokal
-      ? 'Die Bilder zeigen Beispiele. Dein eigenes Motiv wird nach dem Bestellen für jeden Artikel einzeln gestaltet.'
-      : 'Die Bilder zeigen Beispiele. Dein eigenes Motiv wird nach dem Bestellen für jeden Artikel einzeln gestaltet.'));
+    spalte.appendChild(regal); spalte.appendChild(bildknopf);
+    geschenk.appendChild(rahmen); geschenk.appendChild(spalte);
+    box.appendChild(geschenk);
+    box.appendChild(el('p', 'erg-hinweis', 'Das Bild ist ein Entwurf der Fee. Die echte Druckdatei entsteht erst nach dem Bestellen.'));
     var zeile = el('div', 'erg-zeile');
     var bestell = el('button', 'knopf'); bestell.type = 'button'; bestell.disabled = true; bestell.textContent = 'Bestellen: der Shop folgt in Kürze';
     var neu = el('button', 'knopf zweit'); neu.type = 'button'; neu.textContent = 'Anderen Wunsch erzählen';
