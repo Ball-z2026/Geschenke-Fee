@@ -188,6 +188,22 @@
   function wunschkasten() {
     document.querySelectorAll('[data-wunsch]').forEach(function (form) {
       var feld = form.querySelector('textarea'), antwort = form.querySelector('.antwort'), mikro = form.querySelector('[data-mikro]');
+      var stab = document.createElement('img');
+      stab.className = 'stab-live'; stab.src = 'bilder/zauberstab.webp'; stab.alt = ''; stab.width = 110; stab.height = 166; stab.setAttribute('aria-hidden', 'true');
+      form.insertBefore(stab, form.firstChild);
+      var stabTakt = null, stabRuhe = null;
+      form._stab = {
+        an: function () {
+          clearTimeout(stabRuhe); form.classList.add('stab-an');
+          if (!stabTakt) { stabTakt = setInterval(function () { funkenVonStab(stab, feld); }, 650); setTimeout(function () { funkenVonStab(stab, feld); }, 250); }
+        },
+        aus: function (spaet) {
+          clearTimeout(stabRuhe);
+          stabRuhe = setTimeout(function () { clearInterval(stabTakt); stabTakt = null; form.classList.remove('stab-an'); }, spaet || 1500);
+        }
+      };
+      var tippRuhe = null;
+      feld.addEventListener('input', function () { form._stab.an(); clearTimeout(tippRuhe); tippRuhe = setTimeout(function () { form._stab.aus(1200); }, 1600); });
       var Erkennung = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (mikro && !Erkennung) mikro.hidden = true;
       if (mikro && Erkennung) {
@@ -201,12 +217,13 @@
           er.onresult = function (ev) {
             var t = '';
             for (var i = 0; i < ev.results.length; i++) t += ev.results[i][0].transcript;
-            feld.value = grund + (/Android/i.test(navigator.userAgent) ? entdoppeln(t) : t);
+            feld.value = grund + (/Android/i.test(navigator.userAgent) ? entdoppeln(t) : t); form._stab.an();
           };
-          er.onend = function () { an = false; mikro.classList.remove('hoert'); mikro.querySelector('span').textContent = 'Einsprechen'; };
+          er.onend = function () { an = false; mikro.classList.remove('hoert'); mikro.querySelector('span').textContent = 'Einsprechen'; form._stab.aus(2500); if (antwort.dataset.hoert) antwort.textContent = ''; };
           er.onerror = function () { antwort.textContent = 'Das Mikrofon ist gerade nicht erreichbar. Tipp deinen Wunsch einfach ein.'; };
           try { er.start(); } catch (fehler) { antwort.textContent = 'Das Mikrofon ist gerade nicht erreichbar. Tipp deinen Wunsch einfach ein.'; return; }
           an = true; mikro.classList.add('hoert'); mikro.querySelector('span').textContent = 'Fertig';
+          form._stab.an(); antwort.dataset.hoert = '1'; antwort.textContent = 'Die Fee hört zu …';
         });
       }
       form.addEventListener('submit', function (e) {
@@ -243,6 +260,35 @@
     ['dankesgarten', /danke|rente|ruhestand|abschied|erzieher|lehrer|verabschied|kollege/i],
     ['kerzenfest', /geburtstag|runder|jubil|\d0\.|feiert|party|40|50|60|70|80/i]
   ];
+  var ARTIKEL_WOERTER = [
+    [/grillschürze|grillschuerze|schürze|schuerze/i, 'echt-grillschuerze'], [/hoodie|kapuzenpulli|pullover/i, 'echt-hoodie'], [/t-?shirt|shirt/i, 'echt-tshirt'],
+    [/hundedecke/i, 'echt-hundedecke'], [/napf/i, 'echt-napfunterlage'], [/kissen/i, 'echt-kissen'], [/kuscheldecke|decke/i, 'ste-decke'], [/puzzle/i, 'ker-puzzle'],
+    [/poster|leinwand|wandbild/i, 'echt-poster'], [/acryl/i, 'echt-acrylbild'], [/brotdose|lunchbox/i, 'echt-brotdose'], [/fußmatte|fussmatte/i, 'echt-fussmatte'],
+    [/strandtuch/i, 'echt-strandtuch'], [/handtuch/i, 'echt-handtuch'], [/shopper|einkaufstasche|stoffbeutel/i, 'echt-shopper'], [/mousepad|mauspad/i, 'echt-mousepad'],
+    [/sticker|aufkleber/i, 'echt-sticker'], [/türschild|tuerschild/i, 'echt-tuerschild'], [/gepäck|gepaeck|kofferanhänger/i, 'echt-gepaeckanhaenger'],
+    [/keksglas/i, 'dan-keksglas'], [/spardose/i, 'wie-spardose'], [/kalender/i, 'ste-kalender'], [/weihnachtskugel|kugel/i, 'ste-kugel'], [/windlicht/i, 'blu-windlicht'],
+    [/trinkflasche|flasche/i, 'sch-flasche'], [/turnbeutel/i, 'sch-turnbeutel'], [/teller/i, 'wie-teller'], [/body/i, 'wie-body'], [/sternenkarte/i, 'ros-sternenkarte'],
+    [/tasse|becher/i, 'TASSE']
+  ];
+  /* Welcher Artikel wird im Wunsch genannt? Der erste im Text gewinnt. */
+  function genannterArtikel(text, katalog, welt) {
+    var best = null, pos = 1e9;
+    ARTIKEL_WOERTER.forEach(function (p) { var m = text.match(p[0]); if (m && m.index < pos) { pos = m.index; best = p[1]; } });
+    if (best === 'TASSE') {
+      var ts = katalog.artikel.filter(function (a) { return a.name === 'Tasse'; });
+      var gleich = ts.filter(function (a) { return a.welt === welt; })[0];
+      best = (gleich || ts[0] || {}).id || null;
+    }
+    return best && katalog.artikel.some(function (a) { return a.id === best; }) ? best : null;
+  }
+  function alterAusText(text) {
+    var m = text.match(/(\d{1,3})\s*(?:Jahre|jährig|\.\s*Geburtstag|ten\s+Geburtstag)/i) || text.match(/(?:wird|ist|wurde|feiert)\s+(\d{1,3})\b/i);
+    return m && +m[1] > 0 && +m[1] < 130 ? m[1] : '';
+  }
+  function nenneZuerst(liste, id) {
+    if (!id) return liste;
+    return [id].concat(liste.filter(function (x) { return x !== id; })).slice(0, 5);
+  }
   function lokaleAuswertung(text, katalog) {
     var welt = 'kerzenfest';
     for (var i = 0; i < WELT_WOERTER.length; i++) if (WELT_WOERTER[i][1].test(text)) { welt = WELT_WOERTER[i][0]; break; }
@@ -252,9 +298,9 @@
     return {
       welt: welt, fuer: name, anlass: katalog.anlaesse[welt],
       motiv: satz.length > 8 ? satz + '.' : text,
-      schrift: name || '',
+      schrift: name ? name + (alterAusText(text) ? ', ' + alterAusText(text) + ' Jahre' : '') : '',
       farben: ['#F6F0F8', '#D5C4EE', '#E3B04B'], stimmung: '',
-      artikel: katalog.artikel.filter(function (a) { return a.welt === welt; }).slice(0, 4).map(function (a) { return a.id; }),
+      artikel: nenneZuerst(katalog.artikel.filter(function (a) { return a.welt === welt; }).slice(0, 4).map(function (a) { return a.id; }), genannterArtikel(text, katalog, welt)),
       fee: name ? 'Das ist ein schöner Wunsch für ' + name + '. Ich habe ihn gelesen und die Welt dafür gefunden.' : 'Das ist ein schöner Wunsch. Ich habe ihn gelesen und die Welt dafür gefunden.',
       lokal: true
     };
@@ -271,8 +317,8 @@
         'Lies ihn genau und antworte NUR mit einem JSON-Objekt, ohne Text davor oder danach, mit diesen Feldern:\n' +
         '{"welt": "<Slug einer Welt aus der Liste>", "fuer": "<für wen, kurz, z. B. Opa Klaus>", "anlass": "<Anlass in 2 bis 4 Wörtern>", ' +
         '"motiv": "<2 bis 3 Sätze auf Deutsch: was auf dem Geschenk zu sehen ist, konkret und bildlich, mit allem, was die Person erzählt hat>", ' +
-        '"schrift": "<kurzer Text, der auf dem Geschenk stehen soll, oder leer>", "farben": ["<hex>", "<hex>", "<hex>"] (drei zum Motiv passende, sanfte Farben), ' +
-        '"stimmung": "<ein Wort>", "artikel": ["<3 bis 5 IDs aus der Artikelliste, die zum Wunsch passen, wichtigste zuerst>"], ' +
+        '"schrift": "<kurzer Text, der auf dem Geschenk stehen soll, mit Namen und Alter oder Datum, wie genannt, oder leer>", "farben": ["<hex>", "<hex>", "<hex>"] (drei zum Motiv passende, sanfte Farben), ' +
+        '"stimmung": "<ein Wort>", "artikel": ["<3 bis 5 IDs aus der Artikelliste, die zum Wunsch passen; nennt der Kunde einen Artikel (zum Beispiel Grillschürze, Tasse, Kissen), steht genau dieser an erster Stelle, auch wenn er nicht zur Welt gehört>"], ' +
         '"fee": "<ein bis zwei warme Sätze der Fee an den Kunden, per Du, mit Bezug auf Details aus dem Wunsch, ohne Ausrufezeichen-Flut>"}\n\n' +
         'Welten:\n' + welten + '\n\nArtikel:\n' + liste + '\n\nWunsch des Kunden:\n + text.slice(0, 1500) + ';
       return sample.json(auftrag, { modelTier: 'quick', cache: false });
@@ -287,6 +333,7 @@
     if (r.farben.length < 2) r.farben = ['#F6F0F8', '#D5C4EE', '#E3B04B'];
     r.artikel = (Array.isArray(r.artikel) ? r.artikel : []).filter(function (a) { return ids.indexOf(a) > -1; }).slice(0, 5);
     if (!r.artikel.length) r.artikel = katalog.artikel.filter(function (a) { return a.welt === r.welt; }).slice(0, 4).map(function (a) { return a.id; });
+    r.artikel = nenneZuerst(r.artikel, genannterArtikel(text, katalog, r.welt));
     ['fuer', 'anlass', 'motiv', 'schrift', 'stimmung', 'fee'].forEach(function (k) { r[k] = typeof r[k] === 'string' ? r[k].slice(0, 400) : ''; });
     return r;
   }
@@ -298,7 +345,7 @@
     var wand = form.parentNode.querySelector('.zauberstab');
     var zeilen = ['Die Fee liest deinen Wunsch …', 'Sie sucht die passende Welt …', 'Sie überlegt, was auf das Geschenk soll …', 'Gleich ist sie fertig …'];
     var zi = 0;
-    knopf.disabled = true; form.classList.add('zaubert'); if (wand) wand.classList.add('zaubert');
+    knopf.disabled = true; form.classList.add('zaubert'); if (wand) wand.classList.add('zaubert'); if (form._stab) form._stab.an();
     box.hidden = true;
     antwort.textContent = zeilen[0];
     var takt = setInterval(function () { zi = (zi + 1) % zeilen.length; antwort.textContent = zeilen[zi]; funken(knopf); }, 1700);
@@ -312,7 +359,7 @@
       var r = sauber(erg[0], katalog, text) || lokaleAuswertung(text, katalog);
       zeigen(box, r, katalog, text);
       antwort.textContent = '';
-      knopf.disabled = false; form.classList.remove('zaubert'); if (wand) wand.classList.remove('zaubert');
+      knopf.disabled = false; form.classList.remove('zaubert'); if (wand) wand.classList.remove('zaubert'); if (form._stab) form._stab.aus(800);
       funken(knopf);
       box.hidden = false;
       var b = box.getBoundingClientRect();
@@ -320,6 +367,18 @@
     });
   }
 
+  function ebeneHolen() {
+    var ebene = document.querySelector('.funken-seite');
+    if (!ebene) { ebene = document.createElement('div'); ebene.className = 'funken-seite'; ebene.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:45'; document.body.appendChild(ebene); }
+    return ebene;
+  }
+  /* Der grosse Stern des Zauberstabs liegt bei 56 % / 29 % des Bildes */
+  function funkenVonStab(stab, ziel) {
+    var r = stab.getBoundingClientRect(); if (!r.width) return;
+    var von = { x: r.left + r.width * .56, y: r.top + r.height * .29 };
+    var z = ziel ? ziel.getBoundingClientRect() : null;
+    funkenFlug(ebeneHolen(), von, z ? { x: z.left + z.width * .5, y: z.top + Math.min(z.height * .4, 90) } : { x: von.x - 40, y: von.y + 160 }, 1100);
+  }
   function funken(el) {
     var r = el.getBoundingClientRect();
     var ebene = document.querySelector('.funken-seite');
@@ -392,26 +451,33 @@
     spalten.appendChild(seite);
     box.appendChild(spalten);
 
-    box.appendChild(el('h3', 'erg-titel', 'Dein Geschenk'));
+    var titel = el('h3', 'erg-titel', 'Dein Geschenk'); box.appendChild(titel);
     var geschenk = el('div', 'erg-geschenk');
     var rahmen = el('figure', 'erg-bild'), bildstatus = el('p', 'erg-bildstatus'), bildknopf = el('button', 'knopf zweit klein'); bildknopf.type = 'button'; bildknopf.hidden = true;
     rahmen.appendChild(bildstatus);
+    var rahmenStab = document.createElement('img'); rahmenStab.className = 'stab-bild'; rahmenStab.src = 'bilder/zauberstab.webp'; rahmenStab.alt = ''; rahmenStab.setAttribute('aria-hidden', 'true'); rahmen.appendChild(rahmenStab);
+    var bildName = el('span', 'erg-bildname'); rahmen.appendChild(bildName);
+    var malTakt = null;
+    function malStart() { clearInterval(malTakt); malTakt = setInterval(function () { funkenVonStab(rahmenStab, rahmen); }, 700); setTimeout(function () { funkenVonStab(rahmenStab, rahmen); }, 300); }
+    function malEnde() { clearInterval(malTakt); malTakt = null; }
     var spalte = el('div', 'erg-bildseite');
     spalte.appendChild(el('p', 'erg-bildtext', 'Tipp einen Artikel an, dann malt die Fee dein Motiv genau darauf.'));
     var regal = el('div', 'erg-regal'), fertigeBilder = {}, gewaehlt = null;
     function waehle(a, kachel) {
-      gewaehlt = a.id;
+      gewaehlt = a.id; malEnde();
+      var wen = r.fuer ? ' für ' + r.fuer : '';
+      titel.textContent = 'Dein Geschenk: ' + a.name + wen; bildName.textContent = a.name;
       [].forEach.call(regal.children, function (k) { k.setAttribute('aria-pressed', k === kachel ? 'true' : 'false'); });
-      rahmen.className = 'erg-bild'; rahmen.querySelectorAll('img').forEach(function (i) { i.remove(); });
+      rahmen.className = 'erg-bild'; rahmen.querySelectorAll('.erg-foto').forEach(function (i) { i.remove(); });
       bildknopf.hidden = true;
       if (fertigeBilder[a.id]) { bildZeigen(rahmen, bildstatus, fertigeBilder[a.id], a); return; }
-      bildstatus.textContent = 'Die Fee malt dein Motiv auf ' + a.name + ' …'; rahmen.classList.add('malt');
+      bildstatus.textContent = 'Die Fee malt: ' + a.name + wen + ' …'; rahmen.classList.add('malt'); malStart();
       bildZaubern(r, a).then(function (url) {
         fertigeBilder[a.id] = url;
-        if (gewaehlt === a.id) bildZeigen(rahmen, bildstatus, url, a);
+        if (gewaehlt === a.id) { malEnde(); bildZeigen(rahmen, bildstatus, url, a); }
       }, function (fehler) {
         if (gewaehlt !== a.id) return;
-        rahmen.classList.remove('malt'); bildstatus.textContent = fehler; bildknopf.textContent = 'Nochmal versuchen'; bildknopf.hidden = false;
+        malEnde(); rahmen.classList.remove('malt'); bildstatus.textContent = fehler; bildknopf.textContent = 'Nochmal versuchen'; bildknopf.hidden = false;
         bildknopf.onclick = function () { waehle(a, kachel); };
       });
     }

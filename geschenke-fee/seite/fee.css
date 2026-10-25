@@ -400,3 +400,14 @@ button.erg-artikel[aria-pressed="true"] { border-color: var(--salbei); }
 button.erg-artikel img { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; display: block; }
 button.erg-artikel span { display: block; padding: 8px 12px 10px; font-weight: 700; font-size: 14px; color: var(--salbei-tief); }
 @media (max-width: 860px) { .erg-geschenk { grid-template-columns: 1fr; } }
+
+/* Zauberstab mit Feenstaub: erscheint, sobald jemand spricht, tippt oder die Fee malt */
+.formular { overflow: visible; }
+.stab-live { position: absolute; right: 10px; top: -96px; width: clamp(84px, 24vw, 120px); height: auto; pointer-events: none; z-index: 3; opacity: 0; transform: translateY(14px) rotate(-8deg) scale(.85); transform-origin: 40% 90%; transition: opacity .35s ease, transform .5s cubic-bezier(.2,.8,.2,1); filter: drop-shadow(0 4px 14px rgba(227,176,75,.5)); }
+.formular.stab-an .stab-live { opacity: 1; transform: none; animation: wippen .55s ease-in-out infinite alternate; }
+.formular.stab-an textarea { border-color: var(--akzent); box-shadow: 0 0 0 4px rgba(227,176,75,.22); }
+.stab-bild { position: absolute; right: 8%; top: 8%; width: clamp(80px, 22%, 130px); height: auto; opacity: 0; pointer-events: none; z-index: 2; transform-origin: 40% 90%; filter: drop-shadow(0 4px 14px rgba(227,176,75,.5)); }
+.erg-bild.malt .stab-bild { opacity: 1; animation: wippen .5s ease-in-out infinite alternate; }
+.erg-bildname { position: absolute; left: 12px; bottom: 12px; z-index: 2; padding: 7px 14px; border-radius: 99px; background: rgba(255,255,255,.92); color: var(--salbei-tief); font-weight: 700; font-size: 14px; box-shadow: 0 2px 8px rgba(46,58,52,.15); }
+.erg-bildname:empty { display: none; }
+.erg-titel { font-size: clamp(22px, 3.2vw, 30px); }

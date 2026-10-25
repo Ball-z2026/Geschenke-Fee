@@ -125,6 +125,14 @@ def katalog_json():
     for w in WELTEN:
         for t, d, _b in w['artikel']:
             k['artikel'].append(dict(id=d, name=t, welt=w['slug'], w=masse(d)[0], h=masse(d)[1]))
+    vorhanden = {a['id'] for a in k['artikel']}
+    extra = {'echt-acrylbild': 'Acrylbild', 'echt-fussmatte': 'Fußmatte', 'echt-gepaeckanhaenger': 'Gepäckanhänger', 'echt-grillschuerze': 'Grillschürze',
+             'echt-handtuch': 'Handtuch', 'echt-hoodie': 'Hoodie', 'echt-mousepad': 'Mousepad', 'echt-napfunterlage': 'Napfunterlage', 'echt-shopper': 'Shopper',
+             'echt-sticker': 'Sticker', 'echt-strandtuch': 'Strandtuch', 'echt-tshirt': 'T-Shirt', 'echt-tuerschild': 'Türschild', 'echt-kissen': 'Kissen',
+             'echt-brotdose': 'Brotdose', 'echt-hundedecke': 'Hundedecke', 'echt-poster': 'Poster'}
+    for d, t in extra.items():
+        if d not in vorhanden:
+            k['artikel'].append(dict(id=d, name=t, welt='', w=masse(d)[0], h=masse(d)[1]))
     return json.dumps(k, ensure_ascii=False).replace('</', '<\\/')
 
 def wunschkasten(titel, text, beispiel, vorwahl=''):
