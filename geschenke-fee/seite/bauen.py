@@ -100,13 +100,13 @@ def masse(datei):
     return (640, 480) if datei.startswith('echt-') else (800, 800)
 
 FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' \
-        '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&family=Quicksand:wght@400;500;600;700&display=swap">'
+        '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Antonio:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&family=Quicksand:wght@400;500;600;700&display=swap">'
 
 def kopf(aktiv='', start=False):
     pre = '' if start else './'
     return f'''<a class="sprung" href="#inhalt">Zum Inhalt</a>
 <header class="kopf"><div class="rahmen kopf-innen">
-  <a class="marke" href="./" aria-label="Geschenke-Fee, zur Startseite"><img src="bilder/logo-zeile.png" alt="Geschenke-Fee" width="831" height="200"></a>
+  <a class="marke" href="./" aria-label="Geschenke-Fee, zur Startseite"><img class="marke-fee" src="bilder/fee-figur.webp" alt="" width="1500" height="1007"><span class="wortmarke" aria-hidden="true"><b>GESCHENKE</b><i>Fee</i></span></a>
   <nav class="navi" aria-label="Hauptmenü">
     <a class="link" href="{pre}#welten"{' aria-current="page"' if aktiv == 'welten' else ''}>Feenwelten</a>
     <a class="link" href="{pre}#zauber">So geht's</a>
@@ -116,13 +116,13 @@ def kopf(aktiv='', start=False):
   </nav>
 </div>
 <nav class="menue" id="menue" hidden aria-label="Menü">
-  <a href="{pre}#welten">Feenwelten</a><a href="{pre}#zauber">So geht's</a><a href="{pre}#geschenke">Geschenke</a>
+  <a href="{pre}#welten">Feenwelten</a><a href="{pre}#zauber">So geht's</a><a href="{pre}#geschenke">Geschenke</a><a href="#wunsch">Wunsch erzählen</a>
 </nav></header>
 <canvas id="sternenstaub" aria-hidden="true"></canvas>'''
 
 def wunschkasten(titel, text, beispiel, vorwahl=''):
     return f'''<section class="abschnitt hauch" id="wunsch" aria-labelledby="wunsch-titel"><div class="rahmen wunschkasten">
-  <div class="titel"><h2 id="wunsch-titel">{titel}</h2><p>{text}</p></div>
+  <div class="titel"><img class="zauberstab" src="bilder/zauberstab.webp" alt="" width="697" height="1055" loading="lazy"><h2 id="wunsch-titel">{titel}</h2><p>{text}</p></div>
   <form class="formular" data-wunsch novalidate>
     <label for="wunsch-feld">Dein Wunsch</label>
     <textarea id="wunsch-feld" name="wunsch" placeholder="Zum Beispiel: {html.escape(beispiel)}">{html.escape(vorwahl)}</textarea>
@@ -139,7 +139,7 @@ def fuss():
     links = ''.join(f'<li><a href="welt-{w["slug"]}.html">{w["name"]}</a></li>' for w in WELTEN)
     return f'''<footer class="fuss"><div class="rahmen">
   <div class="fuss-innen">
-    <div><img src="bilder/logo-zeile.png" alt="Geschenke-Fee" width="831" height="200"><p>Personalisierte Geschenke aus deinem Wunsch, gestaltet für jeden Artikel neu.</p></div>
+    <div><img class="fuss-logo" src="bilder/logo-voll.webp" alt="Geschenke-Fee" width="1400" height="1048" loading="lazy"><p>Personalisierte Geschenke aus deinem Wunsch, gestaltet für jeden Artikel neu.</p></div>
     <ul class="fuss-welten" aria-label="Feenwelten">{links}</ul>
   </div>
   <p class="fuss-recht" id="impressum">Impressum und Datenschutz folgen, sobald der Shop online geht.</p>
@@ -165,27 +165,8 @@ def startseite():
              was='Decke aus dem <a href="welt-pfotenreich.html">Pfotenreich</a>'),
     ]
     b0 = beispiele[0]
-    fee = open(os.path.join(HIER, 'bilder', 'fee-zeichen.svg'), encoding='utf8').read()
-    # Die Fee aus Tammys Bildzeichen; Arm und Stab bekommen eine Gruppe, damit sie schwingen koennen
-    fee = fee.replace('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Geschenke-Fee: Fee mit Zauberstab">',
-                      '<svg class="fee-figur" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" aria-hidden="true" focusable="false">')
-    fee = fee.replace('<title>Geschenke-Fee – Bildzeichen (Entwurf)</title>', '')
-    fee = fee.replace('''  <g stroke="#B5315F" stroke-width="5" stroke-linecap="round" fill="none">
-    <path d="M87 69 L106 52"/>
-    <path d="M73 70 L64 88"/>
-  </g>
-  <!-- Zauberstab mit Stern und Funken -->
-  <path d="M106 52 L121 35" stroke="#3B2333" stroke-width="2.5" stroke-linecap="round"/>
-  <path fill="#E2508A" d="M126.0 20.0''', '''  <path d="M73 70 L64 88" stroke="#B5315F" stroke-width="5" stroke-linecap="round" fill="none"/>
-  <g class="arm"><path d="M87 69 L106 52" stroke="#B5315F" stroke-width="5" stroke-linecap="round" fill="none"/>
-  <path d="M106 52 L121 35" stroke="#3B2333" stroke-width="2.5" stroke-linecap="round"/>
-  <path class="stern" fill="#E2508A" d="M126.0 20.0''')
-    fee = fee.replace('''  <g fill="#E2508A">
-    <path d="M141 14''', '''  </g>
-  <g fill="#E2508A">
-    <path d="M141 14''')
-    fee = '\n'.join(l for l in fee.splitlines() if not l.strip().startswith('<!--'))
-    assert 'class="arm"' in fee and 'class="stern"' in fee
+    # Die Fee mit dem Zauberstab aus Tammys Logo (freigestellt); .stern sitzt auf dem grossen Stern des Stabs
+    fee = '<div class="fee-figur" aria-hidden="true"><img src="bilder/fee-figur.webp" alt="" width="1500" height="1007" fetchpriority="high"><span class="stern"></span></div>'
 
     tore = '\n'.join(tor(w) for w in WELTEN)
     bento = [

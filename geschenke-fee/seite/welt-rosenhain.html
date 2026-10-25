@@ -6,14 +6,14 @@
 <title>Rosenhain | Geschenke-Fee</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Rosenhain: Geschenke für Liebe, Hochzeit, Valentinstag, gestaltet aus deinem Wunsch von der Geschenke-Fee.">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&family=Quicksand:wght@400;500;600;700&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Antonio:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&family=Quicksand:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="fee.css">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}[hidden]{display:none!important}</style>
 </head>
 <body class="welt welt-rosenhain">
 <a class="sprung" href="#inhalt">Zum Inhalt</a>
 <header class="kopf"><div class="rahmen kopf-innen">
-  <a class="marke" href="./" aria-label="Geschenke-Fee, zur Startseite"><img src="bilder/logo-zeile.png" alt="Geschenke-Fee" width="831" height="200"></a>
+  <a class="marke" href="./" aria-label="Geschenke-Fee, zur Startseite"><img class="marke-fee" src="bilder/fee-figur.webp" alt="" width="1500" height="1007"><span class="wortmarke" aria-hidden="true"><b>GESCHENKE</b><i>Fee</i></span></a>
   <nav class="navi" aria-label="Hauptmenü">
     <a class="link" href="./#welten" aria-current="page">Feenwelten</a>
     <a class="link" href="./#zauber">So geht's</a>
@@ -23,7 +23,7 @@
   </nav>
 </div>
 <nav class="menue" id="menue" hidden aria-label="Menü">
-  <a href="./#welten">Feenwelten</a><a href="./#zauber">So geht's</a><a href="./#geschenke">Geschenke</a>
+  <a href="./#welten">Feenwelten</a><a href="./#zauber">So geht's</a><a href="./#geschenke">Geschenke</a><a href="#wunsch">Wunsch erzählen</a>
 </nav></header>
 <canvas id="sternenstaub" aria-hidden="true"></canvas>
 <main id="inhalt">
@@ -53,7 +53,7 @@
 </div></section>
 
 <section class="abschnitt hauch" id="wunsch" aria-labelledby="wunsch-titel"><div class="rahmen wunschkasten">
-  <div class="titel"><h2 id="wunsch-titel">Dein Wunsch für Liebe</h2><p>Erzähl der Fee, für wen es ist und was diesen Menschen ausmacht. Du kannst tippen oder einsprechen.</p></div>
+  <div class="titel"><img class="zauberstab" src="bilder/zauberstab.webp" alt="" width="697" height="1055" loading="lazy"><h2 id="wunsch-titel">Dein Wunsch für Liebe</h2><p>Erzähl der Fee, für wen es ist und was diesen Menschen ausmacht. Du kannst tippen oder einsprechen.</p></div>
   <form class="formular" data-wunsch novalidate>
     <label for="wunsch-feld">Dein Wunsch</label>
     <textarea id="wunsch-feld" name="wunsch" placeholder="Zum Beispiel: Lea und Jonas heiraten am 12. Juni in Hamburg. Der Sternenhimmel von diesem Abend."></textarea>
@@ -78,7 +78,7 @@
 </main>
 <footer class="fuss"><div class="rahmen">
   <div class="fuss-innen">
-    <div><img src="bilder/logo-zeile.png" alt="Geschenke-Fee" width="831" height="200"><p>Personalisierte Geschenke aus deinem Wunsch, gestaltet für jeden Artikel neu.</p></div>
+    <div><img class="fuss-logo" src="bilder/logo-voll.webp" alt="Geschenke-Fee" width="1400" height="1048" loading="lazy"><p>Personalisierte Geschenke aus deinem Wunsch, gestaltet für jeden Artikel neu.</p></div>
     <ul class="fuss-welten" aria-label="Feenwelten"><li><a href="welt-sternenzauber.html">Sternenzauber</a></li><li><a href="welt-wiegenwald.html">Wiegenwald</a></li><li><a href="welt-rosenhain.html">Rosenhain</a></li><li><a href="welt-bluetenlichtung.html">Blütenlichtung</a></li><li><a href="welt-schultuetenwiese.html">Schultütenwiese</a></li><li><a href="welt-pfotenreich.html">Pfotenreich</a></li><li><a href="welt-kerzenfest.html">Kerzenfest</a></li><li><a href="welt-dankesgarten.html">Dankesgarten</a></li></ul>
   </div>
   <p class="fuss-recht" id="impressum">Impressum und Datenschutz folgen, sobald der Shop online geht.</p>

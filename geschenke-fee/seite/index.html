@@ -1,11 +1,11 @@
 <title>Geschenke-Fee</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Erzähl der Geschenke-Fee deinen Wunsch. Sie zaubert daraus ein Motiv, das es nur einmal gibt, auf Kissen, Decke, Tasse und mehr.">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&family=Quicksand:wght@400;500;600;700&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Antonio:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&family=Quicksand:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="fee.css">
 <a class="sprung" href="#inhalt">Zum Inhalt</a>
 <header class="kopf"><div class="rahmen kopf-innen">
-  <a class="marke" href="./" aria-label="Geschenke-Fee, zur Startseite"><img src="bilder/logo-zeile.png" alt="Geschenke-Fee" width="831" height="200"></a>
+  <a class="marke" href="./" aria-label="Geschenke-Fee, zur Startseite"><img class="marke-fee" src="bilder/fee-figur.webp" alt="" width="1500" height="1007"><span class="wortmarke" aria-hidden="true"><b>GESCHENKE</b><i>Fee</i></span></a>
   <nav class="navi" aria-label="Hauptmenü">
     <a class="link" href="#welten">Feenwelten</a>
     <a class="link" href="#zauber">So geht's</a>
@@ -15,7 +15,7 @@
   </nav>
 </div>
 <nav class="menue" id="menue" hidden aria-label="Menü">
-  <a href="#welten">Feenwelten</a><a href="#zauber">So geht's</a><a href="#geschenke">Geschenke</a>
+  <a href="#welten">Feenwelten</a><a href="#zauber">So geht's</a><a href="#geschenke">Geschenke</a><a href="#wunsch">Wunsch erzählen</a>
 </nav></header>
 <canvas id="sternenstaub" aria-hidden="true"></canvas>
 <main id="inhalt">
@@ -27,31 +27,7 @@
   </div>
   <div class="buehne" data-buehne>
     <script type="application/json">[{"knopf": "Emma", "wer": "Wunsch für Emma", "wunsch": "Für unsere Emma, geboren am 8. September. Ein kleiner Elefant, der auf dem Mond schläft.", "bild": "bilder/artikel/echt-kissen.webp", "alt": "Kissen mit Elefant auf dem Mond und der Schrift Willkommen auf der Welt, Emma", "was": "Kissen aus dem <a href=\"welt-wiegenwald.html\">Wiegenwald</a>"}, {"knopf": "Mia", "wer": "Wunsch für Mia", "wunsch": "Mia kommt in die Schule und liebt Füchse. Ihr Name soll groß drauf.", "bild": "bilder/artikel/echt-brotdose.webp", "alt": "Brotdose mit Fuchs und der Schrift Mia 6", "was": "Brotdose von der <a href=\"welt-schultuetenwiese.html\">Schultütenwiese</a>"}, {"knopf": "Nelli", "wer": "Wunsch für Nelli", "wunsch": "Unsere Nelli ist die Chefin im Haus. Bitte mit Bergen und Knochen.", "bild": "bilder/artikel/echt-hundedecke.webp", "alt": "Hundedecke mit Australian Shepherd und der Schrift Nelli, Chefin im Haus", "was": "Decke aus dem <a href=\"welt-pfotenreich.html\">Pfotenreich</a>"}]</script>
-    <svg class="fee-figur" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" aria-hidden="true" focusable="false">
-  
-  <g fill="#FDEAF2" stroke="#E2508A" stroke-width="2">
-    <ellipse cx="63" cy="64" rx="15" ry="27" transform="rotate(-38 63 64)"/>
-    <ellipse cx="97" cy="64" rx="15" ry="27" transform="rotate(38 97 64)"/>
-    <ellipse cx="67" cy="90" rx="9" ry="16" transform="rotate(-62 67 90)"/>
-    <ellipse cx="93" cy="90" rx="9" ry="16" transform="rotate(62 93 90)"/>
-  </g>
-  <g fill="#B5315F">
-    <circle cx="80" cy="38" r="5"/>
-    <circle cx="80" cy="51" r="10"/>
-    <path d="M80 61 C73 62 72 69 75 79 C70 92 62 108 56 123 Q80 133 104 123 C98 108 90 92 85 79 C88 69 87 62 80 61 Z"/>
-  </g>
-  <path d="M73 70 L64 88" stroke="#B5315F" stroke-width="5" stroke-linecap="round" fill="none"/>
-  <g class="arm"><path d="M87 69 L106 52" stroke="#B5315F" stroke-width="5" stroke-linecap="round" fill="none"/>
-  <path d="M106 52 L121 35" stroke="#3B2333" stroke-width="2.5" stroke-linecap="round"/>
-  <path class="stern" fill="#E2508A" d="M126.0 20.0 L128.2 25.9 L134.6 26.2 L129.6 30.2 L131.3 36.3 L126.0 32.8 L120.7 36.3 L122.4 30.2 L117.4 26.2 L123.8 25.9 Z"/>
-  </g>
-  <g fill="#E2508A">
-    <path d="M141 14 Q142.68 18.32 147 20 Q142.68 21.68 141 26 Q139.32 21.68 135 20 Q139.32 18.32 141 14 Z"/>
-    <path d="M136 41 Q137.12 43.88 140 45 Q137.12 46.12 136 49 Q134.88 46.12 132 45 Q134.88 43.88 136 41 Z"/>
-    <path d="M116 12.5 Q116.98 15.02 119.5 16 Q116.98 16.98 116 19.5 Q115.02 16.98 112.5 16 Q115.02 15.02 116 12.5 Z"/>
-    <circle cx="146" cy="34" r="1.8"/><circle cx="131" cy="11" r="1.5"/>
-  </g>
-</svg>
+    <div class="fee-figur" aria-hidden="true"><img src="bilder/fee-figur.webp" alt="" width="1500" height="1007" fetchpriority="high"><span class="stern"></span></div>
     <div class="funken-ebene" aria-hidden="true"></div>
     <figure class="buehne-karte" aria-label="Beispiel: aus einem Wunsch wird ein Geschenk">
       <blockquote class="wunsch"><span class="wer">Wunsch für Emma</span><span class="wunsch-text">Für unsere Emma, geboren am 8. September. Ein kleiner Elefant, der auf dem Mond schläft.</span></blockquote>
@@ -139,7 +115,7 @@
 </div></section>
 
 <section class="abschnitt hauch" id="wunsch" aria-labelledby="wunsch-titel"><div class="rahmen wunschkasten">
-  <div class="titel"><h2 id="wunsch-titel">Was soll die Fee für dich zaubern?</h2><p>Erzähl, für wen es ist und worauf es soll. Du kannst tippen oder einsprechen.</p></div>
+  <div class="titel"><img class="zauberstab" src="bilder/zauberstab.webp" alt="" width="697" height="1055" loading="lazy"><h2 id="wunsch-titel">Was soll die Fee für dich zaubern?</h2><p>Erzähl, für wen es ist und worauf es soll. Du kannst tippen oder einsprechen.</p></div>
   <form class="formular" data-wunsch novalidate>
     <label for="wunsch-feld">Dein Wunsch</label>
     <textarea id="wunsch-feld" name="wunsch" placeholder="Zum Beispiel: Für Opa Klaus, der jeden Morgen den Fuchs im Garten beobachtet. Am liebsten auf einer Tasse."></textarea>
@@ -154,7 +130,7 @@
 </main>
 <footer class="fuss"><div class="rahmen">
   <div class="fuss-innen">
-    <div><img src="bilder/logo-zeile.png" alt="Geschenke-Fee" width="831" height="200"><p>Personalisierte Geschenke aus deinem Wunsch, gestaltet für jeden Artikel neu.</p></div>
+    <div><img class="fuss-logo" src="bilder/logo-voll.webp" alt="Geschenke-Fee" width="1400" height="1048" loading="lazy"><p>Personalisierte Geschenke aus deinem Wunsch, gestaltet für jeden Artikel neu.</p></div>
     <ul class="fuss-welten" aria-label="Feenwelten"><li><a href="welt-sternenzauber.html">Sternenzauber</a></li><li><a href="welt-wiegenwald.html">Wiegenwald</a></li><li><a href="welt-rosenhain.html">Rosenhain</a></li><li><a href="welt-bluetenlichtung.html">Blütenlichtung</a></li><li><a href="welt-schultuetenwiese.html">Schultütenwiese</a></li><li><a href="welt-pfotenreich.html">Pfotenreich</a></li><li><a href="welt-kerzenfest.html">Kerzenfest</a></li><li><a href="welt-dankesgarten.html">Dankesgarten</a></li></ul>
   </div>
   <p class="fuss-recht" id="impressum">Impressum und Datenschutz folgen, sobald der Shop online geht.</p>

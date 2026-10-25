@@ -1,10 +1,12 @@
 /* Geschenke-Fee: Sternenstaub, Zauberbuehne, Welten-Zauber, Wunschkasten.
-   Alles ohne Bibliothek. Bei "weniger Bewegung" bleibt alles still und lesbar. */
+   Alles ohne Bibliothek. Bei "weniger Bewegung" laeuft alles sanfter (halbes Tempo), nie ganz aus;
+   dazu ein Knopf "Bewegung anhalten". */
 (function () {
   'use strict';
   var ruhig = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var feineMaus = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-  var FARBEN = ['#C9A24B', '#E2508A', '#F6B9D0', '#D9B66A', '#B5315F'];
+  var FARBEN = ['#E3B04B', '#C9B1E6', '#A8D2E8', '#F3D488', '#E3B04B'];
+  var tempo = ruhig ? .45 : 1, stopp = false, neustart = [];
 
   function zufall(a, b) { return a + Math.random() * (b - a); }
 
@@ -22,10 +24,10 @@
   /* 1. Sternenstaub ueber der ganzen Seite (Markus: "der staendig auf der Seite runterfaellt") */
   function sternenstaub() {
     var c = document.getElementById('sternenstaub');
-    if (!c || ruhig) return;
+    if (!c) return;
     var ctx = c.getContext('2d'), dpr = Math.min(window.devicePixelRatio || 1, 2), w, h;
     var teile = [], spur = [], laeuft = true;
-    var menge = window.innerWidth < 760 ? 34 : 64;
+    var menge = ((window.innerWidth < 760 ? 34 : 64) * (ruhig ? .6 : 1)) | 0;
     function groesse() { w = window.innerWidth; h = window.innerHeight; c.width = w * dpr; c.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
     function neu(oben) {
       return { x: zufall(0, w), y: oben ? zufall(-40, -4) : zufall(0, h), r: Math.random() < .22 ? zufall(2.4, 4.2) : zufall(.7, 1.7),
@@ -46,11 +48,11 @@
       }, { passive: true });
     }
     function schritt() {
-      if (!laeuft) return;
+      if (!laeuft || stopp) return;
       ctx.clearRect(0, 0, w, h);
       for (var i = 0; i < teile.length; i++) {
         var p = teile[i];
-        p.t += .02; p.y += p.v; p.x += Math.sin(p.t + p.schw) * p.amp * .4;
+        p.t += .02 * tempo; p.y += p.v * tempo; p.x += Math.sin(p.t + p.schw) * p.amp * .4;
         if (p.y > h + 10) teile[i] = neu(true);
         var glanz = p.r > 2 ? (.55 + .45 * Math.sin(p.t * 2.4 + p.schw)) : 1;
         ctx.globalAlpha = p.a * glanz;
@@ -68,13 +70,14 @@
       ctx.globalAlpha = 1;
       requestAnimationFrame(schritt);
     }
+    neustart.push(function () { requestAnimationFrame(schritt); });
     requestAnimationFrame(schritt);
   }
 
   /* Funkenflug von einem Punkt zu einem Ziel (Zauberstab -> Geschenk) */
   function funkenFlug(ebene, von, nach, dauer) {
-    if (ruhig || !ebene) return;
-    var stueck = 26;
+    if (stopp || !ebene) return;
+    var stueck = ruhig ? 12 : 26;
     for (var i = 0; i < stueck; i++) {
       (function (i) {
         var f = document.createElement('span');
@@ -114,7 +117,7 @@
       clearInterval(tipp);
       var img = new Image();
       img.src = d.bild; img.alt = d.alt; img.width = 640; img.height = 480;
-      if (sofort || ruhig) {
+      if (sofort || stopp) {
         wunsch.textContent = d.wunsch;
         bildBox.innerHTML = ''; bildBox.appendChild(img);
         return;
@@ -142,7 +145,7 @@
     }
     function weiter() {
       clearTimeout(uhr);
-      if (ruhig || angehalten || !sichtbar) return;
+      if (stopp || angehalten || !sichtbar) return;
       uhr = setTimeout(function () { zeigen((nr + 1) % daten.length); weiter(); }, 7600);
     }
     knoepfe.forEach(function (k, j) { k.addEventListener('click', function () { zeigen(j); weiter(); }); });
@@ -170,7 +173,6 @@
 
   /* 4. Weltentore: beim Antippen ein kleiner Funkenregen aus dem Bogen */
   function tore() {
-    if (ruhig) return;
     document.querySelectorAll('.tor').forEach(function (t) {
       t.addEventListener('pointerenter', function (e) {
         if (e.pointerType !== 'mouse') return;
@@ -239,17 +241,17 @@
     pfote: function (ctx, x, y, r) { ctx.beginPath(); ctx.ellipse(x, y + r * .35, r * .55, r * .45, 0, 0, Math.PI * 2); [[-.55, -.25], [-.2, -.6], [.2, -.6], [.55, -.25]].forEach(function (p) { ctx.moveTo(x + p[0] * r + r * .2, y + p[1] * r); ctx.ellipse(x + p[0] * r, y + p[1] * r, r * .2, r * .25, 0, 0, Math.PI * 2); }); }
   };
   var ZAUBER = {
-    schnee:   { form: 'flocke', farben: ['#FFFFFF', '#FFFFFF', '#FDEAF2'], menge: 70, r: [1.2, 3.4], v: [.3, .9], richtung: 1, extra: 'stern' },
-    sterne:   { form: 'stern', farben: ['#D9B66A', '#C9A24B', '#FFFFFF'], menge: 26, r: [2.5, 5.5], v: [.12, .35], richtung: 1, glanz: true },
-    herzen:   { form: 'herz', farben: ['#E2508A', '#F6B9D0', '#B5315F'], menge: 18, r: [4, 9], v: [.25, .6], richtung: -1, extra: 'blatt' },
-    blueten:  { form: 'blatt', farben: ['#F6B9D0', '#FFFFFF', '#E2508A'], menge: 30, r: [3, 6.5], v: [.3, .7], richtung: 1, dreht: true },
-    konfetti: { form: 'konfetti', farben: ['#E2508A', '#F6B9D0', '#C9A24B', '#B5315F', '#9CC3A0'], menge: 46, r: [2.5, 5], v: [.5, 1.2], richtung: 1, dreht: true },
-    blaetter: { form: 'blatt', farben: ['#9CB59A', '#F6B9D0', '#E2508A', '#C9A24B'], menge: 22, r: [4, 7], v: [.3, .65], richtung: 1, dreht: true, extra: 'gluehen' },
-    pfoten:   { form: 'herz', farben: ['#F6B9D0', '#E2508A'], menge: 10, r: [4, 7], v: [.2, .45], richtung: -1, pfoten: true }
+    schnee:   { form: 'flocke', farben: ['#FFFFFF', '#FFFFFF', '#EDE4F7'], menge: 70, r: [1.2, 3.4], v: [.3, .9], richtung: 1, extra: 'stern' },
+    sterne:   { form: 'stern', farben: ['#F3D488', '#E3B04B', '#FFFFFF'], menge: 26, r: [2.5, 5.5], v: [.12, .35], richtung: 1, glanz: true },
+    herzen:   { form: 'herz', farben: ['#D9A0C4', '#C9B1E6', '#E3B04B'], menge: 18, r: [4, 9], v: [.25, .6], richtung: -1, extra: 'blatt' },
+    blueten:  { form: 'blatt', farben: ['#F5C9D9', '#FFFFFF', '#C9B1E6'], menge: 30, r: [3, 6.5], v: [.3, .7], richtung: 1, dreht: true },
+    konfetti: { form: 'konfetti', farben: ['#E3B04B', '#C9B1E6', '#A8D2E8', '#7A9E92', '#F5C9D9'], menge: 46, r: [2.5, 5], v: [.5, 1.2], richtung: 1, dreht: true },
+    blaetter: { form: 'blatt', farben: ['#9CB59A', '#7A9E92', '#E3B04B', '#C9B1E6'], menge: 22, r: [4, 7], v: [.3, .65], richtung: 1, dreht: true, extra: 'gluehen' },
+    pfoten:   { form: 'herz', farben: ['#C9B1E6', '#E3B04B'], menge: 10, r: [4, 7], v: [.2, .45], richtung: -1, pfoten: true }
   };
   function weltZauber() {
     var d = document.querySelector('[data-zauber]');
-    if (!d || ruhig) return;
+    if (!d) return;
     var art = ZAUBER[d.getAttribute('data-zauber')]; if (!art) return;
     var c = document.createElement('canvas'); d.appendChild(c);
     var ctx = c.getContext('2d'), dpr = Math.min(window.devicePixelRatio || 1, 2), w, h, teile = [], tapsen = [], laeuft = true, t0 = performance.now();
@@ -262,18 +264,18 @@
     for (var i = 0; i < art.menge; i++) teile.push(neu(true));
     document.addEventListener('visibilitychange', function () { laeuft = !document.hidden; if (laeuft) requestAnimationFrame(schritt); });
     function schritt(jetzt) {
-      if (!laeuft) return;
+      if (!laeuft || stopp) return;
       ctx.clearRect(0, 0, w, h);
       for (var i = 0; i < teile.length; i++) {
         var p = teile[i];
-        p.t += .016; p.y += p.v * art.richtung; p.x += Math.sin(p.t * 1.3 + p.w) * .35; p.w += p.dw;
+        p.t += .016 * tempo; p.y += p.v * art.richtung * tempo; p.x += Math.sin(p.t * 1.3 + p.w) * .35; p.w += p.dw;
         if ((art.richtung > 0 && p.y > h + 14) || (art.richtung < 0 && p.y < -14)) teile[i] = neu(false);
         var a = p.a;
         if (art.glanz) a *= .45 + .55 * Math.sin(p.t * 3 + p.w);
         if (art.richtung < 0) a *= Math.min(1, p.y / (h * .35));
         ctx.globalAlpha = Math.max(0, a); ctx.fillStyle = p.f;
         FORMEN[art.form](ctx, p.x, p.y, p.r, art.dreht ? p.w : 0); ctx.fill();
-        if (p.f === '#FFFFFF' || p.f === '#FDEAF2') { ctx.globalAlpha = Math.max(0, a * .5); ctx.strokeStyle = '#F6B9D0'; ctx.lineWidth = .6; ctx.stroke(); }
+        if (p.f === '#FFFFFF' || p.f === '#EDE4F7') { ctx.globalAlpha = Math.max(0, a * .5); ctx.strokeStyle = '#C9B1E6'; ctx.lineWidth = .6; ctx.stroke(); }
       }
       if (art.pfoten) {
         /* Eine Spur kleiner Pfoten laeuft ueber den weissen Grund unten im Bild */
@@ -292,7 +294,21 @@
       ctx.globalAlpha = 1;
       requestAnimationFrame(schritt);
     }
+    neustart.push(function () { requestAnimationFrame(schritt); });
     requestAnimationFrame(schritt);
+  }
+
+  /* 8. Knopf: Bewegung anhalten (bei jeder Einstellung da) */
+  function bewegungsKnopf() {
+    var k = document.createElement('button');
+    k.type = 'button'; k.className = 'bewegung'; k.setAttribute('aria-pressed', 'false'); k.textContent = 'Bewegung anhalten';
+    k.addEventListener('click', function () {
+      stopp = !stopp;
+      document.documentElement.classList.toggle('bewegung-aus', stopp);
+      k.setAttribute('aria-pressed', String(stopp)); k.textContent = stopp ? 'Bewegung starten' : 'Bewegung anhalten';
+      if (!stopp) neustart.forEach(function (f) { f(); });
+    });
+    document.body.appendChild(k);
   }
 
   sternenstaub();
@@ -302,4 +318,5 @@
   wunschkasten();
   menue();
   weltZauber();
+  bewegungsKnopf();
 })();
