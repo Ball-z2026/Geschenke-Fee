@@ -1,5 +1,22 @@
 # Motto Otto – Arbeitsregeln
 
+## Wiki: Kommandozentrale (gilt für jede Sitzung)
+
+Dieses Repo gehört zum Projekt `geschenke-fee`. Alles, was wir hier tun, wird zentral im Wiki
+`Ball-z2026/kommandozentrale` festgehalten, damit es auf jedem Gerät und in jeder neuen Sitzung beim Projekt bleibt.
+
+- **Start:** Wiki holen (`add_repo` Ball-z2026/kommandozentrale, dann `git clone --depth 1`, oder lokal `git pull`)
+  und `projekte/geschenke-fee/README.md`, die obersten Einträge von `log.md` und `wissen.md` lesen.
+- **Ende** (jede Sitzung, die etwas gefragt, entschieden oder geändert hat): Eintrag oben in
+  `projekte/geschenke-fee/log.md` nach `SITZUNG.md` (Chat-Link, Fragen, Ergebnis, offen). Neues Wissen nach
+  `wissen.md`, neue Tools nach `tools.md`. Dann `python3 seite/bauen.py`, committen, auf `main` pushen und die
+  Seite https://claude.ai/artifact/M1ndqMiTdHBmXg1MwbnFir neu veröffentlichen (siehe `seite/LINK.md`).
+- **Andere Projekte** nur auf Ansage lesen („schau bei Motto Otto nach“, „nimm das Tool vom Bildserver“): deren
+  Ordner im Wiki lesen, bei Bedarf deren Repo per `add_repo` dazuholen. Geschrieben wird nur in den eigenen Ordner
+  und in `wissen/`.
+- Keine Passwörter, Tokens, API-Schlüssel oder Kundendaten ins Wiki.
+- Ein Push ins Wiki löst kein Deploy aus; die Regeln dieses Repos zu Pushes gelten hier nur für dieses Repo.
+
 ## DIESES REPO IST GESCHENKE-FEE.DE (Markus, 19. Okt. 2026; eigenes Repo seit 23. Okt.)
 
 Ball-z2026/geschenke-fee ist die Kopie des Zweigs `geschenke-fee` aus motto-otto. Hier ist `main` Tammys Projekt -
