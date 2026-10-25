@@ -111,9 +111,12 @@ async function pullImage(result) {
 }
 
 // Geschenke-Fee (Markus, 25. Okt.: "erst mal mit Gemini arbeiten"): KI_ANBIETER=gemini malt ueber das Werkzeug
-// nano_banana des Bilddienstes (Gemini-Bildmodell). Gemini liefert KEINEN Alphakanal - und Freistellen ist verboten
-// (6. Okt.). Deshalb geht nur, was einen Grund braucht (Flachware, Szene, Foto), zu Gemini; ein transparentes Motiv
-// bleibt beim bisherigen Bildmodell, bis entschieden ist, wie Textil-Motive mit Gemini entstehen sollen.
+// nano_banana des Bilddienstes (Gemini-Bildmodell). Gemini ENTWIRFT alles. Gemini liefert aber KEINEN Alphakanal, und
+// Freistellen ist verboten (6. Okt.). Markus, 25. Okt.: "alles auf Gemini entwerfen und wenn etwas ausdruecklich per DTF
+// gewuenscht ist, das Motiv wie in unserem Konfigurator einfach nachbauen mit OpenAI in hoechster Druckstufe". Also:
+// ein transparentes Motiv (= DTF/Textil) entwirft Gemini auf ruhigem Grund, danach baut das bisherige Bildmodell genau
+// diesen Entwurf transparent nach (edit_ballz_image, Entwurf als Bild 1, Stufe max). Nur Auftraege mit Maske (Logo
+// stehen lassen) gehen direkt an das bisherige Modell - Gemini kennt keine Maske.
 const MIT_GEMINI = () => String(process.env.KI_ANBIETER || '').toLowerCase() === 'gemini';
 const SEITEN = [['1:1', 1], ['2:3', 2 / 3], ['3:2', 3 / 2], ['3:4', 3 / 4], ['4:3', 4 / 3], ['4:5', 4 / 5], ['5:4', 5 / 4], ['9:16', 9 / 16], ['16:9', 16 / 9], ['21:9', 21 / 9]];
 export function geminiFormat(size) {
@@ -121,9 +124,11 @@ export function geminiFormat(size) {
   const v = m ? Number(m[1]) / Number(m[2]) : 1;
   return SEITEN.reduce((a, b) => (Math.abs(Math.log(b[1] / v)) < Math.abs(Math.log(a[1] / v)) ? b : a))[0];
 }
+// 4K = hoechste Stufe von Nano Banana Pro (rund 16 Megapixel, 4096 x 4096 bei 1:1, 4800 x 3584 bei 4:3). 2K = rund
+// 4 Megapixel. Fuer Kissen 40 x 40 cm reicht erst 4K fuer rund 260 dpi; deshalb ist 4K die Vorgabe.
 async function viaGemini(url, { prompt, size, bilder64 = [], referenceImageUrls = [] }) {
   const args = {
-    prompt, aspect_ratio: geminiFormat(size), image_size: process.env.GEMINI_IMAGE_SIZE || '2K', inline_image: false,
+    prompt, aspect_ratio: geminiFormat(size), image_size: process.env.GEMINI_IMAGE_SIZE || '4K', inline_image: false,
     ...(process.env.GEMINI_IMAGE_MODEL ? { model: process.env.GEMINI_IMAGE_MODEL } : {})
   };
   if (bilder64.length) args.reference_images_base64 = bilder64.slice(0, 8);
@@ -140,6 +145,25 @@ async function viaGemini(url, { prompt, size, bilder64 = [], referenceImageUrls 
   const png = m[1] === 'png' ? roh : await sharp(roh).png().toBuffer();
   if (png.length < 100 || png[0] !== 0x89 || png[1] !== 0x50) throw new Error('Bild-Download (Gemini): keine Bilddaten');
   return { png, url: m[0] };
+}
+
+const ENTWURF_ZUSATZ = '\n\nTHIS IS THE DESIGN DRAFT. Paint the motif on ONE flat, calm, plain background (pure white, or pure black '
+  + 'for a light motif) with clear space around it - no scene, no texture, no shadow under it. It will be rebuilt as a '
+  + 'transparent print file, so keep every element crisp and separate from the ground.';
+const NACHBAU_AUFTRAG = 'REBUILD THIS DESIGN AS A PRINT FILE FOR DTF. Image 1 is the approved design draft. Recreate it EXACTLY: same '
+  + 'composition, same elements, same colours, same lettering letter for letter, same style. Do not add, remove or '
+  + 'redesign anything. The draft\'s plain background is NOT part of the design - it becomes fully transparent. Crisp '
+  + 'edges, no halo, no soft fringe, no shadow on the ground.\n\nThe original order for reference:\n';
+async function entwurfUndNachbau(url, { prompt, size, quality, model, bilder64 = [], referenceImageUrls = [] }) {
+  const entwurf = await viaGemini(url, { prompt: prompt + ENTWURF_ZUSATZ, size, bilder64, referenceImageUrls });
+  console.log('Gemini-Entwurf fertig (' + entwurf.url + ') - Nachbau als DTF-Datei, Stufe ' + (quality || 'max'));
+  const args = {
+    prompt: NACHBAU_AUFTRAG + prompt, size, quality: quality || 'max', task: 'design', output_format: 'png', inline_image: false,
+    image_base64: entwurf.png.toString('base64'), mime_type: 'image/png', background: 'transparent', input_fidelity: 'high'
+  };
+  if (model) args.model = model;
+  const fertig = await pullImage(await callTool(url, 'edit_ballz_image', args));
+  return { ...fertig, entwurf: entwurf.url };
 }
 
 /** Neues Bild aus reinem Text. */
@@ -160,7 +184,9 @@ export async function generateViaBallz(url, { prompt, size, quality, model, task
   if (args.task === 'design') args.background = 'transparent';
   else if (background) args.background = background;   // 7. Okt.: Szenen-Fotos bestellen ausdruecklich 'opaque'
   if (model) args.model = model;
-  if (MIT_GEMINI() && args.background !== 'transparent') return viaGemini(url, { prompt, size });
+  if (MIT_GEMINI()) return args.background === 'transparent'
+    ? entwurfUndNachbau(url, { prompt, size, quality, model })
+    : viaGemini(url, { prompt, size });
   return pullImage(await callTool(url, 'generate_ballz_image', args));
 }
 
@@ -190,8 +216,9 @@ export async function editViaBallz(url, { prompt, size, quality, imageBase64, mi
   // und erst recht keins unter einer abrufbaren URL).
   if (Array.isArray(referenceImagesBase64) && referenceImagesBase64.length) args.reference_images_base64 = referenceImagesBase64.slice(0, 8);
   // Gemini kennt keine Maske: was eine Maske braucht (Logo stehen lassen), bleibt beim bisherigen Modell.
-  if (MIT_GEMINI() && args.background !== 'transparent' && !maskBase64) {
-    return viaGemini(url, { prompt, size, bilder64: [imageBase64, ...(args.reference_images_base64 || [])].filter(Boolean), referenceImageUrls: args.reference_image_urls || [] });
+  if (MIT_GEMINI() && !maskBase64) {
+    const mit = { prompt, size, bilder64: [imageBase64, ...(args.reference_images_base64 || [])].filter(Boolean), referenceImageUrls: args.reference_image_urls || [] };
+    return args.background === 'transparent' ? entwurfUndNachbau(url, { ...mit, quality, model }) : viaGemini(url, mit);
   }
   return pullImage(await callTool(url, 'edit_ballz_image', args));
 }
