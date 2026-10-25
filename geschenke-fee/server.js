@@ -52,7 +52,7 @@ async function malen(prompt) {
   const inhalt = s.daten && s.daten.result && s.daten.result.content || [];
   const text = inhalt.map(b => b.text || '').join(' ');
   const u = text.match(/https:\/\/[^\s"')]+\.(?:jpg|jpeg|png|webp)/i);
-  if (!u) throw new Error('Kein Bild im Ergebnis');
+  if (!u) throw new Error('Kein Bild im Ergebnis: ' + JSON.stringify(s.daten || null).slice(0, 400));
   return u[0];
 }
 
