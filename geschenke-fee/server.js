@@ -9,7 +9,9 @@ import { fileURLToPath } from 'node:url';
 const ORT = fileURLToPath(new URL('.', import.meta.url));
 const SEITE = join(ORT, 'seite');
 const PORT = process.env.PORT || 8080;
-const BILD_URL = process.env.BALLZ_MCP_URL || '';
+const BILD_URL = process.env.BALLZ_HOST
+  ? 'https://' + process.env.BALLZ_HOST.replace(/^https?:\/\//, '').replace(/\/+$/, '') + '/' + String(process.env.BALLZ_PFAD || '').replace(/^\/+/, '')
+  : (process.env.BALLZ_MCP_URL || '');
 const BILD_TOKEN = process.env.BALLZ_MCP_TOKEN || '';
 const PRO_IP = Number(process.env.WUENSCHE_PRO_IP || 8);          // Bilder je IP und Stunde
 const PRO_TAG = Number(process.env.WUENSCHE_PRO_TAG || 150);      // Bilder insgesamt je Tag
