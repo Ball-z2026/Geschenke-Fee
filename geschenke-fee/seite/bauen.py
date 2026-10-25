@@ -120,6 +120,13 @@ def kopf(aktiv='', start=False):
 </nav></header>
 <canvas id="sternenstaub" aria-hidden="true"></canvas>'''
 
+def katalog_json():
+    k = {'welten': {w['slug']: w['name'] for w in WELTEN}, 'anlaesse': {w['slug']: w['anlass'] for w in WELTEN}, 'artikel': []}
+    for w in WELTEN:
+        for t, d, _b in w['artikel']:
+            k['artikel'].append(dict(id=d, name=t, welt=w['slug'], w=masse(d)[0], h=masse(d)[1]))
+    return json.dumps(k, ensure_ascii=False).replace('</', '<\\/')
+
 def wunschkasten(titel, text, beispiel, vorwahl=''):
     return f'''<section class="abschnitt hauch" id="wunsch" aria-labelledby="wunsch-titel"><div class="rahmen wunschkasten">
   <div class="titel"><img class="zauberstab" src="bilder/zauberstab.webp" alt="" width="697" height="1055" loading="lazy"><h2 id="wunsch-titel">{titel}</h2><p>{text}</p></div>
@@ -133,6 +140,8 @@ def wunschkasten(titel, text, beispiel, vorwahl=''):
     </div>
     <p class="antwort" aria-live="polite"></p>
   </form>
+  <div class="ergebnis" data-ergebnis hidden aria-live="polite"></div>
+  <script type="application/json" id="katalog">{katalog_json()}</script>
 </div></section>'''
 
 def fuss():

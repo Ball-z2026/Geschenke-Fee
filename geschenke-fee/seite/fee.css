@@ -347,3 +347,33 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 @media (max-width: 560px) { .navi .knopf.klein { display: none; } }
 @media (min-width: 861px) { .hero-text { align-self: start; padding-top: clamp(40px, 7vw, 100px); } }
 .bewegung { min-height: 36px; padding: 0 14px; font-size: 13px; opacity: .94; }
+
+/* Ergebnis: was die Fee aus dem Wunsch macht */
+.ergebnis { grid-column: 1 / -1; margin-top: 8px; background: var(--weiss); border-radius: 28px; padding: clamp(20px, 3vw, 34px); box-shadow: var(--schatten); display: grid; gap: 22px; border: 1.5px solid var(--flieder); animation: erscheinen .7s cubic-bezier(.2,.8,.2,1) both; }
+.ergebnis[hidden] { display: none; }
+@keyframes erscheinen { from { opacity: 0; transform: translateY(18px) scale(.985); } to { opacity: 1; transform: none; } }
+.erg-fee { display: grid; gap: 6px; }
+.erg-name { font: 600 13px/1 var(--text); letter-spacing: .14em; text-transform: uppercase; color: var(--salbei-dunkel); }
+.erg-blase { font: italic 500 clamp(21px, 2.4vw, 28px)/1.35 'Cormorant Garamond', serif; color: var(--salbei-tief); max-width: 46ch; }
+.erg-spalten { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 20px; }
+.erg-motiv { position: relative; border-radius: 22px; padding: clamp(18px, 2.6vw, 28px); background: linear-gradient(140deg, var(--m1), var(--m2) 70%, var(--m3)); display: grid; gap: 12px; align-content: start; overflow: hidden; }
+.erg-marke { font: 600 12px/1 var(--text); letter-spacing: .14em; text-transform: uppercase; color: var(--salbei-tief); }
+.erg-schrift { font: 400 clamp(36px, 5vw, 58px)/1.1 'Great Vibes', cursive; color: var(--tinte); }
+.erg-text { font-size: 17px; line-height: 1.55; color: var(--tinte); }
+.erg-stimmung { justify-self: start; font: 600 13px/1 var(--text); padding: 7px 12px; border-radius: 99px; background: rgba(255,255,255,.65); color: var(--salbei-tief); }
+.erg-farben { display: flex; gap: 8px; } .erg-farben span { width: 28px; height: 28px; border-radius: 50%; border: 2px solid rgba(255,255,255,.9); box-shadow: 0 1px 4px rgba(46,58,52,.2); }
+.erg-seite { display: grid; gap: 14px; align-content: start; }
+.erg-fakten { display: grid; grid-template-columns: auto 1fr; gap: 8px 14px; font-size: 16px; }
+.erg-fakten dt { color: var(--grau); font-weight: 600; } .erg-fakten dd { color: var(--tinte); font-weight: 600; }
+.erg-seite .knopf { justify-self: start; }
+.erg-titel { font: 600 22px/1.2 'Cormorant Garamond', serif; color: var(--salbei-tief); }
+.erg-regal { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
+.erg-artikel { margin: 0; border-radius: 16px; overflow: hidden; background: var(--hauch); }
+.erg-artikel img { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; display: block; }
+.erg-artikel figcaption { padding: 8px 12px 10px; font-weight: 700; font-size: 14px; color: var(--salbei-tief); }
+.erg-hinweis { font-size: 14px; color: var(--grau); }
+.erg-zeile { display: flex; flex-wrap: wrap; gap: 10px; }
+.erg-zeile .knopf[disabled] { opacity: .55; cursor: not-allowed; }
+.formular.zaubert textarea { opacity: .7; }
+.zauberstab.zaubert { animation: wippen .5s ease-in-out infinite alternate; }
+@media (max-width: 860px) { .erg-spalten { grid-template-columns: 1fr; } .wunschkasten { grid-template-columns: 1fr; } }

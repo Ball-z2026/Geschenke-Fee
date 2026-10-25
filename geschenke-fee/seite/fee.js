@@ -209,14 +209,156 @@
       }
       form.addEventListener('submit', function (e) {
         e.preventDefault();
-        if (!feld.value.trim()) { antwort.textContent = 'Erzähl der Fee zuerst, für wen das Geschenk ist.'; feld.focus(); return; }
-        antwort.textContent = 'Danke! Das ist eine Vorschau der Seite. Sobald der Shop angeschlossen ist, entsteht hier aus deinem Wunsch dein Motiv.';
-        var knopf = form.querySelector('[type="submit"]'), r = knopf.getBoundingClientRect();
-        var ebene = document.querySelector('.funken-seite');
-        if (!ebene) { ebene = document.createElement('div'); ebene.className = 'funken-seite'; ebene.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:45'; document.body.appendChild(ebene); }
-        funkenFlug(ebene, { x: r.left + r.width / 2, y: r.top + r.height / 2 }, { x: r.left + r.width / 2, y: r.top - 120 }, 1000);
+        var text = feld.value.trim();
+        if (!text) { antwort.textContent = 'Erzähl der Fee zuerst, für wen das Geschenk ist.'; feld.focus(); return; }
+        if (text.length < 12) { antwort.textContent = 'Das ist der Fee noch zu kurz. Erzähl ihr ein bisschen mehr: für wen, wozu, was er oder sie mag.'; feld.focus(); return; }
+        zaubern(form, text);
       });
     });
+  }
+
+  /* Der Wunsch wird gelesen: Claude (falls erreichbar), sonst die eigene Auswertung der Seite */
+  var WELT_WOERTER = [
+    ['sternenzauber', /weihnacht|advent|nikolaus|winter|schnee|christbaum|silvester/i],
+    ['wiegenwald', /geboren|geburt|baby|taufe|neugeboren|nachwuchs|schwanger|storch/i],
+    ['rosenhain', /hochzeit|heirat|verlob|valentin|liebe|jahrestag|paar|trauung/i],
+    ['bluetenlichtung', /muttertag|mama|mutti|mutter|oma|vatertag/i],
+    ['schultuetenwiese', /einschul|schule|schultüte|kita|kindergarten|abc-schütze/i],
+    ['pfotenreich', /hund|katze|haustier|pferd|kater|welpe|hase|tier/i],
+    ['dankesgarten', /danke|rente|ruhestand|abschied|erzieher|lehrer|verabschied|kollege/i],
+    ['kerzenfest', /geburtstag|runder|jubil|\d0\.|feiert|party|40|50|60|70|80/i]
+  ];
+  function lokaleAuswertung(text, katalog) {
+    var welt = 'kerzenfest';
+    for (var i = 0; i < WELT_WOERTER.length; i++) if (WELT_WOERTER[i][1].test(text)) { welt = WELT_WOERTER[i][0]; break; }
+    var m = text.match(/(?:[Ff]ür|[Ff]uer|[Vv]on|[Aa]n)\s+(?:unsere[rnm]?|meine[nrm]?|den|die|das|dem|der)?\s*((?:(?:Opa|Oma|Papa|Mama|Onkel|Tante|Herr|Frau)\s+)?[A-ZÄÖÜ][a-zäöüß]+(?:\s+(?:und|&)\s+[A-ZÄÖÜ][a-zäöüß]+)?)/);
+    var name = m ? m[1] : (text.match(/\b[A-ZÄÖÜ][a-zäöüß]{2,}\b/g) || []).filter(function (w) { return !/^(Für|Wir|Ich|Unser|Unsere|Mein|Meine|Bitte|Am|Der|Die|Das|Ein|Eine)$/.test(w); })[0] || '';
+    var satz = text.split(/[.!?]/)[0].trim();
+    return {
+      welt: welt, fuer: name, anlass: katalog.anlaesse[welt],
+      motiv: satz.length > 8 ? satz + '.' : text,
+      schrift: name || '',
+      farben: ['#F6F0F8', '#D5C4EE', '#E3B04B'], stimmung: '',
+      artikel: katalog.artikel.filter(function (a) { return a.welt === welt; }).slice(0, 4).map(function (a) { return a.id; }),
+      fee: name ? 'Das ist ein schöner Wunsch für ' + name + '. Ich habe ihn gelesen und die Welt dafür gefunden.' : 'Das ist ein schöner Wunsch. Ich habe ihn gelesen und die Welt dafür gefunden.',
+      lokal: true
+    };
+  }
+
+  function claudeFragen(text, katalog) {
+    if (!window.claude || typeof window.claude.use !== 'function') return Promise.resolve(null);
+    return window.claude.use('sample').then(function (sample) {
+      if (!sample) return null;
+      var liste = katalog.artikel.map(function (a) { return a.id + ' = ' + a.name + ' (Welt ' + a.welt + ')'; }).join('\n');
+      var welten = Object.keys(katalog.welten).map(function (s) { return s + ' = ' + katalog.anlaesse[s]; }).join('\n');
+      var auftrag =
+        'Du bist die Geschenke-Fee, eine warme, freundliche Figur in einem Shop für personalisierte Geschenke. Eine Kundin oder ein Kunde hat dir einen Wunsch erzählt. ' +
+        'Lies ihn genau und antworte NUR mit einem JSON-Objekt, ohne Text davor oder danach, mit diesen Feldern:\n' +
+        '{"welt": "<Slug einer Welt aus der Liste>", "fuer": "<für wen, kurz, z. B. Opa Klaus>", "anlass": "<Anlass in 2 bis 4 Wörtern>", ' +
+        '"motiv": "<2 bis 3 Sätze auf Deutsch: was auf dem Geschenk zu sehen ist, konkret und bildlich, mit allem, was die Person erzählt hat>", ' +
+        '"schrift": "<kurzer Text, der auf dem Geschenk stehen soll, oder leer>", "farben": ["<hex>", "<hex>", "<hex>"] (drei zum Motiv passende, sanfte Farben), ' +
+        '"stimmung": "<ein Wort>", "artikel": ["<3 bis 5 IDs aus der Artikelliste, die zum Wunsch passen, wichtigste zuerst>"], ' +
+        '"fee": "<ein bis zwei warme Sätze der Fee an den Kunden, per Du, mit Bezug auf Details aus dem Wunsch, ohne Ausrufezeichen-Flut>"}\n\n' +
+        'Welten:\n' + welten + '\n\nArtikel:\n' + liste + '\n\nWunsch des Kunden:\n + text.slice(0, 1500) + ';
+      return sample.json(auftrag, { modelTier: 'quick', cache: false });
+    }).catch(function () { return null; });
+  }
+
+  function sauber(r, katalog, text) {
+    var ids = katalog.artikel.map(function (a) { return a.id; });
+    if (!r || typeof r !== 'object' || !katalog.welten[r.welt]) return null;
+    var farbe = /^#[0-9a-fA-F]{6}$/;
+    r.farben = (Array.isArray(r.farben) ? r.farben : []).filter(function (f) { return farbe.test(f); }).slice(0, 3);
+    if (r.farben.length < 2) r.farben = ['#F6F0F8', '#D5C4EE', '#E3B04B'];
+    r.artikel = (Array.isArray(r.artikel) ? r.artikel : []).filter(function (a) { return ids.indexOf(a) > -1; }).slice(0, 5);
+    if (!r.artikel.length) r.artikel = katalog.artikel.filter(function (a) { return a.welt === r.welt; }).slice(0, 4).map(function (a) { return a.id; });
+    ['fuer', 'anlass', 'motiv', 'schrift', 'stimmung', 'fee'].forEach(function (k) { r[k] = typeof r[k] === 'string' ? r[k].slice(0, 400) : ''; });
+    return r;
+  }
+
+  function zaubern(form, text) {
+    var antwort = form.querySelector('.antwort'), knopf = form.querySelector('[type="submit"]');
+    var box = form.parentNode.querySelector('[data-ergebnis]');
+    var katalog = JSON.parse(document.getElementById('katalog').textContent);
+    var wand = form.parentNode.querySelector('.zauberstab');
+    var zeilen = ['Die Fee liest deinen Wunsch …', 'Sie sucht die passende Welt …', 'Sie überlegt, was auf das Geschenk soll …', 'Gleich ist sie fertig …'];
+    var zi = 0;
+    knopf.disabled = true; form.classList.add('zaubert'); if (wand) wand.classList.add('zaubert');
+    box.hidden = true;
+    antwort.textContent = zeilen[0];
+    var takt = setInterval(function () { zi = (zi + 1) % zeilen.length; antwort.textContent = zeilen[zi]; funken(knopf); }, 1700);
+    funken(knopf);
+    var fertig = false;
+    var mindest = new Promise(function (ok) { setTimeout(ok, 2200); });
+    var frage = Promise.race([claudeFragen(text, katalog), new Promise(function (ok) { setTimeout(function () { ok(null); }, 45000); })]);
+    Promise.all([frage, mindest]).then(function (erg) {
+      if (fertig) return; fertig = true;
+      clearInterval(takt);
+      var r = sauber(erg[0], katalog, text) || lokaleAuswertung(text, katalog);
+      zeigen(box, r, katalog, text);
+      antwort.textContent = '';
+      knopf.disabled = false; form.classList.remove('zaubert'); if (wand) wand.classList.remove('zaubert');
+      funken(knopf);
+      box.hidden = false;
+      var b = box.getBoundingClientRect();
+      if (b.top > window.innerHeight * .55 || b.top < 60) box.scrollIntoView({ behavior: ruhig ? 'auto' : 'smooth', block: 'start' });
+    });
+  }
+
+  function funken(el) {
+    var r = el.getBoundingClientRect();
+    var ebene = document.querySelector('.funken-seite');
+    if (!ebene) { ebene = document.createElement('div'); ebene.className = 'funken-seite'; ebene.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:45'; document.body.appendChild(ebene); }
+    funkenFlug(ebene, { x: r.left + r.width / 2, y: r.top + r.height / 2 }, { x: r.left + r.width / 2, y: r.top - 120 }, 1000);
+  }
+
+  function el(tag, klasse, text) { var e = document.createElement(tag); if (klasse) e.className = klasse; if (text != null) e.textContent = text; return e; }
+
+  function zeigen(box, r, katalog, text) {
+    box.textContent = '';
+    box.style.setProperty('--m1', r.farben[0]); box.style.setProperty('--m2', r.farben[1]); box.style.setProperty('--m3', r.farben[2] || r.farben[1]);
+    var kopf = el('div', 'erg-fee');
+    var blase = el('p', 'erg-blase', r.fee);
+    kopf.appendChild(el('span', 'erg-name', 'Die Fee sagt'));
+    kopf.appendChild(blase);
+    box.appendChild(kopf);
+
+    var spalten = el('div', 'erg-spalten');
+    var karte = el('div', 'erg-motiv');
+    karte.appendChild(el('span', 'erg-marke', 'Deine Motiv-Idee'));
+    if (r.schrift) karte.appendChild(el('div', 'erg-schrift', r.schrift));
+    karte.appendChild(el('p', 'erg-text', r.motiv));
+    if (r.stimmung) karte.appendChild(el('span', 'erg-stimmung', r.stimmung));
+    var pal = el('div', 'erg-farben'); r.farben.forEach(function (f) { var s = el('span'); s.style.background = f; pal.appendChild(s); });
+    karte.appendChild(pal);
+    spalten.appendChild(karte);
+
+    var fakten = el('dl', 'erg-fakten');
+    [['Für', r.fuer], ['Anlass', r.anlass], ['Feenwelt', katalog.welten[r.welt]]].forEach(function (p) {
+      if (!p[1]) return; fakten.appendChild(el('dt', null, p[0])); fakten.appendChild(el('dd', null, p[1]));
+    });
+    var wl = el('a', 'knopf zweit klein'); wl.href = 'welt-' + r.welt + '.html'; wl.textContent = 'Zur Welt ' + katalog.welten[r.welt];
+    var seite = el('div', 'erg-seite'); seite.appendChild(fakten); seite.appendChild(wl);
+    spalten.appendChild(seite);
+    box.appendChild(spalten);
+
+    box.appendChild(el('h3', 'erg-titel', 'Darauf kann die Fee dein Motiv zaubern'));
+    var regal = el('div', 'erg-regal');
+    r.artikel.forEach(function (id) {
+      var a = katalog.artikel.filter(function (x) { return x.id === id; })[0]; if (!a) return;
+      var k = el('figure', 'erg-artikel'), img = document.createElement('img');
+      img.src = 'bilder/artikel/' + a.id + '.webp'; img.alt = a.name + ' als Beispiel'; img.width = a.w; img.height = a.h; img.loading = 'lazy';
+      k.appendChild(img); k.appendChild(el('figcaption', null, a.name)); regal.appendChild(k);
+    });
+    box.appendChild(regal);
+    box.appendChild(el('p', 'erg-hinweis', r.lokal
+      ? 'Die Bilder zeigen Beispiele. Dein eigenes Motiv wird nach dem Bestellen für jeden Artikel einzeln gestaltet.'
+      : 'Die Bilder zeigen Beispiele. Dein eigenes Motiv wird nach dem Bestellen für jeden Artikel einzeln gestaltet.'));
+    var zeile = el('div', 'erg-zeile');
+    var bestell = el('button', 'knopf'); bestell.type = 'button'; bestell.disabled = true; bestell.textContent = 'Bestellen: der Shop folgt in Kürze';
+    var neu = el('button', 'knopf zweit'); neu.type = 'button'; neu.textContent = 'Anderen Wunsch erzählen';
+    neu.addEventListener('click', function () { var f = document.getElementById('wunsch-feld'); box.hidden = true; f.value = ''; f.focus(); });
+    zeile.appendChild(bestell); zeile.appendChild(neu); box.appendChild(zeile);
   }
 
   /* 6. Menue auf dem Handy */
