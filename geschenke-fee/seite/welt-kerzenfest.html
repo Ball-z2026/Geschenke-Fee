@@ -61,8 +61,10 @@
     <p class="hilfe">Name, Anlass, was diesen Menschen ausmacht und worauf es soll. Je mehr du erzählst, desto persönlicher wird es.</p>
     <div class="zeile">
       <button class="knopf zweit" type="button" data-mikro><svg aria-hidden="true" focusable="false" class="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M128,176a48.05,48.05,0,0,0,48-48V64a48,48,0,0,0-96,0v64A48.05,48.05,0,0,0,128,176ZM96,64a32,32,0,0,1,64,0v64a32,32,0,0,1-64,0Zm40,143.6V240a8,8,0,0,1-16,0V207.6A80.11,80.11,0,0,1,48,128a8,8,0,0,1,16,0,64,64,0,0,0,128,0,8,8,0,0,1,16,0A80.11,80.11,0,0,1,136,207.6Z"/></svg><span>Einsprechen</span></button>
+      <label class="knopf zweit foto-knopf"><span>Foto hinzufügen</span><input type="file" accept="image/*" data-foto hidden></label>
       <button class="knopf" type="submit">Wunsch abschicken</button>
     </div>
+    <div class="foto-vorschau" data-foto-vorschau hidden><img alt="Dein Foto" width="64" height="64"><span>Dein Foto wird mit verarbeitet.</span><button type="button" class="foto-weg" data-foto-weg aria-label="Foto entfernen">Entfernen</button></div>
     <p class="antwort" aria-live="polite"></p>
   </form>
   <div class="ergebnis" data-ergebnis hidden aria-live="polite"></div>

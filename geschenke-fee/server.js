@@ -43,12 +43,12 @@ async function mcpPost(koerper, sitzung) {
   } else if (text) daten = JSON.parse(text);
   return { daten, sitzung: r.headers.get('mcp-session-id') || sitzung };
 }
-async function malen(prompt) {
+async function malen(prompt, foto) {
   if (!BILD_URL) throw Object.assign(new Error('Bilddienst nicht eingerichtet'), { code: 503 });
   let s = await mcpPost({ jsonrpc: '2.0', id: 1, method: 'initialize', params: { protocolVersion: '2025-03-26', capabilities: {}, clientInfo: { name: 'geschenke-fee', version: '1' } } });
   const sitzung = s.sitzung;
   try { await mcpPost({ jsonrpc: '2.0', method: 'notifications/initialized' }, sitzung); } catch {}
-  s = await mcpPost({ jsonrpc: '2.0', id: 2, method: 'tools/call', params: { name: 'nano_banana', arguments: { prompt, aspect_ratio: '1:1', image_size: '1K', inline_image: false } } }, sitzung);
+  s = await mcpPost({ jsonrpc: '2.0', id: 2, method: 'tools/call', params: { name: 'nano_banana', arguments: Object.assign({ prompt, aspect_ratio: '1:1', image_size: '1K', inline_image: false }, foto ? { reference_images_base64: [foto] } : {}) } }, sitzung);
   if (s.daten && s.daten.error && /unknown tool/i.test(s.daten.error.message || '')) {
     /* Dieser Server kennt nano_banana nicht: Werkzeugliste ins Protokoll, dann das OpenAI-Werkzeug versuchen */
     try { const l = await mcpPost({ jsonrpc: '2.0', id: 3, method: 'tools/list', params: {} }, sitzung); console.error('Werkzeuge:', ((l.daten && l.daten.result && l.daten.result.tools) || []).map(t => t.name).join(', ')); } catch {}
@@ -63,17 +63,18 @@ async function malen(prompt) {
 
 /* Bildauftrag pruefen und zu einem sicheren Prompt zusammensetzen */
 const kurz = (v, n) => String(v == null ? '' : v).replace(/[\u0000-\u001f"<>]/g, ' ').trim().slice(0, n);
-function promptAus(k) {
+function promptAus(k, mitFoto) {
   const farben = (Array.isArray(k.farben) ? k.farben : []).filter(f => /^#[0-9a-fA-F]{6}$/.test(f)).slice(0, 3);
   const schrift = kurz(k.schrift, 40);
   return 'Hochwertiges Produktfoto: ' + kurz(k.artikel, 40) + ' für den Anlass ' + (kurz(k.anlass, 60) || 'Geschenk') + ', weiches Tageslicht, ruhiger heller Hintergrund, der Artikel steht im Mittelpunkt. ' +
     'Auf dem Artikel ist ein liebevoll gemaltes, gedrucktes Motiv zu sehen: ' + kurz(k.motiv, 500) + (farben.length ? ' Farben: ' + farben.join(', ') : '') + (kurz(k.stimmung, 30) ? ', Stimmung ' + kurz(k.stimmung, 30) : '') + '.' +
     (schrift ? ' Der gedruckte Text lautet genau "' + schrift + '", keine weiteren Wörter oder Buchstaben.' : ' Auf dem Artikel steht kein Text.') +
-    ' Das Motiv ist sauber und passend auf den Artikel gedruckt.';
+    ' Das Motiv ist sauber und passend auf den Artikel gedruckt.' +
+    (mitFoto ? ' Das beigefügte Foto (Image 1) zeigt die Person oder das Motiv des Wunsches: Übernimm sie erkennbar, gemalt und liebevoll, auf den Artikel.' : '');
 }
 
 function lesen(req) {
-  return new Promise((ok, nein) => { let n = 0; const t = []; req.on('data', c => { n += c.length; if (n > 8000) { nein(new Error('zu gross')); req.destroy(); } else t.push(c); }); req.on('end', () => ok(Buffer.concat(t).toString('utf8'))); req.on('error', nein); });
+  return new Promise((ok, nein) => { let n = 0; const t = []; req.on('data', c => { n += c.length; if (n > 2.5e6) { nein(new Error('zu gross')); req.destroy(); } else t.push(c); }); req.on('end', () => ok(Buffer.concat(t).toString('utf8'))); req.on('error', nein); });
 }
 const json = (res, code, obj) => { res.writeHead(code, { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' }); res.end(JSON.stringify(obj)); };
 
@@ -85,10 +86,11 @@ http.createServer(async (req, res) => {
       const ip = (req.headers['x-forwarded-for'] || req.socket.remoteAddress || '').split(',')[0].trim();
       let k; try { k = JSON.parse(await lesen(req)); } catch { return json(res, 400, { fehler: 'Anfrage nicht lesbar.' }); }
       if (!kurz(k.motiv, 500) || !kurz(k.artikel, 40)) return json(res, 400, { fehler: 'Motiv und Artikel fehlen.' });
+      const foto = typeof k.foto === 'string' && k.foto.length < 2e6 && /^[A-Za-z0-9+\/=]+$/.test(k.foto) ? k.foto : '';
       const sperre = erlaubt(ip);
       if (sperre === 'ip') return json(res, 429, { fehler: 'Die Fee braucht eine kleine Pause. Bitte in ein paar Minuten nochmal.' });
       if (sperre === 'tag') return json(res, 429, { fehler: 'Die Fee hat heute schon sehr viele Wünsche gemalt. Bitte morgen wieder.' });
-      try { return json(res, 200, { url: await malen(promptAus(k)) }); }
+      try { return json(res, 200, { url: await malen(promptAus(k, !!foto), foto) }); }
       catch (e) { console.error('Bild fehlgeschlagen:', e.message); return json(res, e.code === 503 ? 503 : 502, { fehler: 'Das Bild hat gerade nicht geklappt. Bitte nochmal versuchen.' }); }
     }
     if (req.method !== 'GET' && req.method !== 'HEAD') { res.writeHead(405); return res.end(); }

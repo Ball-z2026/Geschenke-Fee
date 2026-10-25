@@ -144,8 +144,10 @@ def wunschkasten(titel, text, beispiel, vorwahl=''):
     <p class="hilfe">Name, Anlass, was diesen Menschen ausmacht und worauf es soll. Je mehr du erzählst, desto persönlicher wird es.</p>
     <div class="zeile">
       <button class="knopf zweit" type="button" data-mikro>{icon('microphone')}<span>Einsprechen</span></button>
+      <label class="knopf zweit foto-knopf"><span>Foto hinzufügen</span><input type="file" accept="image/*" data-foto hidden></label>
       <button class="knopf" type="submit">Wunsch abschicken</button>
     </div>
+    <div class="foto-vorschau" data-foto-vorschau hidden><img alt="Dein Foto" width="64" height="64"><span>Dein Foto wird mit verarbeitet.</span><button type="button" class="foto-weg" data-foto-weg aria-label="Foto entfernen">Entfernen</button></div>
     <p class="antwort" aria-live="polite"></p>
   </form>
   <div class="ergebnis" data-ergebnis hidden aria-live="polite"></div>

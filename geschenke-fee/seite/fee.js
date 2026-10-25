@@ -185,8 +185,31 @@
   }
 
   /* 5. Wunschkasten mit Mikrofon (Spracherkennung im Browser, Deutsch) */
+  var fotoDaten = '';
+  function fotoLaden(datei, fertig) {
+    if (!datei || !/^image\//.test(datei.type)) { fertig(''); return; }
+    var url = URL.createObjectURL(datei), bild = new Image();
+    bild.onload = function () {
+      var m = 1024, f = Math.min(1, m / Math.max(bild.naturalWidth, bild.naturalHeight));
+      var c = document.createElement('canvas'); c.width = Math.max(1, Math.round(bild.naturalWidth * f)); c.height = Math.max(1, Math.round(bild.naturalHeight * f));
+      c.getContext('2d').drawImage(bild, 0, 0, c.width, c.height); URL.revokeObjectURL(url);
+      try { fertig(c.toDataURL('image/jpeg', .85)); } catch (e) { fertig(''); }
+    };
+    bild.onerror = function () { URL.revokeObjectURL(url); fertig(''); };
+    bild.src = url;
+  }
   function wunschkasten() {
     document.querySelectorAll('[data-wunsch]').forEach(function (form) {
+      var fotoEin = form.querySelector('[data-foto]'), fotoBox = form.querySelector('[data-foto-vorschau]');
+      if (fotoEin && fotoBox) {
+        fotoEin.addEventListener('change', function () {
+          fotoLaden(fotoEin.files && fotoEin.files[0], function (d) {
+            fotoDaten = d;
+            if (d) { fotoBox.querySelector('img').src = d; fotoBox.hidden = false; } else { fotoBox.hidden = true; form.querySelector('.antwort').textContent = 'Dieses Foto konnte ich nicht lesen. Bitte ein anderes versuchen.'; }
+          });
+        });
+        fotoBox.querySelector('[data-foto-weg]').addEventListener('click', function () { fotoDaten = ''; fotoEin.value = ''; fotoBox.hidden = true; });
+      }
       var feld = form.querySelector('textarea'), antwort = form.querySelector('.antwort'), mikro = form.querySelector('[data-mikro]');
       var stab = document.createElement('img');
       stab.className = 'stab-live'; stab.src = 'bilder/zauberstab.webp'; stab.alt = ''; stab.width = 110; stab.height = 166; stab.setAttribute('aria-hidden', 'true');
@@ -389,15 +412,16 @@
   var BILD_SERVER = 'ballz-image-mcp_generate_ballz_image';
   function bildPrompt(r, a) {
     var s = r.schrift ? ' Der gedruckte Text lautet genau "' + r.schrift + '", keine weiteren Wörter oder Buchstaben.' : ' Auf dem Artikel steht kein Text.';
+    var fotoSatz = fotoDaten ? ' Das beigefügte Foto (Image 1) zeigt die Person oder das Motiv des Wunsches: Übernimm sie erkennbar, gemalt und liebevoll, auf den Artikel.' : '';
     return 'Hochwertiges Produktfoto: ' + a.name + ' für den Anlass ' + (r.anlass || 'Geschenk') + ', weiches Tageslicht, ruhiger heller Hintergrund, der Artikel steht im Mittelpunkt. ' +
       'Auf dem Artikel ist ein liebevoll gemaltes, gedrucktes Motiv zu sehen: ' + r.motiv + ' Farben: ' + r.farben.join(', ') + (r.stimmung ? ', Stimmung ' + r.stimmung : '') + '.' + s +
-      ' Das Motiv ist sauber und passend auf den Artikel gedruckt.';
+      ' Das Motiv ist sauber und passend auf den Artikel gedruckt.' + fotoSatz;
   }
   function bildZaubern(r, a) {
     return new Promise(function (ok, nein) {
       if (!window.claude || typeof window.claude.use !== 'function') {
         /* eigene Adresse: der Server der Seite malt das Bild */
-        fetch('api/bild', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ artikel: a.name, anlass: r.anlass, motiv: r.motiv, schrift: r.schrift, farben: r.farben, stimmung: r.stimmung }) })
+        fetch('api/bild', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ artikel: a.name, anlass: r.anlass, motiv: r.motiv, schrift: r.schrift, farben: r.farben, stimmung: r.stimmung, foto: fotoDaten ? fotoDaten.replace(/^data:image\/jpeg;base64,/, '') : '' }) })
           .then(function (x) { return x.json().then(function (d) { return { s: x.status, d: d }; }); })
           .then(function (e) { if (e.d && e.d.url) ok(e.d.url); else nein((e.d && e.d.fehler) || 'Das Bild hat gerade nicht geklappt. Bitte nochmal versuchen.'); })
           .catch(function () { nein('Die Fee ist gerade nicht erreichbar. Bitte nochmal versuchen.'); });
@@ -405,7 +429,7 @@
       }
       window.claude.use('mcp').then(function (mcp) {
         if (!mcp) { nein('Das Bild kann die Fee gerade nicht malen: Die Bild-Verbindung ist in dieser Ansicht nicht freigegeben.'); return; }
-        return mcp.callTool(BILD_SERVER, 'nano_banana', { prompt: bildPrompt(r, a), aspect_ratio: '1:1', image_size: '1K' }, { cache: false, signal: AbortSignal.timeout(170000) }).then(function (res) {
+        return mcp.callTool(BILD_SERVER, 'nano_banana', (function () { var o = { prompt: bildPrompt(r, a), aspect_ratio: '1:1', image_size: '1K' }; if (fotoDaten) o.reference_images_base64 = [fotoDaten.replace(/^data:image\/jpeg;base64,/, '')]; return o; })(), { cache: false, signal: AbortSignal.timeout(170000) }).then(function (res) {
           var bild = (res.content || []).filter(function (b) { return b && b.type === 'image' && typeof b.data === 'string'; })[0];
           if (bild && /^image\/(png|jpeg|webp)$/.test(bild.mimeType)) { ok('data:' + bild.mimeType + ';base64,' + bild.data); return; }
           var text = (res.content || []).map(function (b) { return b && b.text || ''; }).join(' ');
