@@ -1,5 +1,5 @@
 // Geschenke-Fee: liefert die Seite aus (seite/) und malt das Bild zum Wunsch (/api/bild).
-// Ohne Abhaengigkeiten. Das Bild kommt vom bestehenden Bildgenerator (BALLZ_MCP_URL, nano_banana);
+// Ohne Abhaengigkeiten. Das Bild kommt vom bestehenden Bildgenerator (BALLZ_MCP_URL, OpenAI);
 // Schluessel stehen nur als Railway-Variable, nie im Code.
 import http from 'node:http';
 import { readFile } from 'node:fs/promises';
@@ -48,12 +48,11 @@ async function malen(prompt, foto) {
   let s = await mcpPost({ jsonrpc: '2.0', id: 1, method: 'initialize', params: { protocolVersion: '2025-03-26', capabilities: {}, clientInfo: { name: 'geschenke-fee', version: '1' } } });
   const sitzung = s.sitzung;
   try { await mcpPost({ jsonrpc: '2.0', method: 'notifications/initialized' }, sitzung); } catch {}
-  s = await mcpPost({ jsonrpc: '2.0', id: 2, method: 'tools/call', params: { name: 'nano_banana', arguments: Object.assign({ prompt, aspect_ratio: '1:1', image_size: '1K', inline_image: false }, foto ? { reference_images_base64: [foto] } : {}) } }, sitzung);
-  if (s.daten && s.daten.error && /unknown tool/i.test(s.daten.error.message || '')) {
-    /* Dieser Server kennt nano_banana nicht: Werkzeugliste ins Protokoll, dann das OpenAI-Werkzeug versuchen */
-    try { const l = await mcpPost({ jsonrpc: '2.0', id: 3, method: 'tools/list', params: {} }, sitzung); console.error('Werkzeuge:', ((l.daten && l.daten.result && l.daten.result.tools) || []).map(t => t.name).join(', ')); } catch {}
-    s = await mcpPost({ jsonrpc: '2.0', id: 2, method: 'tools/call', params: { name: 'generate_ballz_image', arguments: { prompt, size: '1024x1024', quality: 'medium', output_format: 'jpeg', task: 'mockup', inline_image: false } } }, sitzung);
-  }
+  /* Nur OpenAI: mit Foto das Bearbeiten-Werkzeug (Foto als Vorlage), sonst neues Bild */
+  const gemeinsam = { prompt, size: '1024x1024', quality: 'medium', output_format: 'jpeg', task: 'mockup', inline_image: false };
+  s = await mcpPost({ jsonrpc: '2.0', id: 2, method: 'tools/call', params: foto
+    ? { name: 'edit_ballz_image', arguments: Object.assign({ image_base64: foto, mime_type: 'image/jpeg' }, gemeinsam) }
+    : { name: 'generate_ballz_image', arguments: gemeinsam } }, sitzung);
   const inhalt = s.daten && s.daten.result && s.daten.result.content || [];
   const text = inhalt.map(b => b.text || '').join(' ');
   const u = text.match(/https:\/\/[^\s"')]+\.(?:jpg|jpeg|png|webp)/i);
