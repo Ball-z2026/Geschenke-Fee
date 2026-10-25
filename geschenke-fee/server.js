@@ -49,6 +49,11 @@ async function malen(prompt) {
   const sitzung = s.sitzung;
   try { await mcpPost({ jsonrpc: '2.0', method: 'notifications/initialized' }, sitzung); } catch {}
   s = await mcpPost({ jsonrpc: '2.0', id: 2, method: 'tools/call', params: { name: 'nano_banana', arguments: { prompt, aspect_ratio: '1:1', image_size: '1K', inline_image: false } } }, sitzung);
+  if (s.daten && s.daten.error && /unknown tool/i.test(s.daten.error.message || '')) {
+    /* Dieser Server kennt nano_banana nicht: Werkzeugliste ins Protokoll, dann das OpenAI-Werkzeug versuchen */
+    try { const l = await mcpPost({ jsonrpc: '2.0', id: 3, method: 'tools/list', params: {} }, sitzung); console.error('Werkzeuge:', ((l.daten && l.daten.result && l.daten.result.tools) || []).map(t => t.name).join(', ')); } catch {}
+    s = await mcpPost({ jsonrpc: '2.0', id: 2, method: 'tools/call', params: { name: 'generate_ballz_image', arguments: { prompt, size: '1024x1024', quality: 'medium', output_format: 'jpeg', task: 'mockup', inline_image: false } } }, sitzung);
+  }
   const inhalt = s.daten && s.daten.result && s.daten.result.content || [];
   const text = inhalt.map(b => b.text || '').join(' ');
   const u = text.match(/https:\/\/[^\s"')]+\.(?:jpg|jpeg|png|webp)/i);
