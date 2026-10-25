@@ -1,3 +1,4 @@
+import sharp from 'sharp';
 // Client fuer den bestehenden Bildgenerator (ballz-image-mcp, Streamable-HTTP MCP).
 // Dadurch braucht dieser Dienst keinen eigenen OpenAI-Schluessel fuer Bilder.
 
@@ -109,6 +110,38 @@ async function pullImage(result) {
   throw lastErr;
 }
 
+// Geschenke-Fee (Markus, 25. Okt.: "erst mal mit Gemini arbeiten"): KI_ANBIETER=gemini malt ueber das Werkzeug
+// nano_banana des Bilddienstes (Gemini-Bildmodell). Gemini liefert KEINEN Alphakanal - und Freistellen ist verboten
+// (6. Okt.). Deshalb geht nur, was einen Grund braucht (Flachware, Szene, Foto), zu Gemini; ein transparentes Motiv
+// bleibt beim bisherigen Bildmodell, bis entschieden ist, wie Textil-Motive mit Gemini entstehen sollen.
+const MIT_GEMINI = () => String(process.env.KI_ANBIETER || '').toLowerCase() === 'gemini';
+const SEITEN = [['1:1', 1], ['2:3', 2 / 3], ['3:2', 3 / 2], ['3:4', 3 / 4], ['4:3', 4 / 3], ['4:5', 4 / 5], ['5:4', 5 / 4], ['9:16', 9 / 16], ['16:9', 16 / 9], ['21:9', 21 / 9]];
+export function geminiFormat(size) {
+  const m = String(size || '').match(/^(\d+)x(\d+)$/);
+  const v = m ? Number(m[1]) / Number(m[2]) : 1;
+  return SEITEN.reduce((a, b) => (Math.abs(Math.log(b[1] / v)) < Math.abs(Math.log(a[1] / v)) ? b : a))[0];
+}
+async function viaGemini(url, { prompt, size, bilder64 = [], referenceImageUrls = [] }) {
+  const args = {
+    prompt, aspect_ratio: geminiFormat(size), image_size: process.env.GEMINI_IMAGE_SIZE || '2K', inline_image: false,
+    ...(process.env.GEMINI_IMAGE_MODEL ? { model: process.env.GEMINI_IMAGE_MODEL } : {})
+  };
+  if (bilder64.length) args.reference_images_base64 = bilder64.slice(0, 8);
+  if (referenceImageUrls.length) args.reference_images = referenceImageUrls.slice(0, 8);
+  const r = await callTool(url, 'nano_banana', args);
+  const text = (r.content || []).filter(c => c.type === 'text').map(c => c.text).join('\n');
+  if (r.isError) throw new Error('Bilddienst (Gemini) meldet einen Fehler: ' + (kurzText(text) || 'ohne Text'));
+  // Gemini liefert meist PNG, manchmal JPEG/WebP - alles wird hier zu PNG, wie es der Rest des Servers erwartet.
+  const m = text.match(/https?:\/\/\S+?\.(png|jpe?g|webp)\b/);
+  if (!m) throw new Error('Gemini: keine Bild-URL in Antwort. Der Dienst antwortete: ' + (kurzText(text) || '(leere Antwort)'));
+  const img = await fetch(m[0], { signal: AbortSignal.timeout(T_DOWNLOAD) });
+  if (!img.ok) throw new Error(`Bild-Download HTTP ${img.status}`);
+  const roh = Buffer.from(await img.arrayBuffer());
+  const png = m[1] === 'png' ? roh : await sharp(roh).png().toBuffer();
+  if (png.length < 100 || png[0] !== 0x89 || png[1] !== 0x50) throw new Error('Bild-Download (Gemini): keine Bilddaten');
+  return { png, url: m[0] };
+}
+
 /** Neues Bild aus reinem Text. */
 // model ist freiwillig: ohne Angabe nimmt der Bildserver sein eingestelltes Modell.
 // Damit laufen eine schnelle und eine aufwendige Linie ueber denselben Server.
@@ -127,6 +160,7 @@ export async function generateViaBallz(url, { prompt, size, quality, model, task
   if (args.task === 'design') args.background = 'transparent';
   else if (background) args.background = background;   // 7. Okt.: Szenen-Fotos bestellen ausdruecklich 'opaque'
   if (model) args.model = model;
+  if (MIT_GEMINI() && args.background !== 'transparent') return viaGemini(url, { prompt, size });
   return pullImage(await callTool(url, 'generate_ballz_image', args));
 }
 
@@ -155,5 +189,9 @@ export async function editViaBallz(url, { prompt, size, quality, imageBase64, mi
   // gehen als Daten mit, genau wie das Selfie selbst (Hausregel: kein Kundenfoto auf der Platte,
   // und erst recht keins unter einer abrufbaren URL).
   if (Array.isArray(referenceImagesBase64) && referenceImagesBase64.length) args.reference_images_base64 = referenceImagesBase64.slice(0, 8);
+  // Gemini kennt keine Maske: was eine Maske braucht (Logo stehen lassen), bleibt beim bisherigen Modell.
+  if (MIT_GEMINI() && args.background !== 'transparent' && !maskBase64) {
+    return viaGemini(url, { prompt, size, bilder64: [imageBase64, ...(args.reference_images_base64 || [])].filter(Boolean), referenceImageUrls: args.reference_image_urls || [] });
+  }
   return pullImage(await callTool(url, 'edit_ballz_image', args));
 }

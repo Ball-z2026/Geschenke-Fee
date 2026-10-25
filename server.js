@@ -196,9 +196,19 @@ const env = {
 };
 if (!env.BALLZ_MCP_URL) { console.error('BALLZ_MCP_URL fehlt'); process.exit(1); }
 
-const HAS_LLM = !!env.OPENAI_API_KEY;
+// Geschenke-Fee (Markus, 25. Okt.: "dass wir bei Geschenke Fee erst mal mit Gemini arbeiten"): KI_ANBIETER=gemini
+// nimmt fuer alle Text- und Bildpruefungen Googles Gemini ueber dessen OpenAI-kompatible Schnittstelle - derselbe
+// Client, dieselben Aufrufe, nur Adresse, Schluessel und Modell anders. Ohne KI_ANBIETER bleibt alles bei OpenAI.
+const MIT_GEMINI = String(env.KI_ANBIETER || '').toLowerCase() === 'gemini';
+if (MIT_GEMINI && /^(gpt|o\d)/.test(String(env.QA_MODEL || ''))) env.QA_MODEL = 'gemini-2.5-flash';
+const KI_SCHLUESSEL = MIT_GEMINI ? env.GEMINI_API_KEY : env.OPENAI_API_KEY;
+const HAS_LLM = !!KI_SCHLUESSEL;
 // Zeitlimit + nur 1 Wiederholung: ein haengender QA-/Recherche-Aufruf darf nie das ganze Auftrags-Budget fressen
-const openai = HAS_LLM ? new OpenAI({ apiKey: env.OPENAI_API_KEY, timeout: 90000, maxRetries: 1 }) : null;
+const openai = HAS_LLM ? new OpenAI({
+  apiKey: KI_SCHLUESSEL, timeout: 90000, maxRetries: 1,
+  ...(MIT_GEMINI ? { baseURL: env.GEMINI_OPENAI_URL || 'https://generativelanguage.googleapis.com/v1beta/openai/' } : {})
+}) : null;
+console.log(`Textmodell: ${HAS_LLM ? (MIT_GEMINI ? 'Gemini' : 'OpenAI') + ' ' + env.QA_MODEL : 'keins (' + (MIT_GEMINI ? 'GEMINI_API_KEY' : 'OPENAI_API_KEY') + ' fehlt)'}`);
 const SIGN_SECRET = env.SIGN_SECRET || crypto.randomBytes(16).toString('hex');
 const newId = customAlphabet('ABCDEFGHJKLMNPQRSTUVWXYZ23456789', 4);
 const newIdLang = customAlphabet('ABCDEFGHJKLMNPQRSTUVWXYZ23456789', 7);
