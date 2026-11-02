@@ -1,0 +1,143 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Geschenke-Fee</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Erzähl der Geschenke-Fee deinen Wunsch. Sie zaubert daraus ein Motiv, das es nur einmal gibt, auf Kissen, Decke, Tasse und mehr.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Antonio:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&family=Quicksand:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="fee.css">
+<a class="sprung" href="#inhalt">Zum Inhalt</a>
+<header class="kopf"><div class="rahmen kopf-innen">
+  <a class="marke" href="./" aria-label="Geschenke-Fee, zur Startseite"><img class="marke-fee" src="bilder/fee-figur.webp" alt="" width="1500" height="1007"><span class="wortmarke" aria-hidden="true"><b>GESCHENKE</b><i>Fee</i></span></a>
+  <nav class="navi" aria-label="Hauptmenü">
+    <a class="link" href="#welten">Feenwelten</a>
+    <a class="link" href="#zauber">So geht's</a>
+    <a class="link" href="#geschenke">Geschenke</a>
+    <a class="knopf klein" href="#wunsch">Wunsch erzählen</a>
+    <button class="menue-knopf" type="button" aria-expanded="false" aria-controls="menue" aria-label="Menü"><svg aria-hidden="true" focusable="false" class="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"/></svg></button>
+  </nav>
+</div>
+<nav class="menue" id="menue" hidden aria-label="Menü">
+  <a href="#welten">Feenwelten</a><a href="#zauber">So geht's</a><a href="#geschenke">Geschenke</a><a href="#wunsch">Wunsch erzählen</a>
+</nav></header>
+<canvas id="sternenstaub" aria-hidden="true"></canvas>
+<main id="inhalt">
+<section class="hero" aria-labelledby="hero-titel"><div class="rahmen hero-innen">
+  <div class="hero-text">
+    <h1 id="hero-titel">Ein Wunsch genügt.</h1>
+    <p>Erzähl der Fee, für wen es ist. Sie zaubert daraus ein Motiv, das es nur einmal gibt.</p>
+    <div class="knoepfe"><a class="knopf" href="#wunsch">Wunsch erzählen</a><a class="knopf zweit" href="#welten">Feenwelten ansehen</a></div>
+  </div>
+  <div class="buehne" data-buehne>
+    <script type="application/json">[{"knopf": "Emma", "wer": "Wunsch für Emma", "wunsch": "Für unsere Emma, geboren am 8. September. Ein kleiner Elefant, der auf dem Mond schläft.", "bild": "bilder/artikel/echt-kissen.webp", "alt": "Kissen mit Elefant auf dem Mond und der Schrift Willkommen auf der Welt, Emma", "was": "Kissen aus dem <a href=\"welt-wiegenwald.html\">Wiegenwald</a>"}, {"knopf": "Mia", "wer": "Wunsch für Mia", "wunsch": "Mia kommt in die Schule und liebt Füchse. Ihr Name soll groß drauf.", "bild": "bilder/artikel/echt-brotdose.webp", "alt": "Brotdose mit Fuchs und der Schrift Mia 6", "was": "Brotdose von der <a href=\"welt-schultuetenwiese.html\">Schultütenwiese</a>"}, {"knopf": "Nelli", "wer": "Wunsch für Nelli", "wunsch": "Unsere Nelli ist die Chefin im Haus. Bitte mit Bergen und Knochen.", "bild": "bilder/artikel/echt-hundedecke.webp", "alt": "Hundedecke mit Australian Shepherd und der Schrift Nelli, Chefin im Haus", "was": "Decke aus dem <a href=\"welt-pfotenreich.html\">Pfotenreich</a>"}]</script>
+    <div class="fee-figur" aria-hidden="true"><img src="bilder/fee-figur.webp" alt="" width="1500" height="1007" fetchpriority="high"><span class="stern"></span></div>
+    <div class="funken-ebene" aria-hidden="true"></div>
+    <figure class="buehne-karte" aria-label="Beispiel: aus einem Wunsch wird ein Geschenk">
+      <blockquote class="wunsch"><span class="wer">Wunsch für Emma</span><span class="wunsch-text">Für unsere Emma, geboren am 8. September. Ein kleiner Elefant, der auf dem Mond schläft.</span></blockquote>
+      <div class="geschenk"><img src="bilder/artikel/echt-kissen.webp" alt="Kissen mit Elefant auf dem Mond und der Schrift Willkommen auf der Welt, Emma" width="640" height="480"></div>
+      <figcaption class="buehne-fuss"><span class="was">Kissen aus dem <a href="welt-wiegenwald.html">Wiegenwald</a></span><span class="beispiele" role="group" aria-label="Beispiele"><button type="button" aria-pressed="true">Emma</button><button type="button" aria-pressed="false">Mia</button><button type="button" aria-pressed="false">Nelli</button></span></figcaption>
+    </figure>
+  </div>
+</div></section>
+
+<section class="abschnitt" id="welten" aria-labelledby="welten-titel"><div class="rahmen">
+  <div class="titel"><h2 id="welten-titel">Acht Feenwelten</h2><p>Jede Welt gehört zu einem Anlass. Tipp sie an, dort warten die Geschenke, die dazu passen.</p></div>
+  <div class="tore">
+<a class="tor" href="welt-sternenzauber.html">
+  <span class="tor-bild"><img src="bilder/welten/sternenzauber-klein.webp" alt="" width="640" height="960" loading="lazy"></span>
+  <span class="tor-name">Sternenzauber</span><span class="tor-anlass">Weihnachten und Advent</span><span class="tor-artikel">Decke, Kissen, Kalender, Kugel, Tasse</span>
+</a>
+<a class="tor" href="welt-wiegenwald.html">
+  <span class="tor-bild"><img src="bilder/welten/wiegenwald-klein.webp" alt="" width="640" height="960" loading="lazy"></span>
+  <span class="tor-name">Wiegenwald</span><span class="tor-anlass">Geburt und Taufe</span><span class="tor-artikel">Babybody, Decke, Kinderteller, Spardose</span>
+</a>
+<a class="tor" href="welt-rosenhain.html">
+  <span class="tor-bild"><img src="bilder/welten/rosenhain-klein.webp" alt="" width="640" height="960" loading="lazy"></span>
+  <span class="tor-name">Rosenhain</span><span class="tor-anlass">Liebe, Hochzeit, Valentinstag</span><span class="tor-artikel">Sternenkarte, Paar-Porträt, Acryl</span>
+</a>
+<a class="tor" href="welt-bluetenlichtung.html">
+  <span class="tor-bild"><img src="bilder/welten/bluetenlichtung-klein.webp" alt="" width="640" height="960" loading="lazy"></span>
+  <span class="tor-name">Blütenlichtung</span><span class="tor-anlass">Muttertag</span><span class="tor-artikel">Kissen mit Kinderbild, Tasse, Windlicht</span>
+</a>
+<a class="tor" href="welt-schultuetenwiese.html">
+  <span class="tor-bild"><img src="bilder/welten/schultuetenwiese-klein.webp" alt="" width="640" height="960" loading="lazy"></span>
+  <span class="tor-name">Schultütenwiese</span><span class="tor-anlass">Einschulung und Kita</span><span class="tor-artikel">Brotdose, Trinkflasche, Turnbeutel</span>
+</a>
+<a class="tor" href="welt-pfotenreich.html">
+  <span class="tor-bild"><img src="bilder/welten/pfotenreich-klein.webp" alt="" width="640" height="960" loading="lazy"></span>
+  <span class="tor-name">Pfotenreich</span><span class="tor-anlass">Haustiere</span><span class="tor-artikel">Tierporträt auf Poster, Tasse, Decke, Napfunterlage</span>
+</a>
+<a class="tor" href="welt-kerzenfest.html">
+  <span class="tor-bild"><img src="bilder/welten/kerzenfest-klein.webp" alt="" width="640" height="960" loading="lazy"></span>
+  <span class="tor-name">Kerzenfest</span><span class="tor-anlass">Geburtstag</span><span class="tor-artikel">Tasse, Shirt, Puzzle, Poster</span>
+</a>
+<a class="tor" href="welt-dankesgarten.html">
+  <span class="tor-bild"><img src="bilder/welten/dankesgarten-klein.webp" alt="" width="640" height="960" loading="lazy"></span>
+  <span class="tor-name">Dankesgarten</span><span class="tor-anlass">Lehrer, Erzieher, Ruhestand</span><span class="tor-artikel">Beutel, Keksglas, Kissen</span>
+</a>
+  </div>
+</div></section>
+
+<section class="abschnitt hauch" id="zauber" aria-labelledby="zauber-titel"><div class="rahmen">
+  <div class="titel"><h2 id="zauber-titel">So zaubert die Fee</h2><p>Vom ersten Satz bis zum fertigen Geschenk. Das Beispiel: Lasse, geboren am 14. März.</p></div>
+  <div class="ablauf">
+    <svg class="spur" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true"><path d="M60 70 C 260 0, 360 130, 600 64 S 940 -6, 1140 66"/><path class="zeichnen" d="M60 70 C 260 0, 360 130, 600 64 S 940 -6, 1140 66"/></svg>
+    <div class="station">
+      <div class="station-bild station-wunsch">
+        <span class="mikro"><span class="kreis"><svg aria-hidden="true" focusable="false" class="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M128,176a48.05,48.05,0,0,0,48-48V64a48,48,0,0,0-96,0v64A48.05,48.05,0,0,0,128,176ZM96,64a32,32,0,0,1,64,0v64a32,32,0,0,1-64,0Zm40,143.6V240a8,8,0,0,1-16,0V207.6A80.11,80.11,0,0,1,48,128a8,8,0,0,1,16,0,64,64,0,0,0,128,0,8,8,0,0,1,16,0A80.11,80.11,0,0,1,136,207.6Z"/></svg></span>Eingesprochen</span>
+        <blockquote>„Für Lasse, geboren am 14. März. Ein Storch soll ihn zu uns bringen.“</blockquote>
+      </div>
+      <h3><span class="nr" aria-hidden="true">1</span>Erzählen</h3>
+      <p>Sprich oder tipp deinen Wunsch: wer, welcher Anlass, was diesen Menschen ausmacht.</p>
+    </div>
+    <div class="station">
+      <div class="station-bild"><img src="bilder/motive/storch-lasse.webp" alt="Motiv: Storch mit Bündel, darunter Lasse und 14.03.2026" width="800" height="800" loading="lazy"></div>
+      <h3><span class="nr" aria-hidden="true">2</span>Zaubern</h3>
+      <p>Die Fee malt daraus ein eigenes Motiv. Du siehst es, bevor etwas gedruckt wird.</p>
+    </div>
+    <div class="station">
+      <div class="station-paar"><div class="station-bild"><img src="bilder/artikel/wie-body.webp" alt="Babybody mit dem Storch-Motiv für Lasse" width="800" height="800" loading="lazy"></div><img class="klein" src="bilder/artikel/wie-teller.webp" alt="Kinderteller mit Storch und dem Namen Lasse" width="800" height="800" loading="lazy"></div>
+      <h3><span class="nr" aria-hidden="true">3</span>Verschenken</h3>
+      <p>Das Motiv kommt aufs Geschenk, für jeden Artikel neu angeordnet.</p>
+    </div>
+  </div>
+</div></section>
+
+<section class="abschnitt" id="geschenke" aria-labelledby="geschenke-titel"><div class="rahmen">
+  <div class="titel"><h2 id="geschenke-titel">Aus jeder Welt ein Lieblingsstück</h2><p>So sehen Wünsche aus, wenn sie fertig sind. Jedes Stück führt in seine Feenwelt.</p></div>
+  <div class="bento">
+<a class="kachel gross" href="welt-wiegenwald.html"><span class="bild"><img src="bilder/artikel/echt-kissen.webp" alt="Kissen mit Elefant auf dem Mond, Willkommen auf der Welt, Emma" width="640" height="480" loading="lazy"></span><span class="unter"><b>Kissen</b><span>Wiegenwald</span></span></a>
+<a class="kachel " href="welt-dankesgarten.html"><span class="bild"><img src="bilder/artikel/dan-keksglas.webp" alt="Keksglas mit Blütenkranz, Für unsere Sabine" width="800" height="800" loading="lazy"></span><span class="unter"><b>Keksglas</b><span>Dankesgarten</span></span></a>
+<a class="kachel " href="welt-sternenzauber.html"><span class="bild"><img src="bilder/artikel/ste-decke.webp" alt="Kuscheldecke mit Fuchs im Winterwald, Familie Müller" width="800" height="800" loading="lazy"></span><span class="unter"><b>Kuscheldecke</b><span>Sternenzauber</span></span></a>
+<a class="kachel " href="welt-rosenhain.html"><span class="bild"><img src="bilder/artikel/ros-sternenkarte.webp" alt="Sternenkarte im Holzrahmen, Lea und Jonas" width="800" height="800" loading="lazy"></span><span class="unter"><b>Sternenkarte</b><span>Rosenhain</span></span></a>
+<a class="kachel " href="welt-bluetenlichtung.html"><span class="bild"><img src="bilder/artikel/blu-tasse.webp" alt="Tasse mit Tulpen, Mama, du bist unser Zuhause" width="800" height="800" loading="lazy"></span><span class="unter"><b>Tasse</b><span>Blütenlichtung</span></span></a>
+<a class="kachel breit" href="welt-kerzenfest.html"><span class="bild"><img src="bilder/artikel/ker-puzzle.webp" alt="Puzzle mit gezeichneter Familie am Geburtstagstisch, Omas 70." width="800" height="800" loading="lazy" style="object-position:50% 14%"></span><span class="unter"><b>Puzzle</b><span>Kerzenfest</span></span></a>
+<a class="kachel " href="welt-pfotenreich.html"><span class="bild"><img src="bilder/artikel/echt-hundedecke.webp" alt="Hundedecke mit Australian Shepherd, Nelli" width="640" height="480" loading="lazy"></span><span class="unter"><b>Decke</b><span>Pfotenreich</span></span></a>
+<a class="kachel " href="welt-schultuetenwiese.html"><span class="bild"><img src="bilder/artikel/echt-brotdose.webp" alt="Brotdose mit Fuchs, Mia 6" width="640" height="480" loading="lazy"></span><span class="unter"><b>Brotdose</b><span>Schultütenwiese</span></span></a>
+  </div>
+</div></section>
+
+<section class="abschnitt hauch" id="wunsch" aria-labelledby="wunsch-titel"><div class="rahmen wunschkasten">
+  <div class="titel"><img class="zauberstab" src="bilder/zauberstab.webp" alt="" width="697" height="1055" loading="lazy"><h2 id="wunsch-titel">Was soll die Fee für dich zaubern?</h2><p>Erzähl, für wen es ist und worauf es soll. Du kannst tippen oder einsprechen.</p></div>
+  <form class="formular" data-wunsch novalidate>
+    <label for="wunsch-feld">Dein Wunsch</label>
+    <textarea id="wunsch-feld" name="wunsch" placeholder="Zum Beispiel: Für Opa Klaus, der jeden Morgen den Fuchs im Garten beobachtet. Am liebsten auf einer Tasse."></textarea>
+    <p class="hilfe">Name, Anlass, was diesen Menschen ausmacht und worauf es soll. Je mehr du erzählst, desto persönlicher wird es.</p>
+    <div class="zeile">
+      <button class="knopf zweit" type="button" data-mikro><svg aria-hidden="true" focusable="false" class="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M128,176a48.05,48.05,0,0,0,48-48V64a48,48,0,0,0-96,0v64A48.05,48.05,0,0,0,128,176ZM96,64a32,32,0,0,1,64,0v64a32,32,0,0,1-64,0Zm40,143.6V240a8,8,0,0,1-16,0V207.6A80.11,80.11,0,0,1,48,128a8,8,0,0,1,16,0,64,64,0,0,0,128,0,8,8,0,0,1,16,0A80.11,80.11,0,0,1,136,207.6Z"/></svg><span>Einsprechen</span></button>
+      <label class="knopf zweit foto-knopf"><span>Foto hinzufügen</span><input type="file" accept="image/*" data-foto hidden></label>
+      <button class="knopf" type="submit">Wunsch abschicken</button>
+    </div>
+    <div class="foto-vorschau" data-foto-vorschau hidden><img alt="Dein Foto" width="64" height="64"><span>Dein Foto wird mit verarbeitet.</span><button type="button" class="foto-weg" data-foto-weg aria-label="Foto entfernen">Entfernen</button></div>
+    <p class="antwort" aria-live="polite"></p>
+  </form>
+  <div class="ergebnis" data-ergebnis hidden aria-live="polite"></div>
+  <script type="application/json" id="katalog">{"welten": {"sternenzauber": "Sternenzauber", "wiegenwald": "Wiegenwald", "rosenhain": "Rosenhain", "bluetenlichtung": "Blütenlichtung", "schultuetenwiese": "Schultütenwiese", "pfotenreich": "Pfotenreich", "kerzenfest": "Kerzenfest", "dankesgarten": "Dankesgarten"}, "anlaesse": {"sternenzauber": "Weihnachten und Advent", "wiegenwald": "Geburt und Taufe", "rosenhain": "Liebe, Hochzeit, Valentinstag", "bluetenlichtung": "Muttertag", "schultuetenwiese": "Einschulung und Kita", "pfotenreich": "Haustiere", "kerzenfest": "Geburtstag", "dankesgarten": "Lehrer, Erzieher, Ruhestand"}, "artikel": [{"id": "ste-decke", "name": "Kuscheldecke", "welt": "sternenzauber", "w": 800, "h": 800}, {"id": "ste-kissen", "name": "Kissen", "welt": "sternenzauber", "w": 800, "h": 800}, {"id": "ste-kalender", "name": "Wandkalender", "welt": "sternenzauber", "w": 800, "h": 800}, {"id": "ste-kugel", "name": "Weihnachtskugel", "welt": "sternenzauber", "w": 800, "h": 800}, {"id": "ste-tasse", "name": "Tasse", "welt": "sternenzauber", "w": 800, "h": 800}, {"id": "wie-body", "name": "Babybody", "welt": "wiegenwald", "w": 800, "h": 800}, {"id": "wie-decke", "name": "Babydecke", "welt": "wiegenwald", "w": 800, "h": 800}, {"id": "wie-teller", "name": "Kinderteller", "welt": "wiegenwald", "w": 800, "h": 800}, {"id": "wie-spardose", "name": "Spardose", "welt": "wiegenwald", "w": 800, "h": 800}, {"id": "echt-kissen", "name": "Kissen", "welt": "wiegenwald", "w": 640, "h": 480}, {"id": "echt-poster", "name": "Poster", "welt": "wiegenwald", "w": 640, "h": 480}, {"id": "ros-sternenkarte", "name": "Sternenkarte", "welt": "rosenhain", "w": 800, "h": 800}, {"id": "ros-portraet", "name": "Paar-Porträt", "welt": "rosenhain", "w": 800, "h": 800}, {"id": "ros-acryl", "name": "Acrylbild", "welt": "rosenhain", "w": 800, "h": 800}, {"id": "blu-kissen", "name": "Kissen mit Kinderbild", "welt": "bluetenlichtung", "w": 800, "h": 800}, {"id": "blu-tasse", "name": "Tasse", "welt": "bluetenlichtung", "w": 800, "h": 800}, {"id": "blu-windlicht", "name": "Windlicht", "welt": "bluetenlichtung", "w": 800, "h": 800}, {"id": "echt-brotdose", "name": "Brotdose", "welt": "schultuetenwiese", "w": 640, "h": 480}, {"id": "sch-flasche", "name": "Trinkflasche", "welt": "schultuetenwiese", "w": 800, "h": 800}, {"id": "sch-turnbeutel", "name": "Turnbeutel", "welt": "schultuetenwiese", "w": 800, "h": 800}, {"id": "echt-sticker", "name": "Sticker", "welt": "schultuetenwiese", "w": 640, "h": 480}, {"id": "pfo-poster", "name": "Tierporträt", "welt": "pfotenreich", "w": 800, "h": 800}, {"id": "pfo-tasse", "name": "Tasse", "welt": "pfotenreich", "w": 800, "h": 800}, {"id": "echt-hundedecke", "name": "Decke", "welt": "pfotenreich", "w": 640, "h": 480}, {"id": "echt-napfunterlage", "name": "Napfunterlage", "welt": "pfotenreich", "w": 640, "h": 480}, {"id": "ker-tasse", "name": "Tasse", "welt": "kerzenfest", "w": 800, "h": 800}, {"id": "ker-shirt", "name": "Shirt", "welt": "kerzenfest", "w": 800, "h": 800}, {"id": "ker-puzzle", "name": "Puzzle", "welt": "kerzenfest", "w": 800, "h": 800}, {"id": "ker-poster", "name": "Poster", "welt": "kerzenfest", "w": 800, "h": 800}, {"id": "dan-beutel", "name": "Beutel", "welt": "dankesgarten", "w": 800, "h": 800}, {"id": "dan-keksglas", "name": "Keksglas", "welt": "dankesgarten", "w": 800, "h": 800}, {"id": "dan-kissen", "name": "Kissen", "welt": "dankesgarten", "w": 800, "h": 800}, {"id": "echt-hoodie", "name": "Hoodie zum Ruhestand", "welt": "dankesgarten", "w": 640, "h": 480}, {"id": "echt-acrylbild", "name": "Acrylbild", "welt": "", "w": 640, "h": 480}, {"id": "echt-fussmatte", "name": "Fußmatte", "welt": "", "w": 640, "h": 480}, {"id": "echt-gepaeckanhaenger", "name": "Gepäckanhänger", "welt": "", "w": 640, "h": 480}, {"id": "echt-grillschuerze", "name": "Grillschürze", "welt": "", "w": 640, "h": 480}, {"id": "echt-handtuch", "name": "Handtuch", "welt": "", "w": 640, "h": 480}, {"id": "echt-mousepad", "name": "Mousepad", "welt": "", "w": 640, "h": 480}, {"id": "echt-shopper", "name": "Shopper", "welt": "", "w": 640, "h": 480}, {"id": "echt-strandtuch", "name": "Strandtuch", "welt": "", "w": 640, "h": 480}, {"id": "echt-tshirt", "name": "T-Shirt", "welt": "", "w": 640, "h": 480}, {"id": "echt-tuerschild", "name": "Türschild", "welt": "", "w": 640, "h": 480}]}</script>
+</div></section>
+</main>
+<footer class="fuss"><div class="rahmen">
+  <div class="fuss-innen">
+    <div><img class="fuss-logo" src="bilder/logo-voll.webp" alt="Geschenke-Fee" width="1400" height="1048" loading="lazy"><p>Personalisierte Geschenke aus deinem Wunsch, gestaltet für jeden Artikel neu.</p></div>
+    <ul class="fuss-welten" aria-label="Feenwelten"><li><a href="welt-sternenzauber.html">Sternenzauber</a></li><li><a href="welt-wiegenwald.html">Wiegenwald</a></li><li><a href="welt-rosenhain.html">Rosenhain</a></li><li><a href="welt-bluetenlichtung.html">Blütenlichtung</a></li><li><a href="welt-schultuetenwiese.html">Schultütenwiese</a></li><li><a href="welt-pfotenreich.html">Pfotenreich</a></li><li><a href="welt-kerzenfest.html">Kerzenfest</a></li><li><a href="welt-dankesgarten.html">Dankesgarten</a></li></ul>
+  </div>
+  <p class="fuss-recht" id="impressum">Impressum und Datenschutz folgen, sobald der Shop online geht.</p>
+</div></footer>
+<script src="fee.js" defer></script>
+</body></html>
