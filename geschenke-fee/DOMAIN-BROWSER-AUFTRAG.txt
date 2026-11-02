@@ -1,57 +1,23 @@
-AUFTRAG FÜR CLAUDE IM BROWSER — geschenke-fee.de auf die neue Website umstellen
+AUFTRAG FÜR CLAUDE IM BROWSER — geschenke-fee.de (ohne www) auf www weiterleiten
 
-Ich bin bei Cloudflare (dasselbe Konto wie ball-z.de) und bei Alfahosting im Kundenbereich angemeldet.
-Bringe die Domain geschenke-fee.de auf unsere Website bei Railway — genauso, wie es bei ball-z.de
-eingerichtet ist: Domain bleibt bei Alfahosting, die DNS-Verwaltung macht Cloudflare, die E-Mail bleibt bei
-Alfahosting. Arbeite die Schritte der Reihe nach ab und halte dich an die Stoppregeln am Ende.
+Ich bin bei Alfahosting im Kundenbereich angemeldet. www.geschenke-fee.de läuft schon auf der neuen Seite.
+Jetzt soll nur noch die Domain OHNE www dorthin weiterleiten — genauso, wie es bei kartenaugust.de
+eingerichtet ist (http://kartenaugust.de leitet mit 301 auf http://www.kartenaugust.de).
 
-SCHRITT 1 — Ausgangslage bei Alfahosting ablesen (nichts ändern)
-Öffne bei Alfahosting die Domain geschenke-fee.de und darin die DNS-Einträge (Menüpunkt heißt z. B.
-"Domains", "DNS", "DNS-Einstellungen", "Nameserver-Einträge" oder "Zonenverwaltung").
-Schreib mir ALLE Einträge mit Typ, Host und Wert auf. Erwartet wird mindestens:
-    A      @     81.88.34.186
-    A      www   81.88.34.186
-    MX     @     mx03.secure-mailgate.com (Priorität 10)
-    MX     @     mx04.secure-mailgate.com (Priorität 10)
-    TXT    @     v=spf1 a mx include:secure-mailgate.com ~all
-    A      mail  81.88.34.186
-    autodiscover (CNAME/A auf redirect-autodiscover.cloudpit.io)
-Steht dort mehr, schreib es mit dazu.
+SCHRITT 1 — Nachsehen, wie es bei kartenaugust.de gemacht ist
+Öffne bei Alfahosting die Domain kartenaugust.de und sieh nach, wo die Weiterleitung auf www eingetragen ist
+(Menüpunkt heißt z. B. "Weiterleitung", "Domain-Umleitung", "Redirect" oder "Domain-Ziel"). Sag mir, wo und
+mit welchen Einstellungen (Ziel, Typ 301/302, mit oder ohne Pfad).
 
-SCHRITT 2 — Domain bei Cloudflare anlegen
-Bei Cloudflare: "Add a site" / "Domain hinzufügen", geschenke-fee.de eingeben, den kostenlosen Free-Plan
-wählen. Cloudflare liest die vorhandenen Einträge ein.
-Vergleiche die eingelesene Liste mit Schritt 1. JEDER Mail-Eintrag (MX, SPF-TXT, mail, autodiscover) muss
-genau so vorhanden sein. Fehlt einer, lege ihn mit demselben Wert an.
-
-SCHRITT 3 — Website-Einträge bei Cloudflare setzen
-1. Den A-Eintrag für @ (81.88.34.186) löschen.
-2. Den A-Eintrag für www (81.88.34.186) löschen.
-3. Neu anlegen, bei beiden CNAMEs die Wolke auf GRAU stellen ("DNS only", NICHT "Proxied"):
-    CNAME  @                     8d31ukuo.up.railway.app
-    CNAME  www                   xap5sexg.up.railway.app
-    TXT    _railway-verify       railway-verify=f813ae1228c8cf7b9dd6cd3648ff3832551b2705db39ec72b83ca0474423cfa6
-    TXT    _railway-verify.www   railway-verify=b2b89c786a1df13fcd95bb9f8823c7dd9b230e1e8c4bccf612e1ee71d6485213
-Zeig mir die fertige Liste aller Einträge, BEVOR du weitermachst.
-
-SCHRITT 4 — Nameserver bei Alfahosting umstellen
-Cloudflare zeigt am Ende zwei Nameserver an (Form: xxx.ns.cloudflare.com). Schreib sie mir auf.
-Bei Alfahosting für geschenke-fee.de die Nameserver ändern (Menüpunkt z. B. "Nameserver ändern",
-"Eigene Nameserver" oder "Externe Nameserver"):
-    ALT: cns1.alfahosting.info, cns2.alfahosting.info, cns3.alfahosting.info
-    NEU: die zwei Nameserver von Cloudflare
+SCHRITT 2 — Dasselbe für geschenke-fee.de einrichten
+Für die Domain geschenke-fee.de (ohne www) genau dieselbe Weiterleitung anlegen:
+    Ziel:  https://www.geschenke-fee.de
+    Typ:   301 (dauerhaft), falls wählbar
 Zeig mir die Eingabe, BEVOR du speicherst. Erst wenn ich zustimme, speicherst du.
-Danach bei Cloudflare auf "Nameserver prüfen" / "Check nameservers" klicken.
-
-WAS DANACH PASSIERT (nichts zu tun)
-Die Umstellung braucht einige Minuten bis wenige Stunden. Danach prüft Claude Code, ob geschenke-fee.de und
-www.geschenke-fee.de die neue Seite mit gültigem Zertifikat zeigen und die Mail weiter funktioniert.
 
 STOPPREGELN
-- Keine MX-, SPF- oder sonstigen Mail-Einträge löschen oder ändern. Fehlen sie bei Cloudflare, ANLEGEN.
-- Bei den beiden CNAMEs NIEMALS die orange Wolke ("Proxied") — sonst bekommt Railway kein Zertifikat.
-- Bei Alfahosting nur die Nameserver von geschenke-fee.de ändern, keine andere Domain anfassen
-  (besonders nicht ball-z.de oder motto-otto.de).
-- Nichts kündigen, keinen Tarif wechseln, nichts Kostenpflichtiges bestellen. Bei Cloudflare nur den Free-Plan.
-- Wenn die Oberfläche etwas anderes zeigt als hier beschrieben, ein Eintrag nicht eindeutig ist oder eine
-  Warnung erscheint: anhalten und mich fragen. Nicht raten.
+- NUR die Weiterleitung der Domain ohne www anlegen. Den CNAME für www (xap5sexg.up.railway.app) und den
+  TXT _railway-verify.www NICHT anfassen.
+- Keine MX-, SPF- oder Mail-Einträge ändern. Keine Nameserver ändern.
+- Keine andere Domain anfassen. Nichts kündigen, keinen Tarif wechseln, nichts bestellen.
+- Zeigt die Oberfläche etwas anderes als beschrieben oder erscheint eine Warnung: anhalten und mich fragen.
