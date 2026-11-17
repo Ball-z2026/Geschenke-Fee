@@ -16,7 +16,13 @@ const BILD_TOKEN = process.env.BALLZ_MCP_TOKEN || '';
 const PRO_IP = Number(process.env.WUENSCHE_PRO_IP || 8);          // Bilder je IP und Stunde
 const PRO_TAG = Number(process.env.WUENSCHE_PRO_TAG || 150);      // Bilder insgesamt je Tag
 const TYPEN = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8',
-  '.webp': 'image/webp', '.png': 'image/png', '.svg': 'image/svg+xml', '.json': 'application/json', '.jpg': 'image/jpeg' };
+  '.webp': 'image/webp', '.png': 'image/png', '.svg': 'image/svg+xml', '.json': 'application/json', '.jpg': 'image/jpeg',
+  '.xml': 'application/xml; charset=utf-8', '.txt': 'text/plain; charset=utf-8' };
+// Suchmaschinen (Markus, 17. Nov. 2026): sitemap.xml und robots.txt baut seite/bauen.py; der IndexNow-Schluessel liegt
+// als seite/<schluessel>.txt (oeffentlich, so will es IndexNow). Nach jedem Start meldet der Server die Seiten der
+// Sitemap an api.indexnow.org (Bing, Yandex, Seznam ...) - nur auf Railway, nicht beim lokalen Probelauf.
+const INDEXNOW_KEY = 'a935a9450af4e3cb34d96849209e5c04';
+const BASIS = process.env.GF_BASIS || 'https://www.geschenke-fee.de';
 
 /* Mengenbegrenzung: schuetzt vor Missbrauch und unerwarteten Kosten */
 const proIp = new Map(); let tag = { datum: '', n: 0 };
@@ -107,3 +113,17 @@ http.createServer(async (req, res) => {
     console.error('Fehler bei', pfad, e); res.writeHead(500); res.end('Fehler');
   }
 }).listen(PORT, () => console.log('Geschenke-Fee laeuft auf Port', PORT));
+
+async function indexNowMelden() {
+  try {
+    const xml = await readFile(join(SEITE, 'sitemap.xml'), 'utf8');
+    const urlList = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]);
+    const r = await fetch('https://api.indexnow.org/indexnow', {
+      method: 'POST', headers: { 'content-type': 'application/json; charset=utf-8' },
+      body: JSON.stringify({ host: new URL(BASIS).host, key: INDEXNOW_KEY, keyLocation: BASIS + '/' + INDEXNOW_KEY + '.txt', urlList }),
+      signal: AbortSignal.timeout(20000)
+    });
+    console.log('IndexNow:', urlList.length, 'Seiten gemeldet, Antwort', r.status);
+  } catch (e) { console.error('IndexNow fehlgeschlagen:', e.message); }
+}
+if (process.env.RAILWAY_ENVIRONMENT) setTimeout(indexNowMelden, 3 * 60 * 1000).unref();

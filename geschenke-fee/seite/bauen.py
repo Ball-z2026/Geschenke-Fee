@@ -5,6 +5,13 @@ Aufruf: python3 bauen.py   (schreibt index.html, vorschau-index.html und welt-*.
 import html, json, os
 
 HIER = os.path.dirname(os.path.abspath(__file__))
+# Suchmaschinen (Markus, 17. Nov. 2026: Google und Bing). Adresse der Seite fuer canonical, Sitemap und strukturierte Daten.
+BASIS = 'https://www.geschenke-fee.de'
+
+
+def ld(daten):
+    # Strukturierte Daten (schema.org) - nur Angaben, die stimmen: keine Preise, keine Bewertungen.
+    return '<script type="application/ld+json">' + json.dumps(daten, ensure_ascii=False) + '</script>'
 
 def icon(name, cls=''):
     s = open(os.path.join(HIER, 'icons', name + '.svg'), encoding='utf8').read().strip()
@@ -207,6 +214,10 @@ def startseite():
     return f'''<title>Geschenke-Fee</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Erzähl der Geschenke-Fee deinen Wunsch. Sie zaubert daraus ein Motiv, das es nur einmal gibt, auf Kissen, Decke, Tasse und mehr.">
+<link rel="canonical" href="{BASIS}/">
+{ld({'@context': 'https://schema.org', '@graph': [
+    {'@type': 'WebSite', 'name': 'Geschenke-Fee', 'url': BASIS + '/', 'inLanguage': 'de'},
+    {'@type': 'Organization', 'name': 'Geschenke-Fee', 'url': BASIS + '/', 'logo': BASIS + '/bilder/logo.png'}]})}
 {FONTS}
 <link rel="stylesheet" href="fee.css">
 {kopf(start=True)}
@@ -295,6 +306,13 @@ def weltseite(i):
 <title>{w['name']} | Geschenke-Fee</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="{w['name']}: Geschenke für {w['anlass']}, gestaltet aus deinem Wunsch von der Geschenke-Fee.">
+<link rel="canonical" href="{BASIS}/welt-{w['slug']}.html">
+{ld({'@context': 'https://schema.org', '@type': 'WebPage', 'name': w['name'] + ' | Geschenke-Fee', 'url': BASIS + '/welt-' + w['slug'] + '.html', 'inLanguage': 'de',
+     'description': w['name'] + ': Geschenke für ' + w['anlass'] + ', gestaltet aus deinem Wunsch von der Geschenke-Fee.',
+     'isPartOf': {'@type': 'WebSite', 'name': 'Geschenke-Fee', 'url': BASIS + '/'},
+     'breadcrumb': {'@type': 'BreadcrumbList', 'itemListElement': [
+         {'@type': 'ListItem', 'position': 1, 'name': 'Geschenke-Fee', 'item': BASIS + '/'},
+         {'@type': 'ListItem', 'position': 2, 'name': w['name'], 'item': BASIS + '/welt-' + w['slug'] + '.html'}]}})}
 {FONTS}
 <link rel="stylesheet" href="fee.css">
 <style>:root{{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}}[hidden]{{display:none!important}}</style>
@@ -350,4 +368,13 @@ if __name__ == '__main__':
         + s + '</body></html>')
     for i, w in enumerate(WELTEN):
         open(os.path.join(HIER, f'welt-{w["slug"]}.html'), 'w', encoding='utf8').write(weltseite(i))
-    print('gebaut:', 1 + len(WELTEN), 'Seiten')
+    # Sitemap und robots.txt aus derselben Liste - eine neue Welt steht damit automatisch drin.
+    import datetime
+    heute = datetime.date.today().isoformat()
+    urls = [BASIS + '/'] + [f'{BASIS}/welt-{w["slug"]}.html' for w in WELTEN]
+    open(os.path.join(HIER, 'sitemap.xml'), 'w', encoding='utf8').write(
+        '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        + ''.join(f'  <url><loc>{u}</loc><lastmod>{heute}</lastmod></url>\n' for u in urls) + '</urlset>\n')
+    open(os.path.join(HIER, 'robots.txt'), 'w', encoding='utf8').write(
+        'User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: ' + BASIS + '/sitemap.xml\n')
+    print('gebaut:', 1 + len(WELTEN), 'Seiten, Sitemap mit', len(urls), 'Adressen')
