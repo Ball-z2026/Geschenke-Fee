@@ -90,7 +90,9 @@ http.createServer(async (req, res) => {
   try {
     if (pfad === '/gesund') { res.writeHead(200); return res.end('ok'); }
     if (pfad === '/api/bild' && req.method === 'POST') {
-      const ip = (req.headers['x-forwarded-for'] || req.socket.remoteAddress || '').split(',')[0].trim();
+      // Sicherheit 21. Nov. 2026: X-Forwarded-For kann der Besucher selbst mitschicken - mit jedem neuen Wert haette er
+      // die Bremse je IP umgangen. Railway setzt X-Real-IP selbst; sonst gilt der LETZTE Eintrag (den haengt Railway an).
+      const ip = String(req.headers['x-real-ip'] || String(req.headers['x-forwarded-for'] || '').split(',').pop() || req.socket.remoteAddress || '').trim();
       let k; try { k = JSON.parse(await lesen(req)); } catch { return json(res, 400, { fehler: 'Anfrage nicht lesbar.' }); }
       if (!kurz(k.motiv, 500) || !kurz(k.artikel, 40)) return json(res, 400, { fehler: 'Motiv und Artikel fehlen.' });
       const foto = typeof k.foto === 'string' && k.foto.length < 2e6 && /^[A-Za-z0-9+\/=]+$/.test(k.foto) ? k.foto : '';
@@ -106,7 +108,8 @@ http.createServer(async (req, res) => {
     if (!voll.startsWith(SEITE + sep) || rel.startsWith('quelle/') || rel === 'bauen.py' || rel === 'index.html') { res.writeHead(404); return res.end('Nicht gefunden'); }
     const typ = TYPEN[extname(voll)]; if (!typ) { res.writeHead(404); return res.end('Nicht gefunden'); }
     const datei = await readFile(voll);
-    res.writeHead(200, { 'content-type': typ, 'cache-control': extname(voll) === '.html' ? 'no-cache' : 'public, max-age=3600', 'x-content-type-options': 'nosniff' });
+    res.writeHead(200, { 'content-type': typ, 'cache-control': extname(voll) === '.html' ? 'no-cache' : 'public, max-age=3600', 'x-content-type-options': 'nosniff',
+      'referrer-policy': 'strict-origin-when-cross-origin', 'strict-transport-security': 'max-age=31536000', 'x-frame-options': 'SAMEORIGIN' });
     res.end(req.method === 'HEAD' ? undefined : datei);
   } catch (e) {
     if (e.code === 'ENOENT') { res.writeHead(404); return res.end('Nicht gefunden'); }

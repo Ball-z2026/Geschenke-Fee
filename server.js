@@ -3019,6 +3019,25 @@ async function runJob(job) {
 
 // ---------- App ----------
 const app = express();
+
+// ---------- Sicherheits-Kopfzeilen (21. Nov. 2026, Sicherheitscheck aller Seiten) ----------
+// Die Seite schickte bisher keine einzige Schutz-Kopfzeile, dafuer aber "X-Powered-By: Express".
+// Bewusst nur, was nichts kaputt machen kann: kein Skript-CSP (die Seiten leben von Inline-Skripten),
+// keine Permissions-Policy (Standort und Mikrofon werden gebraucht). Das Backend darf in keinem
+// fremden Rahmen stehen (Clickjacking) - alle anderen Seiten bleiben einbettbar wie bisher.
+app.disable('x-powered-by');
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  if (req.secure || req.headers['x-forwarded-proto'] === 'https') res.setHeader('Strict-Transport-Security', 'max-age=31536000');
+  if (/^\/(admin|druck)(\/|$)/.test(req.path)) {
+    res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+    res.setHeader('Content-Security-Policy', "frame-ancestors 'self'");
+    // Der Admin-Token steht oft in der Adresse (?token=) - er soll in keinem Zwischenspeicher landen.
+    res.setHeader('Cache-Control', 'no-store');
+  }
+  next();
+});
 // 1. Okt., Markus: Abstimmen ergibt nur Sinn, wo eine Gruppe bestellt (Firmenausflug, Malle, Kegeln) -
 // nicht beim Shirt fuer Opa oder beim Geburtstag. Die Liste steht in gruppen-mottos.json.
 let GRUPPEN_MOTTOS = new Set();
@@ -9160,9 +9179,15 @@ app.post('/api/mo/rate', async (req, res) => {
 });
 
 // ---------- Backend ----------
+// Token-Vergleich in gleichbleibender Zeit (21. Nov. 2026): ein einfaches !== verraet ueber die
+// Antwortzeit, wie viele Zeichen schon stimmen.
+const gleicherToken = (a, b) => {
+  const x = crypto.createHash('sha256').update(String(a || '')).digest(), y = crypto.createHash('sha256').update(String(b || '')).digest();
+  return crypto.timingSafeEqual(x, y);
+};
 const adminGuard = (req, res, next) => {
   const t = req.query.token || req.get('x-admin-token');
-  if (!env.ADMIN_TOKEN || t !== env.ADMIN_TOKEN) return res.status(403).json({ error: 'kein Zugang' });
+  if (!env.ADMIN_TOKEN || !gleicherToken(t, env.ADMIN_TOKEN)) return res.status(403).json({ error: 'kein Zugang' });
   next();
 };
 
